@@ -1,0 +1,21 @@
+export interface Person{
+    id: String
+    name: String,
+    company?: String,
+    addres?: String,
+    comuna?: String,
+    city?: String,
+    country?: String,
+    zip_code?: String,
+    phone?: String,
+    website?: String,
+    asistio?: String,
+    status?: String,
+    codeQr?: Number,
+    codeEvento?: String,
+    update_by?: String,
+    update?: Date,
+    send_email?: String,
+    contractado?: String,
+    observation?: String,
+}
