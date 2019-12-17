@@ -10,7 +10,7 @@
 
 /Fuse-v8.1.2-demo
 /serverless
-
+/dist
 # IDEs and editors
 /.idea
 .project

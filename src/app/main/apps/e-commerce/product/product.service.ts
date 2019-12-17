@@ -35,7 +35,10 @@ export class EcommerceProductService implements Resolve<any>
      */
     resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<any> | Promise<any> | any
     {
+
         this.routeParams = route.params;
+
+        console.log('this.routeParams product:', this.routeParams) 
 
         return new Promise((resolve, reject) => {
 
@@ -58,6 +61,7 @@ export class EcommerceProductService implements Resolve<any>
     getProduct(): Promise<any>
     {
         return new Promise((resolve, reject) => {
+            console.log(this.routeParams)
             if ( this.routeParams.id === 'new' )
             {
                 this.onProductChanged.next(false);
@@ -65,9 +69,11 @@ export class EcommerceProductService implements Resolve<any>
             }
             else
             {
-                this._httpClient.get('api/e-commerce-products/' + this.routeParams.id)
+                console.log(this.routeParams)
+                this._httpClient.get(environment.apiUrl + '/api/evento/' + this.routeParams.id)
                     .subscribe((response: any) => {
                         this.product = response;
+                        console.log(this.product )
                         this.onProductChanged.next(this.product);
                         resolve(response);
                     }, reject);
@@ -84,7 +90,7 @@ export class EcommerceProductService implements Resolve<any>
     saveProduct(product): Promise<any>
     {
         return new Promise((resolve, reject) => {
-            this._httpClient.post('api/e-commerce-products/' + product.id, product)
+            this._httpClient.post('api/e-commerce-products/' + product._id, product)
                 .subscribe((response: any) => {
                     resolve(response);
                 }, reject);
@@ -105,9 +111,31 @@ export class EcommerceProductService implements Resolve<any>
               'Content-Type': 'application/json',
               'authorization': `${this.authServices.currentUserValue.token}`}),
           }
-        console.log(product)
+        
         return new Promise((resolve, reject) => {
-            this._httpClient.post(environment.apiUrl + '/api/evento', { company: product.handle}, Haeader)
+            this._httpClient.post(environment.apiUrl + '/api/evento', { name: product.name, handle: product.handle, company: product.company, desc: product.description, date: product.date, status: true}, Haeader)
+                .subscribe((response: any) => {
+
+                    console.log(response)
+                    resolve(response);
+
+                    
+                }, reject);
+        });
+    }
+
+    deleteEvent(id) {
+
+        const Haeader = {
+            headers: new HttpHeaders({
+              'Content-Type': 'application/json',
+              'authorization': `${this.authServices.currentUserValue.token}`}),
+          }
+
+          console.log(Haeader)
+      
+        return new Promise((resolve, reject) => {
+            this._httpClient.delete(environment.apiUrl + '/api/evento/' + id,  Haeader)
                 .subscribe((response: any) => {
                     resolve(response);
                 }, reject);

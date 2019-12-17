@@ -5,6 +5,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { environment } from 'environments/environment';
 import { AuthService } from 'app/services/authentication/auth.service';
 
+
 @Injectable()
 export class EcommerceProductsService implements Resolve<any>
 {
@@ -18,9 +19,9 @@ export class EcommerceProductsService implements Resolve<any>
      */
     constructor(
         private _httpClient: HttpClient,
-        private authServices: AuthService
-    )
-    {
+        private authServices: AuthService,
+ 
+    ) {
         // Set the defaults
         this.onProductsChanged = new BehaviorSubject({});
     }
@@ -32,18 +33,20 @@ export class EcommerceProductsService implements Resolve<any>
      * @param {RouterStateSnapshot} state
      * @returns {Observable<any> | Promise<any> | any}
      */
-    resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<any> | Promise<any> | any
-    {
+    resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<any> | Promise<any> | any {
         return new Promise((resolve, reject) => {
 
-            Promise.all([
-                this.getAllEvents()
-            ]).then(
-                () => {
-                    resolve();
-                },
-                reject
-            );
+                Promise.all([
+                
+                    this.getAllEvents()
+                    
+                ]).then(
+                    () => {
+                        resolve();
+                    },
+                    reject
+                );
+
         });
     }
 
@@ -52,12 +55,13 @@ export class EcommerceProductsService implements Resolve<any>
      *
      * @returns {Promise<any>}
      */
-    getProducts(): Promise<any>
-    {
+    getProducts(): Promise<any> {
         return new Promise((resolve, reject) => {
             this._httpClient.get('api/e-commerce-products')
                 .subscribe((response: any) => {
                     this.products = response;
+
+ 
                     this.onProductsChanged.next(this.products);
                     resolve(response);
                 }, reject);
@@ -65,26 +69,43 @@ export class EcommerceProductsService implements Resolve<any>
     }
 
 
-    getAllEvents(): Promise<any>{
+    getAllEvents(): Promise<any> {
 
         const Haeader = {
             headers: new HttpHeaders({
-              'Content-Type': 'application/json',
-              'authorization': `${this.authServices.currentUserValue.token}`}),
-          }
+                'Content-Type': 'application/json',
+                'authorization': `${this.authServices.currentUserValue.token}`
+            }),
+        }
 
         return new Promise((resolve, reject) => {
             this._httpClient.get(environment.apiUrl + '/api/evento', Haeader)
                 .subscribe((response: any) => {
-                    this.products = response;
+                    
+                    let eventArray: any = []
+                    let count = 0;
+
+                    response.forEach(e => {
+                        count++
+                        e.displayId = count
+                        e.id = e._id
+                        
+
+                        eventArray.push(e)
+                       
+                    });
+
+                    this.products = eventArray;
+
                     this.onProductsChanged.next(this.products);
 
                     console.log(this.onProductsChanged)
-                    resolve(response);
+                    resolve(this.products);
 
-                   
+
                 }, reject);
         });
 
     }
+
 }

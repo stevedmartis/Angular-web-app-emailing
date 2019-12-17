@@ -1,3 +1,5 @@
+
+
 <div id="product" class="page-layout carded fullwidth inner-scroll">
 
     <!-- TOP BACKGROUND -->
@@ -63,21 +65,31 @@
 
                     <mat-tab-group>
 
-                        <mat-tab label="Basic Info">
+                        <mat-tab label="Info. Basica">
 
                             <div class="tab-content p-24" fusePerfectScrollbar>
 
                                 <mat-form-field appearance="outline" floatLabel="always" class="w-100-p">
-                                    <mat-label>Product Name</mat-label>
-                                    <input matInput placeholder="Product Name"
+                                    <mat-label>Nombre evento</mat-label>
+                                    <input matInput placeholder="Convocatoria nombre"
                                            name="name"
                                            formControlName="name"
                                            required>
                                 </mat-form-field>
 
+
                                 <mat-form-field appearance="outline" floatLabel="always" class="w-100-p">
-                                    <mat-label>Product Description</mat-label>
-                                    <textarea matInput placeholder="Product Description"
+                                    <mat-label>Organización</mat-label>
+                                    <input matInput placeholder="Compañia"
+                                           name="company"
+                                           formControlName="company"
+                                           required>
+                                </mat-form-field>
+
+
+                                <mat-form-field appearance="outline" floatLabel="always" class="w-100-p">
+                                    <mat-label>Descripción</mat-label>
+                                    <textarea matInput placeholder="descripción del evento"
                                               name="description"
                                               formControlName="description"
                                               rows="5">
@@ -86,21 +98,10 @@
 
                                 <mat-form-field appearance="outline" floatLabel="always" class="w-100-p">
 
-                                    <mat-label>Categories</mat-label>
-
-                                    <mat-chip-list #categoryList name="categories" formControlName="categories">
-
-                                        <mat-chip *ngFor="let category of product.categories"
-                                                  [removable]="true" (removed)="product.removeCategory(category)">
-                                            {{category}}
-                                            <mat-icon matChipRemove>cancel</mat-icon>
-                                        </mat-chip>
-
-                                        <input [matChipInputFor]="categoryList"
-                                               [matChipInputAddOnBlur]="true"
-                                               (matChipInputTokenEnd)="product.addCategory($event)"/>
-
-                                    </mat-chip-list>
+                                    <mat-label>Fecha evento</mat-label>
+                                            <input matInput [matDatepicker]="picker" formControlName="date">
+                                            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                            <mat-datepicker #picker></mat-datepicker>
 
                                 </mat-form-field>
 
@@ -128,7 +129,7 @@
 
                         </mat-tab>
 
-                        <mat-tab label="Product Images">
+                        <mat-tab label="Imagen">
 
                             <div class="tab-content p-24" fusePerfectScrollbar>
                                 <div fxLayout="row wrap" fxLayoutAlign="start start">
@@ -267,7 +268,17 @@
                                     <span matPrefix>$&nbsp;</span>
                                 </mat-form-field>
 
+
+            <button
+            class="save-product-button"
+             (click)="eventDelete()"
+             mat-button color="warn">
+        <span>Eliminar Evento</span>
+    </button>
+
                             </div>
+
+
 
                         </mat-tab>
 
@@ -285,3 +296,5 @@
     <!-- / CENTER -->
 
 </div>
+
+

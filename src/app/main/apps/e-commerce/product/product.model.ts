@@ -4,9 +4,10 @@ import { FuseUtils } from '@fuse/utils';
 
 export class Product
 {
-    id: string;
+    _id: string;
     name: string;
     handle: string;
+    company: String;
     description: string;
     categories: string[];
     tags: string[];
@@ -37,8 +38,9 @@ export class Product
     constructor(product?)
     {
         product = product || {};
-        this.id = product.id || FuseUtils.generateGUID();
+        this._id = product._id || '';
         this.name = product.name || '';
+        this.company = product.company || '';
         this.handle = product.handle || FuseUtils.handleize(this.name);
         this.description = product.description || '';
         this.categories = product.categories || [];

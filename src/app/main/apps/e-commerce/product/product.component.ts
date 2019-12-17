@@ -7,7 +7,7 @@ import { takeUntil } from 'rxjs/operators';
 
 import { fuseAnimations } from '@fuse/animations';
 import { FuseUtils } from '@fuse/utils';
-
+import { Router } from '@angular/router';
 import { Product } from 'app/main/apps/e-commerce/product/product.model';
 import { EcommerceProductService } from 'app/main/apps/e-commerce/product/product.service';
 
@@ -31,16 +31,17 @@ export class EcommerceProductComponent implements OnInit, OnDestroy
     /**
      * Constructor
      *
-     * @param {EcommerceProductService} _eventServices
+     * @param {EcommerceProductService} _ecommerceProductService
      * @param {FormBuilder} _formBuilder
      * @param {Location} _location
      * @param {MatSnackBar} _matSnackBar
      */
     constructor(
-        private _eventServices: EcommerceProductService,
+        private _ecommerceProductService: EcommerceProductService,
         private _formBuilder: FormBuilder,
         private _location: Location,
         private _matSnackBar: MatSnackBar,
+        private router: Router
   
     )
     {
@@ -60,15 +61,19 @@ export class EcommerceProductComponent implements OnInit, OnDestroy
      */
     ngOnInit(): void
     {
+
         // Subscribe to update product on changes
-        this._eventServices.onProductChanged
+        this._ecommerceProductService.onProductChanged
             .pipe(takeUntil(this._unsubscribeAll))
             .subscribe(product => {
 
                 if ( product )
                 {
+
                     this.product = new Product(product);
                     this.pageType = 'edit';
+
+                    console.log(product)
                 }
                 else
                 {
@@ -105,11 +110,12 @@ export class EcommerceProductComponent implements OnInit, OnDestroy
     createProductForm(): FormGroup
     {
         return this._formBuilder.group({
-            id              : [this.product.id],
+            id              : [this.product._id],
+            handle         : [this.product.handle],
             name            : [this.product.name],
-            handle          : [this.product.handle],
+            company          : [this.product.company],
             description     : [this.product.description],
-            categories      : [this.product.categories],
+            date      : [''],
             tags            : [this.product.tags],
             images          : [this.product.images],
             priceTaxExcl    : [this.product.priceTaxExcl],
@@ -135,11 +141,11 @@ export class EcommerceProductComponent implements OnInit, OnDestroy
         const data = this.productForm.getRawValue();
         data.handle = FuseUtils.handleize(data.name);
 
-        this._eventServices.saveProduct(data)
+        this._ecommerceProductService.saveProduct(data)
             .then(() => {
 
                 // Trigger the subscription with new data
-                this._eventServices.onProductChanged.next(data);
+                this._ecommerceProductService.onProductChanged.next(data);
 
                 // Show the success message
                 this._matSnackBar.open('Product saved', 'OK', {
@@ -157,11 +163,12 @@ export class EcommerceProductComponent implements OnInit, OnDestroy
         const data = this.productForm.getRawValue();
         data.handle = FuseUtils.handleize(data.name);
 
-        this._eventServices.addProduct(data)
-            .then(() => {
+        this._ecommerceProductService.addProduct(data)
+            .then((x) => {
+              
 
                 // Trigger the subscription with new data
-                this._eventServices.onProductChanged.next(data);
+                this._ecommerceProductService.onProductChanged.next(x);
 
                 // Show the success message
                 this._matSnackBar.open('Evento creado', 'OK', {
@@ -170,7 +177,23 @@ export class EcommerceProductComponent implements OnInit, OnDestroy
                 });
 
                 // Change the location with new one
-                this._location.go('apps/announcement/events/' + this.product.id + '/' + this.product.handle);
+                this._location.go('apps/e-commerce/products/' + this.product._id + '/' + this.product.handle);
             });
+    }
+
+    eventDelete(){
+
+        this._ecommerceProductService.deleteEvent(this.product._id)
+        .then(x => {
+
+          
+            this.router.navigate(['apps/e-commerce/products']);
+          
+
+            this._matSnackBar.open('Evento eliminado', 'OK', {
+                verticalPosition: 'top',
+                duration        : 3000
+            });
+        })
     }
 }

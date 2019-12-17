@@ -27,6 +27,7 @@ import { EcommerceOrdersComponent } from 'app/main/apps/e-commerce/orders/orders
 import { EcommerceOrdersService } from 'app/main/apps/e-commerce/orders/orders.service';
 import { EcommerceOrderComponent } from 'app/main/apps/e-commerce/order/order.component';
 import { EcommerceOrderService } from 'app/main/apps/e-commerce/order/order.service';
+import { MaterialModule } from 'app/main/angular-material-elements/material.module';
 
 const routes: Routes = [
     {
@@ -47,7 +48,7 @@ const routes: Routes = [
         path     : 'products/:id/:handle',
         component: EcommerceProductComponent,
         resolve  : {
-            data: EcommerceProductsService
+            data: EcommerceProductService
         }
     },
     {
@@ -76,19 +77,7 @@ const routes: Routes = [
     imports     : [
         RouterModule.forChild(routes),
 
-        MatButtonModule,
-        MatChipsModule,
-        MatExpansionModule,
-        MatFormFieldModule,
-        MatIconModule,
-        MatInputModule,
-        MatPaginatorModule,
-        MatRippleModule,
-        MatSelectModule,
-        MatSortModule,
-        MatSnackBarModule,
-        MatTableModule,
-        MatTabsModule,
+        MaterialModule,
 
         NgxChartsModule,
         AgmCoreModule.forRoot({
