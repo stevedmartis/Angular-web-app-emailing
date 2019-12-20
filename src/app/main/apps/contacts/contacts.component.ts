@@ -109,6 +109,10 @@ export class ContactsComponent implements OnInit, OnDestroy
             });
     }
 
+    readExcelToJson(){
+        this._contactsService.excelToJson()
+    }
+
     /**
      * Toggle the sidebar
      *
@@ -118,4 +122,5 @@ export class ContactsComponent implements OnInit, OnDestroy
     {
         this._fuseSidebarService.getSidebar(name).toggleOpen();
     }
+
 }

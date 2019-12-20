@@ -4,6 +4,7 @@ import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot } from '@angular/r
 import { BehaviorSubject, Observable } from 'rxjs';
 import { environment } from 'environments/environment';
 import { AuthService } from 'app/services/authentication/auth.service';
+import { ContactsService } from 'app/main/apps/contacts/contacts.service';
 
 @Injectable()
 export class EcommerceProductService implements Resolve<any>
@@ -19,7 +20,8 @@ export class EcommerceProductService implements Resolve<any>
      */
     constructor(
         private _httpClient: HttpClient,
-        private authServices: AuthService
+        private authServices: AuthService,
+     
     )
     {
         // Set the defaults
@@ -43,7 +45,8 @@ export class EcommerceProductService implements Resolve<any>
         return new Promise((resolve, reject) => {
 
             Promise.all([
-                this.getProduct()
+                this.getProduct(),
+               
             ]).then(
                 () => {
                     resolve();
@@ -113,7 +116,7 @@ export class EcommerceProductService implements Resolve<any>
           }
         
         return new Promise((resolve, reject) => {
-            this._httpClient.post(environment.apiUrl + '/api/evento', { name: product.name, handle: product.handle, company: product.company, desc: product.description, date: product.date, status: true}, Haeader)
+            this._httpClient.post(environment.apiUrl + '/api/evento', { name: product.name, handle: product.handle, company: product.company, description: product.description, date: product.date, status: true}, Haeader)
                 .subscribe((response: any) => {
 
                     console.log(response)
@@ -141,4 +144,5 @@ export class EcommerceProductService implements Resolve<any>
                 }, reject);
         });
     }
+    
 }

@@ -4,6 +4,8 @@ e-commerce-products {
 
     #products {
 
+
+
         .top-bg {
 
             @include media-breakpoint('lt-md') {
@@ -51,6 +53,20 @@ e-commerce-products {
                     max-height: 192px !important;
                 }
             }
+        }
+    }
+
+
+    form {
+        width: 100%;
+        max-width: 800px !important;
+    }
+
+    .form-errors-model {
+        flex: 1;
+
+        code {
+            background: none !important;
         }
     }
 
@@ -125,3 +141,7 @@ e-commerce-products {
         }
     }
 }
+
+
+
+

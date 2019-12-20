@@ -29,7 +29,7 @@ const routes: Routes = [
     ],
     imports     : [
         RouterModule.forChild(routes),
-
+        
         MatButtonModule,
         MatButtonToggleModule,
         MatIconModule,
@@ -38,9 +38,7 @@ const routes: Routes = [
         MatSelectModule,
         MatSlideToggleModule,
         MatTabsModule,
-
         NgxChartsModule,
-
         FuseSharedModule,
         FuseDemoModule,
         FuseHighlightModule,

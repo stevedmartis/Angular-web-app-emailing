@@ -66,6 +66,7 @@ export class ContactsContactListComponent implements OnInit, OnDestroy
             .subscribe(contacts => {
                 this.contacts = contacts;
 
+                console.log(this.contacts)
                 this.checkboxes = {};
                 contacts.map(contact => {
                     this.checkboxes[contact.id] = false;
@@ -190,6 +191,7 @@ export class ContactsContactListComponent implements OnInit, OnDestroy
         this._contactsService.toggleSelectedContact(contactId);
     }
 
+
     /**
      * Toggle star
      *
@@ -218,7 +220,7 @@ export class FilesDataSource extends DataSource<any>
      * @param {ContactsService} _contactsService
      */
     constructor(
-        private _contactsService: ContactsService
+        public _contactsService: ContactsService
     )
     {
         super();

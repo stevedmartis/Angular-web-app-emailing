@@ -2,10 +2,12 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot } from '@angular/router';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
-
+import {SelectionModel} from '@angular/cdk/collections';
 import { FuseUtils } from '@fuse/utils';
 
 import { Contact } from 'app/main/apps/contacts/contact.model';
+import * as XLSX from 'xlsx';  
+import * as FileSaver from 'file-saver'; 
 
 @Injectable()
 export class ContactsService implements Resolve<any>
@@ -22,6 +24,11 @@ export class ContactsService implements Resolve<any>
 
     searchText: string;
     filterBy: string;
+
+    jsonData: any;  
+    fileUploaded: File;
+    worksheet: any;
+    selection = new SelectionModel<any>(true, []);
 
     /**
      * Constructor
@@ -171,6 +178,8 @@ export class ContactsService implements Resolve<any>
         this.onSelectedContactsChanged.next(this.selectedContacts);
     }
 
+ 
+
     /**
      * Toggle select all
      */
@@ -284,5 +293,18 @@ export class ContactsService implements Resolve<any>
         this.onContactsChanged.next(this.contacts);
         this.deselectContacts();
     }
+
+    excelToJson(){
+
+        this.jsonData = XLSX.utils.sheet_to_json(this.worksheet, { raw: false });  
+        this.jsonData = JSON.stringify(this.jsonData);  
+        console.log(this.jsonData)
+        const data: Blob = new Blob([this.jsonData], { type: "application/json" });  
+        FileSaver.saveAs(data, "JsonFile" + new Date().getTime() + '.json'); 
+
+    }
+
+ 
+  
 
 }

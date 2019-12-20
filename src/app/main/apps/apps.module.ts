@@ -47,7 +47,7 @@ const routes = [
     },
     {
         path        : 'contacts',
-        loadChildren: './contacts/contacts.module#ContactsModule'
+        loadChildren: () => import('./contacts/contacts.module').then(m => m.ContactsModule)
     },
     {
         path        : 'scrumboard',

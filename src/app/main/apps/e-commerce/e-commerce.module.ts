@@ -1,18 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { MatButtonModule } from '@angular/material/button';
-import { MatChipsModule } from '@angular/material/chips';
-import { MatRippleModule } from '@angular/material/core';
-import { MatExpansionModule } from '@angular/material/expansion';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatIconModule } from '@angular/material/icon';
-import { MatInputModule } from '@angular/material/input';
-import { MatPaginatorModule } from '@angular/material/paginator';
-import { MatSelectModule } from '@angular/material/select';
-import { MatSnackBarModule } from '@angular/material/snack-bar';
-import { MatSortModule } from '@angular/material/sort';
-import { MatTableModule } from '@angular/material/table';
-import { MatTabsModule } from '@angular/material/tabs';
+
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { AgmCoreModule } from '@agm/core';
 
@@ -28,6 +16,10 @@ import { EcommerceOrdersService } from 'app/main/apps/e-commerce/orders/orders.s
 import { EcommerceOrderComponent } from 'app/main/apps/e-commerce/order/order.component';
 import { EcommerceOrderService } from 'app/main/apps/e-commerce/order/order.service';
 import { MaterialModule } from 'app/main/angular-material-elements/material.module';
+
+import { FuseConfirmDialogModule, FuseSidebarModule } from '@fuse/components';
+
+import { FuseHighlightModule } from '@fuse/components';
 
 const routes: Routes = [
     {
@@ -68,11 +60,14 @@ const routes: Routes = [
 ];
 
 @NgModule({
+    exports: [],
     declarations: [
         EcommerceProductsComponent,
         EcommerceProductComponent,
         EcommerceOrdersComponent,
-        EcommerceOrderComponent
+        EcommerceOrderComponent,
+    
+        
     ],
     imports     : [
         RouterModule.forChild(routes),
@@ -85,14 +80,19 @@ const routes: Routes = [
         }),
 
         FuseSharedModule,
-        FuseWidgetModule
+        FuseWidgetModule,
+        FuseConfirmDialogModule,
+        FuseSidebarModule,
+        FuseHighlightModule
     ],
     providers   : [
         EcommerceProductsService,
         EcommerceProductService,
         EcommerceOrdersService,
-        EcommerceOrderService
-    ]
+        EcommerceOrderService,
+        
+    ],
+
 })
 export class EcommerceModule
 {

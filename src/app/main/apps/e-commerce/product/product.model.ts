@@ -9,6 +9,7 @@ export class Product
     handle: string;
     company: String;
     description: string;
+    date: string;
     categories: string[];
     tags: string[];
     images: {
@@ -41,6 +42,7 @@ export class Product
         this._id = product._id || '';
         this.name = product.name || '';
         this.company = product.company || '';
+        this.date = product.date || '';
         this.handle = product.handle || FuseUtils.handleize(this.name);
         this.description = product.description || '';
         this.categories = product.categories || [];
