@@ -21,7 +21,7 @@ export class EcommerceProductService implements Resolve<any>
     constructor(
         private _httpClient: HttpClient,
         private authServices: AuthService,
-     
+        private contactServices: ContactsService
     )
     {
         // Set the defaults
@@ -46,7 +46,7 @@ export class EcommerceProductService implements Resolve<any>
 
             Promise.all([
                 this.getProduct(),
-               
+                this.contactServices.getContacts()
             ]).then(
                 () => {
                     resolve();
@@ -144,5 +144,4 @@ export class EcommerceProductService implements Resolve<any>
                 }, reject);
         });
     }
-    
 }

@@ -16,10 +16,14 @@ import { EcommerceOrdersService } from 'app/main/apps/e-commerce/orders/orders.s
 import { EcommerceOrderComponent } from 'app/main/apps/e-commerce/order/order.component';
 import { EcommerceOrderService } from 'app/main/apps/e-commerce/order/order.service';
 import { MaterialModule } from 'app/main/angular-material-elements/material.module';
-
+import { ContactsComponent } from 'app/main/apps/contacts/contacts.component';
+import { ContactsSelectedBarComponent } from 'app/main/apps/contacts/selected-bar/selected-bar.component';
+import { ContactsMainSidebarComponent } from 'app/main/apps/contacts/sidebars/main/main.component';
 import { FuseConfirmDialogModule, FuseSidebarModule } from '@fuse/components';
-
-import { FuseHighlightModule } from '@fuse/components';
+import { ContactsContactListComponent } from 'app/main/apps/contacts/contact-list/contact-list.component';
+import { ContactsService } from 'app/main/apps/contacts/contacts.service';
+import { ContactsContactFormDialogComponent } from 'app/main/apps/contacts/contact-form/contact-form.component';
+import {  SpeedDialFabComponent } from 'app/layout/speed-dial-fab/speed-dial-fab.component';
 
 const routes: Routes = [
     {
@@ -60,13 +64,17 @@ const routes: Routes = [
 ];
 
 @NgModule({
-    exports: [],
     declarations: [
         EcommerceProductsComponent,
         EcommerceProductComponent,
         EcommerceOrdersComponent,
         EcommerceOrderComponent,
-    
+        ContactsComponent,
+        ContactsSelectedBarComponent,
+        ContactsMainSidebarComponent,
+        ContactsContactListComponent,
+        ContactsContactFormDialogComponent,
+        SpeedDialFabComponent
         
     ],
     imports     : [
@@ -82,17 +90,20 @@ const routes: Routes = [
         FuseSharedModule,
         FuseWidgetModule,
         FuseConfirmDialogModule,
-        FuseSidebarModule,
-        FuseHighlightModule
+        FuseSidebarModule
     ],
     providers   : [
         EcommerceProductsService,
         EcommerceProductService,
         EcommerceOrdersService,
         EcommerceOrderService,
-        
+        ContactsService
     ],
+    entryComponents: [
 
+        ContactsComponent,
+        ContactsContactFormDialogComponent
+    ]
 })
 export class EcommerceModule
 {

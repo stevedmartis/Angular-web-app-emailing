@@ -10,7 +10,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatTableModule } from '@angular/material/table';
 import { MatToolbarModule } from '@angular/material/toolbar';
-
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { FuseSharedModule } from '@fuse/shared.module';
 import { FuseConfirmDialogModule, FuseSidebarModule } from '@fuse/components';
 
@@ -20,6 +20,7 @@ import { ContactsContactListComponent } from 'app/main/apps/contacts/contact-lis
 import { ContactsSelectedBarComponent } from 'app/main/apps/contacts/selected-bar/selected-bar.component';
 import { ContactsMainSidebarComponent } from 'app/main/apps/contacts/sidebars/main/main.component';
 import { ContactsContactFormDialogComponent } from 'app/main/apps/contacts/contact-form/contact-form.component';
+import {  SpeedDialFabComponent } from 'app/layout/speed-dial-fab/speed-dial-fab.component';
 
 const routes: Routes = [
     {
@@ -32,12 +33,14 @@ const routes: Routes = [
 ];
 
 @NgModule({
+    exports: [ContactsComponent],
     declarations   : [
         ContactsComponent,
         ContactsContactListComponent,
         ContactsSelectedBarComponent,
         ContactsMainSidebarComponent,
-        ContactsContactFormDialogComponent
+        ContactsContactFormDialogComponent,
+        SpeedDialFabComponent
     ],
     imports        : [
         RouterModule.forChild(routes),
@@ -58,10 +61,14 @@ const routes: Routes = [
         FuseSidebarModule
     ],
     providers      : [
-        ContactsService
+        ContactsService,
+    
+            { provide: MatDialogRef, useValue: {} },
+    { provide: MAT_DIALOG_DATA, useValue: [] }
+        
     ],
     entryComponents: [
-        ContactsContactFormDialogComponent
+        ContactsContactFormDialogComponent,
     ]
 })
 export class ContactsModule

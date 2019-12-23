@@ -52,7 +52,7 @@ contacts-contact-list {
     z-index: 99;
 
     @include media-breakpoint('xs') {
-        position: sticky;
+        position: absolute;
         top: calc(100vh - 120px);
         bottom: auto;
     }

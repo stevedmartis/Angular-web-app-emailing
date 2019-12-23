@@ -39,6 +39,8 @@ export class ContactsMainSidebarComponent implements OnInit, OnDestroy
      */
     ngOnInit(): void
     {
+
+      
         this.filterBy = this._contactsService.filterBy || 'all';
 
         this._contactsService.onUserDataChanged
@@ -69,6 +71,8 @@ export class ContactsMainSidebarComponent implements OnInit, OnDestroy
      */
     changeFilter(filter): void
     {
+
+        console.log('in cganfe', filter)
         this.filterBy = filter;
         this._contactsService.onFilterChanged.next(this.filterBy);
     }

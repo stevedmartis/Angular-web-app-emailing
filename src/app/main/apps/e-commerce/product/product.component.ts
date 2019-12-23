@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, ViewEncapsulation, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewEncapsulation, Input, Output, EventEmitter, Inject } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Location } from '@angular/common';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -13,6 +13,8 @@ import { EcommerceProductService } from 'app/main/apps/e-commerce/product/produc
 import * as shape from 'd3-shape';
 import { HttpClient, HttpResponse, HttpRequest, HttpEventType, HttpErrorResponse } from '@angular/common/http';
 import { of } from 'rxjs/internal/observable/of';
+import { MAT_DIALOG_DATA, MatDialogRef, MatDialog } from '@angular/material/dialog';
+import { ContactsComponent } from 'app/main/apps/contacts/contacts.component';
 
 export class FileUploadModel {
     data: File;
@@ -46,6 +48,7 @@ export class EcommerceProductComponent implements OnInit, OnDestroy
     pageType: string;
     productForm: FormGroup;
     card19: any;
+    dialogRef: any;
 
   
     private files: Array<FileUploadModel> = [];
@@ -67,7 +70,11 @@ export class EcommerceProductComponent implements OnInit, OnDestroy
         private _location: Location,
         private _matSnackBar: MatSnackBar,
         private router: Router,
-        private _http: HttpClient
+        private _http: HttpClient,
+
+        public _matDialog: MatDialog,
+
+
         
   
     )
@@ -211,6 +218,14 @@ export class EcommerceProductComponent implements OnInit, OnDestroy
                     duration        : 2000
                 });
             });
+    }
+
+    openContacts() {
+        this.dialogRef = this._matDialog.open(ContactsComponent, {
+            height: '100%',
+            width: '100%'
+
+        });
     }
 
     /**

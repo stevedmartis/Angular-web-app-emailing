@@ -11,6 +11,7 @@ import { FuseUtils } from '@fuse/utils';
 import { EcommerceProductsService } from 'app/main/apps/e-commerce/products/products.service';
 import { takeUntil } from 'rxjs/internal/operators';
 
+
 @Component({
     selector     : 'e-commerce-products',
     templateUrl  : './products.component.html',
@@ -36,7 +37,8 @@ export class EcommerceProductsComponent implements OnInit
     private _unsubscribeAll: Subject<any>;
 
     constructor(
-        private _ecommerceProductsService: EcommerceProductsService
+        private _ecommerceProductsService: EcommerceProductsService,
+        
     )
     {
         // Set the private defaults

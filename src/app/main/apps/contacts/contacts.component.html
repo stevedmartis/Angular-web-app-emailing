@@ -17,7 +17,7 @@
                           [@animate]="{value:'*',params:{delay:'50ms',scale:'0.2'}}">account_box
                 </mat-icon>
                 <span class="logo-text h1" [@animate]="{value:'*',params:{delay:'100ms',x:'-25px'}}">
-                    Personas
+                    Invitados
                 </span>
             </div>
 
@@ -78,24 +78,6 @@
 
 </div>
 
-<!-- ADD CONTACT BUTTON -->
-<button mat-fab class="accent" id="add-contact-button" (click)="newContact()" aria-label="add contact"
-        [@animate]="{value:'*', params:{delay:'300ms',scale:'.2'}}">
-    <mat-icon>person_add</mat-icon>
-</button>
 
+<app-speed-dial-fab></app-speed-dial-fab>
 
-<div class="file-uploader">
-        <input hidden type="file" #fileInput/>
-        <button mat-fab
-                color="warn"
-                class="add-file-button"
-                (click)="fileInput.click()"
-                aria-label="Add file"
-                [@animate]="{value:'*', params:{delay:'300ms',scale:'0.2'}}">
-            <mat-icon>add</mat-icon>
-        </button>
-    </div>
-
-
-<!-- / ADD CONTACT BUTTON -->

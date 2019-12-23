@@ -1,6 +1,6 @@
-import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewEncapsulation, Inject } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Subject } from 'rxjs';
 import { debounceTime, distinctUntilChanged, takeUntil } from 'rxjs/operators';
 
@@ -31,12 +31,11 @@ export class ContactsComponent implements OnInit, OnDestroy
      *
      * @param {ContactsService} _contactsService
      * @param {FuseSidebarService} _fuseSidebarService
-     * @param {MatDialog} _matDialog
      */
     constructor(
         private _contactsService: ContactsService,
         private _fuseSidebarService: FuseSidebarService,
-        private _matDialog: MatDialog
+        private _matDialog: MatDialog,
     )
     {
         // Set the defaults

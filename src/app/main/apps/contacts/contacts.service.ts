@@ -74,6 +74,8 @@ export class ContactsService implements Resolve<any>
                     });
 
                     this.onFilterChanged.subscribe(filter => {
+
+                        console.log('herrr')
                         this.filterBy = filter;
                         this.getContacts();
                     });
@@ -93,6 +95,8 @@ export class ContactsService implements Resolve<any>
      */
     getContacts(): Promise<any>
     {
+
+        console.log('goooo')
         return new Promise((resolve, reject) => {
                 this._httpClient.get('api/contacts-contacts')
                     .subscribe((response: any) => {

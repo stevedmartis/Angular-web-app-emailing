@@ -229,7 +229,7 @@
 
                     <div class="p-8 pt-0" fxLayout="row" fxLayoutAlign="start center">
                             <button  
-                            [routerLink]="'/apps/contacts'" 
+                            (click)="openContacts()"
                             mat-button color="accent">
                             Agregar    
                             <mat-icon>person_add</mat-icon></button>

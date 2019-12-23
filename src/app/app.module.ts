@@ -13,7 +13,7 @@ import 'hammerjs';
 import { FuseModule } from '@fuse/fuse.module';
 import { FuseSharedModule } from '@fuse/shared.module';
 import { FuseProgressBarModule, FuseSidebarModule, FuseThemeOptionsModule } from '@fuse/components';
-
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { fuseConfig } from 'app/fuse-config';
 
 import { FakeDbService } from 'app/fake-db/fake-db.service';
@@ -52,7 +52,8 @@ const appRoutes: Routes = [
 
 @NgModule({
     declarations: [
-        AppComponent
+        AppComponent,
+    
     ],
     imports     : [
         BrowserModule,
@@ -88,7 +89,9 @@ const appRoutes: Routes = [
     ],
     bootstrap   : [
         AppComponent
-    ]
+    ],
+
+    
 })
 export class AppModule
 {
