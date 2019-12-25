@@ -40,12 +40,12 @@ export class EcommerceProductService implements Resolve<any>
 
         this.routeParams = route.params;
 
-
         return new Promise((resolve, reject) => {
 
+            console.log(this.routeParams);
             Promise.all([
                 this.getProduct(),
-                
+                this.contactServices.getContacts(this.routeParams.id)
             ]).then(
                 () => {
                     resolve();
@@ -63,6 +63,8 @@ export class EcommerceProductService implements Resolve<any>
     getProduct(): Promise<any>
     {
         return new Promise((resolve, reject) => {
+
+            console.log('this.routeParams', this.routeParams)
      
             if ( this.routeParams.id === 'new' )
             {
@@ -123,6 +125,10 @@ export class EcommerceProductService implements Resolve<any>
                 .subscribe((response: any) => {
 
                     console.log(response)
+
+                    this.contactServices.idEventNow = response._id;
+
+                    this.contactServices.getContacts(this.contactServices.idEventNow)
                     resolve(response);
                     
                 }, reject);

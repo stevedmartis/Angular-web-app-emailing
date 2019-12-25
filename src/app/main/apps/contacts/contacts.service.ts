@@ -139,7 +139,7 @@ export class ContactsService implements Resolve<any>
                         this.contacts = this.contacts.map(contact => {
                             return new Contact(contact);
                         });
-
+                        
                         this.onContactsChanged.next(this.contacts);
                         resolve(this.contacts);
                     }, reject);
@@ -254,7 +254,7 @@ export class ContactsService implements Resolve<any>
         return new Promise((resolve, reject) => {
 
             console.log('entro update')
-            this._httpClient.post('api/person/' + idEvent, {...contact}, Haeader)
+            this._httpClient.post(environment.apiUrl + '/api/person/', { codeEvento: idEvent, name: contact.name, lastname: contact.lastname, email: contact.emal, phono: contact.phono, company: contact.company, jobTitle: contact.jobTitle, addres: contact.addres}, Haeader)
                 .subscribe(response => {
                     this.getContacts(this.idEventNow);
                     resolve(response);

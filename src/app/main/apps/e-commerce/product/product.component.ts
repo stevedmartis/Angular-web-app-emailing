@@ -15,6 +15,7 @@ import { HttpClient, HttpResponse, HttpRequest, HttpEventType, HttpErrorResponse
 import { of } from 'rxjs/internal/observable/of';
 import { MAT_DIALOG_DATA, MatDialogRef, MatDialog } from '@angular/material/dialog';
 import { ContactsComponent } from 'app/main/apps/contacts/contacts.component';
+import { ContactsService } from 'app/main/apps/contacts/contacts.service';
 
 export class FileUploadModel {
     data: File;
@@ -49,6 +50,7 @@ export class EcommerceProductComponent implements OnInit, OnDestroy
     productForm: FormGroup;
     card19: any;
     dialogRef: any;
+    isCreated: boolean= false;
 
   
     private files: Array<FileUploadModel> = [];
@@ -66,12 +68,13 @@ export class EcommerceProductComponent implements OnInit, OnDestroy
      */
     constructor(
         private _ecommerceProductService: EcommerceProductService,
+        public _contactsService: ContactsService,
         private _formBuilder: FormBuilder,
         private _location: Location,
         private _matSnackBar: MatSnackBar,
         private router: Router,
         private _http: HttpClient,
-
+        
         public _matDialog: MatDialog,
 
 
@@ -137,6 +140,10 @@ export class EcommerceProductComponent implements OnInit, OnDestroy
     ngOnInit(): void
     {
 
+        
+
+        console.log('this._contactsService.contacts.length', this._contactsService.contacts.length)
+
         // Subscribe to update product on changes
         this._ecommerceProductService.onProductChanged
             .pipe(takeUntil(this._unsubscribeAll))
@@ -146,7 +153,7 @@ export class EcommerceProductComponent implements OnInit, OnDestroy
                 {
                     this.product = new Product(product);
                     this.pageType = 'edit';
-
+                    this.isCreated = true;
                 }
                 else
                 {
@@ -155,6 +162,8 @@ export class EcommerceProductComponent implements OnInit, OnDestroy
                 }
 
                 this.productForm = this.createProductForm();
+
+                console.log(this.isCreated)
 
             });
 
@@ -250,7 +259,7 @@ export class EcommerceProductComponent implements OnInit, OnDestroy
                     duration        : 3000
                 });
 
-                
+                this.isCreated = true;
                 // Change the location with new one
                 this._location.go('apps/e-commerce/products/' + this.product._id + '/' + this.product.handle);
             });

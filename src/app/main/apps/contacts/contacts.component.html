@@ -69,15 +69,19 @@
                 <contacts-contact-list></contacts-contact-list>
             </div>
             <!-- / CONTENT -->
-
+           
         </div>
         <!-- / CENTER -->
-
+    
     </div>
     <!-- / CONTENT-->
 
+    <div *ngIf="contactInitial">
+        <app-speed-dial-fab></app-speed-dial-fab>
+    </div>
+   
+  
 </div>
 
 
-<app-speed-dial-fab></app-speed-dial-fab>
 

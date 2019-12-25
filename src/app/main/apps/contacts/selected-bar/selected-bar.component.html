@@ -1,4 +1,4 @@
-<div fxFlex fxLayout="row" fxLayoutAlign="start center" class="p-24">
+<div *ngIf="btnDisplay" fxFlex fxLayout="row" fxLayoutAlign="start center" class="p-24">
 
     <div class="close-button-wrapper" fxFlex="0 1 auto" fxFlex.gt-sm="220px" (click)="deselectAll()">
         <button class="p-8" mat-button fxLayout="row" fxLayoutAlign="start center">

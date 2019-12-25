@@ -22,6 +22,7 @@ export class ContactsComponent implements OnInit, OnDestroy
     dialogRef: any;
     hasSelectedContacts: boolean;
     searchInput: FormControl;
+    contactInitial: boolean = false;
 
     // Private
     private _unsubscribeAll: Subject<any>;
@@ -55,6 +56,13 @@ export class ContactsComponent implements OnInit, OnDestroy
      */
     ngOnInit(): void
     {
+
+
+        setTimeout(() => {
+            this.contactInitial = true;
+        }, 400);
+
+        
 
         console.log(this._data.idEvent)
 
@@ -111,6 +119,7 @@ export class ContactsComponent implements OnInit, OnDestroy
                 }
             
                 this._contactsService.createContact(this._data.idEvent, response.getRawValue());
+
             });
     }
 

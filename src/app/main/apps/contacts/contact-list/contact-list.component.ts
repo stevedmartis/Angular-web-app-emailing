@@ -31,7 +31,7 @@ export class ContactsContactListComponent implements OnInit, OnDestroy
     checkboxes: {};
     dialogRef: any;
     confirmDialogRef: MatDialogRef<FuseConfirmDialogComponent>;
-
+    contactsExist: boolean = false
     // Private
     private _unsubscribeAll: Subject<any>;
 
@@ -61,13 +61,22 @@ export class ContactsContactListComponent implements OnInit, OnDestroy
     {
         this.dataSource = new FilesDataSource(this._contactsService);
 
-     
+        console.log(this.dataSource)
 
 
         this._contactsService.onContactsChanged
             .pipe(takeUntil(this._unsubscribeAll))
             .subscribe(contacts => {
                 this.contacts = contacts;
+     
+                if(contacts.length > 0){
+
+                    this.contactsExist = true;
+                }
+            
+                else {
+                    this.contactsExist = false;
+                }
 
                 console.log(this.contacts)
                 this.checkboxes = {};

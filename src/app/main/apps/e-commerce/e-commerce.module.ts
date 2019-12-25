@@ -23,7 +23,7 @@ import { FuseConfirmDialogModule, FuseSidebarModule } from '@fuse/components';
 import { ContactsContactListComponent } from 'app/main/apps/contacts/contact-list/contact-list.component';
 import { ContactsService } from 'app/main/apps/contacts/contacts.service';
 import { ContactsContactFormDialogComponent } from 'app/main/apps/contacts/contact-form/contact-form.component';
-import {  SpeedDialFabComponent } from 'app/layout/speed-dial-fab/speed-dial-fab.component';
+import { SpeedDialFabComponent } from 'app/layout/speed-dial-fab/speed-dial-fab.component';
 
 const routes: Routes = [
     {

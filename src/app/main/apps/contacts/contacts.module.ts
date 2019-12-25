@@ -33,14 +33,9 @@ const routes: Routes = [
 ];
 
 @NgModule({
-    exports: [ContactsComponent],
+    exports: [],
     declarations   : [
-        ContactsComponent,
-        ContactsContactListComponent,
-        ContactsSelectedBarComponent,
-        ContactsMainSidebarComponent,
-        ContactsContactFormDialogComponent,
-        SpeedDialFabComponent
+        
     ],
     imports        : [
         RouterModule.forChild(routes),
