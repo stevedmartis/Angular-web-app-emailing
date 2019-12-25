@@ -1,13 +1,14 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot } from '@angular/router';
-import { BehaviorSubject, Observable, Subject } from 'rxjs';
+import { BehaviorSubject, Observable, Subject , Subscription} from 'rxjs';
 import {SelectionModel} from '@angular/cdk/collections';
 import { FuseUtils } from '@fuse/utils';
-
+import { environment } from 'environments/environment';
 import { Contact } from 'app/main/apps/contacts/contact.model';
 import * as XLSX from 'xlsx';  
 import * as FileSaver from 'file-saver'; 
+import { AuthService } from 'app/services/authentication/auth.service';
 
 @Injectable()
 export class ContactsService implements Resolve<any>
@@ -21,6 +22,8 @@ export class ContactsService implements Resolve<any>
     contacts: Contact[];
     user: any;
     selectedContacts: string[] = [];
+    contactsArray: any[]
+
 
     searchText: string;
     filterBy: string;
@@ -29,6 +32,7 @@ export class ContactsService implements Resolve<any>
     fileUploaded: File;
     worksheet: any;
     selection = new SelectionModel<any>(true, []);
+    idEventNow: any;
 
     /**
      * Constructor
@@ -36,7 +40,8 @@ export class ContactsService implements Resolve<any>
      * @param {HttpClient} _httpClient
      */
     constructor(
-        private _httpClient: HttpClient
+        private _httpClient: HttpClient,
+        private authServices: AuthService
     )
     {
         // Set the defaults
@@ -45,6 +50,7 @@ export class ContactsService implements Resolve<any>
         this.onUserDataChanged = new BehaviorSubject([]);
         this.onSearchTextChanged = new Subject();
         this.onFilterChanged = new Subject();
+
     }
 
     // -----------------------------------------------------------------------------------------------------
@@ -63,21 +69,21 @@ export class ContactsService implements Resolve<any>
         return new Promise((resolve, reject) => {
 
             Promise.all([
-                this.getContacts(),
+                this.getContacts(this.idEventNow),
                 this.getUserData()
             ]).then(
                 ([files]) => {
 
                     this.onSearchTextChanged.subscribe(searchText => {
                         this.searchText = searchText;
-                        this.getContacts();
+                        this.getContacts(this.idEventNow);
                     });
 
                     this.onFilterChanged.subscribe(filter => {
 
-                        console.log('herrr')
+             
                         this.filterBy = filter;
-                        this.getContacts();
+                        this.getContacts(this.idEventNow);
                     });
 
                     resolve();
@@ -93,15 +99,23 @@ export class ContactsService implements Resolve<any>
      *
      * @returns {Promise<any>}
      */
-    getContacts(): Promise<any>
+    getContacts(idEvent): Promise<any>
     {
 
-        console.log('goooo')
-        return new Promise((resolve, reject) => {
-                this._httpClient.get('api/contacts-contacts')
-                    .subscribe((response: any) => {
+        const Haeader = {
+            headers: new HttpHeaders({
+              'Content-Type': 'application/json',
+              'authorization': `${this.authServices.currentUserValue.token}`}),
+          }
 
+
+        return new Promise((resolve, reject) => {
+                this._httpClient.get(environment.apiUrl+'/api/person/event/' + idEvent, Haeader)
+                    .subscribe((response: any) => {
+                         console.log(response)
                         this.contacts = response;
+
+                        console.log(this.contacts)
 
                         if ( this.filterBy === 'starred' )
                         {
@@ -228,13 +242,21 @@ export class ContactsService implements Resolve<any>
      * @param contact
      * @returns {Promise<any>}
      */
-    updateContact(contact): Promise<any>
+    createContact(idEvent,contact): Promise<any>
     {
+
+        const Haeader = {
+            headers: new HttpHeaders({
+              'Content-Type': 'application/json',
+              'authorization': `${this.authServices.currentUserValue.token}`}),
+          }
+        
         return new Promise((resolve, reject) => {
 
-            this._httpClient.post('api/contacts-contacts/' + contact.id, {...contact})
+            console.log('entro update')
+            this._httpClient.post('api/person/' + idEvent, {...contact}, Haeader)
                 .subscribe(response => {
-                    this.getContacts();
+                    this.getContacts(this.idEventNow);
                     resolve(response);
                 });
         });
@@ -252,7 +274,7 @@ export class ContactsService implements Resolve<any>
             this._httpClient.post('api/contacts-user/' + this.user.id, {...userData})
                 .subscribe(response => {
                     this.getUserData();
-                    this.getContacts();
+                    this.getContacts(this.idEventNow);
                     resolve(response);
                 });
         });
@@ -306,6 +328,41 @@ export class ContactsService implements Resolve<any>
         const data: Blob = new Blob([this.jsonData], { type: "application/json" });  
         FileSaver.saveAs(data, "JsonFile" + new Date().getTime() + '.json'); 
 
+    }
+
+    xlsxToJson(){
+        const fileUpload = document.getElementById('fileUpload') as HTMLInputElement;
+        
+    
+        fileUpload.onchange = () => {
+             const xlsx = fileUpload.files[0]
+
+                let workBook = null;
+                let jsonData = null;
+                const reader = new FileReader();
+                const file = xlsx
+                reader.onload = (event) => {
+
+                  const data = reader.result;
+                  workBook = XLSX.read(data, { type: 'binary' });
+                  jsonData = workBook.SheetNames.reduce((initial, name) => {
+                    const sheet = workBook.Sheets[name];
+                    initial[name] = XLSX.utils.sheet_to_json(sheet);
+
+                    this.contactsArray = initial[name];
+                    return initial;
+                  }, {});
+                  const dataString = JSON.stringify(jsonData);
+
+                  console.log('convert: ', dataString)
+                  //document.getElementById('output').innerHTML = dataString.slice(0, 300).concat("...");
+                  //this.setDownload(dataString);
+                }
+                reader.readAsBinaryString(file)
+
+        }
+        fileUpload.click();
+        
     }
 
  

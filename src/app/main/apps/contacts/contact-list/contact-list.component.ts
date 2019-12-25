@@ -61,6 +61,9 @@ export class ContactsContactListComponent implements OnInit, OnDestroy
     {
         this.dataSource = new FilesDataSource(this._contactsService);
 
+     
+
+
         this._contactsService.onContactsChanged
             .pipe(takeUntil(this._unsubscribeAll))
             .subscribe(contacts => {
@@ -145,7 +148,7 @@ export class ContactsContactListComponent implements OnInit, OnDestroy
                      */
                     case 'save':
 
-                        this._contactsService.updateContact(formData.getRawValue());
+                        this._contactsService.createContact(this._contactsService.idEventNow ,formData.getRawValue());
 
                         break;
                     /**
@@ -166,7 +169,8 @@ export class ContactsContactListComponent implements OnInit, OnDestroy
     deleteContact(contact): void
     {
         this.confirmDialogRef = this._matDialog.open(FuseConfirmDialogComponent, {
-            disableClose: false
+            disableClose: false,
+            panelClass: 'custom-dialog-container'
         });
 
         this.confirmDialogRef.componentInstance.confirmMessage = 'Are you sure you want to delete?';

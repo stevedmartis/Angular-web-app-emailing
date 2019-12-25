@@ -75,8 +75,8 @@ export class EcommerceProductComponent implements OnInit, OnDestroy
         public _matDialog: MatDialog,
 
 
-        
-  
+
+
     )
     {
         this.card19 = {
@@ -223,7 +223,10 @@ export class EcommerceProductComponent implements OnInit, OnDestroy
     openContacts() {
         this.dialogRef = this._matDialog.open(ContactsComponent, {
             height: '100%',
-            width: '100%'
+            width: '100%',
+            data      : {
+                idEvent: this.product._id
+            }
 
         });
     }
@@ -247,6 +250,7 @@ export class EcommerceProductComponent implements OnInit, OnDestroy
                     duration        : 3000
                 });
 
+                
                 // Change the location with new one
                 this._location.go('apps/e-commerce/products/' + this.product._id + '/' + this.product.handle);
             });

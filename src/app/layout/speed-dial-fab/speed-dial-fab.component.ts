@@ -5,6 +5,7 @@ import { FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material';
 import { ContactsService } from 'app/main/apps/contacts/contacts.service';
 
+
 @Component({
   selector: 'app-speed-dial-fab',
   templateUrl: './speed-dial-fab.component.html',
@@ -15,9 +16,12 @@ export class SpeedDialFabComponent implements OnInit {
 
   dialogRef: any;
 
+
+
   fabButtons = [
     {
-      icon: 'insert_drive_file'
+      icon: 'insert_drive_file',
+      click: 'exportContacts'
     },
     {
       icon: 'person_add',
@@ -67,9 +71,18 @@ export class SpeedDialFabComponent implements OnInit {
                   return;
               }
 
-              this._contactsService.updateContact(response.getRawValue());
+              this._contactsService.createContact(this._contactsService.idEventNow, response.getRawValue());
           });
   }
+
+  exportContacts(){
+    //this._contactsService.excelToJson()
+
+    let json_obj = this._contactsService.xlsxToJson()
+
+  }
+
+
 
   handleClick(method: string) {
     switch (method) {
@@ -77,7 +90,7 @@ export class SpeedDialFabComponent implements OnInit {
       this.newContact();
      break;
       case 'exportContacts':
-      console.log('nada')
+      this.exportContacts()
      break;
  
    default:

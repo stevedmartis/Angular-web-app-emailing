@@ -12,7 +12,7 @@
 
                 <div class="product-image mr-8 mr-sm-16" [@animate]="{value:'*',params:{delay:'50ms',scale:'0.2'}}">
                     <img *ngIf="product.images[0]" [src]="product.images[0].url">
-                    <img *ngIf="!product.images[0]" [src]="'assets/images/ecommerce/product-image-placeholder.png'">
+                    <img *ngIf="!product.images[0]" [src]="'assets/images/add_event_white.png'">
                 </div>
 
                 <div fxLayout="column" fxLayoutAlign="start start"
@@ -131,6 +131,7 @@
     
     
                 </form>
+
     
                 <!-- / REACTIVE FORM EXAMPLE -->
     
@@ -167,7 +168,7 @@
                     <button  mat-button
                         (click)="fileUpload()"
                         color="accent">Agregar
-                        <mat-icon>cloud_upload</mat-icon></button>
+                        <mat-icon>add_photo_alternate</mat-icon></button>
                 </div>
                     </div>    
         <br>
@@ -240,12 +241,25 @@
                     
                 </div>
 
-                
+
     
             </div>
   
+            <div class="mb-24" fxLayout="column" fxLayoutAlign="start" >
+
+                    <button  mat-button
+                    (click)="eventDelete()"
+                    color="warn">Eliminar evento
+                    <mat-icon>delete_forever</mat-icon>
+                </button>
+                
+         </div>
 
         </div>
+
+
+
+
         <!-- / CONTENT -->
 
 </div>

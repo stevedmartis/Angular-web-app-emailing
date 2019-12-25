@@ -26,6 +26,7 @@ export class EcommerceProductsComponent implements OnInit
 
     @ViewChild(MatPaginator, {static: true})
     paginator: MatPaginator;
+    eventExist: boolean = true;
 
     @ViewChild(MatSort, {static: true})
     sort: MatSort;
@@ -56,6 +57,21 @@ export class EcommerceProductsComponent implements OnInit
     {
         this.dataSource = new FilesDataSource(this._ecommerceProductsService, this.paginator, this.sort);
 
+        if(this._ecommerceProductsService.products.length > 0) {
+
+
+
+            this.eventExist = true
+
+            console.log(this.eventExist)
+        }
+        else {
+            this.eventExist = false
+
+            console.log(this.eventExist)
+            
+
+        }
         fromEvent(this.filter.nativeElement, 'keyup')
             .pipe(
                 takeUntil(this._unsubscribeAll),

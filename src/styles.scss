@@ -3,3 +3,8 @@
 
 // Import app.theme.scss
 @import "app/app.theme";
+
+
+.custom-dialog-container .mat-dialog-container{
+    padding: 24px !important
+}

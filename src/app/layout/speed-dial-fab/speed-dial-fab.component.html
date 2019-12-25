@@ -4,6 +4,7 @@
                 <mat-icon>add</mat-icon>
         </button>
         <div [@speedDialStagger]="buttons.length"> <!-- and here -->
+          <input hidden id="fileUpload" type="file" #fileInput/>
           <button *ngFor="let btn of buttons"
                   mat-mini-fab
                   class="fab-secondary"

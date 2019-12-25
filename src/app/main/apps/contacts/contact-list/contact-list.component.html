@@ -1,8 +1,13 @@
-<mat-table #table [dataSource]="dataSource"
+<div class="text" *ngIf="dataSource._contactsService.contacts.length === 0">
+        <span class="title">La lista esta vacia</span>
+    </div>
+    
+
+<mat-table *ngIf="dataSource._contactsService.contacts.length > 0" #table [dataSource]="dataSource"
            [@animateStagger]="{value:'50'}">
     <!-- Checkbox Column -->
 
-
+    
 
     <ng-container matColumnDef="checkbox">
         <mat-header-cell *matHeaderCellDef></mat-header-cell>
@@ -104,6 +109,8 @@
              matRipple
              [@animate]="{value:'*',params:{y:'100%'}}">
     </mat-row>
+
+
 </mat-table>
 
 

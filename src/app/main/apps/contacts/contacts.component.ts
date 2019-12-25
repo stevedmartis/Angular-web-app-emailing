@@ -36,6 +36,7 @@ export class ContactsComponent implements OnInit, OnDestroy
         private _contactsService: ContactsService,
         private _fuseSidebarService: FuseSidebarService,
         private _matDialog: MatDialog,
+        @Inject(MAT_DIALOG_DATA) private _data: any,
     )
     {
         // Set the defaults
@@ -54,6 +55,10 @@ export class ContactsComponent implements OnInit, OnDestroy
      */
     ngOnInit(): void
     {
+
+        console.log(this._data.idEvent)
+
+        this._contactsService.idEventNow = this._data.idEvent
         this._contactsService.onSelectedContactsChanged
             .pipe(takeUntil(this._unsubscribeAll))
             .subscribe(selectedContacts => {
@@ -99,12 +104,13 @@ export class ContactsComponent implements OnInit, OnDestroy
 
         this.dialogRef.afterClosed()
             .subscribe((response: FormGroup) => {
+
                 if ( !response )
                 {
                     return;
                 }
-
-                this._contactsService.updateContact(response.getRawValue());
+            
+                this._contactsService.createContact(this._data.idEvent, response.getRawValue());
             });
     }
 
