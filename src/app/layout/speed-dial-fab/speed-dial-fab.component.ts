@@ -71,7 +71,29 @@ export class SpeedDialFabComponent implements OnInit {
                   return;
               }
 
-              this._contactsService.createContact(this._contactsService.idEventNow, response.getRawValue());
+              let res = response.getRawValue();
+
+              let obj = {
+                  codeEvento: this._contactsService.idEventNow,
+                  name: res.name,
+                  lastName: res.lastName,
+                  email: res.email,
+                  asiste: true,
+                  status: null,
+                  contractado: false,
+                  jobtitle: res.jobtitle,
+                  company: res.company,
+                  phone: res.phone,
+                  asistio: false,
+                  update: res.birthday,
+                  codeQr: true
+
+              }
+
+              console.log('obj ',obj)
+
+
+              this._contactsService.createContact(obj);
           });
   }
 

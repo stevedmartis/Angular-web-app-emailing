@@ -28,7 +28,7 @@
             <div class="search-wrapper mx-32 mx-md-0">
                 <div class="search" fxFlex fxLayout="row" fxLayoutAlign="start center">
                     <mat-icon>search</mat-icon>
-                    <input #filter placeholder="Search for a product">
+                    <input #filter placeholder="Buscar evento">
                 </div>
             </div>
             <!-- / SEARCH -->
@@ -56,13 +56,15 @@
                        [@animateStagger]="{value:'50'}"
                        fusePerfectScrollbar>
 
-                <!-- ID Column -->
+                <!--  
                 <ng-container matColumnDef="id">
                     <mat-header-cell *matHeaderCellDef mat-sort-header>ID</mat-header-cell>
                     <mat-cell *matCellDef="let product">
                         <p class="text-truncate">{{product.displayId}}</p>
                     </mat-cell>
                 </ng-container>
+                -->
+
 
                 <!-- Image Column -->
                 <ng-container matColumnDef="image">
@@ -77,17 +79,18 @@
                 </ng-container>
 
                 <!-- Name Column -->
+
                 <ng-container matColumnDef="name">
                     <mat-header-cell *matHeaderCellDef mat-sort-header>Name</mat-header-cell>
-                    <mat-cell *matCellDef="let product">
-                        <p class="text-truncate">{{product.name}}</p>
+                    <mat-cell *matCellDef="let product" >
+                        <p class="category text-truncate">{{product.name}}</p>
                     </mat-cell>
                 </ng-container>
 
                 <!-- Category Column -->
                 <ng-container matColumnDef="category">
-                    <mat-header-cell *matHeaderCellDef mat-sort-header >Compañia</mat-header-cell>
-                    <mat-cell *matCellDef="let product" >
+                    <mat-header-cell *matHeaderCellDef mat-sort-header fxHide fxShow.gt-xs>Compañia</mat-header-cell>
+                    <mat-cell *matCellDef="let product" fxHide fxShow.gt-xs>
                         <p class="category text-truncate">
                             {{ product.company }}
                         </p>
@@ -96,18 +99,18 @@
 
                 <!-- Price Column -->
                 <ng-container matColumnDef="price">
-                    <mat-header-cell *matHeaderCellDef mat-sort-header fxHide fxShow.gt-xs>Invitados</mat-header-cell>
-                    <mat-cell *matCellDef="let product" fxHide fxShow.gt-xs>
+                    <mat-header-cell *matHeaderCellDef mat-sort-header >Invitados</mat-header-cell>
+                    <mat-cell *matCellDef="let product" >
                         <p class="price text-truncate">
-                            {{product.priceTaxIncl | currency:'USD':'symbol'}}
+                            9
                         </p>
                     </mat-cell>
                 </ng-container>
 
                 <!-- Quantity Column -->
                 <ng-container matColumnDef="quantity">
-                    <mat-header-cell *matHeaderCellDef mat-sort-header >% Aprobación</mat-header-cell>
-                    <mat-cell *matCellDef="let product" >
+                    <mat-header-cell *matHeaderCellDef mat-sort-header fxHide fxShow.gt-xs>% Aprobación</mat-header-cell>
+                    <mat-cell *matCellDef="let product" fxHide fxShow.gt-xs>
 
                         <span class="quantity-indicator text-truncate"
                               [ngClass]="{'red-500':product.quantity <= 5, 'amber-500':product.quantity > 5 && product.quantity <= 25,'green-600':product.quantity > 25}">
@@ -120,9 +123,9 @@
                 </ng-container>
 
                 <!-- Active Column -->
-                <ng-container matColumnDef="active">
-                    <mat-header-cell *matHeaderCellDef mat-sort-header fxHide fxShow.gt-xs>Activo</mat-header-cell>
-                    <mat-cell *matCellDef="let product" fxHide fxShow.gt-xs>
+                <ng-container matColumnDef="active" >
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>Activo</mat-header-cell>
+                    <mat-cell *matCellDef="let product" >
                         <mat-icon *ngIf="product.status" class="active-icon green-600 s-16">check</mat-icon>
                         <mat-icon *ngIf="!product.status" class="active-icon red-500 s-16">close</mat-icon>
                     </mat-cell>

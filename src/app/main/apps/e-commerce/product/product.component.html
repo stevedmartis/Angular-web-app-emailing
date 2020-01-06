@@ -10,7 +10,7 @@
                     <mat-icon>arrow_back</mat-icon>
                 </button>
 
-                <div class="product-image mr-8 mr-sm-16" [@animate]="{value:'*',params:{delay:'50ms',scale:'0.2'}}">
+                <div class="product-image-icon mr-8 mr-sm-16" [@animate]="{value:'*',params:{delay:'50ms',scale:'0.2'}}">
                     <img *ngIf="product.images[0]" [src]="product.images[0].url">
                     <img *ngIf="!product.images[0]" [src]="'assets/images/add_event_white.png'">
                 </div>
@@ -148,18 +148,21 @@
 
                     <div *ngIf="!fileUp && !loadingFile"
                     class="product-image" fxlayout="row" fxLayoutAlign="center center">
-                   <img class="media"
+                   <img class="media company-img"
                         [src]="'assets/images/notfound.png'">
                </div>
 
                <div *ngIf="loadingFile"
                class="product-image" fxlayout="row" fxLayoutAlign="center center">
+               <div class="company-img">
+
+               </div>
                <mat-spinner></mat-spinner>
           </div>
 
                <div *ngIf="fileUp && !loadingFile"
                class="product-image" fxlayout="row" fxLayoutAlign="center center">
-              <img class="media"
+              <img class="media company-img"
                    [src]="fileUp.link">
           </div>
 
@@ -167,7 +170,7 @@
                     <input hidden id="fileUpload" type="file" #fileInput/>
                     <button  mat-button
                         (click)="fileUpload()"
-                        color="accent">Agregar
+                        color="accent">Subir nueva
                         <mat-icon>add_photo_alternate</mat-icon></button>
                 </div>
                     </div>    
@@ -233,7 +236,7 @@
                             [disabled]="!isCreated"
                             (click)="openContacts()"
                             mat-button color="accent">
-                            Inivitar    
+                            Ver lista    
                             <mat-icon>person_add</mat-icon></button>
                         </div>
 

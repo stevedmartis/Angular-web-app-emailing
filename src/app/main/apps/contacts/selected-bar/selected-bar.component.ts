@@ -53,6 +53,8 @@ export class ContactsSelectedBarComponent implements OnInit, OnDestroy
             .subscribe(selectedContacts => {
                 this.selectedContacts = selectedContacts;
                 setTimeout(() => {
+                    this.btnDisplay = true
+                    console.log('selectedContacts', selectedContacts)
                     this.hasSelectedContacts = selectedContacts.length > 0;
                     this.isIndeterminate = (selectedContacts.length !== this._contactsService.contacts.length && selectedContacts.length > 0);
                 }, 0);

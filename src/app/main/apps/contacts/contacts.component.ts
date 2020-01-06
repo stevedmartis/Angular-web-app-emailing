@@ -113,12 +113,14 @@ export class ContactsComponent implements OnInit, OnDestroy
         this.dialogRef.afterClosed()
             .subscribe((response: FormGroup) => {
 
+                console.log('entro')
+
                 if ( !response )
                 {
                     return;
-                }
+                }                
             
-                this._contactsService.createContact(this._data.idEvent, response.getRawValue());
+                //this._contactsService.createContact(this._data.idEvent, obj);
 
             });
     }

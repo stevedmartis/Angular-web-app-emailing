@@ -157,7 +157,7 @@ export class ContactsContactListComponent implements OnInit, OnDestroy
                      */
                     case 'save':
 
-                        this._contactsService.createContact(this._contactsService.idEventNow ,formData.getRawValue());
+                        this._contactsService.createContact(formData.getRawValue());
 
                         break;
                     /**
@@ -201,6 +201,7 @@ export class ContactsContactListComponent implements OnInit, OnDestroy
      */
     onSelectedChange(contactId): void
     {
+        console.log('contactId',contactId)
         this._contactsService.toggleSelectedContact(contactId);
     }
 

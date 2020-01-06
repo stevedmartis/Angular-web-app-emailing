@@ -2,7 +2,7 @@
 
     .header {
 
-        .product-image {
+        .product-image-icon {
             overflow: hidden;
             min-width: 56px;
             height: 56px;
@@ -43,20 +43,7 @@
             height: 64px;
         }
 
-        .product-image {
-            overflow: hidden;
-            width: 100%;
-            height: 128px;
-            margin-right: 16px;
-            margin-bottom: 16px;
-            border-radius: 4px;
 
-            img {
-                height: 100%;
-                width: 100%;
-                max-width: none;
-            }
-        }
 
         // Temporary prefix alignment fix
         .mat-form-field-appearance-outline .mat-form-field-prefix,
@@ -105,4 +92,109 @@
 
 
  
+}
+
+
+
+/* Extra small devices (phones, 600px and down) */
+@media only screen and (max-width: 600px) {
+
+    .product-image {
+        overflow: hidden;
+        min-width: 56px;
+        height: 56px;
+        min-height: 200px;
+        max-height: 56px;
+        border-radius: 4px;
+
+        .company-img {
+            height: 100%;
+            width: 100%s;
+            max-width: none;
+        }
+    }
+
+
+}
+
+/* Small devices (portrait tablets and large phones, 600px and up) */
+@media only screen and (min-width: 600px) {
+
+    .product-image {
+        overflow: hidden;
+        min-width: 56px;
+        height: 56px;
+        min-height: 170px;
+        max-height: 56px;
+        border-radius: 4px;
+
+        .company-img {
+            height: 100%;
+            width: 100%s;
+            max-width: none;
+        }
+    }
+
+}
+
+/* Medium devices (landscape tablets, 768px and up) */
+@media only screen and (min-width: 768px) {
+
+    .product-image {
+        overflow: hidden;
+        min-width: 56px;
+        height: 56px;
+        min-height: 170px;
+        max-height: 56px;
+        border-radius: 4px;
+
+        .company-img {
+            height: 100%;
+            width: 100%s;
+            max-width: none;
+        }
+    }
+}
+
+
+
+/* Large devices (laptops/desktops, 992px and up) */
+@media only screen and (min-width: 992px) {
+
+    .product-image {
+        overflow: hidden;
+        min-width: 56px;
+        height: 56px;
+        min-height: 170px;
+        max-height: 56px;
+        border-radius: 4px;
+
+        .company-img {
+            height: 100%;
+            width: 100%s;
+            max-width: none;
+        }
+    }
+
+
+}
+
+/* Extra large devices (large laptops and desktops, 1200px and up) */
+@media only screen and (min-width: 1200px) {
+
+    .product-image {
+        overflow: hidden;
+        min-width: 56px;
+        height: 56px;
+        min-height: 150px;
+        max-height: 56px;
+        border-radius: 4px;
+
+        .company-img {
+            height: 100%;
+            width: 100%s;
+            max-width: none;
+        }
+    }
+
 }

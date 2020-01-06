@@ -242,7 +242,7 @@ export class ContactsService implements Resolve<any>
      * @param contact
      * @returns {Promise<any>}
      */
-    createContact(idEvent,contact): Promise<any>
+    createContact(obj): Promise<any>
     {
 
         const Haeader = {
@@ -253,10 +253,10 @@ export class ContactsService implements Resolve<any>
         
         return new Promise((resolve, reject) => {
 
-            console.log('entro update')
-            this._httpClient.post(environment.apiUrl + '/api/person/', { codeEvento: idEvent, name: contact.name, lastname: contact.lastname, email: contact.emal, phono: contact.phono, company: contact.company, jobTitle: contact.jobTitle, addres: contact.addres}, Haeader)
+            console.log('entro update', obj)
+            this._httpClient.post(environment.apiUrl + '/api/person/', obj, Haeader)
                 .subscribe(response => {
-                    this.getContacts(this.idEventNow);
+                    this.getContacts(obj.codeEvento);
                     resolve(response);
                 });
         });
@@ -343,6 +343,8 @@ export class ContactsService implements Resolve<any>
                 const file = xlsx
                 reader.onload = (event) => {
 
+                    
+
                   const data = reader.result;
                   workBook = XLSX.read(data, { type: 'binary' });
                   jsonData = workBook.SheetNames.reduce((initial, name) => {
@@ -350,11 +352,48 @@ export class ContactsService implements Resolve<any>
                     initial[name] = XLSX.utils.sheet_to_json(sheet);
 
                     this.contactsArray = initial[name];
+                    
+
+                    console.log(this.contactsArray)
+                    let parseArray = []
+
+                    this.contactsArray.forEach(e => {
+                      
+                        let obj = {
+                            codeEvento: this.idEventNow,
+                            name: e.name,
+                            lastName: e.APELLIDO_1,
+                            email: e.email,
+                            asiste: true,
+                            status: null,
+                            contractado: e.CONTACTADO,
+                            jobtitle: e.CARGO,
+                            company: e.EMPRESA,
+                            phone: e.number,
+                            asistio: false,
+                            update: e.MODIFICADO_FECHA,
+                            codeQr: e.COD_BARRA
+
+                        }
+
+                        parseArray.push(obj)
+
+                    });
+
+                    //console.log('contactsArray: ', this.contactsArray)
+
+                    console.log('paseArray: ', parseArray)
+
+                    parseArray.forEach(obj => {
+                        this.createContact(obj)
+                    });
+                    
+
                     return initial;
                   }, {});
                   const dataString = JSON.stringify(jsonData);
 
-                  console.log('convert: ', dataString)
+                 
                   //document.getElementById('output').innerHTML = dataString.slice(0, 300).concat("...");
                   //this.setDownload(dataString);
                 }
