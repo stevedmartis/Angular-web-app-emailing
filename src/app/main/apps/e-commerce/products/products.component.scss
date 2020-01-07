@@ -143,8 +143,12 @@ e-commerce-products {
 }
 
 .empty-event {
-    width: 100%;
-    height: 100%;
+    height: 119%;
+    max-width: 190%;
+}
+
+.empty-card {
+    align-items: center;
 }
 
 .table-hidden {

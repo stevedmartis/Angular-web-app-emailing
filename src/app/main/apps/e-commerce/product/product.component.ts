@@ -16,6 +16,9 @@ import { of } from 'rxjs/internal/observable/of';
 import { MAT_DIALOG_DATA, MatDialogRef, MatDialog } from '@angular/material/dialog';
 import { ContactsComponent } from 'app/main/apps/contacts/contacts.component';
 import { ContactsService } from 'app/main/apps/contacts/contacts.service';
+import { ContactsContactFormDialogComponent } from 'app/main/apps/contacts/contact-form/contact-form.component';
+import { FuseConfirmDialogComponent } from '@fuse/components/confirm-dialog/confirm-dialog.component';
+
 
 export class FileUploadModel {
     data: File;
@@ -51,6 +54,7 @@ export class EcommerceProductComponent implements OnInit, OnDestroy
     card19: any;
     dialogRef: any;
     isCreated: boolean= false;
+    confirmDialogRef: MatDialogRef<FuseConfirmDialogComponent>;
 
   
     private files: Array<FileUploadModel> = [];
@@ -267,18 +271,39 @@ export class EcommerceProductComponent implements OnInit, OnDestroy
 
     eventDelete(){
 
-        this._ecommerceProductService.deleteEvent(this.product._id)
-        .then(x => {
 
-          
-            this.router.navigate(['apps/e-commerce/products']);
-          
-
-            this._matSnackBar.open('Evento eliminado', 'OK', {
-                verticalPosition: 'top',
-                duration        : 3000
+            this.confirmDialogRef = this._matDialog.open(FuseConfirmDialogComponent, {
+                disableClose: false,
+                panelClass: 'custom-dialog-container'
             });
-        })
+    
+            this.confirmDialogRef.componentInstance.confirmMessage = 'Seguro que desea eliminarlo?';
+    
+            this.confirmDialogRef.afterClosed().subscribe(result => {
+                if ( result )
+                {
+
+                    this._ecommerceProductService.deleteEvent(this.product._id)
+                    .then(x => {
+            
+                      
+                        this.router.navigate(['apps/e-commerce/products']);
+                      
+            
+                        this._matSnackBar.open('Evento eliminado', 'OK', {
+                            verticalPosition: 'top',
+                            duration        : 3000
+                        });
+                    })
+                    
+                }
+                this.confirmDialogRef = null;
+            });
+    
+        
+    
+
+
     }
 
     fileUpload(){
