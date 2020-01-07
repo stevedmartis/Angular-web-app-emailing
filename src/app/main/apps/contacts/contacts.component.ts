@@ -58,13 +58,10 @@ export class ContactsComponent implements OnInit, OnDestroy
     {
 
 
-        setTimeout(() => {
-            this.contactInitial = true;
-        }, 400);
 
         
 
-        console.log(this._data.idEvent)
+        console.log('contatcs: ', this._data.idEvent)
 
         this._contactsService.idEventNow = this._data.idEvent
         this._contactsService.onSelectedContactsChanged

@@ -111,11 +111,6 @@ export class ContactsContactListComponent implements OnInit, OnDestroy
                 this.selectedContacts = selectedContacts;
             });
 
-        this._contactsService.onUserDataChanged
-            .pipe(takeUntil(this._unsubscribeAll))
-            .subscribe(user => {
-                this.user = user;
-            });
 
         this._contactsService.onFilterChanged
             .pipe(takeUntil(this._unsubscribeAll))
@@ -195,12 +190,12 @@ export class ContactsContactListComponent implements OnInit, OnDestroy
             panelClass: 'custom-dialog-container'
         });
 
-        this.confirmDialogRef.componentInstance.confirmMessage = 'Are you sure you want to delete?';
+        this.confirmDialogRef.componentInstance.confirmMessage = 'Esta seguro de eliminar este invitado?';
 
         this.confirmDialogRef.afterClosed().subscribe(result => {
             if ( result )
             {
-                this._contactsService.deleteContact(contact);
+                this._contactsService.deleteContact(contact, 1);
             }
             this.confirmDialogRef = null;
         });

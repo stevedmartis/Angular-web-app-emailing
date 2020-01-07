@@ -20,6 +20,7 @@ export class ContactsService implements Resolve<any>
     onFilterChanged: Subject<any>;
 
     contactsExist: boolean = false
+    contactInitial: boolean = false;
 
     contacts: Contact[];
     user: any;
@@ -32,6 +33,7 @@ export class ContactsService implements Resolve<any>
 
     jsonData: any;  
     contactsCount: number = 0;
+    countSelect: number = 0;
     fileUploaded: File;
     worksheet: any;
     selection = new SelectionModel<any>(true, []);
@@ -72,8 +74,8 @@ export class ContactsService implements Resolve<any>
         return new Promise((resolve, reject) => {
 
             Promise.all([
-                this.getContacts(this.idEventNow),
-                this.getUserData()
+                //this.getContacts(this.idEventNow),
+                //this.getUserData()
             ]).then(
                 ([files]) => {
 
@@ -120,6 +122,7 @@ export class ContactsService implements Resolve<any>
 
                         console.log(this.contacts)
 
+                        /*
                         if ( this.filterBy === 'starred' )
                         {
                             this.contacts = this.contacts.filter(_contact => {
@@ -138,6 +141,7 @@ export class ContactsService implements Resolve<any>
                         {
                             this.contacts = FuseUtils.filterArrayByString(this.contacts, this.searchText);
                         }
+                        */
 
                         this.contacts = this.contacts.map(contact => {
                             return new Contact(contact);
@@ -147,9 +151,9 @@ export class ContactsService implements Resolve<any>
                         resolve(this.contacts);
 
                         this.loadingContact = false;
-                        //this.contactsExist = true;
+                        this.contactsExist = true;
                         
-                      
+                     
 
                        
                     }, reject);
@@ -344,11 +348,41 @@ export class ContactsService implements Resolve<any>
      *
      * @param contact
      */
-    deleteContact(contact): void
+    deleteContact(contact, selectlenght)
     {
-        const contactIndex = this.contacts.indexOf(contact);
-        this.contacts.splice(contactIndex, 1);
-        this.onContactsChanged.next(this.contacts);
+
+        const Haeader = {
+            headers: new HttpHeaders({
+              'Content-Type': 'application/json',
+              'authorization': `${this.authServices.currentUserValue.token}`}),
+          }
+        
+        return new Promise((resolve, reject) => {
+
+            console.log('entro delete', contact.id)
+            this._httpClient.delete(environment.apiUrl + '/api/person/' + contact.id, Haeader)
+                .subscribe(response => {
+
+                    console.log(response)
+                    this.countSelect++
+
+                    const contactIndex = this.contacts.indexOf(contact);
+                    this.contacts.splice(contactIndex, 1);
+
+                    console.log(selectlenght, this.countSelect)
+
+                    if(selectlenght === this.countSelect){
+                        this.onContactsChanged.next(this.contacts);
+
+                        this.countSelect = 0;
+                           
+                    }
+                
+                   
+                });
+        });
+
+
     }
 
     /**
@@ -356,15 +390,27 @@ export class ContactsService implements Resolve<any>
      */
     deleteSelectedContacts(): void
     {
+
+        this.loadingContact = true;
+
+        
         for ( const contactId of this.selectedContacts )
         {
+            
+
+            console.log(contactId)
             const contact = this.contacts.find(_contact => {
+
+               
                 return _contact.id === contactId;
             });
-            const contactIndex = this.contacts.indexOf(contact);
-            this.contacts.splice(contactIndex, 1);
+
+           
+
+            this.deleteContact(contact, this.selectedContacts.length)
+
         }
-        this.onContactsChanged.next(this.contacts);
+        //this.onContactsChanged.next(this.contacts);
         this.deselectContacts();
     }
 

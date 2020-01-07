@@ -97,15 +97,20 @@ export class ContactsSelectedBarComponent implements OnInit, OnDestroy
     deleteSelectedContacts(): void
     {
         this.confirmDialogRef = this._matDialog.open(FuseConfirmDialogComponent, {
-            disableClose: false
+            disableClose: false,
+            panelClass: 'custom-dialog-container'
         });
 
-        this.confirmDialogRef.componentInstance.confirmMessage = 'Are you sure you want to delete all selected contacts?';
+        this.confirmDialogRef.componentInstance.confirmMessage = 'Esta seguro de eliminar los contactos selecionados?';
 
         this.confirmDialogRef.afterClosed()
             .subscribe(result => {
+
+                
+
                 if ( result )
                 {
+                    
                     this._contactsService.deleteSelectedContacts();
                 }
                 this.confirmDialogRef = null;

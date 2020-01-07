@@ -15,6 +15,7 @@ import { ContactsService } from 'app/main/apps/contacts/contacts.service';
 export class SpeedDialFabComponent implements OnInit {
 
   dialogRef: any;
+  contactInitial: boolean = false;
 
 
 
@@ -34,7 +35,7 @@ export class SpeedDialFabComponent implements OnInit {
 
   constructor(
     private _matDialog: MatDialog,
-    private _contactsService: ContactsService
+    public _contactsService: ContactsService
   ) { }
 
   showItems() {
@@ -53,6 +54,7 @@ export class SpeedDialFabComponent implements OnInit {
 
 
   ngOnInit() {
+
   }
 
   newContact(): void
