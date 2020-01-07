@@ -30,6 +30,7 @@ export class ContactsContactListComponent implements OnInit, OnDestroy
     selectedContacts: any[];
     checkboxes: {};
     dialogRef: any;
+    loading: boolean = false;
     confirmDialogRef: MatDialogRef<FuseConfirmDialogComponent>;
     contactsExist: boolean = false
     // Private
@@ -42,7 +43,7 @@ export class ContactsContactListComponent implements OnInit, OnDestroy
      * @param {MatDialog} _matDialog
      */
     constructor(
-        private _contactsService: ContactsService,
+        public _contactsService: ContactsService,
         public _matDialog: MatDialog
     )
     {
@@ -59,6 +60,13 @@ export class ContactsContactListComponent implements OnInit, OnDestroy
      */
     ngOnInit(): void
     {
+
+       this._contactsService.loadingContact = true;
+
+
+        setTimeout(() => {
+            
+     
         this.dataSource = new FilesDataSource(this._contactsService);
 
         console.log(this.dataSource)
@@ -72,10 +80,12 @@ export class ContactsContactListComponent implements OnInit, OnDestroy
                 if(contacts.length > 0){
 
                     this.contactsExist = true;
+                    this._contactsService.loadingContact = false;
                 }
             
                 else {
                     this.contactsExist = false;
+                    this._contactsService.loadingContact = false; 
                 }
 
                 console.log(this.contacts)
@@ -84,6 +94,9 @@ export class ContactsContactListComponent implements OnInit, OnDestroy
                     this.checkboxes[contact.id] = false;
                 });
             });
+
+
+        }, 2000);
 
         this._contactsService.onSelectedContactsChanged
             .pipe(takeUntil(this._unsubscribeAll))
@@ -111,6 +124,8 @@ export class ContactsContactListComponent implements OnInit, OnDestroy
             .subscribe(() => {
                 this._contactsService.deselectContacts();
             });
+
+       
     }
 
     /**

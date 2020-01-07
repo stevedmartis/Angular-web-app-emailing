@@ -78,7 +78,7 @@
                             fxFlex="100">
                                     <mat-label>Compañia</mat-label>
                                     <input matInput formControlName="company">
-                                    <mat-icon class="mat-icon" matSuffix>domain</mat-icon>
+                                    <mat-icon class="mat-icon-company" matSuffix>domain</mat-icon>
                                 </mat-form-field>
     
        
@@ -249,9 +249,10 @@
     
             </div>
   
-            <div class="mb-24" fxLayout="column" fxLayoutAlign="start" >
+            <div class="mb-24" fxLayout="column" fxLayoutAlign="start" *ngIf="isCreated">
 
                     <button  mat-button
+                    
                     (click)="eventDelete()"
                     color="warn">Eliminar evento
                     <mat-icon>delete_forever</mat-icon>

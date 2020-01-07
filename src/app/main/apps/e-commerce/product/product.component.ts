@@ -146,8 +146,6 @@ export class EcommerceProductComponent implements OnInit, OnDestroy
 
         
 
-        console.log('this._contactsService.contacts.length', this._contactsService.contacts.length)
-
         // Subscribe to update product on changes
         this._ecommerceProductService.onProductChanged
             .pipe(takeUntil(this._unsubscribeAll))

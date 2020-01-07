@@ -12,7 +12,7 @@ import { MatTableModule } from '@angular/material/table';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { FuseSharedModule } from '@fuse/shared.module';
-import { FuseConfirmDialogModule, FuseSidebarModule } from '@fuse/components';
+import { FuseProgressBarModule, FuseConfirmDialogModule, FuseSidebarModule } from '@fuse/components';
 
 import { ContactsComponent } from 'app/main/apps/contacts/contacts.component';
 import { ContactsService } from 'app/main/apps/contacts/contacts.service';
@@ -53,7 +53,8 @@ const routes: Routes = [
 
         FuseSharedModule,
         FuseConfirmDialogModule,
-        FuseSidebarModule
+        FuseSidebarModule,
+     
     ],
     providers      : [
         ContactsService,

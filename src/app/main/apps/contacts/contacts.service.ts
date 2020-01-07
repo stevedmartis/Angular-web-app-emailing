@@ -19,16 +19,19 @@ export class ContactsService implements Resolve<any>
     onSearchTextChanged: Subject<any>;
     onFilterChanged: Subject<any>;
 
+    
+
     contacts: Contact[];
     user: any;
     selectedContacts: string[] = [];
     contactsArray: any[]
-
+    loadingContact: boolean = true;
 
     searchText: string;
     filterBy: string;
 
     jsonData: any;  
+    contactsCount: number = 0;
     fileUploaded: File;
     worksheet: any;
     selection = new SelectionModel<any>(true, []);
@@ -112,7 +115,7 @@ export class ContactsService implements Resolve<any>
         return new Promise((resolve, reject) => {
                 this._httpClient.get(environment.apiUrl+'/api/person/event/' + idEvent, Haeader)
                     .subscribe((response: any) => {
-                         console.log(response)
+                        
                         this.contacts = response;
 
                         console.log(this.contacts)
@@ -142,6 +145,10 @@ export class ContactsService implements Resolve<any>
                         
                         this.onContactsChanged.next(this.contacts);
                         resolve(this.contacts);
+
+                        this.loadingContact = false;
+
+                       
                     }, reject);
             }
         );
@@ -242,6 +249,28 @@ export class ContactsService implements Resolve<any>
      * @param contact
      * @returns {Promise<any>}
      */
+    createContacts(obj): Promise<any>
+    {
+
+        const Haeader = {
+            headers: new HttpHeaders({
+              'Content-Type': 'application/json',
+              'authorization': `${this.authServices.currentUserValue.token}`}),
+          }
+        
+        return new Promise((resolve, reject) => {
+
+            console.log('entro update', obj)
+            this._httpClient.post(environment.apiUrl + '/api/person/', obj, Haeader)
+                .subscribe(response => {
+
+  
+                    console.log(response)
+                   
+                });
+        });
+    }
+
     createContact(obj): Promise<any>
     {
 
@@ -256,11 +285,17 @@ export class ContactsService implements Resolve<any>
             console.log('entro update', obj)
             this._httpClient.post(environment.apiUrl + '/api/person/', obj, Haeader)
                 .subscribe(response => {
-                    this.getContacts(obj.codeEvento);
+
+                    this.getContacts(this.idEventNow)
                     resolve(response);
+                    console.log(response)
+                   
                 });
         });
     }
+
+
+
 
     /**
      * Update user data
@@ -335,6 +370,8 @@ export class ContactsService implements Resolve<any>
         
     
         fileUpload.onchange = () => {
+
+            this.loadingContact = true;
              const xlsx = fileUpload.files[0]
 
                 let workBook = null;
@@ -352,42 +389,52 @@ export class ContactsService implements Resolve<any>
                     initial[name] = XLSX.utils.sheet_to_json(sheet);
 
                     this.contactsArray = initial[name];
-                    
+
 
                     console.log(this.contactsArray)
-                    let parseArray = []
+                
 
                     this.contactsArray.forEach(e => {
+
+                        this.contactsCount++;
                       
                         let obj = {
                             codeEvento: this.idEventNow,
-                            name: e.name,
-                            lastName: e.APELLIDO_1,
-                            email: e.email,
+                            name: e.name || e.NOMBRES,  
+                            lastname: e.lastname || e.APELLIDO_1,
+                            email: e.email || e.EMAIL_1,
                             asiste: true,
                             status: null,
                             contractado: e.CONTACTADO,
-                            jobtitle: e.CARGO,
-                            company: e.EMPRESA,
-                            phone: e.number,
+                            jobtitle: e.jobtitle || e.CARGO,
+                            company: e.company || e.EMPRESA,
+                            phone: e.number || e.FONO_1,
                             asistio: false,
                             update: e.MODIFICADO_FECHA,
                             codeQr: e.COD_BARRA
 
                         }
 
-                        parseArray.push(obj)
+                        console.log(' count',this.contactsCount, 'array:', this.contactsArray.length)
+                       
+                            this.createContacts(obj)
 
-                    });
+
+                    })
+                    
 
                     //console.log('contactsArray: ', this.contactsArray)
 
-                    console.log('paseArray: ', parseArray)
+                    console.log(' count',this.contactsCount, 'array:', this.contactsArray.length)
+                    if(this.contactsArray.length == this.contactsCount){
 
-                    parseArray.forEach(obj => {
-                        this.createContact(obj)
-                    });
-                    
+                        console.log(' count actualif ',this.contactsCount)
+                        this.getContacts(this.idEventNow)
+
+                        
+                    }
+
+                    this.contactsCount = 0;
 
                     return initial;
                   }, {});

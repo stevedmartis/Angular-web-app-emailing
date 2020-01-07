@@ -83,7 +83,7 @@ export class EcommerceProductService implements Resolve<any>
 
                         console.log()
 
-                        this.contactServices.getContacts(this.product._id)
+                       
                     }, reject);
             }
         });

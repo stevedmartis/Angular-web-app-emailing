@@ -116,7 +116,14 @@ export class ToolbarComponent implements OnInit, OnDestroy
 
         const person = JSON.parse(localStorage.getItem('currentPerson'));
 
-        this.username = person.name;
+        if(person ){
+
+            this.username = person.name;
+       
+
+            console.log(this.username)
+
+        }
  
     }
 

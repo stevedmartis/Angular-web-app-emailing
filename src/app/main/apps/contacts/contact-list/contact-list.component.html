@@ -1,9 +1,14 @@
-<div class="text" *ngIf="!contactsExist">
+<div class="text" *ngIf="!contactsExist && !_contactsService.loadingContact">
         <span class="title">La lista esta vacia</span>
     </div>
+
+
+
     
 
-<mat-table *ngIf="contactsExist" #table [dataSource]="dataSource"
+<mat-table [ngClass]="{
+    'table-hidden': !contactsExist,
+    'table-visible': contactsExist }"  #table [dataSource]="dataSource"
            [@animateStagger]="{value:'50'}">
     <!-- Checkbox Column -->
 
@@ -31,7 +36,7 @@
     <ng-container matColumnDef="name">
         <mat-header-cell *matHeaderCellDef>Name</mat-header-cell>
         <mat-cell *matCellDef="let contact">
-            <p class="text-truncate font-weight-600">{{contact.name}} {{contact.lastName}}</p>
+            <p class="text-truncate font-weight-600">{{contact.name}} {{contact.lastname}}</p>
         </mat-cell>
     </ng-container>
 
@@ -114,3 +119,8 @@
 </mat-table>
 
 
+    <div *ngIf="_contactsService.loadingContact" class="spinner-loading"
+    fxLayoutAlign="center center">
+
+    <mat-spinner></mat-spinner>
+</div>

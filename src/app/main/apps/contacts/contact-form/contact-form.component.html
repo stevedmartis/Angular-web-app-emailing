@@ -10,7 +10,7 @@
         <mat-toolbar-row class="toolbar-bottom py-16" fxLayout="column" fxLayoutAlign="center center">
             <img [src]="contact.avatar" class="avatar contact-avatar huge m-0"
                  [alt]="contact.name"/>
-            <div class="contact-name mt-8">{{contact.name}} {{contact.lastName}}</div>
+            <div class="contact-name mt-8">{{contact.name}} {{contact.lastname}}</div>
         </mat-toolbar-row>
     </mat-toolbar>
 
@@ -30,7 +30,7 @@
                 <mat-form-field appearance="outline" fxFlex>
                     <mat-label>Apellido</mat-label>
                     <mat-icon matSuffix class="secondary-text">account_circle</mat-icon>
-                    <input name="lastName" formControlName="lastName" matInput>
+                    <input name="lastname" formControlName="lastname" matInput>
                 </mat-form-field>
             </div>
 
@@ -62,7 +62,7 @@
                 <mat-form-field appearance="outline" fxFlex>
                     <mat-label>Perfil</mat-label>
                     <mat-icon matSuffix class="secondary-text">work</mat-icon>
-                    <input name="jobTitle" formControlName="jobTitle" matInput>
+                    <input name="jobtitle" formControlName="jobtitle" matInput>
                 </mat-form-field>
             </div>
 

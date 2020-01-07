@@ -62,11 +62,11 @@ export class ContactsContactFormDialogComponent
         return this._formBuilder.group({
             id      : [this.contact.id],
             name    : [this.contact.name],
-            lastName: [this.contact.lastName],
+            lastname: [this.contact.lastname],
             avatar  : [this.contact.avatar],
             nickname: [this.contact.nickname],
             company : [this.contact.company],
-            jobTitle: [this.contact.jobTitle],
+            jobtitle: [this.contact.jobtitle],
             email   : [this.contact.email],
             phone   : [this.contact.phone],
             address : [this.contact.address],

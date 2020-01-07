@@ -62,3 +62,22 @@ contacts-contact-list {
     color: #777;
 }
 
+.table-hidden {
+    visibility: hidden;
+
+}
+
+.table-visible {
+    visibility: visible
+}
+
+.spinner-loading {
+    position: fixed;
+    flex-direction: row;
+    box-sizing: border-box;
+    margin-left: 25%;
+    place-content: center;
+    align-items: center;
+    display: flex;
+}
+

@@ -4,11 +4,11 @@ export class Contact
 {
     id: string;
     name: string;
-    lastName: string;
+    lastname: string;
     avatar: string;
     nickname: string;
     company: string;
-    jobTitle: string;
+    jobtitle: string;
     email: string;
     phone: string;
     address: string;
@@ -25,11 +25,11 @@ export class Contact
         {
             this.id = contact.id || FuseUtils.generateGUID();
             this.name = contact.name || '';
-            this.lastName = contact.lastName || '';
+            this.lastname = contact.lastname || '';
             this.avatar = contact.avatar || 'assets/images/avatars/profile.jpg';
             this.nickname = contact.nickname || '';
             this.company = contact.company || '';
-            this.jobTitle = contact.jobTitle || '';
+            this.jobtitle = contact.jobtitle || '';
             this.email = contact.email || '';
             this.phone = contact.phone || '';
             this.address = contact.address || '';

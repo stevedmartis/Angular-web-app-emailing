@@ -127,6 +127,7 @@ export class ContactsComponent implements OnInit, OnDestroy
 
     readExcelToJson(){
         this._contactsService.excelToJson()
+
     }
 
     /**
