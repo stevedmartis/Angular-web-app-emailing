@@ -110,7 +110,10 @@ export class SpeedDialFabComponent implements OnInit {
   exportContacts(){
     //this._contactsService.excelToJson()
   
-    this._contactsService.xlsxToJson()
+this._contactsService.xlsxToJson()
+
+
+
 
   }
 

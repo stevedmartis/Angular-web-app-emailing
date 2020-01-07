@@ -32,7 +32,7 @@ export class ContactsContactListComponent implements OnInit, OnDestroy
     dialogRef: any;
     loading: boolean = false;
     confirmDialogRef: MatDialogRef<FuseConfirmDialogComponent>;
-    contactsExist: boolean = false
+    
     // Private
     private _unsubscribeAll: Subject<any>;
 
@@ -64,7 +64,6 @@ export class ContactsContactListComponent implements OnInit, OnDestroy
        this._contactsService.loadingContact = true;
 
 
-        setTimeout(() => {
             
      
         this.dataSource = new FilesDataSource(this._contactsService);
@@ -79,12 +78,12 @@ export class ContactsContactListComponent implements OnInit, OnDestroy
      
                 if(contacts.length > 0){
 
-                    this.contactsExist = true;
+                    this._contactsService.contactsExist = true;
                     this._contactsService.loadingContact = false;
                 }
             
                 else {
-                    this.contactsExist = false;
+                    this._contactsService.contactsExist = false;
                     this._contactsService.loadingContact = false; 
                 }
 
@@ -96,7 +95,6 @@ export class ContactsContactListComponent implements OnInit, OnDestroy
             });
 
 
-        }, 2000);
 
         this._contactsService.onSelectedContactsChanged
             .pipe(takeUntil(this._unsubscribeAll))

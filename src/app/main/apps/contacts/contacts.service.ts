@@ -19,12 +19,12 @@ export class ContactsService implements Resolve<any>
     onSearchTextChanged: Subject<any>;
     onFilterChanged: Subject<any>;
 
-    
+    contactsExist: boolean = false
 
     contacts: Contact[];
     user: any;
     selectedContacts: string[] = [];
-    contactsArray: any[]
+    contactsArray: any[] = [];
     loadingContact: boolean = true;
 
     searchText: string;
@@ -147,6 +147,9 @@ export class ContactsService implements Resolve<any>
                         resolve(this.contacts);
 
                         this.loadingContact = false;
+                        //this.contactsExist = true;
+                        
+                      
 
                        
                     }, reject);
@@ -249,7 +252,7 @@ export class ContactsService implements Resolve<any>
      * @param contact
      * @returns {Promise<any>}
      */
-    createContacts(obj): Promise<any>
+    createContacts(obj, arrayLenght): Promise<any>
     {
 
         const Haeader = {
@@ -264,8 +267,18 @@ export class ContactsService implements Resolve<any>
             this._httpClient.post(environment.apiUrl + '/api/person/', obj, Haeader)
                 .subscribe(response => {
 
-  
-                    console.log(response)
+                    this.contactsCount++;
+
+                    console.log(this.contactsCount, arrayLenght)
+
+                    if(this.contactsCount === arrayLenght){
+                        this.getContacts(this.idEventNow)
+
+                        this.contactsCount = 0;
+                        
+                    }
+                   // this.loadingContact = false;
+
                    
                 });
         });
@@ -388,15 +401,14 @@ export class ContactsService implements Resolve<any>
                     const sheet = workBook.Sheets[name];
                     initial[name] = XLSX.utils.sheet_to_json(sheet);
 
-                    this.contactsArray = initial[name];
+                    let array = initial[name];
 
+                    let contactsArray = []
+                    console.log('array: ', array)
 
-                    console.log(this.contactsArray)
-                
+                    array.forEach(e => {
 
-                    this.contactsArray.forEach(e => {
-
-                        this.contactsCount++;
+                       
                       
                         let obj = {
                             codeEvento: this.idEventNow,
@@ -415,28 +427,25 @@ export class ContactsService implements Resolve<any>
 
                         }
 
-                        console.log(' count',this.contactsCount, 'array:', this.contactsArray.length)
-                       
-                            this.createContacts(obj)
 
+                        contactsArray.push(obj);
 
+                                        
                     })
-                    
 
-                    //console.log('contactsArray: ', this.contactsArray)
+                    contactsArray.forEach(e => {
 
-                    console.log(' count',this.contactsCount, 'array:', this.contactsArray.length)
-                    if(this.contactsArray.length == this.contactsCount){
-
-                        console.log(' count actualif ',this.contactsCount)
-                        this.getContacts(this.idEventNow)
-
+                        console.log(e)
+                  
+                        this.createContacts(e, contactsArray.length)
                         
-                    }
+                        
+                    });
 
-                    this.contactsCount = 0;
 
-                    return initial;
+                
+
+                    return this.contactsArray;
                   }, {});
                   const dataString = JSON.stringify(jsonData);
 

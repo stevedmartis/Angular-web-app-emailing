@@ -1,14 +1,10 @@
-<div class="text" *ngIf="!contactsExist && !_contactsService.loadingContact">
+<div class="text" *ngIf="!_contactsService.contactsExist && !_contactsService.loadingContact">
         <span class="title">La lista esta vacia</span>
     </div>
 
 
-
-    
-
-<mat-table [ngClass]="{
-    'table-hidden': !contactsExist,
-    'table-visible': contactsExist }"  #table [dataSource]="dataSource"
+<mat-table *ngIf="_contactsService.contactsExist"
+  #table [dataSource]="dataSource"
            [@animateStagger]="{value:'50'}">
     <!-- Checkbox Column -->
 
