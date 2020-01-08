@@ -2,13 +2,19 @@
         <span class="title">La lista esta vacia</span>
     </div>
 
+<div  class="content-table"
+[ngClass]="{
+    'table-hidden': !_contactsService.contactsExist,
+    'table-visible': _contactsService.contactsExist }">
 
-<mat-table *ngIf="_contactsService.contactsExist"
+
+
+<mat-table 
   #table [dataSource]="dataSource"
-           [@animateStagger]="{value:'50'}">
+           [@animateStagger]="{value:'50'}"
+           >
     <!-- Checkbox Column -->
 
-    
 
     <ng-container matColumnDef="checkbox">
         <mat-header-cell *matHeaderCellDef></mat-header-cell>
@@ -114,6 +120,15 @@
 
 </mat-table>
 
+
+<mat-paginator #paginator
+[length]="dataSource.filteredData.length"
+[pageIndex]="0"
+[pageSize]="25"
+[pageSizeOptions]="[5, 10, 25, 100]">
+</mat-paginator>
+
+</div>
 
     <div *ngIf="_contactsService.loadingContact" class="spinner-loading"
     fxLayoutAlign="center center">

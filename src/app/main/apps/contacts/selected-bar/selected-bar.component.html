@@ -12,7 +12,7 @@
         <div>
             <span class="selected-contacts-count">
                 <span class="mr-4">{{selectedContacts.length}}</span>
-                <span *ngIf="selectedContacts.length === 1">seleccinado</span>
+                <span *ngIf="selectedContacts.length === 1">seleccionado</span>
                 <span *ngIf="selectedContacts.length > 1">seleccionados</span>
             </span>
 
@@ -20,8 +20,9 @@
                 <mat-icon>arrow_drop_down</mat-icon>
             </button>
             <mat-menu #selectMenu="matMenu">
+                <button mat-menu-item (click)="selectPage()">Seleccionar pagina</button>
                 <button mat-menu-item (click)="selectAll()">Seleccionar todos</button>
-                <button mat-menu-item (click)="deselectAll()">Deseleccionar todos</button>
+                <button mat-menu-item (click)="deselectAll()">Deseleccionar</button>
             </mat-menu>
 
         </div>

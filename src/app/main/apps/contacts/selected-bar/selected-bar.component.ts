@@ -83,6 +83,11 @@ export class ContactsSelectedBarComponent implements OnInit, OnDestroy
         this._contactsService.selectContacts();
     }
 
+    selectPage(): void
+    {
+        this._contactsService.selectContacts();
+    }
+
     /**
      * Deselect all
      */
@@ -101,17 +106,22 @@ export class ContactsSelectedBarComponent implements OnInit, OnDestroy
             panelClass: 'custom-dialog-container'
         });
 
-        this.confirmDialogRef.componentInstance.confirmMessage = 'Esta seguro de eliminar los contactos selecionados?';
+        this.confirmDialogRef.componentInstance.confirmMessage = 'Esta seguro de eliminar todos los invitados?';
 
         this.confirmDialogRef.afterClosed()
             .subscribe(result => {
 
-                
-
+            
                 if ( result )
                 {
-                    
-                    this._contactsService.deleteSelectedContacts();
+
+                    if(this._contactsService.selectedContacts.length === this._contactsService.contacts.length){
+                        this._contactsService.deleteAllContacts()
+                        
+                    }
+                 
+                    //this._contactsService.deleteSelectedContacts();
+
                 }
                 this.confirmDialogRef = null;
             });

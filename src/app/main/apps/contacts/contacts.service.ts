@@ -151,7 +151,11 @@ export class ContactsService implements Resolve<any>
                         resolve(this.contacts);
 
                         this.loadingContact = false;
-                        this.contactsExist = true;
+
+                        if(this.contacts.length > 0){
+                            this.contactsExist = true;
+                        }
+                        
                         
                      
 
@@ -385,6 +389,33 @@ export class ContactsService implements Resolve<any>
 
     }
 
+
+    deleteAllContacts()
+    {
+
+        this.loadingContact = true;
+
+        const Haeader = {
+            headers: new HttpHeaders({
+              'Content-Type': 'application/json',
+              'authorization': `${this.authServices.currentUserValue.token}`}),
+          }
+        
+        return new Promise((resolve, reject) => {
+            this._httpClient.delete(environment.apiUrl + '/api/person/delete/' + this.idEventNow, Haeader)
+                .subscribe(response => {
+
+                    console.log(response)
+                    this.getContacts(this.idEventNow)
+
+                    this.loadingContact = false;
+                    this.contactsExist = false;
+                });
+        });
+
+
+    }
+
     /**
      * Delete selected contacts
      */
@@ -454,11 +485,10 @@ export class ContactsService implements Resolve<any>
 
                     array.forEach(e => {
 
-                       
-                      
+                    
                         let obj = {
                             codeEvento: this.idEventNow,
-                            name: e.name || e.NOMBRES,  
+                            name: e.name || e.NOMBRES || e.nameEmployee,
                             lastname: e.lastname || e.APELLIDO_1,
                             email: e.email || e.EMAIL_1,
                             asiste: true,
@@ -470,9 +500,7 @@ export class ContactsService implements Resolve<any>
                             asistio: false,
                             update: e.MODIFICADO_FECHA,
                             codeQr: e.COD_BARRA
-
                         }
-
 
                         contactsArray.push(obj);
 

@@ -82,13 +82,16 @@ export class AuthService {
     const Haeader = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
+        'authorization': `${this.currentUserValue.token}`
 
       }),
     }
-    return this.http.get<Person>(`${environment.apiUrl}/api/person/${this.currentUserValue.id}`, Haeader)
+    return this.http.get<Person>(`${environment.apiUrl}/api/person/userId/${this.currentUserValue.id}`, Haeader)
     .pipe(map(person => {
 
         localStorage.setItem('currentPerson', JSON.stringify(person));
+
+        console.log(person)
         this.currentPersonSubject.next(person);
      
         return person;

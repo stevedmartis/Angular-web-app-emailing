@@ -2,14 +2,16 @@ import { Component, OnDestroy, OnInit, TemplateRef, ViewChild, ViewEncapsulation
 import { FormGroup } from '@angular/forms';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { DataSource } from '@angular/cdk/collections';
-import { Observable, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-
+import { BehaviorSubject, fromEvent, merge, Observable, Subject } from 'rxjs';
 import { fuseAnimations } from '@fuse/animations';
 import { FuseConfirmDialogComponent } from '@fuse/components/confirm-dialog/confirm-dialog.component';
-
+import { map } from 'rxjs/operators';
 import { ContactsService } from 'app/main/apps/contacts/contacts.service';
 import { ContactsContactFormDialogComponent } from 'app/main/apps/contacts/contact-form/contact-form.component';
+import { MatPaginator } from '@angular/material/paginator';
+import { FuseUtils } from '@fuse/utils';
+import {ChangeDetectorRef } from '@angular/core';
 
 @Component({
     selector     : 'contacts-contact-list',
@@ -22,6 +24,8 @@ export class ContactsContactListComponent implements OnInit, OnDestroy
 {
     @ViewChild('dialogContent', {static: false})
     dialogContent: TemplateRef<any>;
+    @ViewChild(MatPaginator, {static: true})
+    paginator: MatPaginator;
 
     contacts: any;
     user: any;
@@ -44,8 +48,10 @@ export class ContactsContactListComponent implements OnInit, OnDestroy
      */
     constructor(
         public _contactsService: ContactsService,
-        public _matDialog: MatDialog
+        public _matDialog: MatDialog,
+        private cdref: ChangeDetectorRef
     )
+    
     {
         // Set the private defaults
         this._unsubscribeAll = new Subject();
@@ -58,15 +64,20 @@ export class ContactsContactListComponent implements OnInit, OnDestroy
     /**
      * On init
      */
+
+    ngAfterContentChecked() {
+
+        this.dataSource = new FilesDataSource(this._contactsService, this.paginator);
+        this.cdref.detectChanges();
+        
+    }
+
     ngOnInit(): void
     {
 
        this._contactsService.loadingContact = true;
-
-
-            
      
-        this.dataSource = new FilesDataSource(this._contactsService);
+        this.dataSource = new FilesDataSource(this._contactsService, this.paginator);
 
         console.log(this.dataSource)
 
@@ -239,10 +250,15 @@ export class FilesDataSource extends DataSource<any>
     /**
      * Constructor
      *
-     * @param {ContactsService} _contactsService
+     * @param {ContactsService} _contactsService,
+     * 
      */
+    private _filterChange = new BehaviorSubject('');
+    private _filteredDataChange = new BehaviorSubject('');
+
     constructor(
-        public _contactsService: ContactsService
+        public _contactsService: ContactsService,
+        private _matPaginator: MatPaginator,
     )
     {
         super();
@@ -254,8 +270,57 @@ export class FilesDataSource extends DataSource<any>
      */
     connect(): Observable<any[]>
     {
-        return this._contactsService.onContactsChanged;
+
+        const displayDataChanges = [
+            this._contactsService.onContactsChanged,
+            this._matPaginator.page
+        ];
+   
+        return merge(...displayDataChanges)
+            .pipe(
+                map(() => {
+                        let data = this._contactsService.contacts.slice();
+                        data = this.filterData(data);
+
+                        this.filteredData = [...data];
+
+                        // Grab the page's slice of data.
+                        const startIndex = this._matPaginator.pageIndex * this._matPaginator.pageSize;
+                        return data.splice(startIndex, this._matPaginator.pageSize);
+                    }
+                ));
     }
+
+        // Filtered data
+        get filteredData(): any
+        {
+            return this._filteredDataChange.value;
+        }
+    
+        set filteredData(value: any)
+        {
+            this._filteredDataChange.next(value);
+        }
+
+            // Filter
+    get filter(): string
+    {
+        return this._filterChange.value;
+    }
+
+    set filter(filter: string)
+    {
+        this._filterChange.next(filter);
+    }
+
+        filterData(data): any
+        {
+            if ( !this.filter )
+            {
+                return data;
+            }
+            return FuseUtils.filterArrayByString(data, this.filter);
+        }
 
     /**
      * Disconnect
