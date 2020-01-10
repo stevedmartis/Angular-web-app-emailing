@@ -4,31 +4,23 @@ import { Location } from '@angular/common';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Subject, Subscription } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { catchError, last, map, tap } from 'rxjs/operators';
+
 import { fuseAnimations } from '@fuse/animations';
 import { FuseUtils } from '@fuse/utils';
 import { Router } from '@angular/router';
 import { Product } from 'app/main/apps/e-commerce/product/product.model';
 import { EcommerceProductService } from 'app/main/apps/e-commerce/product/product.service';
 import * as shape from 'd3-shape';
-import { HttpClient, HttpResponse, HttpRequest, HttpEventType, HttpErrorResponse } from '@angular/common/http';
-import { of } from 'rxjs/internal/observable/of';
+
+
 import { MAT_DIALOG_DATA, MatDialogRef, MatDialog } from '@angular/material/dialog';
 import { ContactsComponent } from 'app/main/apps/contacts/contacts.component';
 import { ContactsService } from 'app/main/apps/contacts/contacts.service';
 import { ContactsContactFormDialogComponent } from 'app/main/apps/contacts/contact-form/contact-form.component';
 import { FuseConfirmDialogComponent } from '@fuse/components/confirm-dialog/confirm-dialog.component';
+import { InvitationFormComponent } from './invitation-form/invitation-form.component';
 
 
-export class FileUploadModel {
-    data: File;
-    state: string;
-    inProgress: boolean;
-    progress: number;
-    canRetry: boolean;
-    canCancel: boolean;
-    sub?: Subscription;
-}
 
 @Component({
     selector     : 'e-commerce-product',
@@ -39,15 +31,8 @@ export class FileUploadModel {
 })
 export class EcommerceProductComponent implements OnInit, OnDestroy
 {
-    @Input() text = 'Upload';
-    @Input() param = 'file';
-    @Input() target = 'https://file.io';
-    @Input() accept = 'text/*';
-    // tslint:disable-next-line:no-output-native
-    @Output() complete = new EventEmitter<string>();
-    fileInformation: any;
-    fileUp: any;
-    loadingFile: boolean = false;
+
+    
     product: Product;
     pageType: string;
     productForm: FormGroup;
@@ -55,10 +40,10 @@ export class EcommerceProductComponent implements OnInit, OnDestroy
     dialogRef: any;
     isCreated: boolean= false;
     confirmDialogRef: MatDialogRef<FuseConfirmDialogComponent>;
+    invitationDialogRef: MatDialogRef<InvitationFormComponent>;
 
   
-    private files: Array<FileUploadModel> = [];
-
+   
     // Private 
     private _unsubscribeAll: Subject<any>;
 
@@ -77,7 +62,7 @@ export class EcommerceProductComponent implements OnInit, OnDestroy
         private _location: Location,
         private _matSnackBar: MatSnackBar,
         private router: Router,
-        private _http: HttpClient,
+        
         
         public _matDialog: MatDialog,
 
@@ -284,10 +269,8 @@ export class EcommerceProductComponent implements OnInit, OnDestroy
                     this._ecommerceProductService.deleteEvent(this.product._id)
                     .then(x => {
             
-                      
                         this.router.navigate(['apps/e-commerce/products']);
-                      
-            
+                               
                         this._matSnackBar.open('Evento eliminado', 'OK', {
                             verticalPosition: 'top',
                             duration        : 3000
@@ -298,96 +281,37 @@ export class EcommerceProductComponent implements OnInit, OnDestroy
                 this.confirmDialogRef = null;
             });
     
-        
-    
-
 
     }
 
-    fileUpload(){
-        const fileUpload = document.getElementById('fileUpload') as HTMLInputElement;
 
-        fileUpload.onchange = () => {
+    dialogInvitationForm(){
 
-            for(let index = 0; index < fileUpload.files.length; index++) {
-                const file = fileUpload.files[index];
-                this.files.push({
-                    data: file,
-                    state: 'in',
-                    inProgress: false,
-                    progress: 0,
-                    canRetry: false,
-                    canCancel: true
-                });
+        this.invitationDialogRef = this._matDialog.open(InvitationFormComponent, {
+            disableClose: false,
+            panelClass: 'invitation-form-dialog',
+            height: '100%',
+            width: '100%',
+            
+            data      : {
+                contact: '',
+                action : 'new'
             }
-            this.uploadFiles();
-        }
-        fileUpload.click();
-        
-    }
-
-    private uploadFile(file: FileUploadModel) {
-
-        this.loadingFile = true;
-        const fd = new FormData();
-        fd.append(this.param, file.data);
-    
-        const req = new HttpRequest('POST', this.target, fd, {
-          reportProgress: true
         });
     
-        file.inProgress = true;
-        file.sub = this._http.request(req).pipe(
-          map(event => {
+        this.invitationDialogRef.componentInstance.dataproduct = 'inivtacion sexy';
+    
+        this.invitationDialogRef.afterClosed().subscribe(result => {
+            if ( result )
+            {
+                
+            }
+    
+        })
 
-           
-            switch (event.type) {
-                  case HttpEventType.UploadProgress:
-                        file.progress = Math.round(event.loaded * 100 / event.total);
-                        break;
-                  case HttpEventType.Response:
+    }
+
+
+
  
-                  this.fileUp = event.body
-                  setTimeout(() => {
-                    this.loadingFile = false;
-                  }, 1000);
-                 
-                    return event;
-            }
-          }),
-          tap(message => { }),
-          last(),
-          catchError((error: HttpErrorResponse) => {
-            file.inProgress = false;
-            file.canRetry = true;
-            return of(`${file.data.name} upload failed.`);
-          })
-        ).subscribe(
-          (event: any) => {
-            if (typeof (event) === 'object') {
-              this.removeFileFromArray(file);
-              this.complete.emit(event.body);
-            }
-          }
-        );
-      }
-    
-      private uploadFiles() {
-        const fileUpload = document.getElementById('fileUpload') as HTMLInputElement;
-        fileUpload.value = '';
-    
-        this.files.forEach(file => {
-
-            console.log('file: ',file)
-          this.uploadFile(file);
-        });
-      }
-
-      private removeFileFromArray(file: FileUploadModel) {
-        const index = this.files.indexOf(file);
-    
-        if (index > -1) {
-          this.files.splice(index, 1);
-        }
-      }
 }

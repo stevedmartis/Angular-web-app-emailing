@@ -24,6 +24,8 @@ import { ContactsContactListComponent } from 'app/main/apps/contacts/contact-lis
 import { ContactsService } from 'app/main/apps/contacts/contacts.service';
 import { ContactsContactFormDialogComponent } from 'app/main/apps/contacts/contact-form/contact-form.component';
 import { SpeedDialFabComponent } from 'app/layout/speed-dial-fab/speed-dial-fab.component';
+import { InvitationFormComponent } from './product/invitation-form/invitation-form.component';
+import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 
 const routes: Routes = [
     {
@@ -74,7 +76,8 @@ const routes: Routes = [
         ContactsMainSidebarComponent,
         ContactsContactListComponent,
         ContactsContactFormDialogComponent,
-        SpeedDialFabComponent
+        SpeedDialFabComponent,
+        InvitationFormComponent
         
     ],
     imports     : [
@@ -90,7 +93,8 @@ const routes: Routes = [
         FuseSharedModule,
         FuseWidgetModule,
         FuseConfirmDialogModule,
-        FuseSidebarModule
+        FuseSidebarModule,
+        CKEditorModule
     ],
     providers   : [
         EcommerceProductsService,
@@ -102,7 +106,8 @@ const routes: Routes = [
     entryComponents: [
 
         ContactsComponent,
-        ContactsContactFormDialogComponent
+        ContactsContactFormDialogComponent,
+        InvitationFormComponent
     ]
 })
 export class EcommerceModule

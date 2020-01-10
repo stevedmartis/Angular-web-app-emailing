@@ -23,6 +23,7 @@ import { LayoutModule } from 'app/layout/layout.module';
 import { AuthServicesModule } from '../app/services/authentication/auth.module';
 import { EventServicesModule } from '../app/services/eventos/event.modules';
 
+
 const appRoutes: Routes = [
     {
         path        : 'apps',
@@ -53,6 +54,7 @@ const appRoutes: Routes = [
 @NgModule({
     declarations: [
         AppComponent,
+
     
     ],
     imports     : [

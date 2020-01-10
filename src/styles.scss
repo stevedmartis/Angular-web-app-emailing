@@ -8,3 +8,8 @@
 .custom-dialog-container .mat-dialog-container{
     padding: 24px !important
 }
+
+
+contacts-contact-list .mat-table .mat-row .mat-cell {
+    min-width: 60px !important;
+}

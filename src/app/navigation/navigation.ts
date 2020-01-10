@@ -27,53 +27,29 @@ export const navigation: FuseNavigation[] = [
                         type : 'item',
                         url  : '/apps/dashboards/project'
                     }
-                ]
+                ],
             },
             {
-                id       : 'event',
-                title    : 'Eventos',
+                id       : 'convo',
+                title    : 'Convocatorias',
+                translate: 'NAV.EVENTS',
+                type     : 'item',
+                icon     : 'event',
+                url      : '/apps/e-commerce/products',
+            
+            },
+
+            {
+                id       : 'campa',
+                title    : 'Campañas',
                 translate: 'NAV.EVENTS',
                 type     : 'item',
                 icon     : 'event_note',
-                url      : '/apps/e-commerce/products'
+                url      : '/apps/e-commerce/campañias',
             
-
-                /*
-                children : [
-                    {
-                        id        : 'products',
-                        title     : 'Products',
-                        type      : 'item',
-                        url       : '/apps/e-commerce/products',
-                        exactMatch: true
-                    },
-                    {
-                        id        : 'productDetail',
-                        title     : 'Product Detail',
-                        type      : 'item',
-                        url       : '/apps/e-commerce/products/1/printed-dress',
-                        exactMatch: true
-                    },
-                    {
-                        id        : 'orders',
-                        title     : 'Orders',
-                        type      : 'item',
-                        url       : '/apps/e-commerce/orders',
-                        exactMatch: true
-                    },
-                    {
-                        id        : 'orderDetail',
-                        title     : 'Order Detail',
-                        type      : 'item',
-                        url       : '/apps/e-commerce/orders/1',
-                        exactMatch: true
-                    }
-                ]
-
-                */
             },
 
-            /*
+          /*
 
          
             {

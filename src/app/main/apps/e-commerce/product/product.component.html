@@ -138,14 +138,15 @@
                 <div class="mat-card form-errors-model p-24 mat-elevation-z4">
                     <div class="h2 mb-24"></div>
 
+                    <!--
                     <div class="inv-card">
                             <div class="p-16">
                                     <div class="h2">Imagen</div>
-                                    <!--
+                                   
                                     <div class="h4 secondary-text">Mon, 12:30 PM, Mostly Sunny</div>
-                                    -->
+                                 
                                 </div>
-
+                   
                     <div *ngIf="!fileUp && !loadingFile"
                     class="product-image" fxlayout="row" fxLayoutAlign="center center">
                    <img class="media company-img"
@@ -173,7 +174,66 @@
                         color="accent">Subir nueva
                         <mat-icon>add_photo_alternate</mat-icon></button>
                 </div>
-                    </div>    
+                    </div>   
+                    
+                     -->
+                     <div class="inv-card">
+            
+                            <div class="p-16">
+                                <div class="h2">Campaña</div>
+                                <!--
+                                <div class="h4 secondary-text">Mon, 12:30 PM, Mostly Sunny</div>
+                                -->
+                            </div>
+        
+                            <div class="p-16 pt-0" fxLayout="row" fxLayoutAlign="space-between center">
+                                <div class="count"  fxLayout="row" fxLayoutAlign="center center">
+                                    <span class="font-weight-300 font-size-72 line-height-72">0%</span>
+                                    <span
+                                        class="font-weight-300 font-size-48 line-height-48 ml-8 mt-4"></span>
+                                    <span
+                                        class="font-weight-300 font-size-48 line-height-48 mt-4"></span>
+                                </div>
+        
+                            </div>
+    
+        
+                            <div class="p-16 pt-4">
+                                <div class="mb-12" fxLayout="row" fxLayoutAlign="space-between center">
+                                    <div>Confirmaron</div>
+                                    <div fxLayout="row" fxLayoutAlign="start center">
+                                        <mat-icon 
+                                            class="icon s-16 mr-16">check_circle</mat-icon>
+                                        <div class="secondary-text">1</div>
+                                    </div>
+                                </div>
+        
+                                <div class="mb-12" fxLayout="row" fxLayoutAlign="space-between center">
+                                    <div>Imagen</div>
+                                    <div fxLayout="row" fxLayoutAlign="start center">
+                                        <mat-icon 
+                                            class="icon s-16 mr-16">cancel</mat-icon>
+                                        <div class="secondary-text">1%</div>
+        
+                                    </div>
+                                </div>
+        
+        
+                            </div>
+        
+        
+        
+                            <div class="p-8 pt-0" fxLayout="row" fxLayoutAlign="start center">
+                                    <button  
+                                    [disabled]="!isCreated"
+                                    (click)="dialogInvitationForm()"
+                                    mat-button color="accent">
+                                    Crear nueva    
+                                    <mat-icon>post_add</mat-icon></button>
+                                </div>
+        
+                        </div>
+        
         <br>
                <div class="inv-card">
             
@@ -196,7 +256,7 @@
                     </div>
 
 
-    
+
 
                     <div class="p-16 pt-4">
                         <div class="mb-12" fxLayout="row" fxLayoutAlign="space-between center">
@@ -237,7 +297,7 @@
                             (click)="openContacts()"
                             mat-button color="accent">
                             Ver lista    
-                            <mat-icon>person_add</mat-icon></button>
+                            <mat-icon>group_add</mat-icon></button>
                         </div>
 
                 </div>
