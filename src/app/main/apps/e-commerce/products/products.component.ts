@@ -34,6 +34,8 @@ export class EcommerceProductsComponent implements OnInit
     @ViewChild('filter', {static: true})
     filter: ElementRef;
 
+    @ViewChild(MatSort, {static: true})
+
     // Private
     private _unsubscribeAll: Subject<any>;
 

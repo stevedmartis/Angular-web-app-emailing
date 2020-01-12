@@ -12,7 +12,7 @@
             </mat-toolbar>
         
             <div mat-dialog-content class="p-24 m-0" fusePerfectScrollbar>
-                    <form [formGroup]="invitationForm">
+                    <form [formGroup]="_invitationService.invitationForm">
     
 
                      <!--
@@ -30,17 +30,31 @@
                                 <div appearance="outline" floatLabel="always" class="w-100-p"
                                 fxFlex="100">
 
-                    
+                              
 
-                                                    
-                                <div class="document-editor">
+                                    <quill-editor  [modules]="config" placeholder="Escriba elontenido del mensaje..." formControlName="editor">
+
+                                    
+                                </quill-editor>
+
+                                     
+                             <!--
+
+                                                      <div class="document-editor">
                                         <div class="document-editor__toolbar"></div>
                                         <div class="document-editor__editable-container">
                                             <div class="document-editor__editable">
-                                                <p>The initial editor data.</p>
+                                               
+<ckeditor [(ngModel)]="model.editorData" [editor]="Editor"></ckeditor>
+                                                  
                                             </div>
+
+                                
                                         </div>
                                     </div>
+
+                                -->
+              
                                 </div>
                              
             
@@ -101,7 +115,7 @@
                     <button *ngIf="action === 'edit'"
                             mat-button
                             class="mr-8"
-                            (click)="matDialogRef.close(['delete',invitationForm])"
+                            (click)="matDialogRef.close(['delete',_invitationService.invitationForm])"
                             aria-label="Delete"
                             matTooltip="Delete">
                         ELIMINAR
@@ -110,8 +124,8 @@
                     <button *ngIf="action !== 'edit'"
                             mat-button
                             class="save-button"
-                            (click)="matDialogRef.close(invitationForm)"
-                            [disabled]="invitationForm.invalid"
+                            (click)="matDialogRef.close(_invitationService.invitationForm)"
+                            [disabled]="_invitationService.invitationForm.invalid"
                             aria-label="SAVE">
                         CREAR
                     </button>
@@ -119,8 +133,8 @@
                     <button *ngIf="action === 'edit'"
                             mat-button
                             class="save-button"
-                            (click)="matDialogRef.close(['save',invitationForm])"
-                            [disabled]="invitationForm.invalid"
+                            (click)="matDialogRef.close(['save',_invitationService.invitationForm])"
+                            [disabled]="_invitationService.invitationForm.invalid"
                             aria-label="SAVE">
                         GUARDAR
                     </button>

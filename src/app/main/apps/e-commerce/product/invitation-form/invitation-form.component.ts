@@ -7,6 +7,8 @@ import { HttpClient, HttpResponse, HttpRequest, HttpEventType, HttpErrorResponse
 import { Subscription, of } from 'rxjs';
 import { catchError, last, tap, map } from 'rxjs/operators';
 import DecoupledEditor from '@ckeditor/ckeditor5-build-decoupled-document';
+import { InvoiceService } from 'app/main/pages/invoices/invoice.service';
+import { InvitationService } from './invitation.service';
 
 export class FileUploadModel {
   data: File;
@@ -27,31 +29,10 @@ export class FileUploadModel {
 export class InvitationFormComponent implements OnInit {
 
   public dataproduct: any;
-  invitationForm: FormGroup;
   invitation: Invitation;
   action: string;
   dialogTitle: string;
   nameFile: any;
-
-
-get()
-
-{
-  DecoupledEditor
-  .create( document.querySelector( '.document-editor__editable' ), {
-
-  } )
-  .then( editor => {
-      const toolbarContainer = document.querySelector( '.document-editor__toolbar' );
-
-      toolbarContainer.appendChild( editor.ui.view.toolbar.element );
-
-     return editor;
-  } )
-  .catch( err => {
-      console.error( err );
-  } );
-}
 
   @Input() text = 'Upload';
   @Input() param = 'file';
@@ -64,13 +45,34 @@ get()
   private files: Array<FileUploadModel> = [];
   loadingFile: boolean = false;
 
-  
+  config = {
+    toolbar: [
+      ['bold', 'italic', 'underline', 'strike'],        // toggled buttons
+  ['blockquote', 'code-block', 'link', 'image', 'video'],
+
+  [{ 'header': 1 }, { 'header': 2 }],               // custom button values
+  [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+  [{ 'script': 'sub'}, { 'script': 'super' }],      // superscript/subscript
+  [{ 'indent': '-1'}, { 'indent': '+1' }],          // outdent/indent
+  [{ 'direction': 'rtl' }],                         // text direction
+
+  [{ 'size': ['small', false, 'large', 'huge'] }],  // custom dropdown
+  [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
+
+  [{ 'color': [] }, { 'background': [] }],          // dropdown with defaults from theme
+  [{ 'font': [] }],
+  [{ 'align': [] }],
+
+  ['clean']      
+    ]
+  }
 
   constructor(
     public matDialogRef: MatDialogRef<ContactsContactFormDialogComponent>,
     @Inject(MAT_DIALOG_DATA) private _data: any,
     private _formBuilder: FormBuilder,
     private _http: HttpClient,
+    public _invitationService: InvitationService
     
 
 ) {
@@ -84,44 +86,23 @@ get()
 
     if (this.action === 'edit') {
       this.dialogTitle = 'Editar Campaña';
-      this.invitation = _data.contact;
+      this._invitationService.invitation = _data.contact;
     }
     else {
       this.dialogTitle = 'Nueva campaña';
-      this.invitation = new Invitation({});
+      this._invitationService.invitation = new Invitation({});
 
       console.log(this.invitation)
     }
 
-    this.invitationForm = this.createInvitationForm();
+    this._invitationService.invitationForm = this._invitationService.createInvitationForm();
   }
 
   ngOnInit() {
-    this.get()
 
   }
 
 
-
-
-
-  createInvitationForm(): FormGroup {
-    return this._formBuilder.group({
-      id: [this.invitation.id],
-      name: [this.invitation.name],
-      nameField: [{ value: '' ,disabled: true}],
-      document: [this.invitation.lastname],
-      avatar: [this.invitation.avatar],
-      nickname: [this.invitation.nickname],
-      company: [this.invitation.company],
-      jobtitle: [this.invitation.jobtitle],
-      email: [this.invitation.email],
-      phone: [this.invitation.phone],
-      address: [this.invitation.address],
-      birthday: [this.invitation.birthday],
-      notes: [this.invitation.notes]
-    });
-  }
 
   fileUpload(){
     const fileUpload = document.getElementById('fileUpload') as HTMLInputElement;
@@ -202,7 +183,7 @@ private uploadFile(file: FileUploadModel) {
 
       this.nameFile = file.data.name;
 
-      this.invitationForm.get('nameField').setValue(this.nameFile);
+      this._invitationService.invitationForm.get('nameField').setValue(this.nameFile);
     });
   }
 

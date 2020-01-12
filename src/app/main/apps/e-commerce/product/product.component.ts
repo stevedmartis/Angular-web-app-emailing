@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, ViewEncapsulation, Input, Output, EventEmitter, Inject } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewEncapsulation, Input, Output, EventEmitter, Inject, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Location } from '@angular/common';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -19,6 +19,7 @@ import { ContactsService } from 'app/main/apps/contacts/contacts.service';
 import { ContactsContactFormDialogComponent } from 'app/main/apps/contacts/contact-form/contact-form.component';
 import { FuseConfirmDialogComponent } from '@fuse/components/confirm-dialog/confirm-dialog.component';
 import { InvitationFormComponent } from './invitation-form/invitation-form.component';
+import { InvitationService } from './invitation-form/invitation.service';
 
 
 
@@ -42,7 +43,8 @@ export class EcommerceProductComponent implements OnInit, OnDestroy
     confirmDialogRef: MatDialogRef<FuseConfirmDialogComponent>;
     invitationDialogRef: MatDialogRef<InvitationFormComponent>;
 
-  
+    @ViewChild(InvitationFormComponent, {static: true}) invitationComponent: InvitationFormComponent
+
    
     // Private 
     private _unsubscribeAll: Subject<any>;
@@ -62,7 +64,7 @@ export class EcommerceProductComponent implements OnInit, OnDestroy
         private _location: Location,
         private _matSnackBar: MatSnackBar,
         private router: Router,
-        
+        private invitationService: InvitationService,
         
         public _matDialog: MatDialog,
 
@@ -288,7 +290,7 @@ export class EcommerceProductComponent implements OnInit, OnDestroy
     dialogInvitationForm(){
 
         this.invitationDialogRef = this._matDialog.open(InvitationFormComponent, {
-            disableClose: false,
+            disableClose: true,
             panelClass: 'invitation-form-dialog',
             height: '100%',
             width: '100%',
@@ -302,9 +304,13 @@ export class EcommerceProductComponent implements OnInit, OnDestroy
         this.invitationDialogRef.componentInstance.dataproduct = 'inivtacion sexy';
     
         this.invitationDialogRef.afterClosed().subscribe(result => {
+
+            console.log(result)
             if ( result )
             {
-                
+
+                console.log('create invitation!')
+                this.invitationService.createCampaign()
             }
     
         })

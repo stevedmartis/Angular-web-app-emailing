@@ -26,6 +26,11 @@ import { ContactsContactFormDialogComponent } from 'app/main/apps/contacts/conta
 import { SpeedDialFabComponent } from 'app/layout/speed-dial-fab/speed-dial-fab.component';
 import { InvitationFormComponent } from './product/invitation-form/invitation-form.component';
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
+import { InvoiceCompactComponent } from 'app/main/pages/invoices/compact/compact.component';
+import { InvoiceService } from 'app/main/pages/invoices/invoice.service';
+
+import { QuillModule } from 'ngx-quill';
+import { InvitationService } from './product/invitation-form/invitation.service';
 
 const routes: Routes = [
     {
@@ -77,7 +82,8 @@ const routes: Routes = [
         ContactsContactListComponent,
         ContactsContactFormDialogComponent,
         SpeedDialFabComponent,
-        InvitationFormComponent
+        InvitationFormComponent,
+
         
     ],
     imports     : [
@@ -94,14 +100,16 @@ const routes: Routes = [
         FuseWidgetModule,
         FuseConfirmDialogModule,
         FuseSidebarModule,
-        CKEditorModule
+        CKEditorModule,
+        QuillModule.forRoot()
     ],
     providers   : [
         EcommerceProductsService,
         EcommerceProductService,
         EcommerceOrdersService,
         EcommerceOrderService,
-        ContactsService
+        ContactsService,
+        InvitationService
     ],
     entryComponents: [
 
