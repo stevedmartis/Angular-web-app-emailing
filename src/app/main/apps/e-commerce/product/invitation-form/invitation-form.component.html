@@ -1,21 +1,18 @@
+<div class="dialog-content-wrapper">
+    <mat-toolbar class="mat-accent m-0">
+        <mat-toolbar-row fxFlex fxLayout="row" fxLayoutAlign="space-between center">
+            <span class="title dialog-title">Nueva campaña</span>
+            <button mat-icon-button (click)="matDialogRef.close()" aria-label="Close dialog">
+                <mat-icon>close</mat-icon>
+            </button>
+        </mat-toolbar-row>
+    </mat-toolbar>
 
-    
+    <div mat-dialog-content class="p-24 m-0" fusePerfectScrollbar>
+        <form [formGroup]="_invitationService.invitationForm">
 
-    <div class="dialog-content-wrapper">
-            <mat-toolbar class="mat-accent m-0">
-                <mat-toolbar-row fxFlex fxLayout="row" fxLayoutAlign="space-between center">
-                    <span class="title dialog-title">Nueva campaña</span>
-                    <button mat-icon-button (click)="matDialogRef.close()" aria-label="Close dialog">
-                        <mat-icon>close</mat-icon>
-                    </button>
-                </mat-toolbar-row>
-            </mat-toolbar>
-        
-            <div mat-dialog-content class="p-24 m-0" fusePerfectScrollbar>
-                    <form [formGroup]="_invitationService.invitationForm">
-    
 
-                     <!--
+            <!--
                             <div fxLayout="row" fxLayoutAlign="start start">
                                 <mat-form-field appearance="outline" fxFlex>
                                     <mat-label>Asunto</mat-label>
@@ -24,21 +21,18 @@
                             </div>
                 
                         -->
-                            <div fxLayout="row" class="ckeditor-content" fxLayoutAlign="start start">
-                           
-                                 
-                                <div appearance="outline" floatLabel="always" class="w-100-p"
-                                fxFlex="100">
+            <div fxLayout="row" class="ckeditor-content" fxLayoutAlign="start start">
 
-                              
 
-                                    <quill-editor  [modules]="config" placeholder="Escriba elontenido del mensaje..." formControlName="editor">
+                <div appearance="outline" floatLabel="always" class="w-100-p" fxFlex="100">
 
-                                    
-                                </quill-editor>
+                    <quill-editor [modules]="config" placeholder="Escriba elontenido del mensaje..."
+                        formControlName="editor">
 
-                                     
-                             <!--
+                    </quill-editor>
+
+
+                    <!--
 
                                                       <div class="document-editor">
                                         <div class="document-editor__toolbar"></div>
@@ -54,14 +48,14 @@
                                     </div>
 
                                 -->
-              
-                                </div>
-                             
-            
 
-                            </div>
-            
-             <!--
+                </div>
+
+
+
+            </div>
+
+            <!--
                             <div class="file-content" fxLayout="row" >
             
             
@@ -90,7 +84,7 @@
                             -->
 
 
-                             <!--
+            <!--
                             <div fxLayout="row" fxLayoutAlign="start start">
                                 <mat-form-field appearance="outline" fxFlex>
                                     <mat-label>Compañia</mat-label>
@@ -107,38 +101,28 @@
                                 </mat-form-field>
                             </div>
                         -->
-                        </form>
-            </div>
-        
-            <div mat-dialog-actions class="m-0 p-24" fxLayout="row" fxLayoutAlign="end center">
-    
-                    <button *ngIf="action === 'edit'"
-                            mat-button
-                            class="mr-8"
-                            (click)="matDialogRef.close(['delete',_invitationService.invitationForm])"
-                            aria-label="Delete"
-                            matTooltip="Delete">
-                        ELIMINAR
-                    </button>
-            
-                    <button *ngIf="action !== 'edit'"
-                            mat-button
-                            class="save-button"
-                            (click)="matDialogRef.close(_invitationService.invitationForm)"
-                            [disabled]="_invitationService.invitationForm.invalid"
-                            aria-label="SAVE">
-                        CREAR
-                    </button>
-            
-                    <button *ngIf="action === 'edit'"
-                            mat-button
-                            class="save-button"
-                            (click)="matDialogRef.close(['save',_invitationService.invitationForm])"
-                            [disabled]="_invitationService.invitationForm.invalid"
-                            aria-label="SAVE">
-                        GUARDAR
-                    </button>
-            
-                </div>
-        </div>
-        
+        </form>
+    </div>
+
+    <div mat-dialog-actions class="m-0 p-24" fxLayout="row" fxLayoutAlign="end center">
+
+        <button *ngIf="action === 'edit'" mat-button class="mr-8"
+            (click)="matDialogRef.close(['delete',_invitationService.invitationForm])" aria-label="Delete"
+            matTooltip="Delete">
+            ELIMINAR
+        </button>
+
+        <button *ngIf="action !== 'edit'" mat-button class="save-button"
+            (click)="matDialogRef.close(_invitationService.invitationForm)"
+            [disabled]="_invitationService.invitationForm.invalid" aria-label="SAVE">
+            CREAR
+        </button>
+
+        <button *ngIf="action === 'edit'" mat-button class="save-button"
+            (click)="matDialogRef.close(['save',_invitationService.invitationForm])"
+            [disabled]="_invitationService.invitationForm.invalid" aria-label="SAVE">
+            GUARDAR
+        </button>
+
+    </div>
+</div>

@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject, Input, Output , EventEmitter} from '@angular/core';
+import { Component, OnInit, Inject, Input, Output, EventEmitter } from '@angular/core';
 import { ContactsContactFormDialogComponent } from 'app/main/apps/contacts/contact-form/contact-form.component';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { FormBuilder, FormGroup } from '@angular/forms';
@@ -6,8 +6,6 @@ import { Invitation } from './invitation.model';
 import { HttpClient, HttpResponse, HttpRequest, HttpEventType, HttpErrorResponse } from '@angular/common/http';
 import { Subscription, of } from 'rxjs';
 import { catchError, last, tap, map } from 'rxjs/operators';
-import DecoupledEditor from '@ckeditor/ckeditor5-build-decoupled-document';
-import { InvoiceService } from 'app/main/pages/invoices/invoice.service';
 import { InvitationService } from './invitation.service';
 
 export class FileUploadModel {
@@ -48,22 +46,22 @@ export class InvitationFormComponent implements OnInit {
   config = {
     toolbar: [
       ['bold', 'italic', 'underline', 'strike'],        // toggled buttons
-  ['blockquote', 'code-block', 'link', 'image', 'video'],
+      ['blockquote', 'code-block', 'link', 'image', 'video'],
 
-  [{ 'header': 1 }, { 'header': 2 }],               // custom button values
-  [{ 'list': 'ordered'}, { 'list': 'bullet' }],
-  [{ 'script': 'sub'}, { 'script': 'super' }],      // superscript/subscript
-  [{ 'indent': '-1'}, { 'indent': '+1' }],          // outdent/indent
-  [{ 'direction': 'rtl' }],                         // text direction
+      [{ 'header': 1 }, { 'header': 2 }],               // custom button values
+      [{ 'list': 'ordered' }, { 'list': 'bullet' }],
+      [{ 'script': 'sub' }, { 'script': 'super' }],      // superscript/subscript
+      [{ 'indent': '-1' }, { 'indent': '+1' }],          // outdent/indent
+      [{ 'direction': 'rtl' }],                         // text direction
 
-  [{ 'size': ['small', false, 'large', 'huge'] }],  // custom dropdown
-  [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
+      [{ 'size': ['small', false, 'large', 'huge'] }],  // custom dropdown
+      [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
 
-  [{ 'color': [] }, { 'background': [] }],          // dropdown with defaults from theme
-  [{ 'font': [] }],
-  [{ 'align': [] }],
+      [{ 'color': [] }, { 'background': [] }],          // dropdown with defaults from theme
+      [{ 'font': [] }],
+      [{ 'align': [] }],
 
-  ['clean']      
+      ['clean']
     ]
   }
 
@@ -73,16 +71,16 @@ export class InvitationFormComponent implements OnInit {
     private _formBuilder: FormBuilder,
     private _http: HttpClient,
     public _invitationService: InvitationService
-    
 
-) {
 
-  
+  ) {
+
+
 
     // Set the defaults
     this.action = _data.action;
 
-    
+
 
     if (this.action === 'edit') {
       this.dialogTitle = 'Editar Campaña';
@@ -104,29 +102,29 @@ export class InvitationFormComponent implements OnInit {
 
 
 
-  fileUpload(){
+  fileUpload() {
     const fileUpload = document.getElementById('fileUpload') as HTMLInputElement;
 
     fileUpload.onchange = () => {
 
-        for(let index = 0; index < fileUpload.files.length; index++) {
-            const file = fileUpload.files[index];
-            this.files.push({
-                data: file,
-                state: 'in',
-                inProgress: false,
-                progress: 0,
-                canRetry: false,
-                canCancel: true
-            });
-        }
-        this.uploadFiles();
+      for (let index = 0; index < fileUpload.files.length; index++) {
+        const file = fileUpload.files[index];
+        this.files.push({
+          data: file,
+          state: 'in',
+          inProgress: false,
+          progress: 0,
+          canRetry: false,
+          canCancel: true
+        });
+      }
+      this.uploadFiles();
     }
     fileUpload.click();
-    
-}
 
-private uploadFile(file: FileUploadModel) {
+  }
+
+  private uploadFile(file: FileUploadModel) {
 
     this.loadingFile = true;
     const fd = new FormData();
@@ -140,19 +138,19 @@ private uploadFile(file: FileUploadModel) {
     file.sub = this._http.request(req).pipe(
       map(event => {
 
-       
-        switch (event.type) {
-              case HttpEventType.UploadProgress:
-                    file.progress = Math.round(event.loaded * 100 / event.total);
-                    break;
-              case HttpEventType.Response:
 
-              this.fileUp = event.body
-              setTimeout(() => {
-                this.loadingFile = false;
-              }, 1000);
-             
-                return event;
+        switch (event.type) {
+          case HttpEventType.UploadProgress:
+            file.progress = Math.round(event.loaded * 100 / event.total);
+            break;
+          case HttpEventType.Response:
+
+            this.fileUp = event.body
+            setTimeout(() => {
+              this.loadingFile = false;
+            }, 1000);
+
+            return event;
         }
       }),
       tap(message => { }),
@@ -178,7 +176,7 @@ private uploadFile(file: FileUploadModel) {
 
     this.files.forEach(file => {
 
-      console.log('file: ',file)
+      console.log('file: ', file)
       this.uploadFile(file);
 
       this.nameFile = file.data.name;
@@ -187,7 +185,7 @@ private uploadFile(file: FileUploadModel) {
     });
   }
 
-    
+
   private removeFileFromArray(file: FileUploadModel) {
     const index = this.files.indexOf(file);
 

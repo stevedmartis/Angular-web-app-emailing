@@ -25,9 +25,6 @@ import { ContactsService } from 'app/main/apps/contacts/contacts.service';
 import { ContactsContactFormDialogComponent } from 'app/main/apps/contacts/contact-form/contact-form.component';
 import { SpeedDialFabComponent } from 'app/layout/speed-dial-fab/speed-dial-fab.component';
 import { InvitationFormComponent } from './product/invitation-form/invitation-form.component';
-import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
-import { InvoiceCompactComponent } from 'app/main/pages/invoices/compact/compact.component';
-import { InvoiceService } from 'app/main/pages/invoices/invoice.service';
 
 import { QuillModule } from 'ngx-quill';
 import { InvitationService } from './product/invitation-form/invitation.service';
@@ -100,7 +97,6 @@ const routes: Routes = [
         FuseWidgetModule,
         FuseConfirmDialogModule,
         FuseSidebarModule,
-        CKEditorModule,
         QuillModule.forRoot()
     ],
     providers   : [
