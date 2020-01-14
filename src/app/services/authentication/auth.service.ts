@@ -54,6 +54,10 @@ export class AuthService {
     }));
   }
 
+  loginGuard(user){
+    this.currentUserSubject.next(user);
+  }
+
   createPerson(name) {
 
     console.log('entro person')

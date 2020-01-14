@@ -22,7 +22,7 @@ import { AppStoreModule } from 'app/store/store.module';
 import { LayoutModule } from 'app/layout/layout.module';
 import { AuthServicesModule } from '../app/services/authentication/auth.module';
 import { EventServicesModule } from '../app/services/eventos/event.modules';
-
+import { AuthGuardService } from '../app/main/helpers/auth-guard.service';
 
 const appRoutes: Routes = [
     {
@@ -88,6 +88,9 @@ const appRoutes: Routes = [
         AppStoreModule,
         AuthServicesModule,
         EventServicesModule
+    ],
+    providers: [
+        AuthGuardService
     ],
     bootstrap   : [
         AppComponent

@@ -74,6 +74,8 @@ export class EcommerceProductsComponent implements OnInit
             
 
         }
+
+        /*
         fromEvent(this.filter.nativeElement, 'keyup')
             .pipe(
                 takeUntil(this._unsubscribeAll),
@@ -88,6 +90,7 @@ export class EcommerceProductsComponent implements OnInit
 
                 this.dataSource.filter = this.filter.nativeElement.value;
             });
+            */
     }
 }
 

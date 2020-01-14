@@ -16,10 +16,12 @@ import { FuseWidgetModule } from '@fuse/components/widget/widget.module';
 
 import { ProjectDashboardComponent } from 'app/main/apps/dashboards/project/project.component';
 import { ProjectDashboardService } from 'app/main/apps/dashboards/project/project.service';
+import { AuthGuardService } from 'app/main/helpers/auth-guard.service';
 
 const routes: Routes = [
     {
         path     : '**',
+        canActivate: [ AuthGuardService ],
         component: ProjectDashboardComponent,
         resolve  : {
             data: ProjectDashboardService

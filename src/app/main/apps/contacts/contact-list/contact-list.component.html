@@ -1,6 +1,11 @@
-<div class="text" *ngIf="!_contactsService.contactsExist && !_contactsService.loadingContact">
-        <span class="title">La lista esta vacia</span>
-    </div>
+
+
+    <div *ngIf="!_contactsService.contactsExist && !_contactsService.loadingContact" class="content-card empty-card">
+
+
+            <img class="empty-inv" src="assets/images/listEmptyCut.png">
+
+        </div>
 
 <div  class="content-table"
 [ngClass]="{
@@ -126,16 +131,16 @@
 
 
 
-</div>
-
-
-
 <mat-paginator #paginator
 [length]="dataSource.filteredData.length"
 [pageIndex]="0"
 [pageSize]="25"
 [pageSizeOptions]="[5, 10, 25, 100]">
 </mat-paginator>
+
+</div>
+
+
 
     <div *ngIf="_contactsService.loadingContact" class="spinner-loading"
     fxLayoutAlign="center center">

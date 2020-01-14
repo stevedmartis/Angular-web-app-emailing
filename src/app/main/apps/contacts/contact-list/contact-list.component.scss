@@ -106,7 +106,17 @@ contacts-contact-list {
 
 contacts-contact-list {
 
-    display: table !important;
+    display: -webkit-inline-box !important;
 
+}
+
+.empty-inv {
+
+    max-width: 100%;
+}
+
+.empty-card {
+    align-items: center;
+    
 }
 

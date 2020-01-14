@@ -22,11 +22,12 @@ import { ContactsService } from 'app/main/apps/contacts/contacts.service';
 
 import { EmailEditorModule } from 'angular-email-editor';
 import { ContactsModule } from '../contacts/contacts.module';
-
+import { AuthGuardService } from 'app/main/helpers/auth-guard.service';
 
 const routes: Routes = [
     {
         path     : 'products',
+        canActivate: [ AuthGuardService ],
         component: EcommerceProductsComponent,
         resolve  : {
             data: EcommerceProductsService

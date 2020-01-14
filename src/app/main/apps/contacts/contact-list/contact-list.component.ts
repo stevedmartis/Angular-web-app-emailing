@@ -79,7 +79,6 @@ export class ContactsContactListComponent implements OnInit, OnDestroy
      
         this.dataSource = new FilesDataSource(this._contactsService, this.paginator);
 
-        console.log(this.dataSource)
 
 
         this._contactsService.onContactsChanged

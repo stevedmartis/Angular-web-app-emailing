@@ -10,7 +10,7 @@ const routes = [
     },
     {
         path        : 'dashboards/project',
-        loadChildren: './dashboards/project/project.module#ProjectDashboardModule'
+        loadChildren: () => import('./dashboards/project/project.module').then(m => m.ProjectDashboardModule)
     },
     {
         path        : 'mail',
