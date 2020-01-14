@@ -54,5 +54,11 @@ private emailEditor: EmailEditorComponent;
     this.emailEditor.exportHtml((data) => console.log('exportHtml', data));
   }
 
+  editorLoaded() {
+    // (load)="editorLoaded($event)"
+    const json = {}
+    this.emailEditor.loadDesign(json)
+  }
+
      
 }
