@@ -26,8 +26,9 @@ import { ContactsContactFormDialogComponent } from 'app/main/apps/contacts/conta
 import { SpeedDialFabComponent } from 'app/layout/speed-dial-fab/speed-dial-fab.component';
 import { InvitationFormComponent } from './product/invitation-form/invitation-form.component';
 
-import { QuillModule } from 'ngx-quill';
 import { InvitationService } from './product/invitation-form/invitation.service';
+import { EmailEditorModule } from 'angular-email-editor';
+
 
 const routes: Routes = [
     {
@@ -97,7 +98,8 @@ const routes: Routes = [
         FuseWidgetModule,
         FuseConfirmDialogModule,
         FuseSidebarModule,
-        QuillModule.forRoot()
+
+        EmailEditorModule
     ],
     providers   : [
         EcommerceProductsService,

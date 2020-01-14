@@ -1,17 +1,26 @@
-import { Injectable } from '@angular/core';
+import { Injectable, ViewChild } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot } from '@angular/router';
 import { Observable, Subject } from 'rxjs';
 import { FormGroup, FormControl, FormBuilder } from '@angular/forms';
 import { Invitation } from './invitation.model';
+import { EmailEditorComponent } from 'angular-email-editor';
 
 @Injectable()
 export class InvitationService 
 {
     invitationForm: FormGroup;
     invitation: Invitation;
-      
+
+  
+@ViewChild(EmailEditorComponent, {static: true})
+
+private emailEditor: EmailEditorComponent;
+
+
+
      constructor(private _formBuilder: FormBuilder,){
+
 
      }
 
@@ -39,6 +48,11 @@ export class InvitationService
         console.log(  this.invitationForm.get('editor').value)
       }
     
+
+
+  exportHtml() {
+    this.emailEditor.exportHtml((data) => console.log('exportHtml', data));
+  }
 
      
 }

@@ -26,10 +26,12 @@
 
                 <div appearance="outline" floatLabel="always" class="w-100-p" fxFlex="100">
 
-                    <quill-editor [modules]="config" placeholder="Escriba elontenido del mensaje..."
-                        formControlName="editor">
 
-                    </quill-editor>
+                        <div class="container">
+                       
+                                <email-editor  class="email-editor" [options]="options" (load)="editorLoaded($event)" ></email-editor>
+                              </div>
+
 
 
                     <!--

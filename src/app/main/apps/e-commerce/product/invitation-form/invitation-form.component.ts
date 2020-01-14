@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Inject, Input, Output, EventEmitter, ViewChild } from '@angular/core';
 import { ContactsContactFormDialogComponent } from 'app/main/apps/contacts/contact-form/contact-form.component';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { FormBuilder, FormGroup } from '@angular/forms';
@@ -7,6 +7,7 @@ import { HttpClient, HttpResponse, HttpRequest, HttpEventType, HttpErrorResponse
 import { Subscription, of } from 'rxjs';
 import { catchError, last, tap, map } from 'rxjs/operators';
 import { InvitationService } from './invitation.service';
+
 
 export class FileUploadModel {
   data: File;
@@ -43,26 +44,9 @@ export class InvitationFormComponent implements OnInit {
   private files: Array<FileUploadModel> = [];
   loadingFile: boolean = false;
 
-  config = {
-    toolbar: [
-      ['bold', 'italic', 'underline', 'strike'],        // toggled buttons
-      ['blockquote', 'code-block', 'link', 'image', 'video'],
 
-      [{ 'header': 1 }, { 'header': 2 }],               // custom button values
-      [{ 'list': 'ordered' }, { 'list': 'bullet' }],
-      [{ 'script': 'sub' }, { 'script': 'super' }],      // superscript/subscript
-      [{ 'indent': '-1' }, { 'indent': '+1' }],          // outdent/indent
-      [{ 'direction': 'rtl' }],                         // text direction
-
-      [{ 'size': ['small', false, 'large', 'huge'] }],  // custom dropdown
-      [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
-
-      [{ 'color': [] }, { 'background': [] }],          // dropdown with defaults from theme
-      [{ 'font': [] }],
-      [{ 'align': [] }],
-
-      ['clean']
-    ]
+  options: {
+    locale: 'es-ES'
   }
 
   constructor(
@@ -193,6 +177,7 @@ export class InvitationFormComponent implements OnInit {
       this.files.splice(index, 1);
     }
   }
+
 
 
 }

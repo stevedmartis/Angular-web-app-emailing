@@ -310,7 +310,7 @@ export class EcommerceProductComponent implements OnInit, OnDestroy
             {
 
                 console.log('create invitation!')
-                this.invitationService.createCampaign()
+                this.invitationService.exportHtml()
             }
     
         })
