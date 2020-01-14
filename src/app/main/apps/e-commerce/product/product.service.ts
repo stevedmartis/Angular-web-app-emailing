@@ -78,6 +78,8 @@ export class EcommerceProductService implements Resolve<any>
                     .subscribe((response: any) => {
                         this.product = response;
                         console.log(this.product)
+
+                        this.contactServices.idEventNow = this.product._id
                         this.onProductChanged.next(this.product);
                         resolve(response);
 

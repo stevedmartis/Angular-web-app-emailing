@@ -37,7 +37,6 @@ export class ContactsComponent implements OnInit, OnDestroy
         private _contactsService: ContactsService,
         private _fuseSidebarService: FuseSidebarService,
         private _matDialog: MatDialog,
-        @Inject(MAT_DIALOG_DATA) private _data: any,
     )
     {
         // Set the defaults
@@ -60,10 +59,6 @@ export class ContactsComponent implements OnInit, OnDestroy
 
 
         
-
-        console.log('contatcs: ', this._data.idEvent)
-
-        this._contactsService.idEventNow = this._data.idEvent
         this._contactsService.onSelectedContactsChanged
             .pipe(takeUntil(this._unsubscribeAll))
             .subscribe(selectedContacts => {

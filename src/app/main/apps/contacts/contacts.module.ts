@@ -21,10 +21,14 @@ import { ContactsSelectedBarComponent } from 'app/main/apps/contacts/selected-ba
 import { ContactsMainSidebarComponent } from 'app/main/apps/contacts/sidebars/main/main.component';
 import { ContactsContactFormDialogComponent } from 'app/main/apps/contacts/contact-form/contact-form.component';
 import {  SpeedDialFabComponent } from 'app/layout/speed-dial-fab/speed-dial-fab.component';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+
+import { MatPaginatorModule } from '@angular/material';
+import { MaterialModule } from 'app/main/angular-material-elements/material.module';
 
 const routes: Routes = [
     {
-        path     : '**',
+        path     : 'contacts',
         component: ContactsComponent,
         resolve  : {
             contacts: ContactsService
@@ -33,23 +37,28 @@ const routes: Routes = [
 ];
 
 @NgModule({
-    exports: [],
-    declarations   : [
-        
+
+declarations: [
+    ContactsComponent,
+    ContactsContactListComponent,
+    ContactsSelectedBarComponent,
+    ContactsMainSidebarComponent,
+    ContactsContactFormDialogComponent,
+    SpeedDialFabComponent
+],
+
+    exports: [
+        ContactsComponent,
+        ContactsContactListComponent,
+        ContactsSelectedBarComponent,
+        ContactsMainSidebarComponent,
+        ContactsContactFormDialogComponent,
+        SpeedDialFabComponent
     ],
     imports        : [
         RouterModule.forChild(routes),
 
-        MatButtonModule,
-        MatCheckboxModule,
-        MatDatepickerModule,
-        MatFormFieldModule,
-        MatIconModule,
-        MatInputModule,
-        MatMenuModule,
-        MatRippleModule,
-        MatTableModule,
-        MatToolbarModule,
+        MaterialModule,
 
         FuseSharedModule,
         FuseConfirmDialogModule,
@@ -59,8 +68,6 @@ const routes: Routes = [
     providers      : [
         ContactsService,
     
-            { provide: MatDialogRef, useValue: {} },
-    { provide: MAT_DIALOG_DATA, useValue: [] }
         
     ],
     entryComponents: [

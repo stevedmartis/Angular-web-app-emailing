@@ -85,3 +85,28 @@ contacts-contact-list {
     width: 100%;
 }
 
+@include media-breakpoint('xs') {
+    .p-24 {
+        padding: 0px !important;
+    }
+
+  .mat-table {
+    width: 320px;
+  }
+
+  .mat-paginator-container {
+    display: table;
+    padding: 20px 8px !important;
+    flex-wrap: inherit !important;
+
+  }
+
+}
+
+
+contacts-contact-list {
+
+    display: table !important;
+
+}
+

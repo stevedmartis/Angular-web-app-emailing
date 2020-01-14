@@ -1,7 +1,9 @@
+@import "src/@fuse/scss/fuse";
+
 .fab-container {
     position: fixed;
-    bottom: 15px;
-    right: 22%;
+    bottom: 10%;
+    right: 120px;
     z-index: 100;
     display: flex;
     flex-direction: column-reverse;
@@ -27,5 +29,12 @@
   .icon-second {
 
     color:#878787
+  }
+
+  @include media-breakpoint('xs') {
+    .fab-container {
+      right: 10px;
+  }
+
   }
 

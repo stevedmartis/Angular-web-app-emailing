@@ -74,7 +74,7 @@ export class ContactsService implements Resolve<any>
         return new Promise((resolve, reject) => {
 
             Promise.all([
-                //this.getContacts(this.idEventNow),
+                this.getContacts(this.idEventNow),
                 //this.getUserData()
             ]).then(
                 ([files]) => {

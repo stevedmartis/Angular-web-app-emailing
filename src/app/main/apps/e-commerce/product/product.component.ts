@@ -18,8 +18,8 @@ import { ContactsComponent } from 'app/main/apps/contacts/contacts.component';
 import { ContactsService } from 'app/main/apps/contacts/contacts.service';
 import { ContactsContactFormDialogComponent } from 'app/main/apps/contacts/contact-form/contact-form.component';
 import { FuseConfirmDialogComponent } from '@fuse/components/confirm-dialog/confirm-dialog.component';
-import { InvitationFormComponent } from './invitation-form/invitation-form.component';
-import { InvitationService } from './invitation-form/invitation.service';
+
+import { EmailEditorComponent } from 'angular-email-editor';
 
 
 
@@ -41,9 +41,11 @@ export class EcommerceProductComponent implements OnInit, OnDestroy
     dialogRef: any;
     isCreated: boolean= false;
     confirmDialogRef: MatDialogRef<FuseConfirmDialogComponent>;
-    invitationDialogRef: MatDialogRef<InvitationFormComponent>;
 
-    @ViewChild(InvitationFormComponent, {static: true}) invitationComponent: InvitationFormComponent
+    //@ViewChild(InvitationFormComponent, {static: false}) invitationComponent: InvitationFormComponent
+
+    @ViewChild(EmailEditorComponent, {static: true})
+    emailEditor: EmailEditorComponent
 
    
     // Private 
@@ -64,7 +66,7 @@ export class EcommerceProductComponent implements OnInit, OnDestroy
         private _location: Location,
         private _matSnackBar: MatSnackBar,
         private router: Router,
-        private invitationService: InvitationService,
+
         
         public _matDialog: MatDialog,
 
@@ -286,36 +288,12 @@ export class EcommerceProductComponent implements OnInit, OnDestroy
 
     }
 
-
-    dialogInvitationForm(){
-
-        this.invitationDialogRef = this._matDialog.open(InvitationFormComponent, {
-            disableClose: true,
-            panelClass: 'invitation-form-dialog',
-            height: '100%',
-            width: '100%',
-            
-            data      : {
-                contact: '',
-                action : 'new'
-            }
-        });
+    exportHtml() {
+        this.emailEditor.exportHtml((data) => console.log('exportHtml', data));
+      }
     
-        this.invitationDialogRef.componentInstance.dataproduct = 'inivtacion sexy';
-    
-        this.invitationDialogRef.afterClosed().subscribe(result => {
 
-            console.log(result)
-            if ( result )
-            {
 
-                console.log('create invitation!')
-                this.invitationService.exportHtml()
-            }
-    
-        })
-
-    }
 
 
 
