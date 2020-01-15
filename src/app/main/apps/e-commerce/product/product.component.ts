@@ -4,6 +4,7 @@ import { Location } from '@angular/common';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Subject, Subscription } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+import { AbstractControl } from '@angular/forms';
 
 import { fuseAnimations } from '@fuse/animations';
 import { FuseUtils } from '@fuse/utils';
@@ -44,7 +45,7 @@ export class EcommerceProductComponent implements OnInit, OnDestroy
 
     //@ViewChild(InvitationFormComponent, {static: false}) invitationComponent: InvitationFormComponent
 
-    @ViewChild(EmailEditorComponent, {static: true})
+    @ViewChild(EmailEditorComponent, {static: false})
     emailEditor: EmailEditorComponent
 
    
@@ -69,8 +70,6 @@ export class EcommerceProductComponent implements OnInit, OnDestroy
 
         
         public _matDialog: MatDialog,
-
-
 
 
     )
@@ -142,9 +141,12 @@ export class EcommerceProductComponent implements OnInit, OnDestroy
 
                 if ( product )
                 {
-                    this.product = new Product(product);
+
+                    console.log('product', product)
+                    this.product = new Product(product.event || product.post);
                     this.pageType = 'edit';
                     this.isCreated = true;
+                    this._contactsService.eventCreated = true;
                 }
                 else
                 {
@@ -187,10 +189,10 @@ export class EcommerceProductComponent implements OnInit, OnDestroy
         return this._formBuilder.group({
             id              : [this.product._id],
             handle         : [this.product.handle],
-            name            : [this.product.name],
+            name            : [this.product.eventName],
             company          : [this.product.company],
-            description     : [this.product.description],
-            date      : [this.product.date],
+            description     : [this.product.desc],
+            date      : [this.product.dateEvent],
             tags            : [this.product.tags],
             images          : [this.product.images],
 
@@ -250,9 +252,11 @@ export class EcommerceProductComponent implements OnInit, OnDestroy
                     duration        : 3000
                 });
 
+                console.log(x)
                 this.isCreated = true;
+               
                 // Change the location with new one
-                this._location.go('apps/e-commerce/products/' + this.product._id + '/' + this.product.handle);
+                this._location.go('apps/e-commerce/products/' + x.post._id + '/' + x.post.handle);
             });
     }
 
@@ -290,6 +294,14 @@ export class EcommerceProductComponent implements OnInit, OnDestroy
 
     exportHtml() {
         this.emailEditor.exportHtml((data) => console.log('exportHtml', data));
+      }
+
+
+    createEventValidator(control: AbstractControl) {
+        if (this.isCreated) {
+          return { creationValid: true };
+        }
+        return null;
       }
     
 

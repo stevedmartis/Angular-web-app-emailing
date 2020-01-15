@@ -34,7 +34,7 @@ export class ContactsComponent implements OnInit, OnDestroy
      * @param {FuseSidebarService} _fuseSidebarService
      */
     constructor(
-        private _contactsService: ContactsService,
+        public _contactsService: ContactsService,
         private _fuseSidebarService: FuseSidebarService,
         private _matDialog: MatDialog,
     )

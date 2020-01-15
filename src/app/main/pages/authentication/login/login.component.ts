@@ -83,17 +83,14 @@ export class LoginComponent implements OnInit
         .pipe(first())
         .subscribe(user => {
 
-            this.authServices.PersonByUserId()
-            .pipe(first())
-            .subscribe(person => {
-                console.log('person by user', person)
+            console.log(user)
+
                 this.router.navigate(['/apps/dashboards/analytics']);
-            })
             
         },
         err => {
             console.log('error api: ', err)    
-            this._matSnackBar.open(err.error.text, 'OK', {
+            this._matSnackBar.open(err.error.message, 'OK', {
                 verticalPosition: 'top',
                 duration        : 2000
             });        

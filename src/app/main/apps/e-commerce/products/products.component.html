@@ -83,7 +83,7 @@
                 <ng-container matColumnDef="name">
                     <mat-header-cell *matHeaderCellDef mat-sort-header>Name</mat-header-cell>
                     <mat-cell *matCellDef="let product" >
-                        <p class="category text-truncate">{{product.name}}</p>
+                        <p class="category text-truncate">{{product.eventName}}</p>
                     </mat-cell>
                 </ng-container>
 
@@ -156,10 +156,7 @@
         <div class="content-card empty-card" *ngIf="!eventExist">
 
 
-            <img class="empty-event" src="assets/images/eventoEmpty.jpg">
-
-
-
+            <img src="assets/images/emptyevent.png">
 
         </div>
 

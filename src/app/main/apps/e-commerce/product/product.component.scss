@@ -26,31 +26,7 @@
         padding: 2%;
     }
 
-    .content {
 
-        .mat-tab-group,
-        .mat-tab-body-wrapper,
-        .tab-content{
-            flex: 1 1 auto;
-            max-width: 100%;
-        }
-
-        .mat-tab-body-content {
-            display: flex;
-        }
-
-        .mat-tab-label {
-            height: 64px;
-        }
-
-
-
-        // Temporary prefix alignment fix
-        .mat-form-field-appearance-outline .mat-form-field-prefix,
-        .mat-form-field-appearance-outline .mat-form-field-suffix {
-            top: 0;
-        }
-    }
 
     .mat-icon-form {
         color: rgba(114, 114, 114, 0.54);
@@ -266,8 +242,23 @@
     margin-left: -23px;
 }
 
-.dialog-content-wrapper {
-    margin-bottom: 4%;
+
+.btn-left {
+    left: 23px;
 }
+
+.step-hidden
+{
+    visibility: hidden;
+}
+
+.step-show {
+    visibility: visible;
+}
+
+.btn-top {
+    top: 12px;
+}
+
 
 

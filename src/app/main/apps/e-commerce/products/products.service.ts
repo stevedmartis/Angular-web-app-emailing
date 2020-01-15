@@ -71,21 +71,24 @@ export class EcommerceProductsService implements Resolve<any>
 
     getAllEvents(): Promise<any> {
 
+        console.log('user ',this.authServices.currentUserValue.token)
+
         const Haeader = {
             headers: new HttpHeaders({
                 'Content-Type': 'application/json',
-                'authorization': `${this.authServices.currentUserValue.token}`
+                'Authorization': `beader ${this.authServices.currentUserValue.token}`
             }),
         }
 
         return new Promise((resolve, reject) => {
-            this._httpClient.get(environment.apiUrl + '/api/evento', Haeader)
+            this._httpClient.get(environment.apiUrl + '/api/all-events', Haeader)
                 .subscribe((response: any) => {
                     
+                    console.log(response)
                     let eventArray: any = []
                     let count = 0;
 
-                    response.forEach(e => {
+                    response.events.forEach(e => {
                         count++
                         e.displayId = count
                         e.id = e._id
@@ -94,6 +97,8 @@ export class EcommerceProductsService implements Resolve<any>
                         eventArray.push(e)
                        
                     });
+
+                    console.log(eventArray)
 
                     this.products = eventArray;
 

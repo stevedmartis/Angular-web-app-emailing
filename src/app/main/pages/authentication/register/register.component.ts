@@ -65,9 +65,9 @@ export class RegisterComponent implements OnInit, OnDestroy
     ngOnInit(): void
     {
         this.registerForm = this._formBuilder.group({
-            name           : ['', Validators.required],
+            username           : ['', [Validators.required, Validators.minLength(5)]],
             email          : ['', [Validators.required, Validators.email]],
-            password       : ['', Validators.required],
+            password       : ['', [Validators.required, Validators.minLength(10)]],
             passwordConfirm: ['', [Validators.required, confirmPasswordValidator]]
         });
 
@@ -80,34 +80,38 @@ export class RegisterComponent implements OnInit, OnDestroy
             });
     }
 
+    get f() { return this.registerForm.controls; }
+
     register() {
 
         const email = this.registerForm.get('email')
-        const name = this.registerForm.get('name')
+        const username = this.registerForm.get('username')
         const password = this.registerForm.get('password')
 
-        this.authServices.register(email.value, name.value, password.value)
+        this.authServices.register(email.value, username.value, password.value)
         .subscribe(user => {
             console.log('user register and person create:', user)
-    
-            this.authServices.login(email.value, password.value)
-            .pipe(first())
-            .subscribe(user => {
 
-                console.log('user loggin :', user)
-                this.router.navigate(['/apps/dashboards/analytics']);
-
-            })
+            this.router.navigate(['/apps/dashboards/analytics']);
         },
         err => {
             console.log('error api: ', err)    
-            this._matSnackBar.open(err.error.text, 'OK', {
+            this._matSnackBar.open(err.error.message, 'OK', {
                 verticalPosition: 'top',
                 duration        : 3000
             });        
            
         })
     }
+
+    
+    getMesaggeErrorUsername(){
+        return this.f.username.getError('required')? 'Nombre de usuario es requerido' : this.f.username.getError('minlength')? 'Minimo 5 letras' : '';    
+      }
+    
+      getMesaggeErrorPassword(){
+        return this.f.password.getError('required')? 'Contraseña es requerida' : this.f.password.getError('minlength')? 'Minimo 10 caracteres' : '';    
+      }
 
     /**
      * On destroy
@@ -153,3 +157,5 @@ export const confirmPasswordValidator: ValidatorFn = (control: AbstractControl):
 
     return {passwordsNotMatching: true};
 };
+
+

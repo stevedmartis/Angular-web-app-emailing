@@ -63,12 +63,12 @@ contacts-contact-list {
 }
 
 .table-hidden {
-    visibility: hidden;
+    display: none;
 
 }
 
 .table-visible {
-    visibility: visible
+    display: contents;
 }
 
 .spinner-loading {

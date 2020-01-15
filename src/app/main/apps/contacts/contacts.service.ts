@@ -38,6 +38,7 @@ export class ContactsService implements Resolve<any>
     worksheet: any;
     selection = new SelectionModel<any>(true, []);
     idEventNow: any;
+    eventCreated: boolean = false;
 
     /**
      * Constructor
@@ -81,14 +82,14 @@ export class ContactsService implements Resolve<any>
 
                     this.onSearchTextChanged.subscribe(searchText => {
                         this.searchText = searchText;
-                        this.getContacts(this.idEventNow);
+                        //this.getContacts(this.idEventNow);
                     });
 
                     this.onFilterChanged.subscribe(filter => {
 
              
                         this.filterBy = filter;
-                        this.getContacts(this.idEventNow);
+                        //this.getContacts(this.idEventNow);
                     });
 
                     resolve();
@@ -120,7 +121,7 @@ export class ContactsService implements Resolve<any>
                         
                         this.contacts = response;
 
-                        console.log(this.contacts)
+                        console.log('hola',this.contacts)
 
                         /*
                         if ( this.filterBy === 'starred' )
@@ -280,7 +281,7 @@ export class ContactsService implements Resolve<any>
                     console.log(this.contactsCount, arrayLenght)
 
                     if(this.contactsCount === arrayLenght){
-                        this.getContacts(this.idEventNow)
+                        //this.getContacts(this.idEventNow)
 
                         this.contactsCount = 0;
                         
@@ -307,7 +308,7 @@ export class ContactsService implements Resolve<any>
             this._httpClient.post(environment.apiUrl + '/api/person/', obj, Haeader)
                 .subscribe(response => {
 
-                    this.getContacts(this.idEventNow)
+                    //this.getContacts(this.idEventNow)
                     resolve(response);
                     console.log(response)
                    

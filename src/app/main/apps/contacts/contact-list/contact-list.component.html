@@ -1,11 +1,6 @@
 
-
-    <div *ngIf="!_contactsService.contactsExist && !_contactsService.loadingContact" class="content-card empty-card">
-
-
-            <img class="empty-inv" src="assets/images/listEmptyCut.png">
-
-        </div>
+        <!-- CENTER -->
+        <div class="center">
 
 <div  class="content-table"
 [ngClass]="{
@@ -142,8 +137,20 @@
 
 
 
+
+<div *ngIf="!_contactsService.contactsExist && !_contactsService.loadingContact" class="empty-card">
+
+
+        <img class="empty-inv" src="assets/images/listEmptyCut.png">
+
+    </div>
+
+
+
     <div *ngIf="_contactsService.loadingContact" class="spinner-loading"
     fxLayoutAlign="center center">
 
     <mat-spinner></mat-spinner>
+</div>
+
 </div>

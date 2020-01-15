@@ -44,7 +44,7 @@ export class AuthService {
         'Content-Type': 'application/json',
       }),
     }
-    return this.http.post<User>(`${environment.apiUrl}/api/auth/login`, { email, password }, Haeader)
+    return this.http.post<User>(`${environment.apiUrl}/api/login`, { email, password }, Haeader)
     .pipe(map(user => {
         // store user details and jwt token in local storage to keep user logged in between page refreshes
         localStorage.setItem('currentUser', JSON.stringify(user));
@@ -104,21 +104,20 @@ export class AuthService {
   }
 
 
-  register(email, name, password) {
+  register(email, username, password) {
 
     const Haeader = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
       }),
-
     }
-
-    return this.http.post<User>(`${environment.apiUrl}/api/auth/register`, { email, name, password }, Haeader)
+    return this.http.post<User>(`${environment.apiUrl}/api/register`, { email, username, password }, Haeader)
     .pipe(map(person => {
 
         // store user details and jwt token in local storage to keep user logged in between page refreshes
-        localStorage.setItem('currentPerson', JSON.stringify(person));
+        localStorage.setItem('currentUser', JSON.stringify(person));
         this.currentPersonSubject.next(person);
+        
 
         return person;
     }));

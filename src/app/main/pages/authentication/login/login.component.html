@@ -8,7 +8,7 @@
                 <img src="assets/images/logos/fuse.svg">
             </div>
 
-            <div class="title">LOGIN TO YOUR ACCOUNT</div>
+            <div class="title">Iniciar sesión con mi cuenta</div>
 
             <form name="loginForm" [formGroup]="loginForm" novalidate>
 
@@ -17,12 +17,12 @@
                     <input matInput formControlName="email">
                     <mat-icon matSuffix class="secondary-text">mail</mat-icon>
                     <mat-error *ngIf="loginForm.get('email').hasError('required')">
-                        Email is required
+                        Email es requerido
                     </mat-error>
                     <mat-error
                         *ngIf="!loginForm.get('email').hasError('required') &&
                                 loginForm.get('email').hasError('email')">
-                        Please enter a valid email address
+                        Favor ingresar email valido
                     </mat-error>
                 </mat-form-field>
 
@@ -31,32 +31,36 @@
                     <input matInput type="password" formControlName="password">
                     <mat-icon matSuffix class="secondary-text">vpn_key</mat-icon>
                     <mat-error>
-                        Password is required
+                        Contraseña es incorrecta
                     </mat-error>
                 </mat-form-field>
 
                 <div class="remember-forgot-password" fxLayout="row" fxLayout.xs="column"
                      fxLayoutAlign="space-between center">
                     <mat-checkbox class="remember-me" aria-label="Remember Me">
-                        Remember Me
+                       Recordame
                     </mat-checkbox>
 
                     <a class="forgot-password" [routerLink]="'/pages/auth/forgot-password'">
-                        Forgot Password?
+                       Recuperar contraseña?
                     </a>
                 </div>
 
                 <button mat-raised-button color="accent" class="submit-button" aria-label="LOG IN"
                     (click)="login()"
                     [disabled]="loginForm.invalid">
-                    LOGIN
+                    Iniciar sesión
                 </button>
 
             </form>
 
             <div class="separator">
-                <span class="text">OR</span>
+                <span class="text">O</span>
             </div>
+
+            <!--
+
+         
 
             <button mat-raised-button class="google">
                 Log in with Google
@@ -66,9 +70,12 @@
                 Log in with Facebook
             </button>
 
+
+               -->
+
             <div class="register" fxLayout="column" fxLayoutAlign="center center">
-                <span class="text">Don't have an account?</span>
-                <a class="link" [routerLink]="'/pages/auth/register'">Create an account</a>
+                <span class="text">Crear mi cuenta</span>
+                <a class="link" [routerLink]="'/pages/auth/register'">Registrarme</a>
             </div>
 
         </div>

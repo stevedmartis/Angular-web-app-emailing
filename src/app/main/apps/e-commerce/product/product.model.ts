@@ -5,11 +5,11 @@ import { FuseUtils } from '@fuse/utils';
 export class Product
 {
     _id: string;
-    name: string;
+    eventName: string;
     handle: string;
     company: String;
-    description: string;
-    date: string;
+    desc: string;
+    dateEvent: string;
     categories: string[];
     tags: string[];
     images: {
@@ -40,11 +40,11 @@ export class Product
     {
         product = product || {};
         this._id = product._id || '';
-        this.name = product.name || '';
+        this.eventName = product.eventName || '';
         this.company = product.company || '';
-        this.date = product.date || '';
-        this.handle = product.handle || FuseUtils.handleize(this.name);
-        this.description = product.description || '';
+        this.dateEvent = product.dateEvent || '';
+        this.handle = product.handle || FuseUtils.handleize(this.eventName);
+        this.desc = product.desc || '';
         this.categories = product.categories || [];
         this.tags = product.tags || [];
         this.images = product.images || [];

@@ -65,25 +65,25 @@
         <div class="center p-24 pb-56 pr-sm-92" fusePerfectScrollbar>
 
             <!-- CONTENT -->
-            <div class="content">
+            <div class="content" *ngIf="_contactsService.eventCreated">
                 <contacts-contact-list></contacts-contact-list>
             </div>
             <!-- / CONTENT -->
            
         </div>
         <!-- / CENTER -->
-    
 
-
-
+       
+        <app-speed-dial-fab></app-speed-dial-fab>
     </div>
     <!-- / CONTENT-->
 
-    <div >
-            <app-speed-dial-fab></app-speed-dial-fab>
-        </div>
+
 
   
+
+
 </div>
+
 
 

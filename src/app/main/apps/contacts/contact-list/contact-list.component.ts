@@ -64,7 +64,7 @@ export class ContactsContactListComponent implements OnInit, OnDestroy
     /**
      * On init
      */
-
+/*
     ngAfterContentChecked() {
 
         this.dataSource = new FilesDataSource(this._contactsService, this.paginator);
@@ -72,19 +72,23 @@ export class ContactsContactListComponent implements OnInit, OnDestroy
         
     }
 
+    */
+
     ngOnInit(): void
     {
+
+
 
        this._contactsService.loadingContact = true;
      
         this.dataSource = new FilesDataSource(this._contactsService, this.paginator);
 
-
-
         this._contactsService.onContactsChanged
             .pipe(takeUntil(this._unsubscribeAll))
             .subscribe(contacts => {
                 this.contacts = contacts;
+
+                console.log('entro ',this.contacts )
      
                 if(contacts.length > 0){
 
@@ -103,6 +107,9 @@ export class ContactsContactListComponent implements OnInit, OnDestroy
                     this.checkboxes[contact.id] = false;
                 });
             });
+
+
+                                
 
 
 
@@ -278,6 +285,13 @@ export class FilesDataSource extends DataSource<any>
         return merge(...displayDataChanges)
             .pipe(
                 map(() => {
+
+                
+
+                    console.log('_contactsService.contacts ', this._contactsService.contacts)
+
+                  
+
                         let data = this._contactsService.contacts.slice();
                         data = this.filterData(data);
 
@@ -286,7 +300,14 @@ export class FilesDataSource extends DataSource<any>
                         // Grab the page's slice of data.
                         const startIndex = this._matPaginator.pageIndex * this._matPaginator.pageSize;
                         return data.splice(startIndex, this._matPaginator.pageSize);
+
+
+      
+
+                    
                     }
+
+                
                 ));
     }
 
