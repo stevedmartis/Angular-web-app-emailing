@@ -26,11 +26,10 @@ export class ContactsService implements Resolve<any>
     user: any;
     selectedContacts: string[] = [];
     contactsArray: any[] = [];
-    loadingContact: boolean = true;
+    loadingContact: boolean = false;
 
     searchText: string;
     filterBy: string;
-
     jsonData: any;  
     contactsCount: number = 0;
     countSelect: number = 0;
@@ -111,15 +110,15 @@ export class ContactsService implements Resolve<any>
         const Haeader = {
             headers: new HttpHeaders({
               'Content-Type': 'application/json',
-              'authorization': `${this.authServices.currentUserValue.token}`}),
+              'Authorization': `beader ${this.authServices.currentUserValue.token}`}),
           }
 
 
         return new Promise((resolve, reject) => {
-                this._httpClient.get(environment.apiUrl+'/api/person/event/' + idEvent, Haeader)
+                this._httpClient.get(environment.apiUrl+'/api/invited/event/' + idEvent, Haeader)
                     .subscribe((response: any) => {
                         
-                        this.contacts = response;
+                        this.contacts = response.invited;
 
                         console.log('hola',this.contacts)
 
@@ -267,26 +266,27 @@ export class ContactsService implements Resolve<any>
         const Haeader = {
             headers: new HttpHeaders({
               'Content-Type': 'application/json',
-              'authorization': `${this.authServices.currentUserValue.token}`}),
+              'Authorization': `beader ${this.authServices.currentUserValue.token}`}),
           }
         
         return new Promise((resolve, reject) => {
 
             console.log('entro update', obj)
-            this._httpClient.post(environment.apiUrl + '/api/person/', obj, Haeader)
+            this._httpClient.post(environment.apiUrl + '/api/invited/add-new-invited/', obj, Haeader)
                 .subscribe(response => {
 
                     this.contactsCount++;
 
+                    console.log(response)
                     console.log(this.contactsCount, arrayLenght)
 
                     if(this.contactsCount === arrayLenght){
-                        //this.getContacts(this.idEventNow)
+                        this.getContacts(this.idEventNow)
 
                         this.contactsCount = 0;
-                        
+                        this.loadingContact = false;
                     }
-                   // this.loadingContact = false;
+                   
 
                    
                 });
@@ -299,18 +299,21 @@ export class ContactsService implements Resolve<any>
         const Haeader = {
             headers: new HttpHeaders({
               'Content-Type': 'application/json',
-              'authorization': `${this.authServices.currentUserValue.token}`}),
+              'Authorization': `beader ${this.authServices.currentUserValue.token}`}),
           }
         
         return new Promise((resolve, reject) => {
 
             console.log('entro update', obj)
-            this._httpClient.post(environment.apiUrl + '/api/person/', obj, Haeader)
-                .subscribe(response => {
-
+            this._httpClient.post(environment.apiUrl + '/api/invited/add-new-invited/', obj, Haeader)
+                .subscribe((response: any) => {
                     //this.getContacts(this.idEventNow)
-                    resolve(response);
+                    resolve(response.post);
                     console.log(response)
+
+                    this.getContacts(this.idEventNow)
+
+                    //this.loadingContact = true;
                    
                 });
         });
@@ -462,7 +465,7 @@ export class ContactsService implements Resolve<any>
     
         fileUpload.onchange = () => {
 
-            this.loadingContact = true;
+            
              const xlsx = fileUpload.files[0]
 
                 let workBook = null;
@@ -471,7 +474,7 @@ export class ContactsService implements Resolve<any>
                 const file = xlsx
                 reader.onload = (event) => {
 
-                    
+                this.loadingContact = true;
 
                   const data = reader.result;
                   workBook = XLSX.read(data, { type: 'binary' });
@@ -483,6 +486,8 @@ export class ContactsService implements Resolve<any>
 
                     let contactsArray = []
                     console.log('array: ', array)
+
+                    
 
                     array.forEach(e => {
 

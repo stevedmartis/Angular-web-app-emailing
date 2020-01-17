@@ -124,14 +124,14 @@ export class NavbarVerticalStyle1Component implements OnInit, OnDestroy
                 this.navigation = this._fuseNavigationService.getCurrentNavigation();
             });
 
-            const person = JSON.parse(localStorage.getItem('currentPerson'));
-            const user = JSON.parse(localStorage.getItem('currentUser'));
+        
+            const currentUser = JSON.parse(localStorage.getItem('currentUser'));
 
-            console.log(person, user)
-            if(person && user ){
+            console.log(currentUser)
+            if(currentUser){
 
-                this.username = person.name;
-                this.email = user.email;
+                this.username = currentUser.user.username;
+                this.email = currentUser.user.email;
     
                 console.log(this.username)
 

@@ -25,7 +25,7 @@
         <!-- / APP TITLE -->
 
         <!-- SEARCH -->
-        <div class="ml-sm-32" fxLayout="row" fxLayoutAlign="center center" fxFlex>
+        <div *ngIf="_contactsService.contacts.length > 25" class="ml-sm-32" fxLayout="row" fxLayoutAlign="center center" fxFlex>
 
             <div class="search-wrapper mt-16 mt-sm-0">
 
@@ -50,7 +50,7 @@
     <div class="content">
 
         <!-- SIDEBAR -->
-        <fuse-sidebar class="sidebar" name="contacts-main-sidebar" position="left" lockedOpen="gt-sm">
+        <fuse-sidebar *ngIf="_contactsService.contacts.length > 2" class="sidebar" name="contacts-main-sidebar" position="left" lockedOpen="gt-sm">
 
             <!-- SIDEBAR CONTENT -->
             <div class="content" fusePerfectScrollbar>

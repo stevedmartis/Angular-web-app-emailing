@@ -64,54 +64,42 @@ export class ContactsContactListComponent implements OnInit, OnDestroy
     /**
      * On init
      */
-/*
+
     ngAfterContentChecked() {
 
         this.dataSource = new FilesDataSource(this._contactsService, this.paginator);
+
+        this.onContactchanged()
         this.cdref.detectChanges();
         
     }
 
-    */
+
 
     ngOnInit(): void
     {
-
-
 
        this._contactsService.loadingContact = true;
      
         this.dataSource = new FilesDataSource(this._contactsService, this.paginator);
 
-        this._contactsService.onContactsChanged
-            .pipe(takeUntil(this._unsubscribeAll))
-            .subscribe(contacts => {
-                this.contacts = contacts;
+        //this.onContactchanged()
 
-                console.log('entro ',this.contacts )
-     
-                if(contacts.length > 0){
+        let contacts = this.dataSource._contactsService.contacts;
+        this._contactsService.contacts = contacts;
 
-                    this._contactsService.contactsExist = true;
-                    this._contactsService.loadingContact = false;
-                }
-            
-                else {
-                    this._contactsService.contactsExist = false;
-                    this._contactsService.loadingContact = false; 
-                }
-
-                console.log(this.contacts)
-                this.checkboxes = {};
-                contacts.map(contact => {
-                    this.checkboxes[contact.id] = false;
-                });
-            });
+       
+        if(contacts.length > 0){
 
 
-                                
-
-
+            this._contactsService.contactsExist = true;
+            this._contactsService.loadingContact = false;
+        }
+    
+        else {
+            this._contactsService.contactsExist = false;
+            this._contactsService.loadingContact = false; 
+        }
 
         this._contactsService.onSelectedContactsChanged
             .pipe(takeUntil(this._unsubscribeAll))
@@ -136,6 +124,24 @@ export class ContactsContactListComponent implements OnInit, OnDestroy
             });
 
        
+    }
+
+    onContactchanged(){
+        this.dataSource = new FilesDataSource(this._contactsService, this.paginator);
+
+        this._contactsService.onContactsChanged
+            .pipe(takeUntil(this._unsubscribeAll))
+            .subscribe(contacts => {
+                this.contacts = contacts;
+
+
+
+                
+                this.checkboxes = {};
+                contacts.map(contact => {
+                    this.checkboxes[contact.id] = false;
+                });
+            });
     }
 
     /**
@@ -286,12 +292,9 @@ export class FilesDataSource extends DataSource<any>
             .pipe(
                 map(() => {
 
-                
-
-                    console.log('_contactsService.contacts ', this._contactsService.contacts)
 
                   
-
+                    if(this._contactsService.contacts) {
                         let data = this._contactsService.contacts.slice();
                         data = this.filterData(data);
 
@@ -300,11 +303,12 @@ export class FilesDataSource extends DataSource<any>
                         // Grab the page's slice of data.
                         const startIndex = this._matPaginator.pageIndex * this._matPaginator.pageSize;
                         return data.splice(startIndex, this._matPaginator.pageSize);
+                    }
 
+                    let data = [];
+                    return data;
+   
 
-      
-
-                    
                     }
 
                 

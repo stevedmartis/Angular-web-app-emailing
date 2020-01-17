@@ -146,6 +146,7 @@ export class EcommerceProductComponent implements OnInit, OnDestroy
                     this.product = new Product(product.event || product.post);
                     this.pageType = 'edit';
                     this.isCreated = true;
+                    this._contactsService.idEventNow =  product.event._id;
                     this._contactsService.eventCreated = true;
                 }
                 else
@@ -256,7 +257,7 @@ export class EcommerceProductComponent implements OnInit, OnDestroy
                 this.isCreated = true;
                
                 // Change the location with new one
-                this._location.go('apps/e-commerce/products/' + x.post._id + '/' + x.post.handle);
+                this._location.go('apps/e-commerce/products/' + x.event._id + '/' + x.event.handle);
             });
     }
 
@@ -273,6 +274,8 @@ export class EcommerceProductComponent implements OnInit, OnDestroy
             this.confirmDialogRef.afterClosed().subscribe(result => {
                 if ( result )
                 {
+
+                    console.log('product post delete', this.product)
 
                     this._ecommerceProductService.deleteEvent(this.product._id)
                     .then(x => {

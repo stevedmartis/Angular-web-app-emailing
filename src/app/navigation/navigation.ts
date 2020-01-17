@@ -30,22 +30,12 @@ export const navigation: FuseNavigation[] = [
                 ],
             },
             {
-                id       : 'convo',
-                title    : 'Convocatorias',
+                id       : 'events',
+                title    : 'Eventos',
                 translate: 'NAV.EVENTS',
                 type     : 'item',
                 icon     : 'event',
                 url      : '/apps/e-commerce/products',
-            
-            },
-
-            {
-                id       : 'campa',
-                title    : 'Campañas',
-                translate: 'NAV.EVENTS',
-                type     : 'item',
-                icon     : 'event_note',
-                url      : '/apps/e-commerce/campañias',
             
             },
 

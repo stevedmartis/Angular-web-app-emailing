@@ -2,16 +2,23 @@
         <!-- CENTER -->
         <div class="center">
 
-<div  class="content-table"
+
+
+<div  class="content-card"
 [ngClass]="{
     'table-hidden': !_contactsService.contactsExist,
-    'table-visible': _contactsService.contactsExist }">
+    'table-contacts-visible': _contactsService.contactsExist }">
 
 
 
 <mat-table 
   #table [dataSource]="dataSource"
            [@animateStagger]="{value:'50'}"
+          
+            #table 
+            [@animateStagger]="{value:'50'}"
+            fusePerfectScrollbar>
+
            >
     <!-- Checkbox Column -->
 
@@ -122,6 +129,7 @@
     </mat-row>
 
 
+
 </mat-table>
 
 
@@ -136,7 +144,11 @@
 </div>
 
 
+<div *ngIf="_contactsService.loadingContact" class="spinner-loading"
+fxLayoutAlign="center center">
 
+<mat-spinner></mat-spinner>
+</div>
 
 <div *ngIf="!_contactsService.contactsExist && !_contactsService.loadingContact" class="empty-card">
 
@@ -147,10 +159,6 @@
 
 
 
-    <div *ngIf="_contactsService.loadingContact" class="spinner-loading"
-    fxLayoutAlign="center center">
-
-    <mat-spinner></mat-spinner>
-</div>
 
 </div>
+

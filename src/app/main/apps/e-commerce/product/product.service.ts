@@ -47,7 +47,9 @@ export class EcommerceProductService implements Resolve<any>
             console.log(this.routeParams);
             Promise.all([
                 this.getProduct(),
-                //this.contactServices.getContacts(this.routeParams.id)
+
+                console.log('herr'),
+                this.contactServices.getContacts(this.routeParams.id)
             ]).then(
                 () => {
                     resolve();
@@ -149,18 +151,20 @@ export class EcommerceProductService implements Resolve<any>
 
     deleteEvent(id) {
 
+        console.log(id)
         const Haeader = {
             headers: new HttpHeaders({
               'Content-Type': 'application/json',
               'Authorization': `beader ${this.authServices.currentUserValue.token}`}),
           }
 
-          console.log(Haeader)
       
         return new Promise((resolve, reject) => {
             this._httpClient.delete(environment.apiUrl + '/api/delete-event/' + id,  Haeader)
                 .subscribe((response: any) => {
                     resolve(response);
+
+                    console.log(response)
                 }, reject);
         });
     }

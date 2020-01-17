@@ -63,22 +63,29 @@ contacts-contact-list {
 }
 
 .table-hidden {
-    display: none;
+    display: none !important;
 
 }
 
-.table-visible {
-    display: contents;
+.table-contacts-visible {
+   
+    display: inline !important;
 }
 
 .spinner-loading {
     position: fixed;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
     flex-direction: row;
     box-sizing: border-box;
-    margin-left: 25%;
+    margin-left: 20%;
+    bottom: 10%;
     place-content: center;
+    -webkit-box-align: center;
     align-items: center;
+    display: -webkit-box;
     display: flex;
+
 }
 
 .content-table {
@@ -106,7 +113,7 @@ contacts-contact-list {
 
 contacts-contact-list {
 
-    display: -webkit-inline-box !important;
+    display: table !important;
 
 }
 
@@ -117,6 +124,78 @@ contacts-contact-list {
 
 .empty-card {
     align-items: center;
+    margin-left: 23%
     
+}
+
+.products-table {
+    flex: 1 1 auto;
+    border-bottom: 1px solid rgba(0, 0, 0, .12);
+    overflow: auto;
+    -webkit-overflow-scrolling: touch;
+
+    .mat-header-row {
+        min-height: 64px;
+    }
+
+    .product {
+        position: relative;
+        cursor: pointer;
+        height: 84px;
+    }
+
+    .mat-cell {
+        min-width: 0;
+        display: flex;
+        align-items: center;
+    }
+
+    .mat-column-id {
+        flex: 0 1 84px;
+    }
+
+    .mat-column-image {
+        flex: 0 1 84px;
+
+        .product-image {
+            width: 52px;
+            height: 52px;
+            border: 1px solid rgba(0, 0, 0, .12);
+        }
+    }
+
+    .mat-column-category {
+        flex: 0 1 240px;
+    }
+
+    .mat-column-price {
+        flex: 0 1 160px;
+    }
+
+    .mat-column-quantity {
+        flex: 0 1 160px;
+    }
+
+    .mat-column-active {
+        flex: 0 1 80px;
+    }
+
+    .quantity-indicator {
+        display: inline-block;
+        vertical-align: middle;
+        width: 8px;
+        height: 8px;
+        border-radius: 4px;
+        margin-right: 8px;
+
+        & + span {
+            display: inline-block;
+            vertical-align: middle;
+        }
+    }
+
+    .active-icon {
+        border-radius: 50%;
+    }
 }
 

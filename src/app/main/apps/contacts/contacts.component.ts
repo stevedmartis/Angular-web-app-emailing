@@ -56,7 +56,7 @@ export class ContactsComponent implements OnInit, OnDestroy
     ngOnInit(): void
     {
 
-
+        
 
         
         this._contactsService.onSelectedContactsChanged

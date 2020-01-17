@@ -4,6 +4,7 @@ import { ContactsContactFormDialogComponent } from 'app/main/apps/contacts/conta
 import { FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material';
 import { ContactsService } from 'app/main/apps/contacts/contacts.service';
+import { nullSafeIsEquivalent } from '@angular/compiler/src/output/output_ast';
 
 
 @Component({
@@ -84,17 +85,13 @@ export class SpeedDialFabComponent implements OnInit {
               let obj = {
                   codeEvento: this._contactsService.idEventNow,
                   name: res.name,
-                  lastName: res.lastName,
+                  lastname: res.lastname,
                   email: res.email,
-                  asiste: true,
-                  status: null,
-                  contractado: false,
+                  //address: res.address,
                   jobtitle: res.jobtitle,
                   company: res.company,
                   phone: res.phone,
-                  asistio: false,
-                  update: res.birthday,
-                  codeQr: true
+
 
               }
 

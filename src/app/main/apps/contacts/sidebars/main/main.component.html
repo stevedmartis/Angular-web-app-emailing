@@ -5,9 +5,9 @@
         <!-- SIDEBAR HEADER -->
         <div class="header p-24" fxLayout="row" fxLayoutAlign="start center">
 
-            <!-- USER -->
-            <img [src]="user.avatar" class="avatar mr-16" [alt]="user.name"/>
-            <span class="h5">{{user.name}}</span>
+            <!-- USER  <img [src]="user.avatar" class="avatar mr-16" [alt]="user.name"/> -->
+           
+            <span class="h4">Filtrar por</span>
             <!-- / USER -->
 
         </div>
@@ -21,19 +21,19 @@
                 <div class="nav-item" aria-label="inbox">
                     <a class="nav-link" matRipple (click)="changeFilter('all')"
                        [ngClass]="{'active accent':filterBy ==='all'}">
-                        <span class="title">Todas</span>
+                        <span class="title">Todos</span>
                     </a>
                 </div>
 
                 <div class="nav-item" aria-label="frequently contacted" (click)="changeFilter('frequent')">
                     <a class="nav-link" matRipple [ngClass]="{'active accent':filterBy ==='frequent'}">
-                        <div class="title">Confirmaron</div>
+                        <div class="title">Hoy</div>
                     </a>
                 </div>
 
                 <div class="nav-item" aria-label="starred" (click)="changeFilter('starred')">
                     <a class="nav-link" matRipple [ngClass]="{'active accent':filterBy ==='starred'}">
-                        <div class="title">Rechazaron</div>
+                        <div class="title">Ayer</div>
                     </a>
                 </div>
             </div>
