@@ -3,6 +3,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { FuseConfigService } from '@fuse/services/config.service';
 import { fuseAnimations } from '@fuse/animations';
+import { ForgotPasswordService } from './forgot-password.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
     selector     : 'forgot-password',
@@ -14,6 +16,8 @@ import { fuseAnimations } from '@fuse/animations';
 export class ForgotPasswordComponent implements OnInit
 {
     forgotPasswordForm: FormGroup;
+    emailSend: boolean = false;
+    email: any;
 
     /**
      * Constructor
@@ -23,7 +27,9 @@ export class ForgotPasswordComponent implements OnInit
      */
     constructor(
         private _fuseConfigService: FuseConfigService,
-        private _formBuilder: FormBuilder
+        private _formBuilder: FormBuilder,
+        private _forgotService: ForgotPasswordService,
+        private _matSnackBar: MatSnackBar
     )
     {
         // Configure the layout
@@ -48,6 +54,7 @@ export class ForgotPasswordComponent implements OnInit
     // -----------------------------------------------------------------------------------------------------
     // @ Lifecycle hooks
     // -----------------------------------------------------------------------------------------------------
+  
 
     /**
      * On init
@@ -57,5 +64,45 @@ export class ForgotPasswordComponent implements OnInit
         this.forgotPasswordForm = this._formBuilder.group({
             email: ['', [Validators.required, Validators.email]]
         });
+    }
+
+    get f() { return this.forgotPasswordForm.controls; }
+
+    forgotPassword() {
+
+        let email = this.f.email.value;
+
+        console.log(email)
+       this._forgotService.forgotPassword(email)
+       .subscribe(data => {
+           console.log(data)
+
+           if(data.user.length === 0){
+            this._matSnackBar.open('Email no existe', 'OK', {
+                verticalPosition: 'top',
+                duration        : 2000
+            }); 
+           }
+           else {
+               console.log('ok', data.user[0].email)
+
+
+               this._forgotService.sendMailJet(data.user[0].email, data.user[0].username)
+               .subscribe(res => {
+                    console.log(res)
+
+                    this.email = data.user[0].email;
+                    this.emailSend = true;
+               })
+           }
+       },
+       err => {
+        console.log('error api: ', err)    
+        this._matSnackBar.open(err.message, 'OK', {
+            verticalPosition: 'top',
+            duration        : 2000
+        });        
+       
+    })
     }
 }
