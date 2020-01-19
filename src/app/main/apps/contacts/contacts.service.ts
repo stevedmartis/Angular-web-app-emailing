@@ -150,11 +150,7 @@ export class ContactsService implements Resolve<any>
                         this.onContactsChanged.next(this.contacts);
                         resolve(this.contacts);
 
-                     
-                        
-                       
 
-                       
                     }, reject);
             }
         );
@@ -381,8 +377,10 @@ export class ContactsService implements Resolve<any>
                     const contactIndex = this.contacts.indexOf(contact);
                     this.contacts.splice(contactIndex, 1);
 
+
+                    this.conditionConatctExist();
                     
-                    this.conditionConatctExist()
+                  
                    
                 });
         });
@@ -391,6 +389,8 @@ export class ContactsService implements Resolve<any>
     }
 
     conditionConatctExist() {
+
+        console.log('conosle',this.contacts)
 
         if(this.contacts.length > 0){
 
@@ -426,16 +426,21 @@ export class ContactsService implements Resolve<any>
 
                     console.log(response)
                     this.getContacts(this.idEventNow)
+                    .then(x => {
+                        
 
-                    this.deselectContacts();
+                        this.deselectContacts();
 
-                    
+                        this.conditionConatctExist();
 
-                    setTimeout(() => {
-                        this.loadingContact = false;
-                    }, (600));
+                        setTimeout(() => {
+                            this.loadingContact = false;
+                        }, (600));
+                    })
 
-                    this.conditionConatctExist();
+  
+
+                   
                     
                 });
         });
