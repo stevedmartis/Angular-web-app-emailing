@@ -34,7 +34,7 @@ export class ContactsContactListComponent implements OnInit, OnDestroy
     selectedContacts: any[];
     checkboxes: {};
     dialogRef: any;
-    loading: boolean = false;
+    loading: boolean = true;
     confirmDialogRef: MatDialogRef<FuseConfirmDialogComponent>;
     
     // Private
@@ -69,7 +69,7 @@ export class ContactsContactListComponent implements OnInit, OnDestroy
 
         this.dataSource = new FilesDataSource(this._contactsService, this.paginator);
 
-        this.onContactchanged()
+       // this.onContactchanged()
         this.cdref.detectChanges();
         
     }
@@ -81,25 +81,49 @@ export class ContactsContactListComponent implements OnInit, OnDestroy
 
        this._contactsService.loadingContact = true;
      
-        this.dataSource = new FilesDataSource(this._contactsService, this.paginator);
 
-        //this.onContactchanged()
+       this.dataSource = new FilesDataSource(this._contactsService, this.paginator);
+
+       this._contactsService.onContactsChanged
+           .pipe(takeUntil(this._unsubscribeAll))
+           .subscribe(contacts => {
+               this.contacts = contacts;
+               this.checkboxes = {};
+               contacts.map(contact => {
+                   this.checkboxes[contact.id] = false;
+
+                   if(contacts.length > 0){
+
+
+                    this._contactsService.contactsExist = true;
+                    this._contactsService.loadingContact = false;
+                }
+            
+                else {
+                    console.log('is else ')
+                    this._contactsService.contactsExist = false;
+                    this._contactsService.loadingContact = false; 
+                }
+
+               });
+           });
 
         let contacts = this.dataSource._contactsService.contacts;
         this._contactsService.contacts = contacts;
 
        
-        if(contacts.length > 0){
+                   if(contacts.length > 0){
 
 
-            this._contactsService.contactsExist = true;
-            this._contactsService.loadingContact = false;
-        }
-    
-        else {
-            this._contactsService.contactsExist = false;
-            this._contactsService.loadingContact = false; 
-        }
+                    this._contactsService.contactsExist = true;
+                    this._contactsService.loadingContact = false;
+                }
+            
+                else {
+                    this._contactsService.contactsExist = false;
+                    this._contactsService.loadingContact = false; 
+                }
+
 
         this._contactsService.onSelectedContactsChanged
             .pipe(takeUntil(this._unsubscribeAll))
@@ -112,6 +136,8 @@ export class ContactsContactListComponent implements OnInit, OnDestroy
                     }
 
                     this.checkboxes[id] = selectedContacts.includes(id);
+
+                   
                 }
                 this.selectedContacts = selectedContacts;
             });
@@ -127,21 +153,7 @@ export class ContactsContactListComponent implements OnInit, OnDestroy
     }
 
     onContactchanged(){
-        this.dataSource = new FilesDataSource(this._contactsService, this.paginator);
-
-        this._contactsService.onContactsChanged
-            .pipe(takeUntil(this._unsubscribeAll))
-            .subscribe(contacts => {
-                this.contacts = contacts;
-
-
-
-                
-                this.checkboxes = {};
-                contacts.map(contact => {
-                    this.checkboxes[contact.id] = false;
-                });
-            });
+       
     }
 
     /**

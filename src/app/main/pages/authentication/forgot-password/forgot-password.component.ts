@@ -18,6 +18,7 @@ export class ForgotPasswordComponent implements OnInit
     forgotPasswordForm: FormGroup;
     emailSend: boolean = false;
     email: any;
+    loading: boolean = false;
 
     /**
      * Constructor
@@ -70,6 +71,8 @@ export class ForgotPasswordComponent implements OnInit
 
     forgotPassword() {
 
+        this.loading = true;
+
         let email = this.f.email.value;
 
         console.log(email)
@@ -93,6 +96,8 @@ export class ForgotPasswordComponent implements OnInit
 
                     this.email = data.user[0].email;
                     this.emailSend = true;
+                    this.loading = false;
+
                })
            }
        },

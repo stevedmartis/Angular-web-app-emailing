@@ -2,8 +2,8 @@
 
 .fab-container {
     position: fixed;
-    bottom: 13%;
-    right: 120px;
+    bottom: 3%;
+    right: 115px;
     z-index: 100;
     display: flex;
     flex-direction: column-reverse;
@@ -38,3 +38,6 @@
 
   }
 
+.spinner {
+  margin-top: -15%;
+}

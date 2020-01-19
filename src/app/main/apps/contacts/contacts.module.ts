@@ -21,7 +21,7 @@ import { ContactsSelectedBarComponent } from 'app/main/apps/contacts/selected-ba
 import { ContactsMainSidebarComponent } from 'app/main/apps/contacts/sidebars/main/main.component';
 import { ContactsContactFormDialogComponent } from 'app/main/apps/contacts/contact-form/contact-form.component';
 import {  SpeedDialFabComponent } from 'app/layout/speed-dial-fab/speed-dial-fab.component';
-import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+
 
 import { MatPaginatorModule } from '@angular/material';
 import { MaterialModule } from 'app/main/angular-material-elements/material.module';

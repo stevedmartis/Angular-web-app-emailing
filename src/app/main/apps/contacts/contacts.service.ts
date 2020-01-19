@@ -81,14 +81,14 @@ export class ContactsService implements Resolve<any>
 
                     this.onSearchTextChanged.subscribe(searchText => {
                         this.searchText = searchText;
-                        //this.getContacts(this.idEventNow);
+                        this.getContacts(this.idEventNow);
                     });
 
                     this.onFilterChanged.subscribe(filter => {
 
              
                         this.filterBy = filter;
-                        //this.getContacts(this.idEventNow);
+                        this.getContacts(this.idEventNow);
                     });
 
                     resolve();
@@ -150,14 +150,9 @@ export class ContactsService implements Resolve<any>
                         this.onContactsChanged.next(this.contacts);
                         resolve(this.contacts);
 
-                        this.loadingContact = false;
-
-                        if(this.contacts.length > 0){
-                            this.contactsExist = true;
-                        }
-                        
-                        
                      
+                        
+                       
 
                        
                     }, reject);
@@ -190,6 +185,8 @@ export class ContactsService implements Resolve<any>
      */
     toggleSelectedContact(id): void
     {
+
+        console.log('HERRRR', id)
         // First, check if we already have that contact as selected...
         if ( this.selectedContacts.length > 0 )
         {
@@ -210,6 +207,7 @@ export class ContactsService implements Resolve<any>
         // If we don't have it, push as selected
         this.selectedContacts.push(id);
 
+        console.log('this.selectedContacts ', this.selectedContacts)
         // Trigger the next event
         this.onSelectedContactsChanged.next(this.selectedContacts);
     }
@@ -247,7 +245,11 @@ export class ContactsService implements Resolve<any>
             this.selectedContacts = [];
             this.contacts.map(contact => {
                 this.selectedContacts.push(contact.id);
+
+
             });
+
+            
         }
 
         // Trigger the next event
@@ -282,12 +284,12 @@ export class ContactsService implements Resolve<any>
 
                     if(this.contactsCount === arrayLenght){
                         this.getContacts(this.idEventNow)
-
-                        this.contactsCount = 0;
-                        this.loadingContact = false;
+                        .then(x => {
+                            this.contactsCount = 0;
+                            this.loadingContact = false;
+                        })
+  
                     }
-                   
-
                    
                 });
         });
@@ -312,8 +314,12 @@ export class ContactsService implements Resolve<any>
                     console.log(response)
 
                     this.getContacts(this.idEventNow)
+                    .then(x => {
+                        this.loadingContact = false;
+                    })
 
-                    //this.loadingContact = true;
+                    
+                   
                    
                 });
         });
@@ -362,36 +368,45 @@ export class ContactsService implements Resolve<any>
         const Haeader = {
             headers: new HttpHeaders({
               'Content-Type': 'application/json',
-              'authorization': `${this.authServices.currentUserValue.token}`}),
+              'Authorization': `beader ${this.authServices.currentUserValue.token}`}),
           }
         
         return new Promise((resolve, reject) => {
 
             console.log('entro delete', contact.id)
-            this._httpClient.delete(environment.apiUrl + '/api/person/' + contact.id, Haeader)
+            this._httpClient.delete(environment.apiUrl + '/api/delete-invited/' + contact.id, Haeader)
                 .subscribe(response => {
 
-                    console.log(response)
-                    this.countSelect++
 
                     const contactIndex = this.contacts.indexOf(contact);
                     this.contacts.splice(contactIndex, 1);
 
-                    console.log(selectlenght, this.countSelect)
-
-                    if(selectlenght === this.countSelect){
-                        this.onContactsChanged.next(this.contacts);
-
-                        this.countSelect = 0;
-                           
-                    }
-                
+                    
+                    this.conditionConatctExist()
                    
                 });
         });
 
 
     }
+
+    conditionConatctExist() {
+
+        if(this.contacts.length > 0){
+
+
+            this.contactsExist = true;
+            this.loadingContact = false;
+        }
+    
+        else {
+            console.log('is else ')
+            this.contactsExist = false;
+            this.loadingContact = false; 
+        }
+
+    }
+    
 
 
     deleteAllContacts()
@@ -402,18 +417,26 @@ export class ContactsService implements Resolve<any>
         const Haeader = {
             headers: new HttpHeaders({
               'Content-Type': 'application/json',
-              'authorization': `${this.authServices.currentUserValue.token}`}),
+              'Authorization': `beader ${this.authServices.currentUserValue.token}`}),
           }
         
         return new Promise((resolve, reject) => {
-            this._httpClient.delete(environment.apiUrl + '/api/person/delete/' + this.idEventNow, Haeader)
+            this._httpClient.delete(environment.apiUrl + '/api/delete-all-invited/event/' + this.idEventNow, Haeader)
                 .subscribe(response => {
 
                     console.log(response)
                     this.getContacts(this.idEventNow)
 
-                    this.loadingContact = false;
-                    this.contactsExist = false;
+                    this.deselectContacts();
+
+                    
+
+                    setTimeout(() => {
+                        this.loadingContact = false;
+                    }, (600));
+
+                    this.conditionConatctExist();
+                    
                 });
         });
 
@@ -485,7 +508,7 @@ export class ContactsService implements Resolve<any>
                     let array = initial[name];
 
                     let contactsArray = []
-                    console.log('array: ', array)
+                
 
                     
 
@@ -515,7 +538,7 @@ export class ContactsService implements Resolve<any>
 
                     contactsArray.forEach(e => {
 
-                        console.log(e)
+
                   
                         this.createContacts(e, contactsArray.length)
                         

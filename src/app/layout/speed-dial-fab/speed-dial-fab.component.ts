@@ -61,7 +61,7 @@ export class SpeedDialFabComponent implements OnInit {
   newContact(): void
   {
 
-    
+      this.onToggleFab()
 
       this.dialogRef = this._matDialog.open(ContactsContactFormDialogComponent, {
           panelClass: 'contact-form-dialog',
@@ -108,6 +108,7 @@ export class SpeedDialFabComponent implements OnInit {
 
   exportContacts(){
     //this._contactsService.excelToJson()
+    this.onToggleFab()
   
 this._contactsService.xlsxToJson()
 

@@ -1,17 +1,25 @@
 <div class="fab-container" >
         <button mat-fab class="fab-toggler"
+                [disabled]="_contactsService.loadingContact"
                 (click)="onToggleFab()">
-                <mat-icon>add</mat-icon>
+                <mat-icon *ngIf="!_contactsService.loadingContact">add</mat-icon>
+                <mat-spinner class="spinner" *ngIf="_contactsService.loadingContact"  diameter="35"></mat-spinner>
         </button>
         <div [@speedDialStagger]="buttons.length"> <!-- and here -->
           <input hidden id="fileUpload" type="file" #fileInput/>
-          <button *ngFor="let btn of buttons"
-                  mat-mini-fab
-                  class="fab-secondary"
-                  (click)="handleClick(btn.click)"
-                  color="secondary">
-                  <mat-icon class="icon-second">{{btn.icon}}</mat-icon>
-          </button>
+     
+                        <button 
+                
+                        *ngFor="let btn of buttons"
+                        mat-mini-fab
+                        
+                        class="fab-secondary"
+                        (click)="handleClick(btn.click)"
+                        color="secondary">
+                          <mat-icon  class="icon-second">{{btn.icon}}</mat-icon>
+                  </button>
+      
+
         </div>
       </div>
 

@@ -7,24 +7,17 @@
 <div  class="content-card"
 [ngClass]="{
     'table-hidden': !_contactsService.contactsExist,
-    'table-contacts-visible': _contactsService.contactsExist }">
+    'table-contacts-visible': _contactsService.contactsExist  }">
 
 
-
-<mat-table 
+<mat-table  class="table-invited"
   #table [dataSource]="dataSource"
-           [@animateStagger]="{value:'50'}"
-          
-            #table 
-            [@animateStagger]="{value:'50'}"
-            fusePerfectScrollbar>
-
-           >
+           [@animateStagger]="{value:'50'}">
     <!-- Checkbox Column -->
 
 
     <ng-container matColumnDef="checkbox">
-        <mat-header-cell *matHeaderCellDef></mat-header-cell>
+        <mat-header-cell *matHeaderCellDef>  <!-- <mat-spinner *ngIf="_contactsService.loadingContact"  diameter="35"></mat-spinner>  --> </mat-header-cell>
         <mat-cell *matCellDef="let contact">
             <mat-checkbox [(ngModel)]="checkboxes[contact.id]" (ngModelChange)="onSelectedChange(contact.id)"
                           (click)="$event.stopPropagation()">
@@ -119,7 +112,7 @@
         </mat-cell>
     </ng-container>
 
-    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></mat-header-row>
     <mat-row *matRowDef="let contact; columns: displayedColumns;"
              class="contact"
              (click)="editContact(contact)"
@@ -137,22 +130,16 @@
 <mat-paginator #paginator
 [length]="dataSource.filteredData.length"
 [pageIndex]="0"
-[pageSize]="25"
-[pageSizeOptions]="[5, 10, 25, 100]">
+[pageSize]="25">
 </mat-paginator>
 
 </div>
 
 
-<div *ngIf="_contactsService.loadingContact" class="spinner-loading"
-fxLayoutAlign="center center">
 
-<mat-spinner></mat-spinner>
-</div>
+<div *ngIf="!_contactsService.contactsExist " class="empty-card-inv">
 
-<div *ngIf="!_contactsService.contactsExist && !_contactsService.loadingContact" class="empty-card-inv">
-
-
+       
         <img class="empty-inv" src="assets/images/listEmptyCut.png">
 
     </div>
