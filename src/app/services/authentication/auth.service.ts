@@ -39,12 +39,8 @@ export class AuthService {
 
   login(email, password) {
 
-    const Haeader = {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-      }),
-    }
-    return this.http.post<User>(`${environment.apiUrl}/api/login`, { email, password }, Haeader)
+
+    return this.http.post<User>(`${environment.apiUrl}/api/login`, { email, password })
     .pipe(map(user => {
         // store user details and jwt token in local storage to keep user logged in between page refreshes
         localStorage.setItem('currentUser', JSON.stringify(user));
@@ -55,6 +51,8 @@ export class AuthService {
   }
 
   loginGuard(user){
+
+    
     this.currentUserSubject.next(user);
   }
 
@@ -62,15 +60,7 @@ export class AuthService {
 
     console.log('entro person')
 
-    const Haeader = {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-        'authorization': `${this.currentUserValue.token}`
-      }),
-    }
-
-    console.log('post header person,' ,Haeader)
-    return this.http.post<Person>(`${environment.apiUrl}/api/person`, { name }, Haeader)
+    return this.http.post<Person>(`${environment.apiUrl}/api/person`, { name })
     .pipe(map(person => {
 
         localStorage.setItem('currentPerson', JSON.stringify(person));
@@ -106,12 +96,7 @@ export class AuthService {
 
   register(email, username, password) {
 
-    const Haeader = {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-      }),
-    }
-    return this.http.post<User>(`${environment.apiUrl}/api/register`, { email, username, password }, Haeader)
+    return this.http.post<User>(`${environment.apiUrl}/api/register`, { email, username, password })
     .pipe(map(person => {
 
         // store user details and jwt token in local storage to keep user logged in between page refreshes

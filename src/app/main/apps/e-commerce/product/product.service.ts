@@ -80,13 +80,7 @@ export class EcommerceProductService implements Resolve<any>
             else
             {
 
-                const Haeader = {
-                    headers: new HttpHeaders({
-                      'Content-Type': 'application/json',
-                      'Authorization': `beader ${this.authServices.currentUserValue.token}`}),
-                  }
-               
-                this._httpClient.get(environment.apiUrl + '/api/event/' + this.routeParams.id, Haeader)
+                this._httpClient.get(environment.apiUrl + '/api/event/' + this.routeParams.id)
                     .subscribe((response: any) => {
                         this.product = response;
                         console.log(this.product)
@@ -128,14 +122,10 @@ export class EcommerceProductService implements Resolve<any>
      */
     addProduct(product): Promise<any> {
 
-        const Haeader = {
-            headers: new HttpHeaders({
-              'Content-Type': 'application/json',
-              'Authorization': `beader ${this.authServices.currentUserValue.token}`}),
-          }
+
         
         return new Promise((resolve, reject) => {
-            this._httpClient.post(environment.apiUrl + '/api/event/add-new-event', { eventName: product.name, company: product.company, handle: product.handle, desc: product.description, dateEvent: product.date}, Haeader)
+            this._httpClient.post(environment.apiUrl + '/api/event/add-new-event', { eventName: product.name, company: product.company, handle: product.handle, desc: product.description, dateEvent: product.date, status: product.active})
                 .subscribe((response: any) => {
 
 
@@ -152,15 +142,10 @@ export class EcommerceProductService implements Resolve<any>
     deleteEvent(id) {
 
         console.log(id)
-        const Haeader = {
-            headers: new HttpHeaders({
-              'Content-Type': 'application/json',
-              'Authorization': `beader ${this.authServices.currentUserValue.token}`}),
-          }
 
       
         return new Promise((resolve, reject) => {
-            this._httpClient.delete(environment.apiUrl + '/api/delete-event/' + id,  Haeader)
+            this._httpClient.delete(environment.apiUrl + '/api/delete-event/' + id)
                 .subscribe((response: any) => {
                     resolve(response);
 

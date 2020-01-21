@@ -196,7 +196,6 @@ export class EcommerceProductComponent implements OnInit, OnDestroy
             date      : [this.product.dateEvent],
             tags            : [this.product.tags],
             images          : [this.product.images],
-
             active          : [this.product.active]
         });
     }

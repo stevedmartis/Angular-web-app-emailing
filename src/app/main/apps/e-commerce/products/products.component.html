@@ -25,7 +25,7 @@
             <!-- / APP TITLE -->
 
             <!-- SEARCH -->
-            <div class="search-wrapper mx-32 mx-md-0">
+            <div *ngIf="eventExist" class="search-wrapper mx-32 mx-md-0">
                 <div class="search" fxFlex fxLayout="row" fxLayoutAlign="start center">
                     <mat-icon>search</mat-icon>
                     <input #filter placeholder="Buscar evento">
@@ -107,7 +107,7 @@
                     </mat-cell>
                 </ng-container>
 
-                <!-- Quantity Column -->
+                <!-- 
                 <ng-container matColumnDef="quantity">
                     <mat-header-cell *matHeaderCellDef mat-sort-header fxHide fxShow.gt-xs>% Aprobación</mat-header-cell>
                     <mat-cell *matCellDef="let product" fxHide fxShow.gt-xs>
@@ -121,10 +121,11 @@
 
                     </mat-cell>
                 </ng-container>
-
+                Quantity Column -->
+                
                 <!-- Active Column -->
                 <ng-container matColumnDef="active" >
-                    <mat-header-cell *matHeaderCellDef mat-sort-header>Activo</mat-header-cell>
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>Abierto</mat-header-cell>
                     <mat-cell *matCellDef="let product" >
                         <mat-icon *ngIf="product.status" class="active-icon green-600 s-16">check</mat-icon>
                         <mat-icon *ngIf="!product.status" class="active-icon red-500 s-16">close</mat-icon>

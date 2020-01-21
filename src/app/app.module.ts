@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule, Routes } from '@angular/router';
 import { MatMomentDateModule, } from '@angular/material-moment-adapter';
@@ -23,6 +23,7 @@ import { LayoutModule } from 'app/layout/layout.module';
 import { AuthServicesModule } from '../app/services/authentication/auth.module';
 import { EventServicesModule } from '../app/services/eventos/event.modules';
 import { AuthGuardService } from '../app/main/helpers/auth-guard.service';
+import { InterceptorService } from './services/interceptor.service';
 
 const appRoutes: Routes = [
     {
@@ -90,6 +91,12 @@ const appRoutes: Routes = [
         EventServicesModule
     ],
     providers: [
+
+        {
+            provide: HTTP_INTERCEPTORS,
+            useClass: InterceptorService,
+            multi: true
+          },
         AuthGuardService
     ],
     bootstrap   : [

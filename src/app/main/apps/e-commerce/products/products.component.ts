@@ -22,7 +22,7 @@ import { takeUntil } from 'rxjs/internal/operators';
 export class EcommerceProductsComponent implements OnInit
 {
     dataSource: FilesDataSource | null;
-    displayedColumns = ['image', 'name', 'category', 'price', 'quantity', 'active'];
+    displayedColumns = ['image', 'name', 'category', 'price', 'active'];
 
     @ViewChild(MatPaginator, {static: true})
     paginator: MatPaginator;

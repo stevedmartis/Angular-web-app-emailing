@@ -38,7 +38,7 @@ export class EcommerceProductsService implements Resolve<any>
 
                 Promise.all([
                 
-                    this.getAllEvents()
+                    this.getEventsByUser()
                     
                 ]).then(
                     () => {
@@ -69,19 +69,53 @@ export class EcommerceProductsService implements Resolve<any>
     }
 
 
+    getEventsByUser(): Promise<any> {
+
+        console.log('user ',this.authServices.currentUserValue)
+
+
+        return new Promise((resolve, reject) => {
+            this._httpClient.get(environment.apiUrl + '/api/events/user/' + this.authServices.currentUserValue.user._id )
+                .subscribe((response: any) => {
+                    
+                    console.log(response)
+                    let eventArray: any = []
+                    let count = 0;
+
+                    response.events.forEach(e => {
+                        count++
+                        e.displayId = count
+                        e.id = e._id
+                        
+
+                        eventArray.push(e)
+                       
+                    });
+
+                    console.log(eventArray)
+
+                    this.products = eventArray;
+
+                    this.onProductsChanged.next(this.products);
+
+                    console.log(this.onProductsChanged)
+                    resolve(this.products);
+
+
+                }, reject);
+        });
+
+    }
+
+
+
     getAllEvents(): Promise<any> {
 
         console.log('user ',this.authServices.currentUserValue.token)
 
-        const Haeader = {
-            headers: new HttpHeaders({
-                'Content-Type': 'application/json',
-                'Authorization': `beader ${this.authServices.currentUserValue.token}`
-            }),
-        }
 
         return new Promise((resolve, reject) => {
-            this._httpClient.get(environment.apiUrl + '/api/all-events', Haeader)
+            this._httpClient.get(environment.apiUrl + '/api/all-events')
                 .subscribe((response: any) => {
                     
                     console.log(response)

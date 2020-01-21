@@ -107,15 +107,10 @@ export class ContactsService implements Resolve<any>
     getContacts(idEvent): Promise<any>
     {
 
-        const Haeader = {
-            headers: new HttpHeaders({
-              'Content-Type': 'application/json',
-              'Authorization': `beader ${this.authServices.currentUserValue.token}`}),
-          }
 
 
         return new Promise((resolve, reject) => {
-                this._httpClient.get(environment.apiUrl+'/api/invited/event/' + idEvent, Haeader)
+                this._httpClient.get(environment.apiUrl+'/api/invited/event/' + idEvent)
                     .subscribe((response: any) => {
                         
                         this.contacts = response.invited;
@@ -261,16 +256,10 @@ export class ContactsService implements Resolve<any>
     createContacts(obj, arrayLenght): Promise<any>
     {
 
-        const Haeader = {
-            headers: new HttpHeaders({
-              'Content-Type': 'application/json',
-              'Authorization': `beader ${this.authServices.currentUserValue.token}`}),
-          }
-        
         return new Promise((resolve, reject) => {
 
             console.log('entro update', obj)
-            this._httpClient.post(environment.apiUrl + '/api/invited/add-new-invited/', obj, Haeader)
+            this._httpClient.post(environment.apiUrl + '/api/invited/add-new-invited/', obj)
                 .subscribe(response => {
 
                     this.contactsCount++;
@@ -294,16 +283,12 @@ export class ContactsService implements Resolve<any>
     createContact(obj): Promise<any>
     {
 
-        const Haeader = {
-            headers: new HttpHeaders({
-              'Content-Type': 'application/json',
-              'Authorization': `beader ${this.authServices.currentUserValue.token}`}),
-          }
+
         
         return new Promise((resolve, reject) => {
 
             console.log('entro update', obj)
-            this._httpClient.post(environment.apiUrl + '/api/invited/add-new-invited/', obj, Haeader)
+            this._httpClient.post(environment.apiUrl + '/api/invited/add-new-invited/', obj)
                 .subscribe((response: any) => {
                     //this.getContacts(this.idEventNow)
                     resolve(response.post);
@@ -361,16 +346,12 @@ export class ContactsService implements Resolve<any>
     deleteContact(contact, selectlenght)
     {
 
-        const Haeader = {
-            headers: new HttpHeaders({
-              'Content-Type': 'application/json',
-              'Authorization': `beader ${this.authServices.currentUserValue.token}`}),
-          }
+  
         
         return new Promise((resolve, reject) => {
 
             console.log('entro delete', contact.id)
-            this._httpClient.delete(environment.apiUrl + '/api/delete-invited/' + contact.id, Haeader)
+            this._httpClient.delete(environment.apiUrl + '/api/delete-invited/' + contact.id)
                 .subscribe(response => {
 
 
@@ -414,14 +395,9 @@ export class ContactsService implements Resolve<any>
 
         this.loadingContact = true;
 
-        const Haeader = {
-            headers: new HttpHeaders({
-              'Content-Type': 'application/json',
-              'Authorization': `beader ${this.authServices.currentUserValue.token}`}),
-          }
         
         return new Promise((resolve, reject) => {
-            this._httpClient.delete(environment.apiUrl + '/api/delete-all-invited/event/' + this.idEventNow, Haeader)
+            this._httpClient.delete(environment.apiUrl + '/api/delete-all-invited/event/' + this.idEventNow)
                 .subscribe(response => {
 
                     console.log(response)
