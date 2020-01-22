@@ -89,7 +89,7 @@ export class ForgotPasswordComponent implements OnInit
             this.loading = false;
            }
            else {
-               console.log('ok', data.user[0].email)
+               console.log('ok', data.user[0])
 
 
                this._forgotService.sendMailJet(data.user[0].email, data.user[0].username, data.user[0]._id)
