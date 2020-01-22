@@ -85,12 +85,14 @@ export class ForgotPasswordComponent implements OnInit
                 verticalPosition: 'top',
                 duration        : 2000
             }); 
+
+            this.loading = false;
            }
            else {
                console.log('ok', data.user[0].email)
 
 
-               this._forgotService.sendMailJet(data.user[0].email, data.user[0].username)
+               this._forgotService.sendMailJet(data.user[0].email, data.user[0].username, data.user[0]._id)
                .subscribe(res => {
                     console.log(res)
 
@@ -106,7 +108,9 @@ export class ForgotPasswordComponent implements OnInit
         this._matSnackBar.open(err.message, 'OK', {
             verticalPosition: 'top',
             duration        : 2000
-        });        
+        });  
+        
+        this.loading = false;
        
     })
     }

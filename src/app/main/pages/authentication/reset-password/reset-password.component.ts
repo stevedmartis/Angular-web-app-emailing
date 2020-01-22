@@ -5,6 +5,7 @@ import { takeUntil } from 'rxjs/operators';
 
 import { FuseConfigService } from '@fuse/services/config.service';
 import { fuseAnimations } from '@fuse/animations';
+import { ResetPasswordService } from './reset-password.service';
 
 @Component({
     selector     : 'reset-password',
@@ -16,13 +17,16 @@ import { fuseAnimations } from '@fuse/animations';
 export class ResetPasswordComponent implements OnInit, OnDestroy
 {
     resetPasswordForm: FormGroup;
+    loading: boolean = false;
+    passwordReset: boolean = false
 
     // Private
     private _unsubscribeAll: Subject<any>;
 
     constructor(
         private _fuseConfigService: FuseConfigService,
-        private _formBuilder: FormBuilder
+        private _formBuilder: FormBuilder,
+        private resetService: ResetPasswordService
     )
     {
         // Configure the layout
@@ -57,9 +61,7 @@ export class ResetPasswordComponent implements OnInit, OnDestroy
     ngOnInit(): void
     {
         this.resetPasswordForm = this._formBuilder.group({
-            name           : ['', Validators.required],
-            email          : ['', [Validators.required, Validators.email]],
-            password       : ['', Validators.required],
+            password       : ['', [Validators.required, Validators.minLength(10)]],
             passwordConfirm: ['', [Validators.required, confirmPasswordValidator]]
         });
 
@@ -70,7 +72,11 @@ export class ResetPasswordComponent implements OnInit, OnDestroy
             .subscribe(() => {
                 this.resetPasswordForm.get('passwordConfirm').updateValueAndValidity();
             });
+
+            
     }
+
+    get f() { return this.resetPasswordForm.controls; }
 
     /**
      * On destroy
@@ -81,6 +87,21 @@ export class ResetPasswordComponent implements OnInit, OnDestroy
         this._unsubscribeAll.next();
         this._unsubscribeAll.complete();
     }
+
+    resetPassword(){
+        this.loading = true;
+        this.resetService.resetPassword(this.resetService.routeParams.id, this.f.password.value)
+        .then( () => {
+            this.loading = false;
+            this.passwordReset = true;
+        })
+
+    }
+
+    getMesaggeErrorPassword(){
+        return this.f.password.getError('required')? 'Contraseña es requerida' : this.f.password.getError('minlength')? 'Minimo 10 caracteres' : '';    
+      }
+   
 }
 
 /**

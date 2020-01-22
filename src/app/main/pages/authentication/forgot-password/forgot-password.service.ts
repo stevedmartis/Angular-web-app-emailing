@@ -23,12 +23,7 @@ export class ForgotPasswordService {
 
   forgotPassword(email) {
 
-    const Haeader = {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-      }),
-    }
-    return this.http.post<any>(`${environment.apiUrl}/api/forgot-password`, { email }, Haeader)
+    return this.http.post<any>(`${environment.apiUrl}/api/forgot-password`, { email })
     .pipe(map(user => {
         // store user details and jwt token in local storage to keep user logged in between page refreshes
         //localStorage.setItem('currentUser', JSON.stringify(user));
@@ -37,13 +32,9 @@ export class ForgotPasswordService {
     }));
   }
 
-  sendMailJet(email, username) {
-    const Haeader = {
-        headers: new HttpHeaders({
-          'Content-Type': 'application/json',
-        }),
-      }
-      return this.http.post<any>(`${environment.apiUrl}/api/send-mail-jet`, { email , username}, Haeader)
+  sendMailJet(email, username, _id) {
+
+      return this.http.post<any>(`${environment.apiUrl}/api/send-mail-jet`, { email , username, _id})
       .pipe(map(user => {
           // store user details and jwt token in local storage to keep user logged in between page refreshes
           //localStorage.setItem('currentUser', JSON.stringify(user));

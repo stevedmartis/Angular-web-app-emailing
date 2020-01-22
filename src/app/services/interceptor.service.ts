@@ -15,15 +15,30 @@ export class InterceptorService {
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     
-    const token = this.authServices.currentUserValue.token;
+    let currentUser = JSON.parse(localStorage.getItem('currentUser'))
 
+    console.log(currentUser)
+    
+   
     let request = req;
 
-    if (token) {
+    if (currentUser) {
+
+      const token = currentUser.token;
+
       request = req.clone({
         setHeaders: {
           'Content-Type': 'application/json',
           'Authorization': `beader ${ token }`
+        }
+      });
+    }
+    else {
+
+      request = req.clone({
+        setHeaders: {
+          'Content-Type': 'application/json',
+         
         }
       });
     }
@@ -39,7 +54,9 @@ export class InterceptorService {
 
       })
     );
-  }
+
+
+}
 
 
 
