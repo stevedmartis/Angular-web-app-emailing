@@ -10,6 +10,8 @@ import { FuseUtils } from '@fuse/utils';
 
 import { EcommerceProductsService } from 'app/main/apps/e-commerce/products/products.service';
 import { takeUntil } from 'rxjs/internal/operators';
+import { FuseConfirmDialogComponent } from '@fuse/components/confirm-dialog/confirm-dialog.component';
+import { MatDialogRef, MatSnackBar, MatDialog } from '@angular/material';
 
 
 @Component({
@@ -38,10 +40,16 @@ export class EcommerceProductsComponent implements OnInit
 
     // Private
     private _unsubscribeAll: Subject<any>;
+    
+    confirmDialogRef: MatDialogRef<FuseConfirmDialogComponent>;
+    
 
     constructor(
         private _ecommerceProductsService: EcommerceProductsService,
+        private _matSnackBar: MatSnackBar,
+        public _matDialog: MatDialog,
         
+
     )
     {
         // Set the private defaults
@@ -92,6 +100,42 @@ export class EcommerceProductsComponent implements OnInit
             });
             */
     }
+
+
+    eventDelete(product){
+
+
+        this.confirmDialogRef = this._matDialog.open(FuseConfirmDialogComponent, {
+            disableClose: false,
+            panelClass: 'custom-dialog-container'
+        });
+
+        this.confirmDialogRef.componentInstance.confirmMessage = 'Seguro que desea eliminarlo?';
+
+        this.confirmDialogRef.afterClosed().subscribe(result => {
+            if ( result )
+            {
+
+                console.log('product post delete', )
+
+                this._ecommerceProductsService.deleteEvent(product)
+
+                
+                .then(x => {
+        
+                           
+                    this._matSnackBar.open('Evento eliminado', 'OK', {
+                        verticalPosition: 'top',
+                        duration        : 3000
+                    });
+                })
+                
+            }
+            this.confirmDialogRef = null;
+        });
+
+
+}
 }
 
 export class FilesDataSource extends DataSource<any>
@@ -239,6 +283,7 @@ export class FilesDataSource extends DataSource<any>
             return (valueA < valueB ? -1 : 1) * (this._matSort.direction === 'asc' ? 1 : -1);
         });
     }
+
 
     /**
      * Disconnect

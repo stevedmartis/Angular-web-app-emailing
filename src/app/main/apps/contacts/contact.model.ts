@@ -10,6 +10,7 @@ export class Contact
     company: string;
     jobtitle: string;
     email: string;
+    send_email: boolean;
     phone: string;
     address: string;
     birthday: string;
@@ -31,6 +32,7 @@ export class Contact
             this.company = contact.company || '';
             this.jobtitle = contact.jobtitle || '';
             this.email = contact.email || '';
+            this.send_email = contact.send_email;
             this.phone = contact.phone || '';
             this.address = contact.address || '';
             this.birthday = contact.birthday || '';

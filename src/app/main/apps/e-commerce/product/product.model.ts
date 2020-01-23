@@ -59,7 +59,7 @@ export class Product
         this.depth = product.depth || 0;
         this.weight = product.weight || 0;
         this.extraShippingFee = product.extraShippingFee || 0;
-        this.active = product.active || true;
+        this.active = product.active || product.active;
     }
 
     /**

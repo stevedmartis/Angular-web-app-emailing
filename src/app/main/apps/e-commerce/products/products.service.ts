@@ -147,4 +147,24 @@ export class EcommerceProductsService implements Resolve<any>
 
     }
 
+    deleteEvent(product) {
+
+        console.log(product)
+
+      
+        return new Promise((resolve, reject) => {
+            this._httpClient.delete(environment.apiUrl + '/api/delete-event/' + product._id)
+                .subscribe((response: any) => {
+                    resolve(response);
+
+                    const productIndex = this.products.indexOf(product);
+                    this.products.splice(productIndex, 1);
+
+                    this.onProductsChanged.next(this.products);
+
+                    console.log(response)
+                }, reject);
+        });
+    }
+
 }

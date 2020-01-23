@@ -105,10 +105,24 @@ export class EcommerceProductService implements Resolve<any>
      */
     saveProduct(product): Promise<any>
     {
+        console.log('product', product)
         return new Promise((resolve, reject) => {
-            this._httpClient.post('api/e-commerce-products/' + product._id, product)
+            this._httpClient.post(environment.apiUrl + '/api/event/edit-event', 
+            { eventId: product.id, 
+                eventName: product.name, 
+                handle: product.handle, 
+                company: product.company, 
+                desc: product.description, 
+                dateEvent: product.date ,
+                active: product.active
+            })
                 .subscribe((response: any) => {
+
+                    
                     resolve(response);
+
+                    
+                    console.log(response)
                 }, reject);
         });
     }
@@ -125,7 +139,15 @@ export class EcommerceProductService implements Resolve<any>
 
         
         return new Promise((resolve, reject) => {
-            this._httpClient.post(environment.apiUrl + '/api/event/add-new-event', { eventName: product.name, company: product.company, handle: product.handle, desc: product.description, dateEvent: product.date, status: product.active})
+            this._httpClient.post(environment.apiUrl + '/api/event/add-new-event', 
+            {   eventName: product.name, 
+                company: product.company, 
+                handle: product.handle, 
+                desc: product.description, 
+                dateEvent: product.date, 
+                active: product.active, 
+
+            })
                 .subscribe((response: any) => {
 
 
@@ -139,18 +161,5 @@ export class EcommerceProductService implements Resolve<any>
         });
     }
 
-    deleteEvent(id) {
 
-        console.log(id)
-
-      
-        return new Promise((resolve, reject) => {
-            this._httpClient.delete(environment.apiUrl + '/api/delete-event/' + id)
-                .subscribe((response: any) => {
-                    resolve(response);
-
-                    console.log(response)
-                }, reject);
-        });
-    }
 }

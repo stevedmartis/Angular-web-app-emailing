@@ -124,11 +124,27 @@
 
                                 </mat-form-field>
 
+                         <div class="slide-bottom w-100-p">
+                            <mat-slide-toggle formControlName="active">Evento abierto</mat-slide-toggle>
+                         </div>
+
+                                  
+
                             </div>
 
-                            <button *ngIf="isCreated" class="mr-8 w-30-p" mat-raised-button matStepperNext type="button"
+                            <button *ngIf="isCreated && productForm.pristine" class="mr-8 w-30-p" mat-raised-button matStepperNext type="button"
+                            color="accent">
+                            Siguiente
+                        </button>
+
+                            <button *ngIf="pageType ==='new'" [disabled]="productForm.invalid"  (click)="addProduct()" class="mr-8 w-30-p" mat-raised-button matStepperNext type="button"
+                            color="accent">
+                            Crear y siguiente
+                        </button>
+
+                            <button *ngIf="pageType ==='edit' && !productForm.pristine" (click)="saveProduct()" class="mr-8 w-30-p" mat-raised-button matStepperNext type="button"
                                 color="accent">
-                                Siguiente
+                                Guardar y siguiente
                             </button>
                         </form>
 

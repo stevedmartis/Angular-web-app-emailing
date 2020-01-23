@@ -346,8 +346,6 @@ export class ContactsService implements Resolve<any>
     deleteContact(contact, selectlenght)
     {
 
-  
-        
         return new Promise((resolve, reject) => {
 
             console.log('entro delete', contact.id)
@@ -357,7 +355,6 @@ export class ContactsService implements Resolve<any>
 
                     const contactIndex = this.contacts.indexOf(contact);
                     this.contacts.splice(contactIndex, 1);
-
 
                     this.conditionConatctExist();
                     

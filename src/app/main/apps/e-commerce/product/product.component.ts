@@ -143,7 +143,8 @@ export class EcommerceProductComponent implements OnInit, OnDestroy
                 {
 
                     console.log('product', product)
-                    this.product = new Product(product.event || product.post);
+                    this.product = new Product(product.event);
+                    console.log('this.product', this.product)
                     this.pageType = 'edit';
                     this.isCreated = true;
                     this._contactsService.idEventNow =  product.event._id;
@@ -195,8 +196,7 @@ export class EcommerceProductComponent implements OnInit, OnDestroy
             description     : [this.product.desc],
             date      : [this.product.dateEvent],
             tags            : [this.product.tags],
-            images          : [this.product.images],
-            active          : [this.product.active]
+            active: [this.product.active]
         });
     }
 
@@ -209,13 +209,13 @@ export class EcommerceProductComponent implements OnInit, OnDestroy
         data.handle = FuseUtils.handleize(data.name);
 
         this._ecommerceProductService.saveProduct(data)
-            .then(() => {
+            .then((result) => {
 
                 // Trigger the subscription with new data
-                this._ecommerceProductService.onProductChanged.next(data);
+                this._ecommerceProductService.onProductChanged.next(result);
 
                 // Show the success message
-                this._matSnackBar.open('Product saved', 'OK', {
+                this._matSnackBar.open('Evento editado', 'OK', {
                     verticalPosition: 'top',
                     duration        : 2000
                 });
@@ -260,39 +260,7 @@ export class EcommerceProductComponent implements OnInit, OnDestroy
             });
     }
 
-    eventDelete(){
 
-
-            this.confirmDialogRef = this._matDialog.open(FuseConfirmDialogComponent, {
-                disableClose: false,
-                panelClass: 'custom-dialog-container'
-            });
-    
-            this.confirmDialogRef.componentInstance.confirmMessage = 'Seguro que desea eliminarlo?';
-    
-            this.confirmDialogRef.afterClosed().subscribe(result => {
-                if ( result )
-                {
-
-                    console.log('product post delete', this.product)
-
-                    this._ecommerceProductService.deleteEvent(this.product._id)
-                    .then(x => {
-            
-                        this.router.navigate(['apps/e-commerce/products']);
-                               
-                        this._matSnackBar.open('Evento eliminado', 'OK', {
-                            verticalPosition: 'top',
-                            duration        : 3000
-                        });
-                    })
-                    
-                }
-                this.confirmDialogRef = null;
-            });
-    
-
-    }
 
     sendEmailToInvited(){
         console.log('contacts ',this._contactsService.contacts)

@@ -68,6 +68,7 @@ export class ContactsContactFormDialogComponent
             company : [this.contact.company],
             jobtitle: [this.contact.jobtitle],
             email   : [this.contact.email],
+            send_email: [this.contact.send_email],
             phone   : [this.contact.phone],
             address : [this.contact.address],
             birthday: [this.contact.birthday],

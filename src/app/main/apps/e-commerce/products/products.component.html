@@ -127,15 +127,15 @@
                 <ng-container matColumnDef="active" >
                     <mat-header-cell *matHeaderCellDef mat-sort-header>Abierto</mat-header-cell>
                     <mat-cell *matCellDef="let product" >
-                        <mat-icon *ngIf="product.status" class="active-icon green-600 s-16">check</mat-icon>
-                        <mat-icon *ngIf="!product.status" class="active-icon red-500 s-16">close</mat-icon>
+                        <mat-icon *ngIf="product.active" class="active-icon green-600 s-16">check</mat-icon>
+                        <mat-icon *ngIf="!product.active" class="active-icon red-500 s-16">close</mat-icon>
                     </mat-cell>
                 </ng-container>
 
                     <!-- Buttons Column -->
     <ng-container matColumnDef="buttons">
         <mat-header-cell *matHeaderCellDef></mat-header-cell>
-        <mat-cell *matCellDef="let contact">
+        <mat-cell *matCellDef="let product">
             <div fxFlex="row" fxLayoutAlign="end center">
 
                 <!--
@@ -152,7 +152,7 @@
                 </button>
 
                 <mat-menu #moreMenu="matMenu">
-                    <button mat-menu-item aria-label="remove" (click)="deleteContact(contact)">
+                    <button mat-menu-item aria-label="remove" (click)="eventDelete(product)">
                         <mat-icon>delete</mat-icon>
                         <span>Eliminar</span>
                     </button>
