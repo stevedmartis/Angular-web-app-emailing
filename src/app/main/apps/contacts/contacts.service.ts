@@ -283,12 +283,11 @@ export class ContactsService implements Resolve<any>
     createContact(obj): Promise<any>
     {
 
-
-        
         return new Promise((resolve, reject) => {
 
             console.log('entro update', obj)
-            this._httpClient.post(environment.apiUrl + '/api/invited/add-new-invited/', obj)
+            this._httpClient.post(environment.apiUrl + '/api/invited/add-new-invited/',  obj)
+
                 .subscribe((response: any) => {
                     //this.getContacts(this.idEventNow)
                     resolve(response);
@@ -302,6 +301,37 @@ export class ContactsService implements Resolve<any>
                     
                    
                    
+                });
+        });
+    }
+
+    editContact(obj): Promise<any>
+    {
+        
+        return new Promise((resolve, reject) => {
+
+            obj.send_email? true: false;
+            console.log('editor',  obj)
+            this._httpClient.post(environment.apiUrl + '/api/invited/edit-invited/',             {
+                invitedId: obj.id, 
+                codeEvento: this.idEventNow, 
+                name: obj.name, 
+                lastname: obj.lastname, 
+                email: obj.email, 
+                jobtilte: obj.jobtitle, 
+                company: obj.company, 
+                phone: obj.phone, 
+                send_email: obj.send_email
+            })
+                .subscribe((response: any) => {
+                    //this.getContacts(this.idEventNow)
+                    resolve(response);
+                    console.log(response)
+
+                    this.getContacts(this.idEventNow)
+                    .then(x => {
+                        this.loadingContact = false;
+                    })    
                 });
         });
     }

@@ -200,7 +200,7 @@ export class ContactsContactListComponent implements OnInit, OnDestroy
                      */
                     case 'save':
 
-                        this._contactsService.createContact(formData.getRawValue());
+                        this._contactsService.editContact(formData.getRawValue());
 
                         break;
                     /**
@@ -234,9 +234,7 @@ export class ContactsContactListComponent implements OnInit, OnDestroy
             }
             this.confirmDialogRef = null;
         });
-
     }
-
     /**
      * On selected change
      *
@@ -247,7 +245,6 @@ export class ContactsContactListComponent implements OnInit, OnDestroy
         console.log('contactId',contactId)
         this._contactsService.toggleSelectedContact(contactId);
     }
-
 
     /**
      * Toggle star
