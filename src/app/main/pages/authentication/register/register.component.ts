@@ -21,6 +21,7 @@ import { Router } from '@angular/router';
 export class RegisterComponent implements OnInit, OnDestroy
 {
     registerForm: FormGroup;
+    loading: boolean = false;
 
     // Private
     private _unsubscribeAll: Subject<any>;
@@ -84,6 +85,8 @@ export class RegisterComponent implements OnInit, OnDestroy
 
     register() {
 
+        this.loading = true;
+
         const email = this.registerForm.get('email')
         const username = this.registerForm.get('username')
         const password = this.registerForm.get('password')
@@ -99,7 +102,9 @@ export class RegisterComponent implements OnInit, OnDestroy
             this._matSnackBar.open(err.error.message, 'OK', {
                 verticalPosition: 'top',
                 duration        : 3000
-            });        
+            });   
+            this.loading = false;
+     
            
         })
     }

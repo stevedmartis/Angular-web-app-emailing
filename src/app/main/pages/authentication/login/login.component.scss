@@ -87,7 +87,7 @@ login {
                 .separator {
                     font-size: 15px;
                     font-weight: 600;
-                    margin: 24px auto;
+                    margin: -16px auto;
                     position: relative;
                     overflow: hidden;
                     width: 100px;
@@ -144,4 +144,8 @@ login {
             }
         }
     }
+}
+
+.spinner-loading {
+    margin-bottom: 7%;
 }

@@ -22,6 +22,7 @@ export class LoginComponent implements OnInit
 {
 
     loginForm: FormGroup;
+    loading: boolean = false;
     /**
      * Constructor
      *
@@ -77,6 +78,8 @@ export class LoginComponent implements OnInit
 
     login() {
 
+        this.loading = true;
+
         const email = this.loginForm.get('email')
         const password = this.loginForm.get('password')
         this.authServices.login(email.value, password.value)
@@ -86,6 +89,8 @@ export class LoginComponent implements OnInit
             console.log(user)
 
                 this.router.navigate(['/apps/dashboards/analytics']);
+
+                
             
         },
         err => {
@@ -95,6 +100,7 @@ export class LoginComponent implements OnInit
                 duration        : 2000
             });        
            
+            this.loading = false;
         })
     }
 
