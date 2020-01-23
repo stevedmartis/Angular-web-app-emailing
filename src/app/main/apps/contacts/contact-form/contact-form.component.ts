@@ -17,6 +17,7 @@ export class ContactsContactFormDialogComponent
     contact: Contact;
     contactForm: FormGroup;
     dialogTitle: string;
+    checked = true;
 
     /**
      * Constructor

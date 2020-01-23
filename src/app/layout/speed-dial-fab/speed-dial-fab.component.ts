@@ -91,6 +91,7 @@ export class SpeedDialFabComponent implements OnInit {
                   jobtitle: res.jobtitle,
                   company: res.company,
                   phone: res.phone,
+                  send_email: res.send_email
 
 
               }

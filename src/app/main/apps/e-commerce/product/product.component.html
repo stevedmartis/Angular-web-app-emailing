@@ -125,7 +125,7 @@
                                 </mat-form-field>
 
                          <div class="slide-bottom w-100-p">
-                            <mat-slide-toggle formControlName="active">Evento abierto</mat-slide-toggle>
+                            <mat-slide-toggle [checked]="true" formControlName="active">Evento abierto</mat-slide-toggle>
                          </div>
 
                                   
@@ -137,14 +137,14 @@
                             Siguiente
                         </button>
 
-                            <button *ngIf="pageType ==='new'" [disabled]="productForm.invalid"  (click)="addProduct()" class="mr-8 w-30-p" mat-raised-button matStepperNext type="button"
+                            <button *ngIf="pageType ==='new'" [disabled]="productForm.invalid"  (click)="addProduct()" class="mr-8 w-30-p" mat-raised-button type="button"
                             color="accent">
-                            Crear y siguiente
+                            Crear
                         </button>
 
                             <button *ngIf="pageType ==='edit' && !productForm.pristine" (click)="saveProduct()" class="mr-8 w-30-p" mat-raised-button matStepperNext type="button"
                                 color="accent">
-                                Guardar y siguiente
+                                Siguiente
                             </button>
                         </form>
 
