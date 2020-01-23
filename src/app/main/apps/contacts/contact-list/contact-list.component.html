@@ -54,11 +54,10 @@
 
     <!-- Phone Column -->
     <ng-container matColumnDef="phone">
-        <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-md>Phone</mat-header-cell>
-        <mat-cell *matCellDef="let contact" fxHide fxShow.gt-md>
-            <p class="phone text-truncate">
-                {{contact.phone}}
-            </p>
+        <mat-header-cell *matHeaderCellDef  >Enviar emal</mat-header-cell>
+        <mat-cell *matCellDef="let contact"  >
+            <mat-icon *ngIf="contact.sendEmail" class="active-icon green-600 s-16">check</mat-icon>
+            <mat-icon *ngIf="!contact.sendEmail" class="active-icon red-500 s-16">close</mat-icon>
         </mat-cell>
     </ng-container>
 

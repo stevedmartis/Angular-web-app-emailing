@@ -55,7 +55,7 @@
             <div class="horizontal-stepper-wrapper">
 
                 <!-- HORIZONTAL STEPPER EXAMPLE -->
-                <mat-horizontal-stepper class="mat-elevation-z4"  linear #stepper>
+                <mat-horizontal-stepper class="mat-elevation-z4" linear #stepper>
 
                     <mat-step [completed]="isCreated" [editable]="isCreated">
 
@@ -126,7 +126,8 @@
 
                             </div>
 
-                            <button *ngIf="isCreated" class="mr-8 w-30-p" mat-raised-button matStepperNext  type="button" color="accent">
+                            <button *ngIf="isCreated" class="mr-8 w-30-p" mat-raised-button matStepperNext type="button"
+                                color="accent">
                                 Siguiente
                             </button>
                         </form>
@@ -136,9 +137,9 @@
 
 
                     </mat-step>
-   
 
-                   
+
+
                     <mat-step [completed]="isCreated" [editable]="isCreated">
 
 
@@ -149,23 +150,22 @@
 
                         <contacts></contacts>
 
-                  
-                        <button class="btn-next-contact mr-8 w-30-p" mat-raised-button matStepperNext type="button" color="accent">
+
+                        <button class="btn-next-contact mr-8 w-30-p" mat-raised-button matStepperNext type="button"
+                            color="accent">
                             Siguiente
                         </button>
 
 
-
-
                     </mat-step>
 
-             
 
-          
+
+
                     <mat-step [completed]="isCreated" [editable]="isCreated">
 
                         <ng-template matStepLabel>Campaña</ng-template>
-                         
+
 
                         <div class="dialog-content-wrapper">
 
@@ -183,26 +183,30 @@
 
                                 </div>
 
+                            </div>
+
+                            <div class="fab-container">
+                                <button (click)="sendEmailToInvited()" mat-fab class="fab-toggler" [disabled]="false">
+                                    <mat-icon>send</mat-icon>
+                                    <!---   <mat-spinner class="spinner" *ngIf="_contactsService.loadingContact"  diameter="35"></mat-spinner> -->
+                                </button>
+
+                            </div>
+
+                            <!--
 
 
-                           
-                           
- </div>
 
-                            
- <button (click)="exportHtml()" class="mr-8 w-30-p btn-top" matStepperNext mat-raised-button
- type="button" color="accent">
- Siguiente
-</button>
+                        <button (click)="exportHtml()" class="mr-8 w-30-p btn-top" matStepperNext mat-raised-button
+                        type="button" color="accent">
+                        Siguiente
+                    </button>
+
+-->
                         </div>
-
-
-
-
-
                     </mat-step>
 
-           
+
 
 
                 </mat-horizontal-stepper>
@@ -220,16 +224,16 @@
 
     </div>
 
-
+    <!--
     <div class="mb-24" fxLayout="column" fxLayoutAlign="start" *ngIf="isCreated">
 
-            <button mat-button (click)="eventDelete()" color="warn">Eliminar evento
-                <mat-icon>delete_forever</mat-icon>
-            </button>
+        <button mat-button (click)="eventDelete()" color="warn">Eliminar evento
+            <mat-icon>delete_forever</mat-icon>
+        </button>
 
-        </div>
+    </div>
 
-
+-->
     <!-- / CONTENT -->
 
 </div>

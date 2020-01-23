@@ -294,8 +294,23 @@ export class EcommerceProductComponent implements OnInit, OnDestroy
 
     }
 
+    sendEmailToInvited(){
+        console.log('contacts ',this._contactsService.contacts)
+    }
+
     exportHtml() {
-        this.emailEditor.exportHtml((data) => console.log('exportHtml', data));
+        this.emailEditor.exportHtml((res) => {
+
+            console.log('exportHtml', res)
+
+            let data = res;
+
+            console.log(data)
+
+
+        });
+
+
       }
 
 

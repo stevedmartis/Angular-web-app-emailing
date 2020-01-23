@@ -102,7 +102,7 @@ contacts-contact-list {
   }
 
   .mat-paginator-container {
-    display: table;
+    display: -webkit-box;
     padding: 20px 8px !important;
     flex-wrap: inherit !important;
 
@@ -204,3 +204,7 @@ contacts-contact-list {
     overflow: auto;
 }
 
+
+.active-icon {
+    border-radius: 50%;
+}
