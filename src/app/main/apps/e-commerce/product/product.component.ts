@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, ViewEncapsulation, Input, Output, EventEmitter, Inject, ViewChild } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewEncapsulation, ViewChild, } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Location } from '@angular/common';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -11,15 +11,13 @@ import { FuseUtils } from '@fuse/utils';
 import { Router } from '@angular/router';
 import { Product } from 'app/main/apps/e-commerce/product/product.model';
 import { EcommerceProductService } from 'app/main/apps/e-commerce/product/product.service';
-import * as shape from 'd3-shape';
+
 
 
 import { MAT_DIALOG_DATA, MatDialogRef, MatDialog } from '@angular/material/dialog';
 import { ContactsComponent } from 'app/main/apps/contacts/contacts.component';
 import { ContactsService } from 'app/main/apps/contacts/contacts.service';
 import { ContactsContactFormDialogComponent } from 'app/main/apps/contacts/contact-form/contact-form.component';
-import { FuseConfirmDialogComponent } from '@fuse/components/confirm-dialog/confirm-dialog.component';
-
 import { EmailEditorComponent } from 'angular-email-editor';
 
 
@@ -34,19 +32,17 @@ import { EmailEditorComponent } from 'angular-email-editor';
 export class EcommerceProductComponent implements OnInit, OnDestroy
 {
 
-    
+    @ViewChild(EmailEditorComponent, {static: false}) emailEditor: EmailEditorComponent
+
     product: Product;
     pageType: string;
     productForm: FormGroup;
     card19: any;
     dialogRef: any;
     isCreated: boolean= false;
-    confirmDialogRef: MatDialogRef<FuseConfirmDialogComponent>;
 
     //@ViewChild(InvitationFormComponent, {static: false}) invitationComponent: InvitationFormComponent
 
-    @ViewChild(EmailEditorComponent, {static: false})
-    emailEditor: EmailEditorComponent
 
    
     // Private 
@@ -74,47 +70,7 @@ export class EcommerceProductComponent implements OnInit, OnDestroy
 
     )
     {
-        this.card19 = {
-            scheme: {
-                domain: ['#5c84f1']
-            },
-            data  : [
-                {
-                    name  : 'GOOG',
-                    series: [
-                        {
-                            name : 'Jan 1',
-                            value: 540.2
-                        },
-                        {
-                            name : 'Jan 2',
-                            value: 539.4
-                        },
-                        {
-                            name : 'Jan 3',
-                            value: 538.9
-                        },
-                        {
-                            name : 'Jan 4',
-                            value: 539.6
-                        },
-                        {
-                            name : 'Jan 5',
-                            value: 540
-                        },
-                        {
-                            name : 'Jan 6',
-                            value: 540.2
-                        },
-                        {
-                            name : 'Jan 7',
-                            value: 540.48
-                        }
-                    ]
-                }
-            ],
-            curve : shape.curveBasis
-        };
+
         // Set the default
         this.product = new Product();
 
@@ -254,32 +210,17 @@ export class EcommerceProductComponent implements OnInit, OnDestroy
 
                 console.log(x)
                 this.isCreated = true;
+
+
                
                 // Change the location with new one
                 this._location.go('apps/e-commerce/products/' + x.event._id + '/' + x.event.handle);
             });
     }
 
-
-
     sendEmailToInvited(){
         console.log('contacts ',this._contactsService.contacts)
     }
-
-    exportHtml() {
-        this.emailEditor.exportHtml((res) => {
-
-            console.log('exportHtml', res)
-
-            let data = res;
-
-            console.log(data)
-
-
-        });
-
-
-      }
 
 
     createEventValidator(control: AbstractControl) {
@@ -288,6 +229,9 @@ export class EcommerceProductComponent implements OnInit, OnDestroy
         }
         return null;
       }
+
+
+  
     
 
 

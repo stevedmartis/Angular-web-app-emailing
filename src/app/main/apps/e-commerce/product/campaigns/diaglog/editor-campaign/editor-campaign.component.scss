@@ -1,14 +1,31 @@
+.mat-dialog-content {
+
+    max-height: 100vh !important;
+
+}
+
+.mat-dialog-actions {
+    flex-direction: row-reverse !important;
+    box-sizing: unset !important;
+    display: flex;
+    place-content: center flex-end;
+    align-items: center;
+}
+
+
+
+
 @import "src/@fuse/scss/fuse";
 
 .fab-container {
-
     z-index: 100;
     display: flex;
     flex-direction: column-reverse;
     align-items: center;
     position: fixed;
     bottom: 10px;
-    left: 90%;
+    left: 95%;
+
   
     > div {
       display: flex;
@@ -32,7 +49,10 @@
     color:#878787
   }
 
-  
-.spinner-fab {
-  margin-top: -15%;
-}
+  @include media-breakpoint('xs') {
+    .fab-container {
+      left: 90%
+  }
+
+  }
+

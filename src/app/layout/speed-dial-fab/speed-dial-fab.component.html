@@ -3,7 +3,7 @@
                 [disabled]="_contactsService.loadingContact"
                 (click)="onToggleFab()">
                 <mat-icon *ngIf="!_contactsService.loadingContact">add</mat-icon>
-                <mat-spinner class="spinner" *ngIf="_contactsService.loadingContact"  diameter="35"></mat-spinner>
+                <mat-spinner class="spinner-fab" *ngIf="_contactsService.loadingContact"  diameter="35"></mat-spinner>
         </button>
         <div [@speedDialStagger]="buttons.length"> <!-- and here -->
           <input hidden id="fileUpload" type="file" #fileInput/>

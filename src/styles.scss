@@ -11,13 +11,19 @@
 
 
 contacts-contact-list .mat-table .mat-row .mat-cell {
-    min-width: 60px !important;
+    min-width: 80px !important;
 }
 
 .ql-editor {
 
     height: 800px !important;
 
+}
+
+#editor {
+
+    min-height: 650px !important;
+   
 }
 
 
