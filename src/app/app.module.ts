@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule,LOCALE_ID } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -10,12 +10,21 @@ import { InMemoryWebApiModule } from 'angular-in-memory-web-api';
 import { TranslateModule } from '@ngx-translate/core';
 import 'hammerjs';
 
+import { registerLocaleData } from '@angular/common';
+
+import localePy from '@angular/common/locales/es-PY';
+import localePt from '@angular/common/locales/pt';
+import localeEn from '@angular/common/locales/en';
+import localeEsAR from '@angular/common/locales/es-AR';
+
+
+
 import { FuseModule } from '@fuse/fuse.module';
 import { FuseSharedModule } from '@fuse/shared.module';
 import { FuseProgressBarModule, FuseSidebarModule, FuseThemeOptionsModule } from '@fuse/components';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { fuseConfig } from 'app/fuse-config';
-
+import {MAT_DATE_LOCALE} from '@angular/material';
 import { FakeDbService } from 'app/fake-db/fake-db.service';
 import { AppComponent } from 'app/app.component';
 import { AppStoreModule } from 'app/store/store.module';
@@ -24,6 +33,8 @@ import { AuthServicesModule } from '../app/services/authentication/auth.module';
 import { EventServicesModule } from '../app/services/eventos/event.modules';
 import { AuthGuardService } from '../app/main/helpers/auth-guard.service';
 import { InterceptorService } from './services/interceptor.service';
+import { SocketIoModule, SocketIoConfig} from 'ngx-socket-io';
+import { environment } from 'environments/environment.prod';
 
 const appRoutes: Routes = [
     {
@@ -49,16 +60,29 @@ const appRoutes: Routes = [
     {
         path      : '**',
         redirectTo: 'apps/dashboards/analytics'
-    }
+    },
+
+    
+
 ];
+
+registerLocaleData(localePy, 'es');
+registerLocaleData(localePt, 'pt');
+registerLocaleData(localeEn, 'en')
+registerLocaleData(localeEsAR, 'es-Ar');
+
+
+const config: SocketIoConfig = {
+    url:  environment.apiUrl, options: {}
+}
 
 @NgModule({
     declarations: [
         AppComponent,
 
-    
     ],
     imports     : [
+        
         BrowserModule,
         BrowserAnimationsModule,
         HttpClientModule,
@@ -88,15 +112,22 @@ const appRoutes: Routes = [
         LayoutModule,
         AppStoreModule,
         AuthServicesModule,
-        EventServicesModule
+        EventServicesModule,
+
+        SocketIoModule.forRoot(config),
     ],
     providers: [
+
 
         {
             provide: HTTP_INTERCEPTORS,
             useClass: InterceptorService,
             multi: true
           },
+
+          { provide: MAT_DATE_LOCALE, useValue: 'es-ES' },
+          { provide: LOCALE_ID, useValue: "es-Ar" },
+
         AuthGuardService
     ],
     bootstrap   : [

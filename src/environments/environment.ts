@@ -5,7 +5,8 @@
 export const environment = {
     production: false,
     hmr       : false,
-    apiUrl: 'http://ec2-18-231-109-8.sa-east-1.compute.amazonaws.com'
+    //apiUrl: 'http://ec2-18-231-109-8.sa-east-1.compute.amazonaws.com'
+    apiUrl: 'http://ec2-18-229-157-32.sa-east-1.compute.amazonaws.com:8080'
 };
 
 

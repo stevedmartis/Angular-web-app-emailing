@@ -12,6 +12,7 @@ import { EcommerceProductsService } from 'app/main/apps/e-commerce/products/prod
 import { takeUntil } from 'rxjs/internal/operators';
 import { FuseConfirmDialogComponent } from '@fuse/components/confirm-dialog/confirm-dialog.component';
 import { MatDialogRef, MatSnackBar, MatDialog } from '@angular/material';
+import { WebsocketService } from 'app/services/websocket.service';
 
 
 @Component({
@@ -40,6 +41,7 @@ export class EcommerceProductsComponent implements OnInit
 
     // Private
     private _unsubscribeAll: Subject<any>;
+    public _wbSocket: WebsocketService
     
     confirmDialogRef: MatDialogRef<FuseConfirmDialogComponent>;
     
@@ -65,6 +67,8 @@ export class EcommerceProductsComponent implements OnInit
      */
     ngOnInit(): void
     {
+
+    
         this.dataSource = new FilesDataSource(this._ecommerceProductsService, this.paginator, this.sort);
 
         if(this._ecommerceProductsService.products.length > 0) {

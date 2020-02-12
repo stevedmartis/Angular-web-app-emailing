@@ -8,18 +8,16 @@
     <div class="center">
 
         <!-- HEADER -->
-        <div class="header accent"
-             fxLayout="column" fxLayoutAlign="center center"
-             fxLayout.gt-sm="row" fxLayoutAlign.gt-sm="space-between center">
+        <div class="header accent" fxLayout="column" fxLayoutAlign="center center" fxLayout.gt-sm="row"
+            fxLayoutAlign.gt-sm="space-between center">
 
             <!-- APP TITLE -->
-            <div class="logo mb-24 mb-md-0"
-                 fxLayout="row" fxLayoutAlign="start center">
+            <div class="logo mb-24 mb-md-0" fxLayout="row" fxLayoutAlign="start center">
                 <mat-icon class="logo-icon s-32 mr-16" [@animate]="{value:'*',params:{delay:'50ms',scale:'0.2'}}">
-                        event
+                    event
                 </mat-icon>
                 <span class="logo-text h1" [@animate]="{value:'*',params:{delay:'100ms',x:'-25px'}}">
-                    Campañas
+                    Campañias
                 </span>
             </div>
             <!-- / APP TITLE -->
@@ -34,9 +32,7 @@
             <!-- / SEARCH -->
 
             <!-- ADD BUTTON -->
-            <button mat-raised-button
-                    (click)="OpenEditorCampaign()"
-                    class="add-product-button fuse-white mt-24 mt-md-0">
+            <button mat-raised-button (click)="goToCreateCampaignSite()" class="add-product-button fuse-white mt-24 mt-md-0">
                 <span>CREAR NUEVA</span>
             </button>
             <!-- / ADD BUTTON -->
@@ -45,21 +41,26 @@
         <!-- / HEADER -->
 
 
+        
+
+        <div class="widget-group p-12" fxLayout="row wrap" fxFlex="100" *fuseIfOnDom [@animateStagger]="{value:'50'}">
+
+            <!-- WIDGET 1 -->
 
 
-            <div class="widget-group p-12" fxLayout="row wrap" fxFlex="100" *fuseIfOnDom
-                 [@animateStagger]="{value:'50'}">
 
-                <!-- WIDGET 1 -->
-                <fuse-widget [@animate]="{value:'*',params:{y:'100%'}}" class="widget" fxLayout="column"
-                             fxFlex="100" fxFlex.gt-xs="50" fxFlex.gt-md="25">
+          
+            <div *ngFor="let c of _campaignService.campaigns">
+
+
+                <fuse-widget [@animate]="{value:'*',params:{y:'100%'}}" class="widget" fxLayout="column" fxFlex="100"
+                    fxFlex.gt-xs="50" fxFlex.gt-md="25">
 
                     <!-- Front -->
                     <div class="fuse-widget-front">
-                        <div class="pl-16 pr-8 py-16 h-52 widget-front" fxLayout="row"
-                             >
+                        <div class="pl-16 pr-8 py-16 h-52 widget-front" fxLayout="row">
 
-                            <button mat-icon-button class="fuse-widget-flip-button"fuseWidgetToggle aria-label="more">
+                            <button mat-icon-button class="fuse-widget-flip-button" fuseWidgetToggle aria-label="more">
                                 <mat-icon>more_vert</mat-icon>
                             </button>
                         </div>
@@ -68,38 +69,62 @@
 
                         <div class="p-16 border-top" fxLayout="row" fxLayoutAlign="start center">
                             <span class="h4 secondary-text text-truncate">
-                                lorem
+                                {{ c.created | date: 'dd/MM/yyyy' }}
                             </span>
                             <span class="h4 ml-8">
-                                
+
                             </span>
                         </div>
+
+
+                        <div class="pl-16 pr-8 py-16 h-52 widget-front" fxLayout="row">
+
+
+                                <button mat-icon-button class="fuse-widget-flip-button" (click)="openEditor(c)"  aria-label="more">
+                                        <mat-icon>edit</mat-icon>
+                                    </button>
+
+                                <button mat-icon-button class="fuse-widget-flip-button" (click)="deleteCampaign(c)"  aria-label="more">
+                                    <mat-icon>delete</mat-icon>
+                                </button>
+                            </div>
                     </div>
                     <!-- / Front -->
 
                     <!-- Back -->
-                    <div class="fuse-widget-back p-16 pt-32">
-                        <button mat-icon-button fuseWidgetToggle class="fuse-widget-flip-button"
+                    <div class="fuse-widget-back">
+                        <div class="pl-16 pr-8 py-16 h-52 widget-front" fxLayout="row">
+                            <button mat-icon-button fuseWidgetToggle class="fuse-widget-flip-button"
                                 aria-label="Flip widget">
-                            <mat-icon class="s-16">close</mat-icon>
-                        </button>
-
-                        <div>
-                           lorem
+                                <mat-icon class="s-16">close</mat-icon>
+                            </button>
                         </div>
+
+                        <div class="p-16 border-top" fxLayout="row" fxLayoutAlign="start center">
+                            <span class="h4 secondary-text text-truncate">
+                                {{ c.created | date: 'dd/MM/yyyy' }}
+                            </span>
+
+                            <span class="h4 ml-8">
+        
+                            </span>
+                        </div>
+                        
                     </div>
                     <!-- / Back -->
 
                 </fuse-widget>
                 <!-- / WIDGET 1 -->
-
-
             </div>
-            <!-- / WIDGET GROUP -->
 
 
 
-        <div *ngIf="campaignExists" class="content-card empty-card" >
+        </div>
+        <!-- / WIDGET GROUP -->
+
+
+
+        <div *ngIf="campaignExists" class="content-card empty-card">
 
 
             <img src="assets/images/emptyevent.png">

@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, ViewEncapsulation, ViewChild, } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewEncapsulation, ViewChild, AfterViewInit , ChangeDetectorRef} from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Location } from '@angular/common';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -19,7 +19,8 @@ import { ContactsComponent } from 'app/main/apps/contacts/contacts.component';
 import { ContactsService } from 'app/main/apps/contacts/contacts.service';
 import { ContactsContactFormDialogComponent } from 'app/main/apps/contacts/contact-form/contact-form.component';
 import { EmailEditorComponent } from 'angular-email-editor';
-
+import { MatStepper } from '@angular/material';
+import { WebsocketService } from 'app/services/websocket.service';
 
 
 @Component({
@@ -33,6 +34,7 @@ export class EcommerceProductComponent implements OnInit, OnDestroy
 {
 
     @ViewChild(EmailEditorComponent, {static: false}) emailEditor: EmailEditorComponent
+    @ViewChild(MatStepper, {static: false}) stepper;
 
     product: Product;
     pageType: string;
@@ -43,8 +45,6 @@ export class EcommerceProductComponent implements OnInit, OnDestroy
 
     //@ViewChild(InvitationFormComponent, {static: false}) invitationComponent: InvitationFormComponent
 
-
-   
     // Private 
     private _unsubscribeAll: Subject<any>;
 
@@ -63,9 +63,11 @@ export class EcommerceProductComponent implements OnInit, OnDestroy
         private _location: Location,
         private _matSnackBar: MatSnackBar,
         private router: Router,
+        private cdRef: ChangeDetectorRef,
 
         
         public _matDialog: MatDialog,
+        public _wbSocket: WebsocketService
 
 
     )
@@ -85,9 +87,11 @@ export class EcommerceProductComponent implements OnInit, OnDestroy
     /**
      * On init
      */
+
+
+
     ngOnInit(): void
     {
-
         
 
         // Subscribe to update product on changes
@@ -119,6 +123,7 @@ export class EcommerceProductComponent implements OnInit, OnDestroy
             });
 
 
+             
             
     }
 

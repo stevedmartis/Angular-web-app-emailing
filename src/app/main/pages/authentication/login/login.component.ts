@@ -97,7 +97,7 @@ export class LoginComponent implements OnInit
             console.log('error api: ', err)    
             this._matSnackBar.open(err.error.message, 'OK', {
                 verticalPosition: 'top',
-                duration        : 2000
+                duration        : 3000
             });        
            
             this.loading = false;

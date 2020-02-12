@@ -115,7 +115,7 @@ export class ContactsService implements Resolve<any>
                         
                         this.contacts = response.invited;
 
-                        console.log('hola',this.contacts)
+                
 
                         /*
                         if ( this.filterBy === 'starred' )
@@ -177,7 +177,6 @@ export class ContactsService implements Resolve<any>
     toggleSelectedContact(id): void
     {
 
-        console.log('HERRRR', id)
         // First, check if we already have that contact as selected...
         if ( this.selectedContacts.length > 0 )
         {

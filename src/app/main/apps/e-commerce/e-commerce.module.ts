@@ -24,7 +24,8 @@ import { EmailEditorModule } from 'angular-email-editor';
 import { ContactsModule } from '../contacts/contacts.module';
 import { AuthGuardService } from 'app/main/helpers/auth-guard.service';
 import { CampaignsComponent } from './product/campaigns/campaigns.component';
-import { EditorCampaignComponent } from './product/campaigns/diaglog/editor-campaign/editor-campaign.component';
+import { CampaignService } from 'app/main/apps/e-commerce/product/campaigns/campaign.service';
+import { WebsocketService } from 'app/services/websocket.service';
 
 const routes: Routes = [
     {
@@ -62,7 +63,8 @@ const routes: Routes = [
         resolve  : {
             data: EcommerceOrderService
         }
-    }
+    },
+
 ];
 
 @NgModule({
@@ -73,7 +75,7 @@ const routes: Routes = [
         EcommerceOrdersComponent,
         EcommerceOrderComponent,
         CampaignsComponent,
-        EditorCampaignComponent,
+       
 
 
     ],
@@ -100,11 +102,16 @@ const routes: Routes = [
         EcommerceOrdersService,
         EcommerceOrderService,
         ContactsService,
-        EditorCampaignComponent
+        CampaignService,
+        WebsocketService
+
+        
+       
 
     ],
     entryComponents: [
-        EditorCampaignComponent
+        
+        
     ]
 })
 export class EcommerceModule

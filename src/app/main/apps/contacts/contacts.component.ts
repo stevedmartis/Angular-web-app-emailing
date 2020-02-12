@@ -23,6 +23,7 @@ export class ContactsComponent implements OnInit, OnDestroy
     hasSelectedContacts: boolean;
     searchInput: FormControl;
     contactInitial: boolean = false;
+   
 
     // Private
     private _unsubscribeAll: Subject<any>;
@@ -55,6 +56,7 @@ export class ContactsComponent implements OnInit, OnDestroy
      */
     ngOnInit(): void
     {
+        
 
         
 

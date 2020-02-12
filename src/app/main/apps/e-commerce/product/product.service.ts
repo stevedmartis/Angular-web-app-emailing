@@ -43,8 +43,6 @@ export class EcommerceProductService implements Resolve<any>
         this.routeParams = route.params;
 
         return new Promise((resolve, reject) => {
-
-            console.log(this.routeParams);
             Promise.all([
                 this.getProduct(),
 
@@ -68,7 +66,7 @@ export class EcommerceProductService implements Resolve<any>
     {
         return new Promise((resolve, reject) => {
 
-            console.log('this.routeParams', this.routeParams)
+          
      
             if ( this.routeParams.id === 'new' )
             {
