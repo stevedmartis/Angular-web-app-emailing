@@ -41,7 +41,7 @@ export class EcommerceProductsComponent implements OnInit
 
     // Private
     private _unsubscribeAll: Subject<any>;
-    public _wbSocket: WebsocketService
+
     
     confirmDialogRef: MatDialogRef<FuseConfirmDialogComponent>;
     
@@ -67,8 +67,7 @@ export class EcommerceProductsComponent implements OnInit
      */
     ngOnInit(): void
     {
-
-    
+        
         this.dataSource = new FilesDataSource(this._ecommerceProductsService, this.paginator, this.sort);
 
         if(this._ecommerceProductsService.products.length > 0) {

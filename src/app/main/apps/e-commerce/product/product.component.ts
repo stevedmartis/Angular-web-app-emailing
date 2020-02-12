@@ -67,7 +67,6 @@ export class EcommerceProductComponent implements OnInit, OnDestroy
 
         
         public _matDialog: MatDialog,
-        public _wbSocket: WebsocketService
 
 
     )

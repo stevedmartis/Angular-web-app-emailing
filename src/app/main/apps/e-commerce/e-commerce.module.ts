@@ -25,7 +25,6 @@ import { ContactsModule } from '../contacts/contacts.module';
 import { AuthGuardService } from 'app/main/helpers/auth-guard.service';
 import { CampaignsComponent } from './product/campaigns/campaigns.component';
 import { CampaignService } from 'app/main/apps/e-commerce/product/campaigns/campaign.service';
-import { WebsocketService } from 'app/services/websocket.service';
 
 const routes: Routes = [
     {
@@ -103,7 +102,6 @@ const routes: Routes = [
         EcommerceOrderService,
         ContactsService,
         CampaignService,
-        WebsocketService
 
         
        

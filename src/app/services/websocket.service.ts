@@ -33,4 +33,12 @@ export class WebsocketService {
       this.socketStatus = true;
     })
   }
+  // evento, payload, callback Metodo generico reutilizable
+  emit(evento: string, payload?: any, callback?: Function){
+    this.socket.emit(evento, payload, callback);
+  }
+
+  listen(evento:string){
+    return this.socket.fromEvent(evento);
+  }
 }

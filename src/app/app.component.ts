@@ -14,6 +14,7 @@ import { FuseTranslationLoaderService } from '@fuse/services/translation-loader.
 import { navigation } from 'app/navigation/navigation';
 import { locale as navigationEnglish } from 'app/navigation/i18n/en';
 import { locale as navigationTurkish } from 'app/navigation/i18n/tr';
+import { WebsocketService } from './services/websocket.service';
 
 @Component({
     selector   : 'app',
@@ -48,7 +49,9 @@ export class AppComponent implements OnInit, OnDestroy
         private _fuseSplashScreenService: FuseSplashScreenService,
         private _fuseTranslationLoaderService: FuseTranslationLoaderService,
         private _translateService: TranslateService,
-        private _platform: Platform
+        private _platform: Platform,
+
+        public _wbSocket: WebsocketService
     )
     {
         // Get default navigation
@@ -124,6 +127,15 @@ export class AppComponent implements OnInit, OnDestroy
      */
     ngOnInit(): void
     {
+
+       this._wbSocket.emit('online')
+       
+
+       this._wbSocket.listen('refreshPage').subscribe( res => { 
+
+        console.log(res)
+       });
+
         // Subscribe to config changes
         this._fuseConfigService.config
             .pipe(takeUntil(this._unsubscribeAll))

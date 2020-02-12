@@ -35,6 +35,7 @@ import { AuthGuardService } from '../app/main/helpers/auth-guard.service';
 import { InterceptorService } from './services/interceptor.service';
 import { SocketIoModule, SocketIoConfig} from 'ngx-socket-io';
 import { environment } from 'environments/environment.prod';
+import { WebsocketService } from 'app/services/websocket.service';
 
 const appRoutes: Routes = [
     {
@@ -128,7 +129,8 @@ const config: SocketIoConfig = {
           { provide: MAT_DATE_LOCALE, useValue: 'es-ES' },
           { provide: LOCALE_ID, useValue: "es-Ar" },
 
-        AuthGuardService
+        AuthGuardService,
+        WebsocketService
     ],
     bootstrap   : [
         AppComponent
