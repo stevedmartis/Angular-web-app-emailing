@@ -1,19 +1,26 @@
-import { Injectable, ViewChild } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Injectable, ViewChild, Input, Output, EventEmitter } from '@angular/core';
+import { HttpClient, HttpHeaders, HttpRequest, HttpErrorResponse, HttpEventType } from '@angular/common/http';
 import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot } from '@angular/router';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, Subscription, of  } from 'rxjs';
 import { environment } from 'environments/environment';
 import { AuthService } from 'app/services/authentication/auth.service';
 import { ContactsService } from 'app/main/apps/contacts/contacts.service';
 import { MatHorizontalStepper } from '@angular/material';
+import { catchError, last, tap, map } from 'rxjs/operators';
 
 
 @Injectable()
 export class EcommerceProductService implements Resolve<any>
-{
+{       
+
     routeParams: any;
     product: any;
+    loadingFile: boolean = false;
     onProductChanged: BehaviorSubject<any>;
+
+
+
+
     @ViewChild(MatHorizontalStepper, {static: true}) stepper: MatHorizontalStepper;
     /**
      * Constructor
@@ -158,6 +165,8 @@ export class EcommerceProductService implements Resolve<any>
                 }, reject);
         });
     }
+
+
 
 
 }

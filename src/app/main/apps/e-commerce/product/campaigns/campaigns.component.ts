@@ -8,6 +8,7 @@ import { CampaignService } from './campaign.service';
 import { DataSource } from '@angular/cdk/collections';
 import { BehaviorSubject, fromEvent, merge, Observable, Subject } from 'rxjs';
 import { debounceTime, distinctUntilChanged, map } from 'rxjs/operators';
+import { AddComponent } from './dialog/add/add.component';
 
 @Component({
   selector: 'campaigns',
@@ -39,7 +40,6 @@ export class CampaignsComponent implements OnInit {
     this._campaignService.getCampaigns()
     .then(x => 
       {
-
         this.dataSource = new FilesDataSource(this._campaignService, this.paginator, this.sort);
         console.log('this.dataSource ', this.dataSource)
       })
@@ -55,8 +55,13 @@ export class CampaignsComponent implements OnInit {
     })
   }
 
-  goToCreateCampaignSite(){
-    this._campaignService.addCampaign()
+  addCampaignDialog(){
+    this.dialogRef = this._matDialog.open(AddComponent, {
+      data      : {
+        action: 'new'
+      }
+
+  });
   }
 
 

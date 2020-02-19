@@ -50,8 +50,6 @@ export class AppComponent implements OnInit, OnDestroy
         private _fuseTranslationLoaderService: FuseTranslationLoaderService,
         private _translateService: TranslateService,
         private _platform: Platform,
-
-        public _wbSocket: WebsocketService
     )
     {
         // Get default navigation
@@ -128,13 +126,6 @@ export class AppComponent implements OnInit, OnDestroy
     ngOnInit(): void
     {
 
-       this._wbSocket.emit('online')
-       
-
-       this._wbSocket.listen('refreshPage').subscribe( res => { 
-
-        console.log(res)
-       });
 
         // Subscribe to config changes
         this._fuseConfigService.config

@@ -72,11 +72,6 @@ registerLocaleData(localePt, 'pt');
 registerLocaleData(localeEn, 'en')
 registerLocaleData(localeEsAR, 'es-Ar');
 
-
-const config: SocketIoConfig = {
-    url:  environment.apiUrl, options: {}
-}
-
 @NgModule({
     declarations: [
         AppComponent,
@@ -115,7 +110,7 @@ const config: SocketIoConfig = {
         AuthServicesModule,
         EventServicesModule,
 
-        SocketIoModule.forRoot(config),
+        //SocketIoModule.forRoot(config),
     ],
     providers: [
 

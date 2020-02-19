@@ -193,6 +193,7 @@ export class EcommerceProductComponent implements OnInit, OnDestroy
         });
     }
 
+
     /**
      * Add product
      */
@@ -235,12 +236,6 @@ export class EcommerceProductComponent implements OnInit, OnDestroy
       }
 
 
-  
-    
+      
 
-
-
-
-
- 
 }

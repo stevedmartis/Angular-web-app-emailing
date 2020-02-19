@@ -25,6 +25,7 @@ import { ContactsModule } from '../contacts/contacts.module';
 import { AuthGuardService } from 'app/main/helpers/auth-guard.service';
 import { CampaignsComponent } from './product/campaigns/campaigns.component';
 import { CampaignService } from 'app/main/apps/e-commerce/product/campaigns/campaign.service';
+import { AddComponent } from './product/campaigns/dialog/add/add.component';
 
 const routes: Routes = [
     {
@@ -74,6 +75,7 @@ const routes: Routes = [
         EcommerceOrdersComponent,
         EcommerceOrderComponent,
         CampaignsComponent,
+        AddComponent,
        
 
 
@@ -108,7 +110,7 @@ const routes: Routes = [
 
     ],
     entryComponents: [
-        
+        AddComponent
         
     ]
 })

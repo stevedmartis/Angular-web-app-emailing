@@ -7,16 +7,11 @@
             </button>
         </mat-toolbar-row>
 
-        <mat-toolbar-row class="toolbar-bottom py-16" fxLayout="column" fxLayoutAlign="center center">
-            <img [src]="contact.avatar" class="avatar contact-avatar huge m-0"
-                 [alt]="contact.name"/>
-            <div class="contact-name mt-8">{{contact.name}} {{contact.lastname}}</div>
-        </mat-toolbar-row>
     </mat-toolbar>
 
-    <div mat-dialog-content class="p-24 pb-0 m-0" fusePerfectScrollbar>
+    <div mat-dialog-content class="pb-0 m-0" fusePerfectScrollbar>
 
-        <form [formGroup]="contactForm">
+        <form [formGroup]="contactForm" class="form">
 
             <div fxLayout="row" fxLayoutAlign="start start">
                 <mat-form-field appearance="outline" fxFlex>

@@ -32,7 +32,7 @@
             <!-- / SEARCH -->
 
             <!-- ADD BUTTON -->
-            <button mat-raised-button (click)="goToCreateCampaignSite()" class="add-product-button fuse-white mt-24 mt-md-0">
+            <button mat-raised-button (click)="addCampaignDialog()" class="add-product-button fuse-white mt-24 mt-md-0">
                 <span>CREAR NUEVA</span>
             </button>
             <!-- / ADD BUTTON -->
@@ -41,17 +41,11 @@
         <!-- / HEADER -->
 
 
-        
-
         <div class="widget-group p-12" fxLayout="row wrap" fxFlex="100" *fuseIfOnDom [@animateStagger]="{value:'50'}">
 
             <!-- WIDGET 1 -->
 
-
-
-          
             <div *ngFor="let c of _campaignService.campaigns">
-
 
                 <fuse-widget [@animate]="{value:'*',params:{y:'100%'}}" class="widget" fxLayout="column" fxFlex="100"
                     fxFlex.gt-xs="50" fxFlex.gt-md="25">
@@ -65,8 +59,6 @@
                             </button>
                         </div>
 
-
-
                         <div class="p-16 border-top" fxLayout="row" fxLayoutAlign="start center">
                             <span class="h4 secondary-text text-truncate">
                                 {{ c.created | date: 'dd/MM/yyyy' }}
@@ -78,8 +70,6 @@
 
 
                         <div class="pl-16 pr-8 py-16 h-52 widget-front" fxLayout="row">
-
-
                                 <button mat-icon-button class="fuse-widget-flip-button" (click)="openEditor(c)"  aria-label="more">
                                         <mat-icon>edit</mat-icon>
                                     </button>
@@ -117,18 +107,11 @@
                 <!-- / WIDGET 1 -->
             </div>
 
-
-
         </div>
         <!-- / WIDGET GROUP -->
 
-
-
         <div *ngIf="campaignExists" class="content-card empty-card">
-
-
             <img src="assets/images/emptyevent.png">
-
         </div>
 
 
