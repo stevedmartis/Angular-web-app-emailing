@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { fuseAnimations } from '@fuse/animations';
-import { MatDialogRef, MatDialog } from '@angular/material';
+import { MatDialogRef, MatDialog, MatSnackBar } from '@angular/material';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { Router } from '@angular/router'
@@ -9,6 +9,7 @@ import { DataSource } from '@angular/cdk/collections';
 import { BehaviorSubject, fromEvent, merge, Observable, Subject } from 'rxjs';
 import { debounceTime, distinctUntilChanged, map } from 'rxjs/operators';
 import { AddComponent } from './dialog/add/add.component';
+import { FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'campaigns',
@@ -32,7 +33,8 @@ export class CampaignsComponent implements OnInit {
 
   constructor(public _matDialog: MatDialog,
             private router: Router,
-            private _campaignService: CampaignService
+            private _campaignService: CampaignService,
+            private _matSnackBar: MatSnackBar,
             ) { }
 
   ngOnInit() {
@@ -62,6 +64,34 @@ export class CampaignsComponent implements OnInit {
       }
 
   });
+
+  this.dialogRef.afterClosed()
+  .subscribe((response: FormGroup) => {
+    if ( !response )
+    {
+        return;
+    }
+
+
+        console.log('product post delete', response)
+
+        let form = response.getRawValue();
+
+        this._campaignService.addCampaign(form)
+
+        
+        .then(x => {
+
+            console.log(x)
+            this._matSnackBar.open('Campañia creada', 'OK', {
+                verticalPosition: 'top',
+                duration        : 3000
+            });
+        })
+        
+    
+    this.dialogRef = null;
+});
   }
 
 

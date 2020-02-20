@@ -43,65 +43,72 @@
 
         <div class="widget-group p-12" fxLayout="row wrap" fxFlex="100" *fuseIfOnDom [@animateStagger]="{value:'50'}">
 
+            
             <!-- WIDGET 1 -->
 
             <div *ngFor="let c of _campaignService.campaigns">
 
+
+                
                 <fuse-widget [@animate]="{value:'*',params:{y:'100%'}}" class="widget" fxLayout="column" fxFlex="100"
                     fxFlex.gt-xs="50" fxFlex.gt-md="25">
+                <!-- PREVIEW -->
+                <div class="card-preview">
 
-                    <!-- Front -->
-                    <div class="fuse-widget-front">
-                        <div class="pl-16 pr-8 py-16 h-52 widget-front" fxLayout="row">
-
-                            <button mat-icon-button class="fuse-widget-flip-button" fuseWidgetToggle aria-label="more">
-                                <mat-icon>more_vert</mat-icon>
-                            </button>
-                        </div>
-
-                        <div class="p-16 border-top" fxLayout="row" fxLayoutAlign="start center">
-                            <span class="h4 secondary-text text-truncate">
-                                {{ c.created | date: 'dd/MM/yyyy' }}
-                            </span>
-                            <span class="h4 ml-8">
-
-                            </span>
-                        </div>
+                    <div class="fuse-card">
 
 
-                        <div class="pl-16 pr-8 py-16 h-52 widget-front" fxLayout="row">
-                                <button mat-icon-button class="fuse-widget-flip-button" (click)="openEditor(c)"  aria-label="more">
-                                        <mat-icon>edit</mat-icon>
+                        <div >
+
+                            <div class="p-16" fxLayout="row" fxLayoutAlign="space-between center">
+                                <div class="pr-16">
+                                    <div class="text-bold ">{{ c.affair }}</div>
+                                    <div class="h5 text-bold secondary-text"> {{ c.sender }}</div>
+    
+                                </div>
+
+                                <div>
+                                    <button mat-icon-button [matMenuTriggerFor]="card19Menu" aria-label="more">
+                                        <mat-icon>more_vert</mat-icon>
                                     </button>
 
-                                <button mat-icon-button class="fuse-widget-flip-button" (click)="deleteCampaign(c)"  aria-label="more">
-                                    <mat-icon>delete</mat-icon>
-                                </button>
+                                    <mat-menu #card19Menu="matMenu">
+                                        <button mat-menu-item>
+                                            <mat-icon>trending_up</mat-icon>
+                                            <span>Trend</span>
+                                        </button>
+                                        <button mat-menu-item>
+                                            <mat-icon>history</mat-icon>
+                                            <span>History</span>
+                                        </button>
+                                        <button mat-menu-item>
+                                            <mat-icon>notifications_off</mat-icon>
+                                            <span>Disable alerts</span>
+                                        </button>
+                                    </mat-menu>
+                                </div>
                             </div>
-                    </div>
-                    <!-- / Front -->
 
-                    <!-- Back -->
-                    <div class="fuse-widget-back">
+
+                        </div>
+                        
+                        <img [src]="c.imgBlob">
+
                         <div class="pl-16 pr-8 py-16 h-52 widget-front" fxLayout="row">
-                            <button mat-icon-button fuseWidgetToggle class="fuse-widget-flip-button"
-                                aria-label="Flip widget">
-                                <mat-icon class="s-16">close</mat-icon>
+                            <button mat-icon-button class="fuse-widget-flip-button" (click)="openEditor(c)"  aria-label="more">
+                                    <mat-icon>edit</mat-icon>
+                                </button>
+
+                            <button mat-icon-button class="fuse-widget-flip-button" (click)="deleteCampaign(c)"  aria-label="more">
+                                <mat-icon>delete</mat-icon>
                             </button>
                         </div>
 
-                        <div class="p-16 border-top" fxLayout="row" fxLayoutAlign="start center">
-                            <span class="h4 secondary-text text-truncate">
-                                {{ c.created | date: 'dd/MM/yyyy' }}
-                            </span>
-
-                            <span class="h4 ml-8">
-        
-                            </span>
-                        </div>
-                        
                     </div>
-                    <!-- / Back -->
+
+                </div>
+                <!-- / PREVIEW -->
+ 
 
                 </fuse-widget>
                 <!-- / WIDGET 1 -->

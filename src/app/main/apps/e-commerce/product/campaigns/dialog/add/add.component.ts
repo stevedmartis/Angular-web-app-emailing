@@ -5,7 +5,7 @@ import { Campaign } from '../../campaign.model';
 import { Subscription, of } from 'rxjs';
 import { HttpRequest, HttpEventType, HttpErrorResponse, HttpClient } from '@angular/common/http';
 import { catchError, last, tap, map } from 'rxjs/operators';
-
+import { CampaignService } from '../../campaign.service';
 
 export class FileUploadModel {
   data: File;
@@ -55,6 +55,7 @@ private files: Array<FileUploadModel> = [];
     @Inject(MAT_DIALOG_DATA) private _data: any,
     private _formBuilder: FormBuilder,
     private _httpClient: HttpClient,
+    private _campaignService: CampaignService
     
     ) {
       // Set the defaults
@@ -89,7 +90,8 @@ private files: Array<FileUploadModel> = [];
           id              : [this.campaign.id],
           asunto         : [this.campaign.asunto],
           remitente            : [this.campaign.remite],
-          notes:              [this.campaign.footer]
+          notes:              [this.campaign.footer],
+
   
       });
   }
@@ -203,6 +205,7 @@ preview() {
     this.previewUrl = reader.result; 
 
     console.log('this.previewUrl ', this.previewUrl)
+    this._campaignService.image = this.previewUrl;
     this.previewLoading = true;
   }
 }

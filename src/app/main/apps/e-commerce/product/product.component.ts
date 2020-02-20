@@ -189,6 +189,7 @@ export class EcommerceProductComponent implements OnInit, OnDestroy
             data      : {
                 idEvent: this.product._id
             }
+            
 
         });
     }
