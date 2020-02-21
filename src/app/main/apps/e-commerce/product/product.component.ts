@@ -21,6 +21,7 @@ import { ContactsContactFormDialogComponent } from 'app/main/apps/contacts/conta
 import { EmailEditorComponent } from 'angular-email-editor';
 import { MatStepper } from '@angular/material';
 import { WebsocketService } from 'app/services/websocket.service';
+import { CampaignService } from './campaigns/campaign.service';
 
 
 @Component({
@@ -68,7 +69,6 @@ export class EcommerceProductComponent implements OnInit, OnDestroy
         
         public _matDialog: MatDialog,
 
-
     )
     {
 
@@ -103,7 +103,9 @@ export class EcommerceProductComponent implements OnInit, OnDestroy
 
                     console.log('product', product)
                     this.product = new Product(product.event);
-                    console.log('this.product', this.product)
+                    console.log('this.producte.evnd.id',product.event._id)
+
+                    this._ecommerceProductService.idNowEvent = product.event._id
                     this.pageType = 'edit';
                     this.isCreated = true;
                     this._contactsService.idEventNow =  product.event._id;

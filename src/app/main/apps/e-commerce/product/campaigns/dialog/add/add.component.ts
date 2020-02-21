@@ -65,12 +65,12 @@ private files: Array<FileUploadModel> = [];
 
       if ( this.action === 'edit' )
       {
-          this.dialogTitle = 'Editar campañia';
+          this.dialogTitle = 'Editar campaña';
           this.campaign = _data.contact;
       }
       else
       {
-          this.dialogTitle = 'Nueva campañia';
+          this.dialogTitle = 'Nueva campaña';
           this.campaign = new Campaign({});
       }
 
@@ -117,7 +117,7 @@ private files: Array<FileUploadModel> = [];
                 type: 'image'
             });
         }
-        this.uploadFiles();
+       // this.uploadFiles();
     }
     fileUpload.click();
     
@@ -204,7 +204,6 @@ preview() {
   reader.onload = (_event) => { 
     this.previewUrl = reader.result; 
 
-    console.log('this.previewUrl ', this.previewUrl)
     this._campaignService.image = this.previewUrl;
     this.previewLoading = true;
   }

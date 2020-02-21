@@ -110,7 +110,7 @@ export class EcommerceProductsComponent implements OnInit
 
         this.confirmDialogRef = this._matDialog.open(FuseConfirmDialogComponent, {
             disableClose: false,
-            panelClass: 'custom-dialog-container'
+            
         });
 
         this.confirmDialogRef.componentInstance.confirmMessage = 'Seguro que desea eliminarlo?';

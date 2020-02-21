@@ -59,6 +59,7 @@ export class CampaignsComponent implements OnInit {
 
   addCampaignDialog(){
     this.dialogRef = this._matDialog.open(AddComponent, {
+      disableClose: true,
       data      : {
         action: 'new'
       }
@@ -73,7 +74,7 @@ export class CampaignsComponent implements OnInit {
     }
 
 
-        console.log('product post delete', response)
+        console.log('product post delete', response);
 
         let form = response.getRawValue();
 
@@ -83,7 +84,7 @@ export class CampaignsComponent implements OnInit {
         .then(x => {
 
             console.log(x)
-            this._matSnackBar.open('Campañia creada', 'OK', {
+            this._matSnackBar.open('Campaña creada', 'OK', {
                 verticalPosition: 'top',
                 duration        : 3000
             });

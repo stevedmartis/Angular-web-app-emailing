@@ -16,6 +16,7 @@ export class CampaignService
     userId = this._authServices.currentUserValue.user._id;
     token = this._authServices.currentUserValue.token;
     image: any;
+    idEventNow: any
 
     eventId = this._productService.product.event._id;
     /**
@@ -26,7 +27,8 @@ export class CampaignService
     constructor(
         private _httpClient: HttpClient,
         private _authServices: AuthService,
-        private _productService: EcommerceProductService
+        private _productService: EcommerceProductService,
+        
     )
     {
         // Set the defaults
@@ -60,9 +62,13 @@ export class CampaignService
 
                 this._httpClient.get(environment.apiUrl + '/api/campaign-user/' + this.userId)
                     .subscribe((response: any) => {
-                        this.campaigns = response.campaigns;
-                       
 
+                        const allCampaigs = response.campaigns
+
+                       const campByEvent =  allCampaigs.filter(x => x.eventId === this._productService.idNowEvent)
+
+                        console.log('map by id:', this._productService.idNowEvent, campByEvent)
+                        this.campaigns = campByEvent;
                         this.onCampaignhanged.next(this.campaigns);
                         resolve(response);
                        
@@ -86,7 +92,7 @@ console.log('campaign', campaign, this.eventId)
             this._httpClient.post(environment.apiUrl + '/api/campaign/add-new-campaign', 
             {  
                 user: this.userId,
-                codeEvent: this.eventId,
+                codeEvent: this.idEventNow,
                 affair: campaign.asunto,
                 sender: campaign.remitente,
                 imgBlob: this.image,

@@ -7,6 +7,7 @@ import { AuthService } from 'app/services/authentication/auth.service';
 import { ContactsService } from 'app/main/apps/contacts/contacts.service';
 import { MatHorizontalStepper } from '@angular/material';
 import { catchError, last, tap, map } from 'rxjs/operators';
+import { CampaignService } from './campaigns/campaign.service';
 
 
 @Injectable()
@@ -17,6 +18,7 @@ export class EcommerceProductService implements Resolve<any>
     product: any;
     loadingFile: boolean = false;
     onProductChanged: BehaviorSubject<any>;
+    idNowEvent: any;
 
 
 
@@ -30,7 +32,8 @@ export class EcommerceProductService implements Resolve<any>
     constructor(
         private _httpClient: HttpClient,
         private authServices: AuthService,
-        private contactServices: ContactsService
+        private contactServices: ContactsService,
+
     )
     {
         // Set the defaults
@@ -88,13 +91,16 @@ export class EcommerceProductService implements Resolve<any>
                 this._httpClient.get(environment.apiUrl + '/api/event/' + this.routeParams.id)
                     .subscribe((response: any) => {
                         this.product = response;
-                        console.log(this.product)
+                        console.log(this.product.event)
 
-                        this.contactServices.idEventNow = this.product._id
+                    
+
+                        this.contactServices.idEventNow = this.product.event._id;
+
+                        console.log('**  this.contactServices.idEventNow',  this.contactServices.idEventNow)
+
                         this.onProductChanged.next(this.product);
-                        resolve(response);
-
-                        console.log()
+                        resolve(response)
 
                        
                     }, reject);
