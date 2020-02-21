@@ -41,7 +41,7 @@
         <!-- / HEADER -->
 
 
-        <div class="widget-group p-12" fxLayout="row wrap" fxFlex="100" *fuseIfOnDom >
+        <div class="widget-group margin-card" fxLayout="row wrap" fxFlex="100" *fuseIfOnDom >
 
             
             <!-- WIDGET 1 -->
@@ -73,17 +73,17 @@
                                     </button>
 
                                     <mat-menu #card19Menu="matMenu">
-                                        <button mat-menu-item>
-                                            <mat-icon>trending_up</mat-icon>
-                                            <span>Trend</span>
+                                        <button mat-menu-item (click)="openEditor(c)" >
+                                            <mat-icon>edit</mat-icon>
+                                            <span>Editar</span>
                                         </button>
-                                        <button mat-menu-item>
-                                            <mat-icon>history</mat-icon>
-                                            <span>History</span>
+                                        <button mat-menu-item (click)="deleteCampaign(c)">
+                                            <mat-icon>delete</mat-icon>
+                                            <span>Eliminar</span>
                                         </button>
-                                        <button mat-menu-item>
-                                            <mat-icon>notifications_off</mat-icon>
-                                            <span>Disable alerts</span>
+                                        <button mat-menu-item  >
+                                            <mat-icon>file_copy</mat-icon>
+                                            <span>Duplicar</span>
                                         </button>
                                     </mat-menu>
                                 </div>
@@ -95,13 +95,11 @@
                         <img [src]="c.imgBlob">
 
                         <div class="pl-16 pr-8 py-16 h-52 widget-front" fxLayout="row">
-                            <button mat-icon-button class="fuse-widget-flip-button" (click)="openEditor(c)"  aria-label="more">
-                                    <mat-icon>edit</mat-icon>
-                                </button>
-
-                            <button mat-icon-button class="fuse-widget-flip-button" (click)="deleteCampaign(c)"  aria-label="more">
-                                <mat-icon>delete</mat-icon>
+                            <button mat-raised-button  color="accent"  class="mt-24 mt-md-0">
+                                <span>Enviar
+                                </span>
                             </button>
+
                         </div>
 
                     </div>

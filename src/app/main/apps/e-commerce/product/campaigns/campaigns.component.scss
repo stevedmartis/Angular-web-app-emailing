@@ -191,6 +191,15 @@ margin: 46%;
 }
 
 
+@include media-breakpoint('xs') {
+    .margin-card {
+        margin-left: -11%;
+    }
+    
+}
+
+
+
 
 
 

@@ -92,7 +92,7 @@ console.log('campaign', campaign, this.eventId)
             this._httpClient.post(environment.apiUrl + '/api/campaign/add-new-campaign', 
             {  
                 user: this.userId,
-                codeEvent: this.idEventNow,
+                codeEvent: this.eventId,
                 affair: campaign.asunto,
                 sender: campaign.remitente,
                 imgBlob: this.image,
