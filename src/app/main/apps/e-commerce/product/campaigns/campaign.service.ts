@@ -29,7 +29,7 @@ export class CampaignService
     selectedContacts = this._contactService.selectedContacts.length;
     statusSendInvitation = '';
 
-    eventId = this._productService.idNowEvent;
+
     /**
      * Constructor
      *
@@ -97,12 +97,12 @@ export class CampaignService
 
     addCampaign(campaign): Promise<any> {
 
-console.log('campaign', campaign, this.eventId)        
+console.log('campaign', campaign, this._productService.idNowEvent)        
         return new Promise((resolve, reject) => {
             this._httpClient.post(environment.apiUrl + '/api/campaign/add-new-campaign', 
             {  
                 user: this.userId,
-                codeEvent: this.eventId,
+                codeEvent: this._productService.idNowEvent,
                 affair: campaign.asunto,
                 sender: campaign.remitente,
                 imgBlob: this.image,
@@ -166,10 +166,6 @@ console.log('campaign', campaign, this.eventId)
         const array = arrayInvitedSelected.map( obj => obj.id)
         this.invitedArrayforSend(array, invitation);
 
-        setTimeout(() => {
-            this.value ++;
-        }, 1000);
-
 
     }
     else {
@@ -182,11 +178,8 @@ console.log('campaign', campaign, this.eventId)
         console.log('arrayInvitedSelected', arrayInvitedSelected);
 
         this.invitedArrayforSend(arrayInvitedSelected,invitation);
-
         
-        setTimeout(() => {
-            this.value ++;
-        }, 1000);
+
 
     }
 
