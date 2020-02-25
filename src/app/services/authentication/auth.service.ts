@@ -70,26 +70,17 @@ export class AuthService {
     }));
   }
 
-  PersonByUserId(){
+  InvitedByUserId(id){
 
+    return new Promise((resolve, reject) => {
+      this.http.get(environment.apiUrl + '/api/invited/' + id)
+          .subscribe((response: any) => {
+              resolve(response);
 
-    const Haeader = {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-        'authorization': `${this.currentUserValue.token}`
+              console.log(response)
+          }, reject);
+  });
 
-      }),
-    }
-    return this.http.get<Person>(`${environment.apiUrl}/api/person/userId/${this.currentUserValue.id}`, Haeader)
-    .pipe(map(person => {
-
-        localStorage.setItem('currentPerson', JSON.stringify(person));
-
-        console.log(person)
-        this.currentPersonSubject.next(person);
-     
-        return person;
-    }));
 
   }
 

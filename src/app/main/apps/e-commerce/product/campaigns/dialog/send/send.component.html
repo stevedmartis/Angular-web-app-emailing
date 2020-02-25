@@ -1,0 +1,57 @@
+<div class="dialog-content-wrapper">
+    <mat-toolbar matDialogTitle class="mat-accent m-0">
+        <mat-toolbar-row fxLayout="row" fxLayoutAlign="space-between center">
+            <span class="title-dialog dialog-title">Enviar invitación a:</span>
+            <button mat-icon-button (click)="matDialogRef.close()" aria-label="Close dialog">
+                <mat-icon>close</mat-icon>
+            </button>
+        </mat-toolbar-row>
+
+    </mat-toolbar>
+
+<div mat-dialog-content class="pb-0 m-0 dialog-content" fusePerfectScrollbar>
+
+        <div fxLayout="row" fxLayoutAlign="start start">
+
+            <a
+                appearance="outline" fxFlex
+                mat-button class="reference-button save-button"
+                target="_blank"
+                (click)="SendInvitation('all')"
+            >
+             <mat-icon class="mr-8">done_all</mat-icon>
+             <span class="h1">Todos los invitados</span>
+         </a>
+         
+       <br>
+         
+
+
+        </div>
+
+
+        <div fxLayout="row" fxLayoutAlign="start start">
+
+            <a
+            appearance="outline" fxFlex
+             mat-button class="reference-button save-button"
+            target="_blank"
+            (click)="SendInvitation('select')"
+            >
+             <mat-icon class="mr-8">check_box</mat-icon>
+             <span class="h1">Invitados marcados</span>
+         </a>
+         
+       <br>
+         
+
+
+        </div>
+
+    </div>
+
+    <div mat-dialog-actions class="m-0 p-16" fxLayout="row" fxLayoutAlign="end center">
+
+
+    </div>
+</div>

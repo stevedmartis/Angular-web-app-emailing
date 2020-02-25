@@ -89,14 +89,17 @@
                                 </div>
                             </div>
 
-
                         </div>
                         
                         <img [src]="c.imgBlob">
 
                         <div class="pl-16 pr-8 py-16 h-52 widget-front" fxLayout="row">
-                            <button mat-raised-button  color="accent"  class="mt-24 mt-md-0">
-                                <span>Enviar
+                            <button 
+                                (click)="sendCampaignDialog(c)"
+                                mat-raised-button  
+                                color="accent"  
+                                class="mt-24 mt-md-0">
+                                <span>Enviar invitación
                                 </span>
                             </button>
 

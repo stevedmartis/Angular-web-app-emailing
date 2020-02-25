@@ -26,6 +26,7 @@ import { AuthGuardService } from 'app/main/helpers/auth-guard.service';
 import { CampaignsComponent } from './product/campaigns/campaigns.component';
 import { CampaignService } from 'app/main/apps/e-commerce/product/campaigns/campaign.service';
 import { AddComponent } from './product/campaigns/dialog/add/add.component';
+import { SendComponent } from './product/campaigns/dialog/send/send.component';
 
 const routes: Routes = [
     {
@@ -76,6 +77,7 @@ const routes: Routes = [
         EcommerceOrderComponent,
         CampaignsComponent,
         AddComponent,
+        SendComponent,
        
 
 
@@ -108,7 +110,8 @@ const routes: Routes = [
 
     ],
     entryComponents: [
-        AddComponent
+        AddComponent,
+        SendComponent
         
     ]
 })

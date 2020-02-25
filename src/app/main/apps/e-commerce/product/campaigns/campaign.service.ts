@@ -6,6 +6,9 @@ import { environment } from 'environments/environment';
 import { AuthService } from 'app/services/authentication/auth.service';
 import { EcommerceProductService } from '../product.service';
 import { Campaign } from './campaign.model';
+import { ContactsService } from 'app/main/apps/contacts/contacts.service';
+import { map } from 'rxjs/operators';
+import { ImgSrcDirective } from '@angular/flex-layout';
 
 @Injectable()
 export class CampaignService
@@ -17,6 +20,7 @@ export class CampaignService
     token = this._authServices.currentUserValue.token;
     image: any;
     idEventNow: any
+    base64Image: any;
 
     eventId = this._productService.product.event._id;
     /**
@@ -28,6 +32,9 @@ export class CampaignService
         private _httpClient: HttpClient,
         private _authServices: AuthService,
         private _productService: EcommerceProductService,
+        private _contactService: ContactsService
+
+
         
     )
     {
@@ -50,9 +57,6 @@ export class CampaignService
      * @returns {Promise<any>}
      */
     getCampaigns(): Promise<any>
-    
-
-
     {
       
         return new Promise((resolve, reject) => {
@@ -85,9 +89,8 @@ export class CampaignService
      */
 
     addCampaign(campaign): Promise<any> {
-console.log('campaign', campaign, this.eventId)
 
-        
+console.log('campaign', campaign, this.eventId)        
         return new Promise((resolve, reject) => {
             this._httpClient.post(environment.apiUrl + '/api/campaign/add-new-campaign', 
             {  
@@ -131,9 +134,98 @@ console.log('campaign', campaign, this.eventId)
   }
 
     
+  getDataPersonForSendEmail(invitation, option){
+
+    console.log('invitation', invitation)
+
+    console.log('contacts all: ', this._contactService.contacts)
+
+    console.log('contacts selects: ', this._contactService.selectedContacts)
+
+    if(option === 'all'){
+
+        console.log('allllll')
+        const arrayInvitedSelected = this._contactService.contacts;
+        console.log('arrayInvitedSelected', arrayInvitedSelected)
+
+        const array = arrayInvitedSelected.map( obj => obj.id)
+        this.invitedArrayforSend(array, invitation);
+
+
+    }
+    else {
+
+        console.log('select')
+
+        const arrayInvitedSelected = this._contactService.selectedContacts;
+
+        console.log('arrayInvitedSelected', arrayInvitedSelected)
+
+        this.invitedArrayforSend(arrayInvitedSelected,invitation);
+
+    }
+
+  }
+
+  invitedArrayforSend(array, invitation){
+
+
+    array.forEach(obj => {
+
+        console.log(obj)
+
+        this._authServices.InvitedByUserId(obj)
+        .then( (person ) => {
+
+            console.log(person)
+            
+            this.sendInvited(invitation, person)
+            .subscribe( (mail ) => {
+                console.log(mail)
+            })
+        })
+
+        
+    });
+
+  }
+
+  sendInvited(invitation, person){
+
+
+    const imagen =  invitation.imgBlob.substr(22)
+        
+    const obj = {
+        _id: invitation._id,
+        affair: invitation.affair,
+        sender: invitation.sender,
+        imgBlob: imagen,
+          _idInvited: person.invited._id,
+            emailInvited: person.invited.email,
+            nameInvited: person.invited.name,
+
+
+    }
+
+    return this._httpClient.post<any>(`${environment.apiUrl}/api/send-invited`, obj)
+    .pipe(map(user => {
+        // store user details and jwt token in local storage to keep user logged in between page refreshes
+        //localStorage.setItem('currentUser', JSON.stringify(user));
+    console.log(user)
+        return user;
+    }));
+
+
+    }
+
+
+
+
 
 
   
 
 }
+
+
 

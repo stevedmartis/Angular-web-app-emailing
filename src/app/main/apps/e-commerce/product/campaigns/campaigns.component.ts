@@ -10,6 +10,7 @@ import { BehaviorSubject, fromEvent, merge, Observable, Subject } from 'rxjs';
 import { debounceTime, distinctUntilChanged, map } from 'rxjs/operators';
 import { AddComponent } from './dialog/add/add.component';
 import { FormGroup } from '@angular/forms';
+import { SendComponent } from './dialog/send/send.component';
 
 @Component({
   selector: 'campaigns',
@@ -49,13 +50,28 @@ export class CampaignsComponent implements OnInit {
 
   deleteCampaign(campaign){
 
-
     console.log('campaign', campaign)
     this._campaignService.deleteCampaign(campaign)
     .then(x => {
       console.log(x)
     })
   }
+
+
+  sendCampaignDialog(campaign){
+
+    console.log(campaign)
+    this.dialogRef = this._matDialog.open(SendComponent, {
+      disableClose: true,
+      width: '50%',
+      height: '40%',
+      data      : {
+        campaign: campaign
+      }
+
+  });
+
+}
 
   addCampaignDialog(){
     this.dialogRef = this._matDialog.open(AddComponent, {
