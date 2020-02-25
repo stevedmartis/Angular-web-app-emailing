@@ -141,6 +141,8 @@ export class ContactsService implements Resolve<any>
                         this.contacts = this.contacts.map(contact => {
                             return new Contact(contact);
                         });
+
+                        console.log( this.contacts.length)
                         
                         this.onContactsChanged.next(this.contacts);
                         resolve(this.contacts);
