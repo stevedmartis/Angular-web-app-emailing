@@ -147,7 +147,7 @@ console.log('campaign', campaign, this.eventId)
 
     console.log('invitation', invitation)
 
-    console.log('contacts all: ', this._contactService.contacts)
+    console.log('contacts all: ', this._contactService.contacts);
 
 
     
@@ -160,11 +160,15 @@ console.log('campaign', campaign, this.eventId)
         console.log('allllll')
         const arrayInvitedSelected = this._contactService.contacts;
 
-        
+
         console.log('arrayInvitedSelected', arrayInvitedSelected)
 
         const array = arrayInvitedSelected.map( obj => obj.id)
         this.invitedArrayforSend(array, invitation);
+
+        setTimeout(() => {
+            this.value ++;
+        }, 1000);
 
 
     }
@@ -179,6 +183,11 @@ console.log('campaign', campaign, this.eventId)
 
         this.invitedArrayforSend(arrayInvitedSelected,invitation);
 
+        
+        setTimeout(() => {
+            this.value ++;
+        }, 1000);
+
     }
 
   }
@@ -192,6 +201,7 @@ console.log('campaign', campaign, this.eventId)
 
         this._authServices.InvitedByUserId(obj)
         .then( (person ) => {
+            
 
             console.log(person)
             
@@ -204,7 +214,7 @@ console.log('campaign', campaign, this.eventId)
                 console.log( this.value)
 
 
-                if(this.value === this._contactService.contacts.length){
+                if(this.value === array.length){
 
                    this.value = 100;
 

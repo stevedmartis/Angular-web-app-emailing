@@ -52,10 +52,11 @@
                     Iniciar sesión
                 </button>
 
+                <button *ngIf="loading" mat-raised-button color="accent" class="submit-button" fxLayoutAlign="center center" aria-label="LOG IN"
+                disabled="true">
+                <mat-spinner diameter="45"></mat-spinner>
+            </button>
 
-                <div *ngIf="loading" class="spinner-loading" fxLayoutAlign="center center">
-                    <mat-spinner diameter="45"></mat-spinner>
-                </div>
 
             </form>
 
