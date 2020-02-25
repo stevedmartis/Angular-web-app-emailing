@@ -29,7 +29,7 @@ export class CampaignService
     selectedContacts = this._contactService.selectedContacts.length;
     statusSendInvitation = '';
 
-    eventId = this._productService.product.event._id;
+    eventId = this._productService.idNowEvent;
     /**
      * Constructor
      *
@@ -224,7 +224,12 @@ console.log('campaign', campaign, this.eventId)
                 }
 
                    
-            })
+            },
+            
+            error => {
+                this.value ++
+              },)
+            
             
         })
 
