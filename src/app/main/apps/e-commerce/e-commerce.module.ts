@@ -17,7 +17,7 @@ import { EcommerceOrderComponent } from 'app/main/apps/e-commerce/order/order.co
 import { EcommerceOrderService } from 'app/main/apps/e-commerce/order/order.service';
 import { MaterialModule } from 'app/main/angular-material-elements/material.module';
 
-import { FuseConfirmDialogModule, FuseSidebarModule } from '@fuse/components';
+import { FuseConfirmDialogModule, FuseSidebarModule, FuseProgressBarModule } from '@fuse/components';
 import { ContactsService } from 'app/main/apps/contacts/contacts.service';
 
 import { EmailEditorModule } from 'angular-email-editor';
@@ -93,11 +93,12 @@ const routes: Routes = [
         }),
 
         FuseSharedModule,
+        FuseProgressBarModule,
         FuseWidgetModule,
         FuseConfirmDialogModule,
         FuseSidebarModule,
         ContactsModule,
-        EmailEditorModule
+        EmailEditorModule,
     ],
     providers   : [
         EcommerceProductsService,

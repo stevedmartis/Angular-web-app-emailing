@@ -22,6 +22,13 @@ export class CampaignService
     idEventNow: any
     base64Image: any;
 
+    allLoading: boolean = false;
+    selectLoading: boolean = false;
+    value = 0;
+    allContacts = this._contactService.contacts.length;
+    selectedContacts = this._contactService.selectedContacts.length;
+    statusSendInvitation = '';
+
     eventId = this._productService.product.event._id;
     /**
      * Constructor
@@ -32,7 +39,7 @@ export class CampaignService
         private _httpClient: HttpClient,
         private _authServices: AuthService,
         private _productService: EcommerceProductService,
-        private _contactService: ContactsService
+        public _contactService: ContactsService
 
 
         
@@ -136,16 +143,24 @@ console.log('campaign', campaign, this.eventId)
     
   getDataPersonForSendEmail(invitation, option){
 
+   
+
     console.log('invitation', invitation)
 
     console.log('contacts all: ', this._contactService.contacts)
 
+
+    
     console.log('contacts selects: ', this._contactService.selectedContacts)
 
     if(option === 'all'){
 
+        this.allLoading = true;
+
         console.log('allllll')
         const arrayInvitedSelected = this._contactService.contacts;
+
+        
         console.log('arrayInvitedSelected', arrayInvitedSelected)
 
         const array = arrayInvitedSelected.map( obj => obj.id)
@@ -154,12 +169,13 @@ console.log('campaign', campaign, this.eventId)
 
     }
     else {
+        this.selectLoading = true;
 
         console.log('select')
 
         const arrayInvitedSelected = this._contactService.selectedContacts;
 
-        console.log('arrayInvitedSelected', arrayInvitedSelected)
+        console.log('arrayInvitedSelected', arrayInvitedSelected);
 
         this.invitedArrayforSend(arrayInvitedSelected,invitation);
 
@@ -182,10 +198,27 @@ console.log('campaign', campaign, this.eventId)
             this.sendInvited(invitation, person)
             .subscribe( (mail ) => {
                 console.log(mail)
+
+                this.value ++
+
+                console.log( this.value)
+
+
+                if(this.value === this._contactService.contacts.length){
+
+                   this.value = 100;
+
+                   this.statusSendInvitation = 'Completado!'
+
+                   console.log('ok')
+                }
+
+                   
             })
+            
         })
 
-        
+       
     });
 
   }

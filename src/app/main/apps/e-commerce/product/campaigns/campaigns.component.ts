@@ -57,19 +57,43 @@ export class CampaignsComponent implements OnInit {
     })
   }
 
-
+                //this.allLoading = false;
+                //this.selectLoading = false;
   sendCampaignDialog(campaign){
 
     console.log(campaign)
     this.dialogRef = this._matDialog.open(SendComponent, {
       disableClose: true,
-      width: '50%',
+      width: '75%',
       height: '40%',
       data      : {
         campaign: campaign
       }
 
   });
+
+  
+  this.dialogRef.afterClosed()
+  .subscribe((response) => {
+    if ( !response )
+    {
+
+ 
+
+        return;
+    }
+
+    this._campaignService.allLoading = false;
+    this._campaignService.selectLoading = false;
+    this._campaignService.value = 0;
+
+
+        
+    
+    this.dialogRef = null;
+});
+  
+  
 
 }
 

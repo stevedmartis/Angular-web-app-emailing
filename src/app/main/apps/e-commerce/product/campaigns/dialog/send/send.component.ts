@@ -9,28 +9,70 @@ import { CampaignService } from '../../campaign.service';
 })
 export class SendComponent implements OnInit {
 
+  selectionCount = this._campaignService._contactService.selectedContacts.length;
+
   constructor(public matDialogRef: MatDialogRef<SendComponent>,
-    private _campaignService: CampaignService,
+    public _campaignService: CampaignService,
     @Inject(MAT_DIALOG_DATA) private _data: any,
     ) { }
 
   ngOnInit() {
+
+ 
   }
 
 
-  SendInvitation(option){
+  allInvitation(option){
 
-    console.log(option)
+if(this._campaignService.allContacts > 0){
 
-    const invitation = this._data.campaign;
+  console.log('pasa')
+
+    if(this._campaignService.allLoading){
+      return 
+
+  } 
+  else {
+
+    this._campaignService.statusSendInvitation = 'Cargando...'
+    
+  const invitation = this._data.campaign;
 
   this._campaignService.getDataPersonForSendEmail(invitation, option)
 
 
-   
+  }
+}
+
+
+}
+
+
+  SendInvitation(option){
+
+    if(this.selectionCount > 0){
+
+
+      if(this._campaignService.selectLoading){
+        return 
+
+    } 
+    else {
+
+      this._campaignService.statusSendInvitation = 'Cargando...'
+      
+    const invitation = this._data.campaign;
+
+    this._campaignService.getDataPersonForSendEmail(invitation, option)
+
+
+    
+    }
+
+
 
   }
-
+  }
 
 
 }
