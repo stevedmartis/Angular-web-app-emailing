@@ -26,13 +26,14 @@
 </ng-container>
 <!-- / HORIZONTAL LAYOUT 1 -->
 
-<!-- THEME OPTIONS PANEL -->
+<!-- THEME OPTIONS PANEL 
 <button mat-icon-button class="warn mat-elevation-z2 theme-options-button"
         [ngClass]="{'right-side-panel': fuseConfig.layout.sidepanel.position === 'right',
                     'side-panel-hidden': fuseConfig.layout.sidepanel.hidden === true}"
         (click)="toggleSidebarOpen('themeOptionsPanel')">
     <mat-icon>settings</mat-icon>
 </button>
+-->
 
 <fuse-sidebar name="themeOptionsPanel" class="theme-options-sidebar" position="right" [invisibleOverlay]="true">
     <fuse-theme-options></fuse-theme-options>
