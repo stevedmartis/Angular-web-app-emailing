@@ -21,12 +21,6 @@ export const navigation: FuseNavigation[] = [
                         type : 'item',
                         url  : '/apps/dashboards/analytics'
                     },
-                    {
-                        id   : 'project',
-                        title: 'Project',
-                        type : 'item',
-                        url  : '/apps/dashboards/project'
-                    }
                 ],
             },
             {
