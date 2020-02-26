@@ -50,7 +50,6 @@ import { KnowledgeBaseModule } from 'app/main/pages/knowledge-base/knowledge-bas
 
         // Maintenance
         MaintenanceModule,
-
         // Pricing
         PricingModule,
 
@@ -66,7 +65,8 @@ import { KnowledgeBaseModule } from 'app/main/pages/knowledge-base/knowledge-bas
 
         // Knowledge base
         KnowledgeBaseModule
-    ]
+    ],
+    declarations: []
 })
 export class PagesModule
 {

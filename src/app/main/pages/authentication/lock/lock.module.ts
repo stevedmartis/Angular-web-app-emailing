@@ -4,15 +4,17 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
-
 import { FuseSharedModule } from '@fuse/shared.module';
-
 import { LockComponent } from 'app/main/pages/authentication/lock/lock.component';
+import { FormInvitedService } from '../lock/form-invited.service';
 
 const routes = [
     {
-        path     : 'auth/lock',
-        component: LockComponent
+        path     : 'confirm-invited/:campaignId/:invitedId',
+        component: LockComponent,
+        resolve  : {
+            data: FormInvitedService
+        }
     }
 ];
 
@@ -27,8 +29,10 @@ const routes = [
         MatFormFieldModule,
         MatIconModule,
         MatInputModule,
-
         FuseSharedModule
+    ],
+    providers: [
+        FormInvitedService
     ]
 })
 export class LockModule

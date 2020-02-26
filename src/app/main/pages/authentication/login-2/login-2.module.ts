@@ -7,13 +7,12 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 
 import { FuseSharedModule } from '@fuse/shared.module';
-
 import { Login2Component } from 'app/main/pages/authentication/login-2/login-2.component';
 
 const routes = [
     {
         path     : 'auth/login-2',
-        component: Login2Component
+        component: Login2Component,
     }
 ];
 
