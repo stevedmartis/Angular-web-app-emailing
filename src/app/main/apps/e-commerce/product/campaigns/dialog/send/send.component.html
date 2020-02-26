@@ -9,83 +9,174 @@
 
     </mat-toolbar>
 
-    <div mat-dialog-content class="pb-0 m-0 dialog-content" fusePerfectScrollbar>
 
-        <div fxLayout="row" fxLayoutAlign="start start" *ngIf="!_campaignService.selectLoading">
+    <div id="send-invitation" fxLayout="column" class="content-send">
 
-            <a appearance="outline" fxFlex mat-button class="reference-button save-button"
-                (click)="allInvitation('all')">
+        <div  class="center-send">
+    
+            <div  >
+    
+                <div  *ngIf="!_campaignService.selectLoading">
+
+                    <a appearance="outline" fxFlex mat-button class="reference-button save-button"
+                        (click)="allInvitation('all')">
+                        
+                        <span class="h1">Todos:</span>
+        
+                        <span class="h1"> {{allContacts }} </span>
+        
+                    </a>
+        
+        
+                </div>
+    
+
+                <mat-progress-bar *ngIf="_campaignService.allLoading" color="accent" class="checklist-progressbar"
+                mode="determinate" [value]="_campaignService.value * 10 " bufferValue="100">
+            </mat-progress-bar>
+    
+    
+            <div *ngIf="_campaignService.allLoading">
+
+                <span fxLayoutAlign="center center" >
+                    
+                    <div class="h1"> {{  _campaignService.statusSendInvitation }} </div>
+    
+                   
+   
+ 
+                </span>
+
+                <span fxLayoutAlign="center center" >
+                    
                 
-                <span class="h1">Todos los invitados:</span>
+                    <div class="h3" *ngIf="_campaignService.invitedFails.length > 0">Fallidos:</div>
+                    <br>
 
-                <span class="h1"> {{allContacts }} </span>
+                    <ul >
+
+                        <li *ngFor="let f of _campaignService.invitedFails"  
+                        type="circle">   
+                        <div class="h4"> {{ f.email }} </div>
+                    </li>
+                    
+                        </ul>
+                    
+                        
+ 
+                </span>
+
+            </div>
+    
 
 
-            </a>
+                <!--
+    
+             
+    
+                <button mat-raised-button class="google">
+                    Log in with Google
+                </button>
+    
+                <button mat-raised-button class="facebook">
+                    Log in with Facebook
+                </button>
+    
+    
+                   -->
+    
 
-
+    
+            </div>
+    
         </div>
-
-
-
-        <mat-progress-bar *ngIf="_campaignService.allLoading" color="accent" class="checklist-progressbar"
-            mode="determinate" [value]="_campaignService.value * 10 " bufferValue="100">
-        </mat-progress-bar>
-
-        <div fxLayout="row" fxLayoutAlign="start start" *ngIf="_campaignService.allLoading">
-
-            <a appearance="outline" fxFlex mat-button class="reference-button save-button"
-                >
-                
-
-                <span class="h1"> {{  _campaignService.statusSendInvitation }} </span>
-
-
-        </a>
-        </div>
-        <div class="space">
-
-        </div>
-
-
-        <div fxLayout="row" fxLayoutAlign="start start" *ngIf="!_campaignService.allLoading">
-
-            <a appearance="outline" fxFlex mat-button class="reference-button save-button" target="_blank"
-                (click)="SendInvitation('select')">
-                
-                <span class="h1">Invitados marcados:</span>
-
-                <span class="h1"> {{ selectionCount }} </span>
-            </a>
-
-
-
-
-        </div>
-
-
-        <mat-progress-bar *ngIf="_campaignService.selectLoading" color="accent" class="checklist-progressbar"
-            mode="determinate" [value]="_campaignService.value * 10" bufferValue="100">
-        </mat-progress-bar>
-
-        <div fxLayout="row" fxLayoutAlign="start start" *ngIf="_campaignService.selectLoading">
-
-            <a appearance="outline" fxFlex mat-button class="reference-button save-button"
-                >
-                <span class="h1"> {{  _campaignService.statusSendInvitation }} </span>
-
-                
-
-
-        </a>
-
-        </div>
-
+    
     </div>
 
-    <div mat-dialog-actions class="m-0 p-16" fxLayout="row" fxLayoutAlign="end center">
+    
+   <div id="login" fxLayout="column">
+
+        <div  class="center-send">
+    
+            <div  >
+    
+                <div  *ngIf="!_campaignService.allLoading">
+
+                    <a appearance="outline" fxFlex mat-button class="reference-button save-button"
+                        (click)="SendInvitation('selct')">
+                        
+                        <span class="h1">Selección:</span>
+        
+                        <span class="h1"> {{ selectionCount }} </span>
+        
+                    </a>
+        
+        
+                </div>
+    
+
+                <mat-progress-bar *ngIf="_campaignService.selectLoading" color="accent" class="checklist-progressbar"
+                mode="determinate" [value]="_campaignService.value * 10" bufferValue="100">
+            </mat-progress-bar>
+    
+    
+            <div *ngIf="_campaignService.selectLoading">
+
+                <span fxLayoutAlign="center center" >
+                    
+                    <div class="h1"> {{  _campaignService.statusSendInvitation }} </div>
+    
+                   
+   
+ 
+                </span>
+
+                <span fxLayoutAlign="center center" >
+                    
+                
+                    <div class="h3" *ngIf="_campaignService.invitedFails.length > 0">Fallidos:</div>
+                 
+
+                    <ul >
+
+                        <li *ngFor="let f of _campaignService.invitedFails"  
+                        type="circle">   
+                        {{ f.email }} 
+                    </li>
+                    
+                        </ul>
+                    
+                        
+ 
+                </span>
+
+            </div>
+    
 
 
+                <!--
+    
+             
+    
+                <button mat-raised-button class="google">
+                    Log in with Google
+                </button>
+    
+                <button mat-raised-button class="facebook">
+                    Log in with Facebook
+                </button>
+    
+    
+                   -->
+    
 
+    
+            </div>
+    
+        </div>
+    
     </div>
+
+    
+
 </div>

@@ -28,6 +28,10 @@ export class CampaignService
     allContacts = this._contactService.contacts.length;
     selectedContacts = this._contactService.selectedContacts.length;
     statusSendInvitation = '';
+    invitedFails: any[] = [];
+
+    value200: 0
+    value500: 0
 
 
     /**
@@ -204,6 +208,8 @@ console.log('campaign', campaign, this._productService.idNowEvent)
 
                 this.value ++
 
+                this.value200 ++
+
                 console.log( this.value)
 
 
@@ -211,7 +217,7 @@ console.log('campaign', campaign, this._productService.idNowEvent)
 
                    this.value = 100;
 
-                   this.statusSendInvitation = 'Completado!'
+                   this.statusSendInvitation = 'Operación realizada!'
 
                    console.log('ok')
                 }
@@ -220,7 +226,39 @@ console.log('campaign', campaign, this._productService.idNowEvent)
             },
             
             error => {
+
                 this.value ++
+               
+console.log(' error ',  this.value, array.length)
+
+
+this.value500 ++
+
+
+                    this.statusSendInvitation = 'Operación realizada!';
+
+
+                    console.log('ok error')
+
+                    this._authServices.InvitedByUserId(obj)
+                    .then( (x:any) => {
+                        console.log(x)
+
+                        this.invitedFails.push(x.invited);
+
+                       console.log( this.invitedFails)
+
+                       this.value = 100;
+
+                    })
+
+                    
+
+
+
+
+ 
+
               },)
             
             

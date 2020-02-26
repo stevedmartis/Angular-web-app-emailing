@@ -8,7 +8,7 @@
     align-items: center;
     position: fixed;
     bottom: 10px;
-    left: 90%;
+    left: 95%;
   
     > div {
       display: flex;
@@ -20,6 +20,18 @@
         margin-bottom: 17px;
       }
     }
+  }
+
+  @include media-breakpoint('xs') {
+
+
+    .fab-container {
+
+
+      left: 85%;
+
+}
+
   }
   
   .fab-toggler {

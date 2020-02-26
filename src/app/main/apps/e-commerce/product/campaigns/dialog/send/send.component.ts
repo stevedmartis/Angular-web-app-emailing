@@ -20,6 +20,8 @@ export class SendComponent implements OnInit {
 
   ngOnInit() {
 
+   
+
     console.log(this.allContacts)
 
  
@@ -40,9 +42,9 @@ if(this.allContacts > 0){
 
     this._campaignService.statusSendInvitation = 'Cargando...'
     
-  const invitation = this._data.campaign;
+    const invitation = this._data.campaign;
 
-  this._campaignService.getDataPersonForSendEmail(invitation, option)
+    this._campaignService.getDataPersonForSendEmail(invitation, option)
 
 
   }

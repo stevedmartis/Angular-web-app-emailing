@@ -153,6 +153,24 @@ export class ContactsService implements Resolve<any>
         );
     }
 
+
+    getContact(idInvited): Promise<any>
+    {
+
+
+
+        return new Promise((resolve, reject) => {
+                this._httpClient.get(environment.apiUrl+'/api/invited/' + idInvited)
+                    .subscribe((response: any) => {
+
+                        console.log(response)
+
+
+                    }, reject);
+            }
+        );
+    }
+
     /**
      * Get user data
      *

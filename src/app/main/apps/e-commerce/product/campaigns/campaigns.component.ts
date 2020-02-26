@@ -64,8 +64,10 @@ export class CampaignsComponent implements OnInit {
     console.log(campaign)
     this.dialogRef = this._matDialog.open(SendComponent, {
       disableClose: true,
-      width: '75%',
-      height: '40%',
+      panelClass: 'my-class',
+
+      
+
       data      : {
         campaign: campaign
       }
@@ -86,6 +88,13 @@ export class CampaignsComponent implements OnInit {
     this._campaignService.allLoading = false;
     this._campaignService.selectLoading = false;
     this._campaignService.value = 0;
+
+   
+
+
+     this._campaignService.allContacts = 0;
+    this._campaignService.statusSendInvitation = '';
+    this._campaignService.invitedFails = [];
 
 
         
