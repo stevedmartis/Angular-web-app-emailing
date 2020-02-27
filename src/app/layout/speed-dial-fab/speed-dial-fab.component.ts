@@ -93,9 +93,7 @@ export class SpeedDialFabComponent implements OnInit {
                   jobtitle: res.jobtitle,
                   company: res.company,
                   phone: res.phone,
-                  asiste: res.asiste
-
-
+                  asiste: 'null'
               }
 
               console.log('obj ',obj)

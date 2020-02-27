@@ -15,7 +15,7 @@ export class Invited {
     zip_code: string;
     phone: string;
     website: string;
-    asiste: true;
+    asiste: string;
     asistio: false;
     status: string;
     sendEmail: true;
@@ -48,7 +48,7 @@ export class Invited {
         this.zip_code = invited.zip_code || '';
         this.phone = invited.phone || '';
         this.website = invited.website || '';
-        this.asiste = invited.asiste || false;
+        this.asiste = invited.asiste || 'null';
         this.asistio = invited.asistio || false;
         this.status = invited.status || '';
         this.sendEmail = invited.send_email || '';

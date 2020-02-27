@@ -19,6 +19,10 @@ export class ContactsContactFormDialogComponent
     dialogTitle: string;
     checked = true;
 
+    asisteBoolean: boolean;
+
+
+
     /**
      * Constructor
      *
@@ -60,6 +64,18 @@ export class ContactsContactFormDialogComponent
      */
     createContactForm(): FormGroup
     {
+        
+       if(this.contact.asiste === 'null' || this.contact.asiste === 'no'){
+        this.asisteBoolean = false
+       }
+
+       else if (this.contact.asiste === 'si'){
+        this.asisteBoolean = true
+
+       }
+
+       console.log(this.asisteBoolean)
+
         return this._formBuilder.group({
             id      : [this.contact.id],
             name    : [this.contact.name, [Validators.required]],
@@ -69,7 +85,7 @@ export class ContactsContactFormDialogComponent
             company : [this.contact.company],
             jobtitle: [this.contact.jobtitle],
             email   : [this.contact.email, [Validators.required, Validators.email]],
-            asiste: [this.contact.asiste],
+            asiste: [this.asisteBoolean],
             phone   : [this.contact.phone],
             address : [this.contact.address],
             birthday: [this.contact.birthday],

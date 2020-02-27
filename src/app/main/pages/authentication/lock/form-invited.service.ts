@@ -58,7 +58,6 @@ export class FormInvitedService implements Resolve<any>
 
                     this.getCampaignById(this.campaignId),
 
-
                     this.getInvited()
                     .then(() => {
 
@@ -84,22 +83,15 @@ export class FormInvitedService implements Resolve<any>
 
     getCampaignById(idCampaign) {
 
-
-
-
         console.log(idCampaign)
 
         return new Promise((resolve, reject) => {
 
-
-
-            this._httpClient.get(environment.apiUrl + '/api/get-campaign/' + idCampaign )
+            this._httpClient.get(environment.apiUrl + '/api/get-campaign/' + idCampaign)
             .subscribe((response: any) => {
 
                 console.log(response)
 
-                
-                        
                 this.campaignInvitation = response.campaign;
 
                 this.campaignName = this.campaignInvitation.affair;
@@ -122,20 +114,15 @@ export class FormInvitedService implements Resolve<any>
     return new Promise((resolve, reject) => {
 
 
-            console.log('elseseeee', this.invitedId)
+    console.log('elseseeee', this.invitedId)
 
       this._httpClient.get(environment.apiUrl + '/api/invitedConfirm/' + this.invitedId)
           .subscribe((response: any) => {
               resolve(response);
 
-              console.log(response)
+              console.log(response);
 
               this.invited = response;
-
-              if(this.invited.invited.asiste){
-                this.router.navigate(['/pages/confirm/200/' + this.campaignId])
-                  
-              }
 
               this.onInvitedChanged.next(this.invited);
               resolve(response)
@@ -152,16 +139,12 @@ export class FormInvitedService implements Resolve<any>
     
   confirmInvitation(invited) {
 
-
-
         return new Promise((resolve, reject) => {
             this._httpClient.post(environment.apiUrl + '/api/invited/confirm-invited', invited )
             .subscribe((response: any) => {
 
                 console.log(response)
 
-               
-            
                 resolve(response);
                 
             }, reject);     

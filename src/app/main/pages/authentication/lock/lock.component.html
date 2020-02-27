@@ -2,14 +2,28 @@
 
     <div id="lock-form-wrapper" fxLayout="column" fxLayoutAlign="center center">
 
+
+        
+
+
         <div id="lock-form" [@animate]="{value:'*',params:{duration:'300ms',y:'100px'}}">
+
+            <div class="form-card">
+
+                <img class="img-banner" [src]="_formInvitationService.campaignInvitation.imgBlob">
+
+            </div>
+            
+          
 
             <div class="lock-form-header" fxLayout="column" fxLayoutAlign="center center"
                  fxLayout.gt-xs="row" fxLayoutAlign.gt-xs="start center">
 
+                
+
                 <div class="avatar-container">
-                    <img class="avatar big" src="assets/images/avatars/katherine.jpg">
-                    <mat-icon class="s-32">lock</mat-icon>
+                  
+                    
                 </div>
 
                 <div>
@@ -76,7 +90,9 @@
                 </button>
 
 
-                <button mat-raised-button class="cancel-button" 
+                <button mat-raised-button 
+                (click)="cancelInvitation()"
+                class="cancel-button" 
                >
                 Rechazar
         </button>

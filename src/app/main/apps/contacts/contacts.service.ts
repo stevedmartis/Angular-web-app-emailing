@@ -328,6 +328,8 @@ export class ContactsService implements Resolve<any>
 
     editContact(obj): Promise<any>
     {
+       
+        
         
         return new Promise((resolve, reject) => {
 
@@ -342,7 +344,7 @@ export class ContactsService implements Resolve<any>
                 jobtilte: obj.jobtitle, 
                 company: obj.company, 
                 phone: obj.phone, 
-                asiste: obj.asiste
+                asiste: obj.asiste? 'si': 'no'
             })
                 .subscribe((response: any) => {
                     //this.getContacts(this.idEventNow)
@@ -394,23 +396,25 @@ export class ContactsService implements Resolve<any>
      *
      * @param contact
      */
-    deleteContact(contact, selectlenght)
+    deleteContact(id)
     {
 
         return new Promise((resolve, reject) => {
 
-            console.log('entro delete', contact.id)
-            this._httpClient.delete(environment.apiUrl + '/api/delete-invited/' + contact.id)
+            console.log('entro delete', id)
+            this._httpClient.delete(environment.apiUrl + '/api/delete-invited/' + id)
                 .subscribe(response => {
 
 
-                    const contactIndex = this.contacts.indexOf(contact);
+                    const contactIndex = this.contacts.indexOf(id);
                     this.contacts.splice(contactIndex, 1);
 
-                    this.conditionConatctExist();
-                    
+                   // this.conditionConatctExist();
+
                   
-                   
+                   this.selectedContacts = [];
+
+                   this.deselectContacts();
                 });
         });
 
@@ -494,7 +498,7 @@ export class ContactsService implements Resolve<any>
 
            
 
-            this.deleteContact(contact, this.selectedContacts.length)
+            this.deleteContact(contact.id)
 
         }
         //this.onContactsChanged.next(this.contacts);
@@ -549,7 +553,7 @@ export class ContactsService implements Resolve<any>
                             name: e.name || e.NOMBRES || e.nameEmployee,
                             lastname: e.lastname || e.APELLIDO_1,
                             email: e.email || e.EMAIL_1,
-                            asiste: false,
+                            asiste: 'null',
                             status: null,
                             contractado: e.CONTACTADO,
                             jobtitle: e.jobtitle || e.CARGO,

@@ -115,12 +115,22 @@ export class ContactsSelectedBarComponent implements OnInit, OnDestroy
                 if ( result )
                 {
 
+                    console.log(result, this._contactsService.selectedContacts)
+
                     if(this._contactsService.selectedContacts.length === this._contactsService.contacts.length){
                         this._contactsService.deleteAllContacts()
                         
                     }
+
+                    else {
+
+                        this._contactsService.selectedContacts.forEach(id => {
+                            this._contactsService.deleteContact(id);
+                        });
+                       
+                    }
                  
-                    //this._contactsService.deleteSelectedContacts();
+                    
 
                 }
                 this.confirmDialogRef = null;

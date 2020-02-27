@@ -119,7 +119,7 @@ export class LockComponent implements OnInit, OnDestroy {
             name:  [this.invited.name, [Validators.required]], 
             email: [this.invited.email, [Validators.required, Validators.email]], 
             company:  [this.invited.company, [Validators.required]], 
-
+            asiste: [],
             jobtitle: [this.invited.jobtitle, [Validators.required]], 
             phone: [this.invited.phone], 
             numberFijo: [''], 
@@ -128,6 +128,10 @@ export class LockComponent implements OnInit, OnDestroy {
 
 
     confirmInvitation(){
+
+       const  value = 'si'
+        this.invitationForm.controls['asiste'].setValue(value);
+
 
        const data = this.invitationForm.getRawValue();
 
@@ -138,11 +142,33 @@ export class LockComponent implements OnInit, OnDestroy {
 
             console.log(inv)
 
-            this.router.navigate(['/pages/confirm/200'])
+            this.router.navigate(['/pages/confirm/si/' + this._formInvitationService.campaignId])
 
             
         })
 
+
+    }
+
+    cancelInvitation(){
+
+        const  value = 'no'
+        this.invitationForm.controls['asiste'].setValue(value);
+
+        const data = this.invitationForm.getRawValue();
+
+        console.log('invited data: ', data)
+ 
+         this._formInvitationService.confirmInvitation(data)
+         .then( (inv: Invited ) => {
+ 
+             console.log(inv)
+ 
+             this.router.navigate(['/pages/confirm/no/' + this._formInvitationService.campaignId])
+ 
+             
+         })
+ 
 
     }
 }
