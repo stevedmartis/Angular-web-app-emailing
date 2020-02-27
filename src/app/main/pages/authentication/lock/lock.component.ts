@@ -8,6 +8,7 @@ import { Invited } from './invited.module';
 import { takeUntil } from 'rxjs/operators';
 
 import { Subject } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Component({
     selector: "lock",
@@ -23,7 +24,8 @@ export class LockComponent implements OnInit, OnDestroy {
 
     private _unsubscribeAll: Subject<any>;
    
-
+    
+    
     /**
      * Constructor
      *
@@ -33,7 +35,8 @@ export class LockComponent implements OnInit, OnDestroy {
     constructor(
         private _fuseConfigService: FuseConfigService,
         private _formBuilder: FormBuilder,
-        public _formInvitationService: FormInvitedService
+        public _formInvitationService: FormInvitedService,
+        private router: Router
     ) {
 
         this.invited = new Invited();
@@ -75,21 +78,23 @@ export class LockComponent implements OnInit, OnDestroy {
 
 
                 console.log('invited', invited)
-                if ( invited )
+                if ( !invited.invited)
                 {
 
-                    console.log('invited', invited)
-                    this.invited = new Invited(invited.invited);
-                    console.log('this.producte.evnd.id',invited.invited._id)
 
+                    this.invited = new Invited();
+
+                    console.log(  this.invited)
     
                 }
                 else
                 {
 
-                    this.invited = new Invited();
 
-                    console.log(  this.invited)
+                    
+                    console.log('invited', invited)
+                    this.invited = new Invited(invited.invited);
+                    console.log('this.producte.evnd.id',invited.invited._id)
                 }
 
                 this.invitationForm = this.createInvitedForm();
@@ -132,6 +137,10 @@ export class LockComponent implements OnInit, OnDestroy {
         .then( (inv: Invited ) => {
 
             console.log(inv)
+
+            this.router.navigate(['/pages/confirm/200'])
+
+            
         })
 
 

@@ -15,6 +15,7 @@ const routes = [
         resolve  : {
             data: FormInvitedService
         }
+        
     }
 ];
 

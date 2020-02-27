@@ -35,7 +35,7 @@ export class Contact
             this.email = contact.email || '';
             this.send_email = contact.send_email;
             this.phone = contact.phone || '';
-            this.asiste = contact.asiste || '';
+            this.asiste = contact.asiste || false;
             this.address = contact.address || '';
             this.birthday = contact.birthday || '';
             this.notes = contact.notes || '';

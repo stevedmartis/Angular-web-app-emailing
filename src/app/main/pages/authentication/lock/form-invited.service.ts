@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot } from '@angular/router';
+import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot, Router } from '@angular/router';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { environment } from 'environments/environment';
@@ -27,6 +27,7 @@ export class FormInvitedService implements Resolve<any>
     constructor(
         private _httpClient: HttpClient,
         private authServices: AuthService,
+        private router: Router
  
     ) {
         // Set the defaults
@@ -129,7 +130,12 @@ export class FormInvitedService implements Resolve<any>
 
               console.log(response)
 
-              this.invited = response
+              this.invited = response;
+
+              if(this.invited.invited.asiste){
+                this.router.navigate(['/pages/confirm/200/' + this.campaignId])
+                  
+              }
 
               this.onInvitedChanged.next(this.invited);
               resolve(response)

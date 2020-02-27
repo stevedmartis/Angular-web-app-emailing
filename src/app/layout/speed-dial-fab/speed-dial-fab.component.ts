@@ -82,6 +82,8 @@ export class SpeedDialFabComponent implements OnInit {
 
               let res = response.getRawValue();
 
+              console.log('res', res)
+
               let obj = {
                   codeEvento: this._contactsService.idEventNow,
                   name: res.name,
