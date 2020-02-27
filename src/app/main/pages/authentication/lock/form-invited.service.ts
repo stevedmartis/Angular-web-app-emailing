@@ -144,20 +144,18 @@ export class FormInvitedService implements Resolve<any>
 
 
     
-    sendResponse(id, newPassword) {
+  confirmInvitation(invited) {
 
-        console.log(id, newPassword)
+
 
         return new Promise((resolve, reject) => {
-            this._httpClient.post(environment.apiUrl + '/api/reset-password', {id, newPassword } )
+            this._httpClient.post(environment.apiUrl + '/api/invited/confirm-invited', invited )
             .subscribe((response: any) => {
-
 
                 console.log(response)
 
                
-               
-
+            
                 resolve(response);
                 
             }, reject);     

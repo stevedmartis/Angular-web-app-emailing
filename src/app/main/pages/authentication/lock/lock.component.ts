@@ -110,14 +110,30 @@ export class LockComponent implements OnInit, OnDestroy {
     {
 
         return this._formBuilder.group({
-            id: [this.invited._id, [Validators.required]], 
+            invitedId: [this.invited._id, [Validators.required]], 
             name:  [this.invited.name, [Validators.required]], 
             email: [this.invited.email, [Validators.required, Validators.email]], 
             company:  [this.invited.company, [Validators.required]], 
 
-            cargo: [this.invited.jobtitle, [Validators.required]], 
-            numberMobil: [this.invited.phone], 
+            jobtitle: [this.invited.jobtitle, [Validators.required]], 
+            phone: [this.invited.phone], 
             numberFijo: [''], 
         });
+    }
+
+
+    confirmInvitation(){
+
+       const data = this.invitationForm.getRawValue();
+
+       console.log('invited data: ', data)
+
+        this._formInvitationService.confirmInvitation(data)
+        .then( (inv: Invited ) => {
+
+            console.log(inv)
+        })
+
+
     }
 }

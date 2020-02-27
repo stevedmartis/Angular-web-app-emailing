@@ -1,5 +1,5 @@
 import { Component, Inject, ViewEncapsulation } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 
 import { Contact } from 'app/main/apps/contacts/contact.model';
@@ -62,14 +62,14 @@ export class ContactsContactFormDialogComponent
     {
         return this._formBuilder.group({
             id      : [this.contact.id],
-            name    : [this.contact.name],
+            name    : [this.contact.name, [Validators.required]],
             lastname: [this.contact.lastname],
             avatar  : [this.contact.avatar],
             nickname: [this.contact.nickname],
             company : [this.contact.company],
             jobtitle: [this.contact.jobtitle],
-            email   : [this.contact.email],
-            send_email: [this.contact.send_email],
+            email   : [this.contact.email, [Validators.required, Validators.email]],
+            asiste: [this.contact.asiste],
             phone   : [this.contact.phone],
             address : [this.contact.address],
             birthday: [this.contact.birthday],

@@ -112,6 +112,8 @@ export class ContactsService implements Resolve<any>
         return new Promise((resolve, reject) => {
                 this._httpClient.get(environment.apiUrl+'/api/invited/event/' + idEvent)
                     .subscribe((response: any) => {
+
+                        console.log(response)
                         
                         this.contacts = response.invited;
 
@@ -142,7 +144,7 @@ export class ContactsService implements Resolve<any>
                             return new Contact(contact);
                         });
 
-                        console.log( this.contacts.length)
+                        console.log( this.contacts)
                         
                         this.onContactsChanged.next(this.contacts);
                         resolve(this.contacts);
@@ -340,7 +342,7 @@ export class ContactsService implements Resolve<any>
                 jobtilte: obj.jobtitle, 
                 company: obj.company, 
                 phone: obj.phone, 
-                send_email: obj.send_email
+                asiste: obj.asiste
             })
                 .subscribe((response: any) => {
                     //this.getContacts(this.idEventNow)
@@ -547,7 +549,7 @@ export class ContactsService implements Resolve<any>
                             name: e.name || e.NOMBRES || e.nameEmployee,
                             lastname: e.lastname || e.APELLIDO_1,
                             email: e.email || e.EMAIL_1,
-                            asiste: true,
+                            asiste: false,
                             status: null,
                             contractado: e.CONTACTADO,
                             jobtitle: e.jobtitle || e.CARGO,

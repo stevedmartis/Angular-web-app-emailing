@@ -48,8 +48,8 @@ export class Invited {
         this.zip_code = invited.zip_code || '';
         this.phone = invited.phone || '';
         this.website = invited.website || '';
-        this.asiste = invited.asiste || true;
-        this.asistio = invited.asistio || true;
+        this.asiste = invited.asiste || false;
+        this.asistio = invited.asistio || false;
         this.status = invited.status || '';
         this.sendEmail = invited.send_email || '';
         this.codeQr = invited.codeQr || '';
