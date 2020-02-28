@@ -403,18 +403,10 @@ export class ContactsService implements Resolve<any>
 
             console.log('entro delete', id)
             this._httpClient.delete(environment.apiUrl + '/api/delete-invited/' + id)
-                .subscribe(response => {
-
-
-                    const contactIndex = this.contacts.indexOf(id);
-                    this.contacts.splice(contactIndex, 1);
-
+                .subscribe(response => {                
                    // this.conditionConatctExist();
 
-                  
-                   this.selectedContacts = [];
 
-                   this.deselectContacts();
                 });
         });
 

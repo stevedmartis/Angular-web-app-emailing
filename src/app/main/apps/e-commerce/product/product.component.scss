@@ -308,7 +308,7 @@
   position: relative;
   margin-top: 0px;
   margin-bottom: 25px;
-  width: 500px;
+  width: 100%;
   height: 300px;
   border-style: dashed;
   color: #e0e0e0;
@@ -320,7 +320,7 @@
   position: relative;
   margin-top: 0px;
   margin-bottom: 25px;
-  width: 500px;
+  width: 100%;
   height: 300px;
 
 }
@@ -342,8 +342,8 @@
 {
 border-radius: 3%;
   position: absolute;
-  width: 475px;
-  height: 295px;
+  width: 100%;
+  height: 300px;
   left: 0;
 }
 
@@ -351,7 +351,7 @@ border-radius: 3%;
 {
 border-radius: 3%;
   position: absolute;
-  width: 500px;
+  width: 100%;
   height: 300px;
   left: 0;
 }

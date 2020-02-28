@@ -19,6 +19,7 @@ export class ContactsSelectedBarComponent implements OnInit, OnDestroy
     isIndeterminate: boolean;
     selectedContacts: string[];
     btnDisplay: boolean = false
+    
 
     // Private
     private _unsubscribeAll: Subject<any>;
@@ -106,7 +107,16 @@ export class ContactsSelectedBarComponent implements OnInit, OnDestroy
             panelClass: 'custom-dialog-container'
         });
 
-        this.confirmDialogRef.componentInstance.confirmMessage = 'Esta seguro de eliminar todos los invitados?';
+        if(this._contactsService.selectedContacts.length ===  this._contactsService.contacts.length){
+            this.confirmDialogRef.componentInstance.confirmMessage = 'Esta seguro de eliminar todos los invitados?';
+
+        }
+
+        else if (this._contactsService.selectedContacts.length < this._contactsService.contacts.length){
+            this.confirmDialogRef.componentInstance.confirmMessage = 'Esta seguro de eliminar la selección?';
+        }
+
+     
 
         this.confirmDialogRef.afterClosed()
             .subscribe(result => {
@@ -124,9 +134,28 @@ export class ContactsSelectedBarComponent implements OnInit, OnDestroy
 
                     else {
 
+                        this._contactsService.loadingContact = true;
+
                         this._contactsService.selectedContacts.forEach(id => {
+
+                            this._contactsService.countSelect ++
                             this._contactsService.deleteContact(id);
                         });
+
+                        if( this._contactsService.countSelect ===  this._contactsService.selectedContacts.length){
+
+                            this._contactsService.selectedContacts = [];
+
+                            this._contactsService.deselectContacts();
+
+                            this._contactsService.getContacts(this._contactsService.idEventNow);
+
+                            this._contactsService.loadingContact = false;
+
+                        }
+
+                                       
+
                        
                     }
                  
