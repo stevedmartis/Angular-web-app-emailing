@@ -94,6 +94,8 @@ private files: Array<FileUploadModel> = [];
 
 
   fileUpload(){
+
+    const type = 'camp'
     const fileUpload = document.getElementById('fileUpload') as HTMLInputElement;
     fileUpload.onchange = (event) => {
 
@@ -103,7 +105,7 @@ private files: Array<FileUploadModel> = [];
 
             console.log('file', file)
 
-            this._campaignService.fileProgress(file)
+            this._campaignService.fileProgress(file, type )
             this.files.push({
                 data: file,
                 state: 'in',
@@ -120,17 +122,6 @@ private files: Array<FileUploadModel> = [];
     
 }
 
-private uploadFiles() {
-  const fileUpload = document.getElementById('fileUpload') as HTMLInputElement;
-  fileUpload.value = '';
-
-  this.files.forEach(file => {
-      console.log('file: ',file)
-
-      this._campaignService.preview()
-    this._campaignService.uploadFile(file);
-  });
-}
 
 
 }

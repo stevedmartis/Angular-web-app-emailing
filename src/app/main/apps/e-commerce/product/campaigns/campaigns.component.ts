@@ -1,156 +1,127 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { fuseAnimations } from '@fuse/animations';
-import { MatDialogRef, MatDialog, MatSnackBar } from '@angular/material';
-import { MatPaginator } from '@angular/material/paginator';
-import { MatSort } from '@angular/material/sort';
-import { Router } from '@angular/router'
-import { CampaignService } from './campaign.service';
-import { DataSource } from '@angular/cdk/collections';
-import { BehaviorSubject, fromEvent, merge, Observable, Subject } from 'rxjs';
-import { debounceTime, distinctUntilChanged, map } from 'rxjs/operators';
-import { AddComponent } from './dialog/add/add.component';
-import { FormGroup } from '@angular/forms';
-import { SendComponent } from './dialog/send/send.component';
+import { Component, OnInit, ViewChild } from "@angular/core";
+import { fuseAnimations } from "@fuse/animations";
+import { MatDialogRef, MatDialog, MatSnackBar } from "@angular/material";
+import { MatPaginator } from "@angular/material/paginator";
+import { MatSort } from "@angular/material/sort";
+import { Router } from "@angular/router";
+import { CampaignService } from "./campaign.service";
+import { DataSource } from "@angular/cdk/collections";
+import { BehaviorSubject, fromEvent, merge, Observable, Subject } from "rxjs";
+import { debounceTime, distinctUntilChanged, map } from "rxjs/operators";
+import { AddComponent } from "./dialog/add/add.component";
+import { FormGroup } from "@angular/forms";
+import { SendComponent } from "./dialog/send/send.component";
 
 @Component({
-  selector: 'campaigns',
-  templateUrl: './campaigns.component.html',
-  styleUrls: ['./campaigns.component.scss'],
-  animations: fuseAnimations
+    selector: "campaigns",
+    templateUrl: "./campaigns.component.html",
+    styleUrls: ["./campaigns.component.scss"],
+    animations: fuseAnimations
 })
 export class CampaignsComponent implements OnInit {
+    dialogRef: any;
+    campaignExists: boolean = false;
+    dataSource: FilesDataSource | null;
 
-  dialogRef: any;
-  campaignExists: boolean = false;
-  dataSource: FilesDataSource | null;
+    @ViewChild(MatPaginator, { static: true })
+    paginator: MatPaginator;
+    eventExist: boolean = true;
 
+    @ViewChild(MatSort, { static: true })
+    sort: MatSort;
 
-  @ViewChild(MatPaginator, {static: true})
-  paginator: MatPaginator;
-  eventExist: boolean = true;
+    constructor(
+        public _matDialog: MatDialog,
+        private router: Router,
+        private _campaignService: CampaignService,
+        private _matSnackBar: MatSnackBar
+    ) {}
 
-  @ViewChild(MatSort, {static: true})
-  sort: MatSort;
-
-  constructor(public _matDialog: MatDialog,
-            private router: Router,
-            private _campaignService: CampaignService,
-            private _matSnackBar: MatSnackBar,
-            ) { }
-
-  ngOnInit() {
-
-    this._campaignService.getCampaigns()
-    .then(x => 
-      {
-        this.dataSource = new FilesDataSource(this._campaignService, this.paginator, this.sort);
-        console.log('this.dataSource ', this.dataSource)
-      })
-  }
-
-  deleteCampaign(campaign){
-
-    console.log('campaign', campaign)
-    this._campaignService.deleteCampaign(campaign)
-    .then(x => {
-      console.log(x)
-    })
-  }
-
-                //this.allLoading = false;
-                //this.selectLoading = false;
-  sendCampaignDialog(campaign){
-
-    console.log(campaign)
-    this.dialogRef = this._matDialog.open(SendComponent, {
-      disableClose: true,
-      panelClass: 'my-class',
-
-      
-
-      data      : {
-        campaign: campaign
-      }
-
-  });
-
-  
-  this.dialogRef.afterClosed()
-  .subscribe((response) => {
-    if ( !response )
-    {
-
- 
-
-        return;
+    ngOnInit() {
+        this._campaignService.getCampaigns().then(x => {
+            this.dataSource = new FilesDataSource(
+                this._campaignService,
+                this.paginator,
+                this.sort
+            );
+            console.log("this.dataSource ", this.dataSource);
+        });
     }
 
-    this._campaignService.allLoading = false;
-    this._campaignService.selectLoading = false;
-    this._campaignService.value = 0;
-
-   
-
-
-     this._campaignService.allContacts = 0;
-    this._campaignService.statusSendInvitation = '';
-    this._campaignService.invitedFails = [];
-
-
-        
-    
-    this.dialogRef = null;
-});
-  
-  
-
-}
-
-  addCampaignDialog(){
-    this.dialogRef = this._matDialog.open(AddComponent, {
-      disableClose: true,
-      data      : {
-        action: 'new'
-      }
-
-  });
-
-  this.dialogRef.afterClosed()
-  .subscribe((response: FormGroup) => {
-    if ( !response )
-    {
-        return;
+    deleteCampaign(campaign) {
+        console.log("campaign", campaign);
+        this._campaignService.deleteCampaign(campaign).then(x => {
+            console.log(x);
+        });
     }
 
+    //this.allLoading = false;
+    //this.selectLoading = false;
+    sendCampaignDialog(campaign) {
+        console.log(campaign);
+        this.dialogRef = this._matDialog.open(SendComponent, {
+            disableClose: true,
+            panelClass: "my-class",
 
-        console.log('product post delete', response);
+            data: {
+                campaign: campaign
+            }
+        });
 
-        let form = response.getRawValue();
+        this.dialogRef.afterClosed().subscribe(response => {
+            if (!response) {
+                return;
+            }
 
-        this._campaignService.addCampaign(form)
+            this._campaignService.allLoading = false;
+            this._campaignService.selectLoading = false;
+            this._campaignService.value = 0;
 
-        
-        .then(x => {
+            this._campaignService.allContacts = 0;
+            this._campaignService.statusSendInvitation = "";
+            this._campaignService.invitedFails = [];
 
-            console.log(x)
-            this._matSnackBar.open('Campaña creada', 'OK', {
-                verticalPosition: 'top',
-                duration        : 3000
-            });
-        })
-        
-    
-    this.dialogRef = null;
-});
-  }
+            this.dialogRef = null;
+        });
+    }
 
+    addCampaignDialog() {
+        this.dialogRef = this._matDialog.open(AddComponent, {
+            disableClose: true,
+            data: {
+                action: "new"
+            }
+        });
 
+        this.dialogRef.afterClosed().subscribe((response: FormGroup) => {
+            if (!response) {
+                return;
+            }
+            console.log("product post delete", response);
+
+            let form = response.getRawValue();
+
+            this._campaignService
+                .addCampaign(form)
+
+                .then(x => {
+                    console.log(x);
+                    this._matSnackBar.open("Campaña creada", "OK", {
+                        verticalPosition: "top",
+                        duration: 3000
+                    });
+                });
+
+            this._campaignService.previewLoading = false;
+
+            this.dialogRef = null;
+        });
+    }
 }
 
-export class FilesDataSource extends DataSource<any>
-{
-    private _filterChange = new BehaviorSubject('');
-    private _filteredDataChange = new BehaviorSubject('');
+export class FilesDataSource extends DataSource<any> {
+    private _filterChange = new BehaviorSubject("");
+    private _filteredDataChange = new BehaviorSubject("");
 
     /**
      * Constructor
@@ -163,8 +134,7 @@ export class FilesDataSource extends DataSource<any>
         private _ecommerceCampaignService: CampaignService,
         private _matPaginator: MatPaginator,
         private _matSort: MatSort
-    )
-    {
+    ) {
         super();
 
         this.filteredData = this._ecommerceCampaignService.campaigns;
@@ -175,8 +145,7 @@ export class FilesDataSource extends DataSource<any>
      *
      * @returns {Observable<any[]>}
      */
-    connect(): Observable<any[]>
-    {
+    connect(): Observable<any[]> {
         const displayDataChanges = [
             this._ecommerceCampaignService.onCampaignhanged,
             this._matPaginator.page,
@@ -184,47 +153,38 @@ export class FilesDataSource extends DataSource<any>
             this._matSort.sortChange
         ];
 
-        return merge(...displayDataChanges)
-            .pipe(
-                map(() => {
-                        let data = this._ecommerceCampaignService.campaigns.slice();
+        return merge(...displayDataChanges).pipe(
+            map(() => {
+                let data = this._ecommerceCampaignService.campaigns.slice();
 
-
-                        // Grab the page's slice of data.
-                        const startIndex = this._matPaginator.pageIndex * this._matPaginator.pageSize;
-                        return data.splice(startIndex, this._matPaginator.pageSize);
-                    }
-                ));
+                // Grab the page's slice of data.
+                const startIndex =
+                    this._matPaginator.pageIndex * this._matPaginator.pageSize;
+                return data.splice(startIndex, this._matPaginator.pageSize);
+            })
+        );
     }
 
-   
-
     // Filtered data
-    get filteredData(): any
-    {
+    get filteredData(): any {
         return this._filteredDataChange.value;
     }
 
-    set filteredData(value: any)
-    {
+    set filteredData(value: any) {
         this._filteredDataChange.next(value);
     }
 
     // Filter
-    get filter(): string
-    {
+    get filter(): string {
         return this._filterChange.value;
     }
 
-    set filter(filter: string)
-    {
+    set filter(filter: string) {
         this._filterChange.next(filter);
     }
 
     /**
      * Disconnect
      */
-    disconnect(): void
-    {
-    }
+    disconnect(): void {}
 }

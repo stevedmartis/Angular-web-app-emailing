@@ -50,6 +50,7 @@ export class CampaignService
     
     previewUrl:any = null;
     previewLoading: boolean = false;
+    previewLoadingEvent: boolean = false;
     value500: 0;
     fileUp: any;
 
@@ -57,6 +58,9 @@ export class CampaignService
     @Input() text = 'Upload';
     @Input() param = 'file';
   @Input() target = 'https://file.io';
+
+
+    previewUrlEvent: any;
 
   private files: Array<FileUploadModel> = [];
   
@@ -374,15 +378,15 @@ this.value500 ++
     
 
     
-    fileProgress(fileInput: any) {
+    fileProgress(fileInput: any, type) {
         this.fileData = <File>fileInput
     
         console.log(fileInput, this.fileData)
-        this.preview();
+        this.preview(type);
     }
       
  
-    preview() {
+    preview(type) {
       // Show preview 
       var mimeType = this.fileData.type;
       if (mimeType.match(/image\/*/) == null) {
@@ -392,10 +396,23 @@ this.value500 ++
       var reader = new FileReader();      
       reader.readAsDataURL(this.fileData); 
       reader.onload = (_event) => { 
-        this.previewUrl = reader.result; 
+        
+
+        if(type === 'camp'){
+
+            this.previewUrl = reader.result; 
+            this.image = this.previewUrl;
+
+            this.previewLoading = true;
+
+          
+        }
+        else {
+            this.previewUrlEvent = reader.result;
+        }
     
-        this.image = this.previewUrl;
-        this.previewLoading = true;
+
+
       }
     }
 

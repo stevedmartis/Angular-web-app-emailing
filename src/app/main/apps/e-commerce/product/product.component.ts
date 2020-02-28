@@ -136,7 +136,7 @@ export class EcommerceProductComponent implements OnInit, OnDestroy
 
                 console.log(this.isCreated)
 
-                this._campaignService.previewUrl = this.product.imgBanner;
+                this._campaignService.previewUrlEvent = this.product.imgBanner;
 
                 
 
@@ -225,7 +225,6 @@ export class EcommerceProductComponent implements OnInit, OnDestroy
         const data = this.productForm.getRawValue();
         data.handle = FuseUtils.handleize(data.name);
 
-        
         this._ecommerceProductService.addProduct(data, this._campaignService.image)
             .then((x) => {
                 // Trigger the subscription with new data
@@ -240,8 +239,6 @@ export class EcommerceProductComponent implements OnInit, OnDestroy
                 console.log(x)
                 this.isCreated = true;
 
-
-               
                 // Change the location with new one
                 this._location.go('apps/e-commerce/products/' + x.event._id + '/' + x.event.handle);
             });
@@ -251,7 +248,6 @@ export class EcommerceProductComponent implements OnInit, OnDestroy
         console.log('contacts ',this._contactsService.contacts)
     }
 
-
     createEventValidator(control: AbstractControl) {
         if (this.isCreated) {
           return { creationValid: true };
@@ -259,9 +255,8 @@ export class EcommerceProductComponent implements OnInit, OnDestroy
         return null;
       }
 
-
-      
   fileUpload(){
+      const type =  'evento'
     const fileUpload = document.getElementById('fileUpload') as HTMLInputElement;
     fileUpload.onchange = (event) => {
 
@@ -271,7 +266,7 @@ export class EcommerceProductComponent implements OnInit, OnDestroy
 
             console.log('file', file)
 
-            this._campaignService.fileProgress(file)
+            this._campaignService.fileProgress(file, type)
             this.files.push({
                 data: file,
                 state: 'in',
@@ -286,18 +281,6 @@ export class EcommerceProductComponent implements OnInit, OnDestroy
     }
     fileUpload.click();
     
-}
-
-private uploadFiles() {
-  const fileUpload = document.getElementById('fileUpload') as HTMLInputElement;
-  fileUpload.value = '';
-
-  this.files.forEach(file => {
-      console.log('file: ',file)
-
-      this._campaignService.preview()
-    this._campaignService.uploadFile(file);
-  });
 }
 
 
