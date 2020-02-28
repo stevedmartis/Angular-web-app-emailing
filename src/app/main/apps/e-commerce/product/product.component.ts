@@ -23,6 +23,18 @@ import { MatStepper } from '@angular/material';
 import { WebsocketService } from 'app/services/websocket.service';
 import { CampaignService } from './campaigns/campaign.service';
 
+export class FileUploadModel {
+    data: File;
+    state: string;
+    inProgress: boolean;
+    progress: number;
+    canRetry: boolean;
+    canCancel: boolean;
+    sub?: Subscription;
+    type: string;
+  }
+
+  
 
 @Component({
     selector     : 'e-commerce-product',
@@ -43,6 +55,7 @@ export class EcommerceProductComponent implements OnInit, OnDestroy
     card19: any;
     dialogRef: any;
     isCreated: boolean= false;
+    private files: Array<FileUploadModel> = [];
 
     //@ViewChild(InvitationFormComponent, {static: false}) invitationComponent: InvitationFormComponent
 
@@ -65,6 +78,7 @@ export class EcommerceProductComponent implements OnInit, OnDestroy
         private _matSnackBar: MatSnackBar,
         private router: Router,
         private cdRef: ChangeDetectorRef,
+        public _campaignService: CampaignService,
 
         
         public _matDialog: MatDialog,
@@ -110,6 +124,7 @@ export class EcommerceProductComponent implements OnInit, OnDestroy
                     this.isCreated = true;
                     this._contactsService.idEventNow =  product.event._id;
                     this._contactsService.eventCreated = true;
+                    
                 }
                 else
                 {
@@ -120,6 +135,10 @@ export class EcommerceProductComponent implements OnInit, OnDestroy
                 this.productForm = this.createProductForm();
 
                 console.log(this.isCreated)
+
+                this._campaignService.previewUrl = this.product.imgBanner;
+
+                
 
             });
 
@@ -150,6 +169,7 @@ export class EcommerceProductComponent implements OnInit, OnDestroy
     createProductForm(): FormGroup
     {
 
+
         return this._formBuilder.group({
             id              : [this.product._id],
             handle         : [this.product.handle],
@@ -170,7 +190,7 @@ export class EcommerceProductComponent implements OnInit, OnDestroy
         const data = this.productForm.getRawValue();
         data.handle = FuseUtils.handleize(data.name);
 
-        this._ecommerceProductService.saveProduct(data)
+        this._ecommerceProductService.saveProduct(data, this._campaignService.image)
             .then((result) => {
 
                 // Trigger the subscription with new data
@@ -205,7 +225,8 @@ export class EcommerceProductComponent implements OnInit, OnDestroy
         const data = this.productForm.getRawValue();
         data.handle = FuseUtils.handleize(data.name);
 
-        this._ecommerceProductService.addProduct(data)
+        
+        this._ecommerceProductService.addProduct(data, this._campaignService.image)
             .then((x) => {
                 // Trigger the subscription with new data
                 this._ecommerceProductService.onProductChanged.next(x);
@@ -237,6 +258,50 @@ export class EcommerceProductComponent implements OnInit, OnDestroy
         }
         return null;
       }
+
+
+      
+  fileUpload(){
+    const fileUpload = document.getElementById('fileUpload') as HTMLInputElement;
+    fileUpload.onchange = (event) => {
+
+      console.log(event, fileUpload)
+        for(let index = 0; index < fileUpload.files.length; index++) {
+            const file = fileUpload.files[index];
+
+            console.log('file', file)
+
+            this._campaignService.fileProgress(file)
+            this.files.push({
+                data: file,
+                state: 'in',
+                inProgress: false,
+                progress: 0,
+                canRetry: false,
+                canCancel: true,
+                type: 'image'
+            });
+        }
+       // this.uploadFiles();
+    }
+    fileUpload.click();
+    
+}
+
+private uploadFiles() {
+  const fileUpload = document.getElementById('fileUpload') as HTMLInputElement;
+  fileUpload.value = '';
+
+  this.files.forEach(file => {
+      console.log('file: ',file)
+
+      this._campaignService.preview()
+    this._campaignService.uploadFile(file);
+  });
+}
+
+
+      
 
 
       

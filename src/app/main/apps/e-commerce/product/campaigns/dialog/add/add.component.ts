@@ -42,11 +42,7 @@ private files: Array<FileUploadModel> = [];
   dialogTitle = 'Nueva campañia';
   action: string;
   campaignForm: FormGroup;
-  loadingFile: boolean = false; 
 
-    
-  previewUrl:any = null;
-  previewLoading: boolean = false;
 
   
   
@@ -55,7 +51,7 @@ private files: Array<FileUploadModel> = [];
     @Inject(MAT_DIALOG_DATA) private _data: any,
     private _formBuilder: FormBuilder,
     private _httpClient: HttpClient,
-    private _campaignService: CampaignService
+    public _campaignService: CampaignService
     
     ) {
       // Set the defaults
@@ -96,6 +92,7 @@ private files: Array<FileUploadModel> = [];
       });
   }
 
+
   fileUpload(){
     const fileUpload = document.getElementById('fileUpload') as HTMLInputElement;
     fileUpload.onchange = (event) => {
@@ -106,7 +103,7 @@ private files: Array<FileUploadModel> = [];
 
             console.log('file', file)
 
-            this.fileProgress(file)
+            this._campaignService.fileProgress(file)
             this.files.push({
                 data: file,
                 state: 'in',
@@ -123,98 +120,17 @@ private files: Array<FileUploadModel> = [];
     
 }
 
+private uploadFiles() {
+  const fileUpload = document.getElementById('fileUpload') as HTMLInputElement;
+  fileUpload.value = '';
 
-private uploadFile(file: FileUploadModel) {
-    this.loadingFile = true;
-    const fd = new FormData();
-    fd.append(this.param, file.data);
+  this.files.forEach(file => {
+      console.log('file: ',file)
 
-    const req = new HttpRequest('POST', this.target, fd, {
-      reportProgress: true
-    });
-
-    file.inProgress = true;
-    file.sub = this._httpClient.request(req).pipe(
-      map(event => {
-       
-        switch (event.type) {
-              case HttpEventType.UploadProgress:
-                    file.progress = Math.round(event.loaded * 100 / event.total);
-                    break;
-              case HttpEventType.Response:
-
-              this.fileUp = event.body
-              setTimeout(() => {
-                this.loadingFile = false;
-              }, 1000);
-             
-                return event;
-        }
-      }),
-      tap(message => { }),
-      last(),
-      catchError((error: HttpErrorResponse) => {
-        file.inProgress = false;
-        file.canRetry = true;
-        return of(`${file.data.name} upload failed.`);
-      })
-    ).subscribe(
-      (event: any) => {
-        if (typeof (event) === 'object') {
-          this.removeFileFromArray(file);
-          this.complete.emit(event.body);
-        }
-      }
-    );
-  }
-
-  private uploadFiles() {
-    const fileUpload = document.getElementById('fileUpload') as HTMLInputElement;
-    fileUpload.value = '';
-
-    this.files.forEach(file => {
-        console.log('file: ',file)
-
-        this.preview()
-      this.uploadFile(file);
-    });
-  }
-
-
-fileProgress(fileInput: any) {
-    this.fileData = <File>fileInput
-
-    console.log(fileInput, this.fileData)
-    this.preview();
+      this._campaignService.preview()
+    this._campaignService.uploadFile(file);
+  });
 }
-  
-
-
-
-
-preview() {
-  // Show preview 
-  var mimeType = this.fileData.type;
-  if (mimeType.match(/image\/*/) == null) {
-    return;
-  }
-
-  var reader = new FileReader();      
-  reader.readAsDataURL(this.fileData); 
-  reader.onload = (_event) => { 
-    this.previewUrl = reader.result; 
-
-    this._campaignService.image = this.previewUrl;
-    this.previewLoading = true;
-  }
-}
-  private removeFileFromArray(file: FileUploadModel) {
-    const index = this.files.indexOf(file);
-
-    if (index > -1) {
-      this.files.splice(index, 1);
-    }
-  }
 
 
 }

@@ -22,7 +22,7 @@
             </div>
 
             <div fxLayout="row" fxLayoutAlign="start start">
-                <div class="container" *ngIf="!previewLoading">
+                <div class="container" *ngIf="!_campaignService.previewLoading">
                     <img src="assets/images/file_placeholder.png" class="img-empty" alt="" />
  
                     
@@ -34,8 +34,8 @@
                     </button>
                   </div>
 
-                  <div class="container-load" *ngIf="previewLoading">
-                    <img [src]="previewUrl"  class="img-load"  alt="" />
+                  <div class="container-load" *ngIf="_campaignService.previewLoading">
+                    <img [src]="_campaignService.previewUrl"  class="img-load"  alt="" />
                     <input hidden  id="fileUpload" type="file" #fileInput />
                     <div class="overlay"></div>
                     <div></div>

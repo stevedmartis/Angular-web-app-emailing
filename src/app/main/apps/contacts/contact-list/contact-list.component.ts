@@ -230,7 +230,7 @@ export class ContactsContactListComponent implements OnInit, OnDestroy
         this.confirmDialogRef.afterClosed().subscribe(result => {
             if ( result )
             {
-                this._contactsService.deleteContact(contact);
+                this._contactsService.deleteContact(contact.id);
             }
             this.confirmDialogRef = null;
         });

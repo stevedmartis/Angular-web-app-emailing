@@ -6,8 +6,8 @@
 
 <div  class="content-card"
 [ngClass]="{
-    'table-hidden': !_contactsService.contactsExist,
-    'table-contacts-visible': _contactsService.contactsExist  }">
+    'table-hidden': _contactsService.contacts.length === 0,
+    'table-contacts-visible': _contactsService.contacts.length > 0  }">
 
 
 <mat-table  class="table-invited"
@@ -140,7 +140,7 @@
 
 
 
-<div *ngIf="!_contactsService.contactsExist " class="empty-card-inv">
+<div *ngIf="_contactsService.contacts.length === 0 " class="empty-card-inv">
 
        
         <img class="empty-inv" src="assets/images/listEmptyCut.png">

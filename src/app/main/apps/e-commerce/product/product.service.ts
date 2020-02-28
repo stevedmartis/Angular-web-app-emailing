@@ -114,12 +114,14 @@ export class EcommerceProductService implements Resolve<any>
      * @param product
      * @returns {Promise<any>}
      */
-    saveProduct(product): Promise<any>
+    saveProduct(product, img): Promise<any>
     {
         console.log('product', product)
         return new Promise((resolve, reject) => {
             this._httpClient.post(environment.apiUrl + '/api/event/edit-event', 
-            { eventId: product.id, 
+            {   
+                imgBanner: img,
+                eventId: product.id, 
                 eventName: product.name, 
                 handle: product.handle, 
                 company: product.company, 
@@ -145,13 +147,15 @@ export class EcommerceProductService implements Resolve<any>
      * @param product
      * @returns {Promise<any>}
      */
-    addProduct(product): Promise<any> {
+    addProduct(product, img): Promise<any> {
 
 
         
         return new Promise((resolve, reject) => {
             this._httpClient.post(environment.apiUrl + '/api/event/add-new-event', 
-            {   eventName: product.name, 
+            {   
+                imgBanner: img,
+                eventName: product.name, 
                 company: product.company, 
                 handle: product.handle, 
                 desc: product.description, 

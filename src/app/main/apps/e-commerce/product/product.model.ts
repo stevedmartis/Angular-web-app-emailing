@@ -30,6 +30,7 @@ export class Product
     weight: string;
     extraShippingFee: number;
     active: boolean;
+    imgBanner: string;
 
     /**
      * Constructor
@@ -60,6 +61,7 @@ export class Product
         this.weight = product.weight || 0;
         this.extraShippingFee = product.extraShippingFee || 0;
         this.active = product.active || product.active;
+        this.imgBanner = product.imgBanner || 'assets/images/file_placeholder.png';
     }
 
     /**

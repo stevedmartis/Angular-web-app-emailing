@@ -65,7 +65,18 @@
 
                             <ng-template matStepLabel>General</ng-template>
 
-
+                            <div fxLayout="row" fxLayoutAlign="start start" fxFlex="1 0 auto">
+                
+                                  <div class="container-load" >
+                                    <img [src]="_campaignService.previewUrl"  class="img-load"  alt="" />
+                                    <input hidden  id="fileUpload" type="file" #fileInput />
+                                    <div class="overlay"></div>
+                                    <div></div>
+                                    <button mat-fab  (click)="fileUpload()"  class="button fuse-white mt-24 mt-md-0">
+                                        <mat-icon>add_photo_alternate</mat-icon>
+                                    </button>
+                                  </div>
+                            </div>
 
                             <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
 

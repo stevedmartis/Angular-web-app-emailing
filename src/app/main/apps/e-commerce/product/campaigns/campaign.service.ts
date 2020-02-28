@@ -1,14 +1,27 @@
-import { Injectable, ViewChild } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Injectable, ViewChild, Input } from '@angular/core';
+import { HttpClient, HttpHeaders, HttpRequest, HttpEventType, HttpErrorResponse } from '@angular/common/http';
 import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot } from '@angular/router';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, Subscription, of } from 'rxjs';
 import { environment } from 'environments/environment';
 import { AuthService } from 'app/services/authentication/auth.service';
 import { EcommerceProductService } from '../product.service';
 import { Campaign } from './campaign.model';
 import { ContactsService } from 'app/main/apps/contacts/contacts.service';
-import { map } from 'rxjs/operators';
+import { map, tap, last, catchError } from 'rxjs/operators';
 import { ImgSrcDirective } from '@angular/flex-layout';
+
+
+export class FileUploadModel {
+    data: File;
+    state: string;
+    inProgress: boolean;
+    progress: number;
+    canRetry: boolean;
+    canCancel: boolean;
+    sub?: Subscription;
+    type: string;
+  }
+ 
 
 @Injectable()
 export class CampaignService
@@ -31,7 +44,24 @@ export class CampaignService
     invitedFails: any[] = [];
 
     value200: 0
-    value500: 0
+
+    loadingFile: boolean = false; 
+
+    
+    previewUrl:any = null;
+    previewLoading: boolean = false;
+    value500: 0;
+    fileUp: any;
+
+
+    @Input() text = 'Upload';
+    @Input() param = 'file';
+  @Input() target = 'https://file.io';
+
+  private files: Array<FileUploadModel> = [];
+  
+  fileData: File = null;
+
 
 
     /**
@@ -295,6 +325,78 @@ this.value500 ++
     }));
 
 
+    }
+
+
+
+    
+    
+     uploadFile(file: FileUploadModel) {
+        this.loadingFile = true;
+        const fd = new FormData();
+        fd.append(this.param, file.data);
+    
+        const req = new HttpRequest('POST', this.target, fd, {
+          reportProgress: true
+        });
+    
+        file.inProgress = true;
+        file.sub = this._httpClient.request(req).pipe(
+          map(event => {
+           
+            switch (event.type) {
+                  case HttpEventType.UploadProgress:
+                        file.progress = Math.round(event.loaded * 100 / event.total);
+                        break;
+                  case HttpEventType.Response:
+    
+                  this.fileUp = event.body
+                  setTimeout(() => {
+                    this.loadingFile = false;
+                  }, 1000);
+                 
+                    return event;
+            }
+          }),
+          tap(message => { }),
+          last(),
+          catchError((error: HttpErrorResponse) => {
+            file.inProgress = false;
+            file.canRetry = true;
+            return of(`${file.data.name} upload failed.`);
+          })
+        ).subscribe(
+          (event: any) => {
+
+          }
+        );
+      }
+    
+
+    
+    fileProgress(fileInput: any) {
+        this.fileData = <File>fileInput
+    
+        console.log(fileInput, this.fileData)
+        this.preview();
+    }
+      
+ 
+    preview() {
+      // Show preview 
+      var mimeType = this.fileData.type;
+      if (mimeType.match(/image\/*/) == null) {
+        return;
+      }
+    
+      var reader = new FileReader();      
+      reader.readAsDataURL(this.fileData); 
+      reader.onload = (_event) => { 
+        this.previewUrl = reader.result; 
+    
+        this.image = this.previewUrl;
+        this.previewLoading = true;
+      }
     }
 
 
