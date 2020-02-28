@@ -15,7 +15,7 @@
 
             <div fxLayout="row" fxLayoutAlign="start start">
                 <mat-form-field appearance="outline" fxFlex>
-                    <mat-label>Nombre</mat-label>
+                    <mat-label>Nombre Completo</mat-label>
                     <mat-icon matSuffix class="secondary-text">account_circle</mat-icon>
                     <input name="name" formControlName="name" matInput required>
                 </mat-form-field>
@@ -23,7 +23,7 @@
 
             <div fxLayout="row" fxLayoutAlign="start start">
                 <mat-form-field appearance="outline" fxFlex>
-                    <mat-label>Apellido</mat-label>
+                    <mat-label>Apellidos</mat-label>
                     <mat-icon matSuffix class="secondary-text">account_circle</mat-icon>
                     <input name="lastname" formControlName="lastname" matInput>
                 </mat-form-field>
@@ -31,19 +31,21 @@
 
             <div fxLayout="row" fxLayoutAlign="start start">
                 <mat-form-field appearance="outline" fxFlex>
-                    <mat-label>Numero telefono</mat-label>
-                    <mat-icon matSuffix class="secondary-text">phone</mat-icon>
-                    <input formControlName="phone" matInput>
+                    <mat-label>Correo Electrónico</mat-label>
+                    <mat-icon matSuffix class="secondary-text">email</mat-icon>
+                    <input name="email" formControlName="email" matInput type="email">
                 </mat-form-field>
             </div>
 
             <div fxLayout="row" fxLayoutAlign="start start">
                 <mat-form-field appearance="outline" fxFlex>
-                    <mat-label>Correo electrónico</mat-label>
-                    <mat-icon matSuffix class="secondary-text">email</mat-icon>
-                    <input name="email" formControlName="email" matInput type="email">
+                    <mat-label>Teléfonos</mat-label>
+                    <mat-icon matSuffix class="secondary-text">phone</mat-icon>
+                    <input formControlName="phone" matInput>
                 </mat-form-field>
             </div>
+
+           
 
 
             <div fxLayout="row" fxLayoutAlign="start start">
@@ -52,7 +54,7 @@
 
             <div fxLayout="row" fxLayoutAlign="start start">
                 <mat-form-field appearance="outline" fxFlex>
-                    <mat-label>Compañia</mat-label>
+                    <mat-label>Empresa/Institución</mat-label>
                     <mat-icon matSuffix class="secondary-text">domain</mat-icon>
                     <input name="company" formControlName="company" matInput>
                 </mat-form-field>
@@ -60,7 +62,7 @@
 
             <div fxLayout="row" fxLayoutAlign="start start">
                 <mat-form-field appearance="outline" fxFlex>
-                    <mat-label>Perfil</mat-label>
+                    <mat-label>Cargo</mat-label>
                     <mat-icon matSuffix class="secondary-text">work</mat-icon>
                     <input name="jobtitle" formControlName="jobtitle" matInput>
                 </mat-form-field>
@@ -77,7 +79,7 @@
 
             <div fxLayout="row" fxLayoutAlign="start start">
                 <mat-form-field appearance="outline" fxFlex>
-                    <mat-label>Dirección</mat-label>
+                    <mat-label>Dirección/Comuna/País</mat-label>
                     <mat-icon matSuffix class="secondary-text">home</mat-icon>
                     <input name="address" formControlName="address" matInput>
                 </mat-form-field>
@@ -85,7 +87,7 @@
 
             <div fxLayout="row" class="textarea-wrapper" fxLayoutAlign="start start">
                 <mat-form-field appearance="outline" fxFlex>
-                    <mat-label>Notas</mat-label>
+                    <mat-label>Contactado/Observaciones</mat-label>
                     <textarea name="notes" formControlName="notes" matInput type="text" max-rows="4"></textarea>
                 </mat-form-field>
             </div>
@@ -102,7 +104,7 @@
                 (click)="matDialogRef.close(['delete',contactForm])"
                 aria-label="Delete"
                 matTooltip="Delete">
-            ELIMINAR
+            ELIMINAR INVITADO
         </button>
 
         <button *ngIf="action !== 'edit'"
@@ -111,7 +113,7 @@
                 (click)="matDialogRef.close(contactForm)"
                 [disabled]="contactForm.invalid"
                 aria-label="SAVE">
-            AGREGAR
+            AGREGAR INVITADO
         </button>
 
         <button *ngIf="action === 'edit'"
