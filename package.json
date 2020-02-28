@@ -1,6 +1,6 @@
 {
     "name": "fuse",
-    "version": "8.1.2",
+    "version": "1.9.3",
     "license": "https://themeforest.net/licenses/terms/regular",
     "scripts": {
         "ng": "ng",
