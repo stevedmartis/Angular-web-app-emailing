@@ -73,7 +73,6 @@ export class EcommerceProductsService implements Resolve<any>
 
         console.log('user ',this.authServices.currentUserValue)
 
-
         return new Promise((resolve, reject) => {
             this._httpClient.get(environment.apiUrl + '/api/events/user/' + this.authServices.currentUserValue.user._id )
                 .subscribe((response: any) => {

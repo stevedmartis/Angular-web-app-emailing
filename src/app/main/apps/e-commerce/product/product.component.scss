@@ -352,7 +352,7 @@ border-radius: 3%;
 border-radius: 3%;
   position: absolute;
   width: 100%;
-  height: 300px;
+  height: 100%;
   left: 0;
 }
 
@@ -376,7 +376,7 @@ margin: 46%;
   border: solid 2px white;
   z-index: 1;
 }
-.container:hover .button {
+.container-empty .button {
   opacity: 1;
 }
 

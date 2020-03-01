@@ -18,6 +18,8 @@ export class FormInvitedService implements Resolve<any>
     campaignInvitation: any;
     invited: any;
     campaignName: any;
+    event: any;
+    eventLoad: boolean = false;
 
     /**
      * Constructor
@@ -56,7 +58,17 @@ export class FormInvitedService implements Resolve<any>
         
                 Promise.all([
 
-                    this.getCampaignById(this.campaignId),
+                    this.getCampaignById(this.campaignId)
+                    .then(() => {
+                        this.getEventById(this.campaignInvitation.eventId)
+                        .then( (data ) => {
+                            console.log(data)
+        
+                            this.event = data.event;
+        
+                            this.eventLoad = true
+                        })
+                    }),
 
                     this.getInvited()
                     .then(() => {
@@ -64,7 +76,9 @@ export class FormInvitedService implements Resolve<any>
 
                         resolve();
 
-                    }, reject)
+                    }, reject),
+
+
 
                     //this.getEventsByUser()
 
@@ -98,7 +112,10 @@ export class FormInvitedService implements Resolve<any>
 
                 console.log( this.campaignInvitation)
 
+
                 resolve(response);
+
+                
                 
             }, reject);   
             
@@ -128,6 +145,27 @@ export class FormInvitedService implements Resolve<any>
               resolve(response)
 
               console.log(response)
+          }, reject);
+        
+  });
+    
+
+  }
+
+      
+  getEventById(idEvent): Promise<any>{
+
+    return new Promise((resolve, reject) => {
+
+      this._httpClient.get(environment.apiUrl + '/api/event/' + idEvent)
+          .subscribe((response: any) => {
+              resolve(response);
+
+              console.log(response);
+
+       
+
+
           }, reject);
         
   });

@@ -53,7 +53,7 @@ export class CampaignService
     previewLoadingEvent: boolean = false;
     value500: 0;
     fileUp: any;
-
+    imgProductLoad: boolean = false;
 
     @Input() text = 'Upload';
     @Input() param = 'file';
@@ -202,7 +202,13 @@ console.log('campaign', campaign, this._productService.idNowEvent)
         console.log('arrayInvitedSelected', arrayInvitedSelected)
 
         const array = arrayInvitedSelected.map( obj => obj.id)
-        this.invitedArrayforSend(array, invitation);
+
+        setTimeout(() => {
+
+          this.invitedArrayforSend(array, invitation);
+
+          
+        }, 1000);
 
 
     }
@@ -215,7 +221,14 @@ console.log('campaign', campaign, this._productService.idNowEvent)
 
         console.log('arrayInvitedSelected', arrayInvitedSelected);
 
-        this.invitedArrayforSend(arrayInvitedSelected,invitation);
+
+        setTimeout(() => {
+
+          this.invitedArrayforSend(arrayInvitedSelected,invitation);
+
+          
+        }, 1000);
+
         
 
 
@@ -251,7 +264,7 @@ console.log('campaign', campaign, this._productService.idNowEvent)
 
                    this.value = 100;
 
-                   this.statusSendInvitation = 'Operación realizada!'
+                   this.statusSendInvitation = 'Enviado!'
 
                    console.log('ok')
                 }
@@ -269,7 +282,7 @@ console.log(' error ',  this.value, array.length)
 this.value500 ++
 
 
-                    this.statusSendInvitation = 'Operación realizada!';
+                    this.statusSendInvitation = 'Enviado!';
 
 
                     console.log('ok error')
@@ -408,6 +421,10 @@ this.value500 ++
           
         }
         else {
+
+          this.imgProductLoad = true;
+
+          console.log('imgProductLoad ', this.imgProductLoad)
             this.previewUrlEvent = reader.result;
         }
     

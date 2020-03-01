@@ -10,7 +10,7 @@ error-404 {
             max-width: 512px !important;
 
             .error-code {
-                font-size: 112px;
+                font-size: 75px;
                 text-align: center;
                 line-height: 1;
                 margin-bottom: 16px;
@@ -34,6 +34,12 @@ error-404 {
                 input {
                     padding: 0 0 0 16px;
                 }
+            }
+
+            .name-campaign {
+                font-size: 26px;
+                text-align: center;
+                color: #039be5;
             }
 
             .back-link {

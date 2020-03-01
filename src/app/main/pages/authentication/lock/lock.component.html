@@ -3,14 +3,38 @@
     <div id="lock-form-wrapper" fxLayout="column" fxLayoutAlign="center center">
 
 
+                
         
 
+        <div *ngIf="_formInvitationService.eventLoad" id="lock-form" [@animate]="{value:'*',params:{duration:'300ms',y:'100px'}}">
 
-        <div id="lock-form" [@animate]="{value:'*',params:{duration:'300ms',y:'100px'}}">
 
-            <div class="form-card">
+                <div id="profile" class="page-layout simple tabbed">
 
-                <img class="img-banner" [src]="_formInvitationService.campaignInvitation.imgBlob">
+                        <!-- HEADER -->
+                        <div class="header" fxLayout="column" fxLayoutAlign="center center" fxLayout.gt-sm="row"
+                             fxLayoutAlign.gt-sm="space-between end">
+                             <img class="img-banner" [src]="_formInvitationService.event.imgBanner">
+    
+                
+                    
+                        </div>
+                        <!-- / HEADER -->
+                    
+                        <!-- CONTENT -->
+                        <div class="content">
+                    
+     
+                    
+                        </div>
+                        <!-- / CONTENT -->
+                    
+                    </div>
+
+                    
+            <div class="form-card" >
+
+                
 
             </div>
             
@@ -20,11 +44,6 @@
                  fxLayout.gt-xs="row" fxLayoutAlign.gt-xs="start center">
 
                 
-
-                <div class="avatar-container">
-                  
-                    
-                </div>
 
                 <div>
                     <div class="title">{{ _formInvitationService.campaignName }}</div>
@@ -94,7 +113,7 @@
                 (click)="cancelInvitation()"
                 class="cancel-button" 
                >
-                Rechazar
+                Cancelar
         </button>
             </form>
 

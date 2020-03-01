@@ -21,6 +21,7 @@ export class LockComponent implements OnInit, OnDestroy {
     invitationForm: FormGroup;
 
     invited: Invited;
+  
 
     private _unsubscribeAll: Subject<any>;
    
