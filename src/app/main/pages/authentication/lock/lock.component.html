@@ -3,118 +3,113 @@
     <div id="lock-form-wrapper" fxLayout="column" fxLayoutAlign="center center">
 
 
-                
-        <div *ngIf="_formInvitationService.eventLoad" id="lock-form" [@animate]="{value:'*',params:{duration:'300ms',y:'100px'}}">
 
 
-                <div id="profile" class="layout-invitation tabbed">
 
-                        <!-- HEADER -->
-                        <div class="header" fxLayout="column" fxLayoutAlign="center center" fxLayout.gt-sm="row"
-                             fxLayoutAlign.gt-sm="space-between end">
-                             <img class="img-banner" [src]="_formInvitationService.event.imgBanner">
-    
-                
-                    
-                        </div>
-                        <!-- / HEADER -->
-                    
-                        <!-- CONTENT -->
-                        <div class="content">
-                    
-     
-                    
-                        </div>
-                        <!-- / CONTENT -->
-                    
+
+        <div *ngIf="_formInvitationService.eventLoad" id="lock-form"
+            [@animate]="{value:'*',params:{duration:'300ms',y:'100px'}}">
+
+
+            <div id="wrapper">
+
+                <header>
+
+                    <div class="header" fxLayout="column" fxLayoutAlign="center center" fxLayout.gt-sm="row"
+                        fxLayoutAlign.gt-sm="space-between end">
+                        <img class="img-banner" [src]="_formInvitationService.event.imgBanner">
+
+
+
                     </div>
 
-                    
-            <div class="form-card" >
-
-                
+                </header>
 
             </div>
-            
-          
 
-            <div class="lock-form-header" fxLayout="column" fxLayoutAlign="center center"
-                 fxLayout.gt-xs="row" fxLayoutAlign.gt-xs="start center">
 
-                
 
-                <div>
-                    <div class="title">{{ _formInvitationService.campaignName }}</div>
-                    <div class="subtitle">
-                       Confirmar asistencia
+
+
+            <div class="form-card">
+
+
+                <div class="lock-form-header" fxLayout="column" fxLayoutAlign="center center" fxLayout.gt-xs="row"
+                    fxLayoutAlign.gt-xs="start center">
+
+                    <div>
+                        <div class="title">{{ _formInvitationService.campaignName }}</div>
+                        <div class="subtitle">
+                            Confirmar asistencia
+                        </div>
                     </div>
+
                 </div>
 
+                <form class="form-invitation " name="lockForm" [formGroup]="invitationForm" novalidate>
+
+                    <mat-form-field appearance="outline">
+                        <mat-label>Correo electronico</mat-label>
+                        <input matInput formControlName="email">
+                        <mat-icon matSuffix>email</mat-icon>
+
+                    </mat-form-field>
+
+                    <mat-form-field appearance="outline">
+                        <mat-label>Nombre</mat-label>
+                        <input matInput formControlName="name">
+                        <mat-icon matSuffix>account_circle</mat-icon>
+
+                    </mat-form-field>
+
+                    <mat-form-field appearance="outline">
+                        <mat-label>Apellido</mat-label>
+                        <input matInput formControlName="lastname">
+                        <mat-icon matSuffix>account_circle</mat-icon>
+
+                    </mat-form-field>
+
+                    <mat-form-field appearance="outline">
+                        <mat-label>Empresa/Institución</mat-label>
+                        <input matInput formControlName="company">
+                        <mat-icon matSuffix>domain</mat-icon>
+
+                    </mat-form-field>
+
+
+                    <!--
+  
+                    <mat-form-field appearance="outline">
+                        <mat-label>Cargo</mat-label>
+                        <input matInput formControlName="jobtitle">
+                        <mat-icon matSuffix>work</mat-icon>
+
+                    </mat-form-field>
+                    -->
+
+                    <mat-form-field appearance="outline">
+                        <mat-label>Fono de  contacto</mat-label>
+                        <input matInput formControlName="phone">
+                        <mat-icon matSuffix>smartphone</mat-icon>
+
+                    </mat-form-field>
+
+
+                    <button mat-raised-button (click)="confirmInvitation()" class="submit-button" color="accent">
+                        <mat-icon matSuffix>done</mat-icon>
+                        Confirmar
+                    </button>
+                    
+
+
+                    <button mat-raised-button (click)="cancelInvitation()" class="cancel-button">
+                        Cancelar
+                    </button>
+                </form>
+
+
             </div>
-
-            <form  class="form-invitation " name="lockForm" [formGroup]="invitationForm" novalidate>
-
-                
-
-                <mat-form-field appearance="outline">
-                    <mat-label>Nombre</mat-label>
-                    <input matInput formControlName="name">
-                    <mat-icon matSuffix >account_circle</mat-icon>
-
-                </mat-form-field>
-
-                <mat-form-field appearance="outline">
-                    <mat-label>Correo electronico</mat-label>
-                    <input matInput formControlName="email">
-                    <mat-icon matSuffix >email</mat-icon>
-
-                </mat-form-field>
-
-                <mat-form-field appearance="outline">
-                    <mat-label>Compañia</mat-label>
-                    <input matInput formControlName="company">
-                    <mat-icon matSuffix>domain</mat-icon>
-
-                </mat-form-field>
-
-                <mat-form-field appearance="outline">
-                    <mat-label>Cargo</mat-label>
-                    <input matInput formControlName="jobtitle">
-                    <mat-icon matSuffix >work</mat-icon>
-
-                </mat-form-field>
-
-
-                <mat-form-field appearance="outline">
-                    <mat-label>Numero mobil</mat-label>
-                    <input matInput formControlName="phone">
-                    <mat-icon matSuffix >smartphone</mat-icon>
-
-                </mat-form-field>
-
-                <mat-form-field appearance="outline">
-                    <mat-label>Numero fijo</mat-label>
-                    <input matInput formControlName="numberFijo">
-                    <mat-icon matSuffix >local_phone</mat-icon>
-
-                </mat-form-field>
-
-                <button mat-raised-button 
-                (click)="confirmInvitation()"
-                class="submit-button" color="accent">
-                    <mat-icon matSuffix >done</mat-icon>
-                    Confirmar
-                </button>
-
-
-                <button mat-raised-button 
-                (click)="cancelInvitation()"
-                class="cancel-button" 
-               >
-                Cancelar
-        </button>
-            </form>
-
+  
             <!--
 
 
@@ -124,6 +119,8 @@
             </div>
   -->
         </div>
+
+        
 
     </div>
 

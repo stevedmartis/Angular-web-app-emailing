@@ -3,9 +3,9 @@
     $background: map-get($theme, background);
     $foreground: map-get($theme, foreground);
 
-    error-404 {
+    error-500 {
 
-        #error-404 {
+        #error-500 {
 
             .content {
 

@@ -80,7 +80,7 @@ lock {
                     }
 
                     .submit-button {
-                        width: 90%;
+                        width: 100%;
                         margin: 16px auto;
                         display: block;
 
@@ -91,7 +91,7 @@ lock {
 
                     .cancel-button {
 
-width: 90%;
+width: 100%;
 margin: 16px auto;
 display: block;
 
@@ -187,3 +187,23 @@ display: block;
             max-height: 100px;
         }
 }
+
+
+#wrapper {
+    margin: 0 auto;
+    width: 100%;
+    margin-bottom: 30px;
+  }
+  
+  header {
+    height: 180px;
+    width: 100%;
+    overflow: hidden;
+    background-size: cover;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    /* The two lines below make the photo opaque. No Apacity = 1  Full Opacity = 0  :-) */
+    opacity: 0.6;
+    line-height: 2.8em;
+  }

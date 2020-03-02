@@ -72,7 +72,6 @@ if(this.allContacts > 0){
     this._campaignService.getDataPersonForSendEmail(invitation, option)
 
 
-    
     }
 
 
