@@ -59,6 +59,7 @@ export class EcommerceOrdersComponent implements OnInit, OnDestroy
     {
         this.dataSource = new FilesDataSource(this._ecommerceOrdersService, this.paginator, this.sort);
 
+
         fromEvent(this.filter.nativeElement, 'keyup')
             .pipe(
                 takeUntil(this._unsubscribeAll),
@@ -66,6 +67,7 @@ export class EcommerceOrdersComponent implements OnInit, OnDestroy
                 distinctUntilChanged()
             )
             .subscribe(() => {
+
                 if ( !this.dataSource )
                 {
                     return;

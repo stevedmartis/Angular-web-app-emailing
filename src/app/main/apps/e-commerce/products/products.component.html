@@ -25,7 +25,7 @@
             <!-- / APP TITLE -->
 
             <!-- SEARCH -->
-            <div *ngIf="eventExist" class="search-wrapper mx-32 mx-md-0">
+            <div  class="search-wrapper mx-32 mx-md-0">
                 <div class="search" fxFlex fxLayout="row" fxLayoutAlign="start center">
                     <mat-icon>search</mat-icon>
                     <input #filter placeholder="Buscar evento">
@@ -46,8 +46,8 @@
 
         <!-- CONTENT CARD -->
         <div [ngClass]="{
-            'table-hidden': !eventExist,
-            'table-visible': eventExist }"
+            'table-hidden': !dataSource.length === 0,
+            'table-visible': dataSource.length > 0 }"
                 class="content-card">
 
             <mat-table  class="products-table"
@@ -71,16 +71,16 @@
                     <mat-header-cell *matHeaderCellDef></mat-header-cell>
                     <mat-cell *matCellDef="let product">
                         <img class="product-image"
-                             *ngIf="product.featuredImageId" [alt]="product.name"
-                             [src]="product.images[product.featuredImageId].url"/>
-                        <img *ngIf="!product.featuredImageId"
+                             *ngIf="product.img" [alt]="product.eventName"
+                             [src]="product.img"/>
+                        <img *ngIf="!product.img"
                              [src]="'assets/images/ecommerce/product-image-placeholder.png'">
                     </mat-cell>
                 </ng-container>
 
                 <!-- Name Column -->
 
-                <ng-container matColumnDef="name">
+                <ng-container matColumnDef="eventName">
                     <mat-header-cell *matHeaderCellDef mat-sort-header>Name</mat-header-cell>
                     <mat-cell *matCellDef="let product" >
                         <p class="category text-truncate">{{product.eventName}}</p>
@@ -184,7 +184,7 @@
         </div>
 
 
-        <div class="content-card empty-card" *ngIf="!eventExist">
+        <div class="content-card empty-card" *ngIf="dataSource.length === 0 ">
 
 
             <img src="assets/images/emptyevent.png">

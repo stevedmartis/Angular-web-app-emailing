@@ -98,7 +98,7 @@ export class EcommerceProductsService implements Resolve<any>
                     this.onProductsChanged.next(this.products);
 
                     console.log(this.onProductsChanged)
-                    resolve(this.products);
+                    resolve(response);
 
 
                 }, reject);

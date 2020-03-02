@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild, ViewEncapsulation, OnDestroy } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { DataSource } from '@angular/cdk/collections';
@@ -22,25 +22,23 @@ import { WebsocketService } from 'app/services/websocket.service';
     animations   : fuseAnimations,
     encapsulation: ViewEncapsulation.None
 })
-export class EcommerceProductsComponent implements OnInit
+export class EcommerceProductsComponent implements OnInit, OnDestroy
 {
     dataSource: FilesDataSource | null;
-    displayedColumns = ['image', 'name', 'category', 'price', 'active', 'buttons'];
+    displayedColumns = ['image', 'eventName', 'category', 'price', 'active', 'buttons'];
 
     @ViewChild(MatPaginator, {static: true})
     paginator: MatPaginator;
-    eventExist: boolean = true;
-
-    @ViewChild(MatSort, {static: true})
-    sort: MatSort;
 
     @ViewChild('filter', {static: true})
     filter: ElementRef;
 
     @ViewChild(MatSort, {static: true})
+    sort: MatSort;
 
     // Private
     private _unsubscribeAll: Subject<any>;
+
 
     
     confirmDialogRef: MatDialogRef<FuseConfirmDialogComponent>;
@@ -70,38 +68,28 @@ export class EcommerceProductsComponent implements OnInit
         
         this.dataSource = new FilesDataSource(this._ecommerceProductsService, this.paginator, this.sort);
 
-        if(this._ecommerceProductsService.products.length > 0) {
+        console.log('asd', this.dataSource)
 
 
-
-            this.eventExist = true
-
-            console.log(this.eventExist)
-        }
-        else {
-            this.eventExist = false
-
-            console.log(this.eventExist)
-            
-
-        }
-
-        /*
         fromEvent(this.filter.nativeElement, 'keyup')
-            .pipe(
-                takeUntil(this._unsubscribeAll),
-                debounceTime(150),
-                distinctUntilChanged()
-            )
-            .subscribe(() => {
-                if ( !this.dataSource )
-                {
-                    return;
-                }
+        .pipe(
+            takeUntil(this._unsubscribeAll),
+            debounceTime(150),
+            distinctUntilChanged()
+        )
+        .subscribe(() => {
 
-                this.dataSource.filter = this.filter.nativeElement.value;
-            });
-            */
+            console.log(this.dataSource)
+            if ( !this.dataSource )
+            {
+                return;
+            }
+            this.dataSource.filter = this.filter.nativeElement.value;
+        });
+
+
+
+            
     }
 
 
@@ -139,6 +127,13 @@ export class EcommerceProductsComponent implements OnInit
 
 
 }
+
+ngOnDestroy(): void
+{
+    // Unsubscribe from all subscriptions
+    this._unsubscribeAll.next();
+    this._unsubscribeAll.complete();
+}
 }
 
 export class FilesDataSource extends DataSource<any>
@@ -162,6 +157,33 @@ export class FilesDataSource extends DataSource<any>
         super();
 
         this.filteredData = this._ecommerceProductsService.products;
+    }
+
+    
+    // -----------------------------------------------------------------------------------------------------
+    // @ Accessors
+    // -----------------------------------------------------------------------------------------------------
+
+    // Filtered data
+    get filteredData(): any
+    {
+        return this._filteredDataChange.value;
+    }
+
+    set filteredData(value: any)
+    {
+        this._filteredDataChange.next(value);
+    }
+
+    // Filter
+    get filter(): string
+    {
+        return this._filterChange.value;
+    }
+
+    set filter(filter: string)
+    {
+        this._filterChange.next(filter);
     }
 
     /**
@@ -196,31 +218,6 @@ export class FilesDataSource extends DataSource<any>
                 ));
     }
 
-    // -----------------------------------------------------------------------------------------------------
-    // @ Accessors
-    // -----------------------------------------------------------------------------------------------------
-
-    // Filtered data
-    get filteredData(): any
-    {
-        return this._filteredDataChange.value;
-    }
-
-    set filteredData(value: any)
-    {
-        this._filteredDataChange.next(value);
-    }
-
-    // Filter
-    get filter(): string
-    {
-        return this._filterChange.value;
-    }
-
-    set filter(filter: string)
-    {
-        this._filterChange.next(filter);
-    }
 
     // -----------------------------------------------------------------------------------------------------
     // @ Public methods
@@ -263,8 +260,8 @@ export class FilesDataSource extends DataSource<any>
                 case 'id':
                     [propertyA, propertyB] = [a.id, b.id];
                     break;
-                case 'name':
-                    [propertyA, propertyB] = [a.name, b.name];
+                case 'eventName':
+                    [propertyA, propertyB] = [a.eventName, b.eventName];
                     break;
                 case 'categories':
                     [propertyA, propertyB] = [a.categories[0], b.categories[0]];
