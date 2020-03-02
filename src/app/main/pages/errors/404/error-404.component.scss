@@ -15,6 +15,10 @@ error-404 {
                 line-height: 1;
                 margin-bottom: 16px;
                 font-weight: 600;
+
+                @include media-breakpoint('xs') {
+                    font-size: 55px;
+                }
             }
 
             .message {
