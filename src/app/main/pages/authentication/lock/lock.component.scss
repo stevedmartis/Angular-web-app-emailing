@@ -196,7 +196,7 @@ display: block;
   }
   
   header {
-    height: 180px;
+    height: 290px;
     width: 100%;
     overflow: hidden;
     background-size: cover;
@@ -206,4 +206,14 @@ display: block;
     /* The two lines below make the photo opaque. No Apacity = 1  Full Opacity = 0  :-) */
     opacity: 0.6;
     line-height: 2.8em;
+
+    
+    @include media-breakpoint('xs') {
+
+        height: 290px;
+    }
+
+    @include media-breakpoint('sm') {
+        height: 130px;
+    }
   }
