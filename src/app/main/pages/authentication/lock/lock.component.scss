@@ -20,7 +20,7 @@ lock {
                 flex-direction: column;
                 width: 100%;
                 max-width: 100%;
-                padding: 0px 32px 32px 32px;
+                //padding: 0px 32px 32px 32px;
                 @include mat-elevation(16);
 
                 @include media-breakpoint('xs') {
@@ -31,6 +31,7 @@ lock {
                 .lock-form-header {
                     display: flex;
                     flex: 1 0 auto;
+                    padding-left: 3%;
 
                     .avatar-container {
                         position: relative;
@@ -110,7 +111,10 @@ display: block;
 }
 
 
-
+.form-invitation {
+    padding-left: 3%;
+    padding-right: 3%;
+}
 
 .form-card {
     max-width: 100%;
@@ -129,9 +133,7 @@ display: block;
 #profile {
 
     .header {
-        height: 320px;
-        min-height: 320px;
-        max-height: 320px;
+
        
         background-size: cover;
 

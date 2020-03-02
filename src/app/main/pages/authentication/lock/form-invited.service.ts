@@ -133,7 +133,7 @@ export class FormInvitedService implements Resolve<any>
 
     console.log('elseseeee', this.invitedId)
 
-      this._httpClient.get(environment.apiUrl + '/api/invitedConfirm/' + this.invitedId)
+      this._httpClient.get(environment.apiUrl + '/api/invited-confirm/' + this.invitedId)
           .subscribe((response: any) => {
               resolve(response);
 

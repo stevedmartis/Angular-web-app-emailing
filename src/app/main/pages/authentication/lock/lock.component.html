@@ -4,8 +4,6 @@
 
 
                 
-        
-
         <div *ngIf="_formInvitationService.eventLoad" id="lock-form" [@animate]="{value:'*',params:{duration:'300ms',y:'100px'}}">
 
 
@@ -54,7 +52,7 @@
 
             </div>
 
-            <form name="lockForm" [formGroup]="invitationForm" novalidate>
+            <form  class="form-invitation " name="lockForm" [formGroup]="invitationForm" novalidate>
 
                 
 

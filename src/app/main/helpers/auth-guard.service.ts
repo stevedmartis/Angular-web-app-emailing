@@ -13,7 +13,7 @@ export class AuthGuardService {
 
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
       const currentUser = JSON.parse(localStorage.getItem('currentUser'));
-      
+      console.log('can acivate ')
 
       if (currentUser) {
 
