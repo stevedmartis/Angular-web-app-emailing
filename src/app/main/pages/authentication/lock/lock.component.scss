@@ -32,6 +32,7 @@ lock {
                     display: flex;
                     flex: 1 0 auto;
                     padding-left: 3%;
+                    padding-right: 3%;
 
                     .avatar-container {
                         position: relative;
@@ -168,4 +169,21 @@ display: block;
             }
         }
     }
+}
+
+.layout-invitation{
+        height: 150px;
+        min-height: 200px;
+        max-height: 200px;
+
+        @include media-breakpoint('xs') {
+
+            min-height: 60px;
+            max-height: 60px;
+        }
+
+        @include media-breakpoint('sm') {
+            min-height: 100px;
+            max-height: 100px;
+        }
 }
