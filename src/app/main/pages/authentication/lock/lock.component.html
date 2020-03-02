@@ -53,60 +53,60 @@
                         <input matInput formControlName="email">
                         <mat-icon matSuffix>email</mat-icon>
 
-                    </mat-form-field>
+                <mat-form-field appearance="outline">
+                    <mat-label>Correo electrónico</mat-label>
+                    <input matInput formControlName="email">
+                    <mat-icon matSuffix >email</mat-icon>
 
-                    <mat-form-field appearance="outline">
-                        <mat-label>Nombre</mat-label>
-                        <input matInput formControlName="name">
-                        <mat-icon matSuffix>account_circle</mat-icon>
+                </mat-form-field>
 
-                    </mat-form-field>
+                <mat-form-field appearance="outline">
+                    <mat-label>Nombre</mat-label>
+                    <input matInput formControlName="name">
+                    <mat-icon matSuffix >account_circle</mat-icon>
+                </mat-form-field>
 
-                    <mat-form-field appearance="outline">
-                        <mat-label>Apellido</mat-label>
-                        <input matInput formControlName="lastname">
-                        <mat-icon matSuffix>account_circle</mat-icon>
+                <mat-form-field appearance="outline">
+                    <mat-label>Apellidos</mat-label>
+                    <input matInput formControlName="lastname">
+                    <mat-icon matSuffix >account_circle</mat-icon>
+                </mat-form-field>
 
-                    </mat-form-field>
+                
 
-                    <mat-form-field appearance="outline">
-                        <mat-label>Empresa/Institución</mat-label>
-                        <input matInput formControlName="company">
-                        <mat-icon matSuffix>domain</mat-icon>
-
-                    </mat-form-field>
-
-
-                    <!--
-  
-                    <mat-form-field appearance="outline">
-                        <mat-label>Cargo</mat-label>
-                        <input matInput formControlName="jobtitle">
-                        <mat-icon matSuffix>work</mat-icon>
+                <mat-form-field appearance="outline">
+                    <mat-label>Empresa / Institución </mat-label>
+                    <input matInput formControlName="company">
+                    <mat-icon matSuffix>domain</mat-icon>
 
                     </mat-form-field>
-                    -->
 
-                    <mat-form-field appearance="outline">
-                        <mat-label>Fono de  contacto</mat-label>
-                        <input matInput formControlName="phone">
-                        <mat-icon matSuffix>smartphone</mat-icon>
+                <mat-form-field appearance="outline">
+                    <mat-label>Numero de Contacto</mat-label>
+                    <input matInput formControlName="phone">
+                    <mat-icon matSuffix >phone</mat-icon>
 
                     </mat-form-field>
 
 
-                    <button mat-raised-button (click)="confirmInvitation()" class="submit-button" color="accent">
-                        <mat-icon matSuffix>done</mat-icon>
-                        Confirmar
-                    </button>
-                    
+               
 
+                <button mat-raised-button 
+                (click)="confirmInvitation()"
+                class="submit-button" color="accent">
+                <mat-icon matSuffix >done</mat-icon>
+                Confirmar
+                </button>
 
-                    <button mat-raised-button (click)="cancelInvitation()" class="cancel-button">
-                        Cancelar
-                    </button>
-                </form>
+     
 
+                <button mat-raised-button 
+                (click)="cancelInvitation()"
+                class="cancel-button">
+                <mat-icon matSuffix >close</mat-icon>
+                Cancelar
+        </button>
+            </form>
 
             </div>
   
