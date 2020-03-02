@@ -49,7 +49,7 @@
                 <form class="form-invitation " name="lockForm" [formGroup]="invitationForm" novalidate>
 
                     <mat-form-field appearance="outline">
-                        <mat-label>Correo electronico</mat-label>
+                        <mat-label>Correo Electrónico</mat-label>
                         <input matInput formControlName="email">
                         <mat-icon matSuffix>email</mat-icon>
 
@@ -63,14 +63,14 @@
                     </mat-form-field>
 
                     <mat-form-field appearance="outline">
-                        <mat-label>Apellido</mat-label>
+                        <mat-label>Apellidos</mat-label>
                         <input matInput formControlName="lastname">
                         <mat-icon matSuffix>account_circle</mat-icon>
 
                     </mat-form-field>
 
                     <mat-form-field appearance="outline">
-                        <mat-label>Empresa/Institución</mat-label>
+                        <mat-label>Empresa / Institución</mat-label>
                         <input matInput formControlName="company">
                         <mat-icon matSuffix>domain</mat-icon>
 
@@ -89,7 +89,7 @@
 -->
 
                     <mat-form-field appearance="outline">
-                        <mat-label>Fono de  contacto</mat-label>
+                        <mat-label>Teléfono de Contacto</mat-label>
                         <input matInput formControlName="phone">
                         <mat-icon matSuffix>smartphone</mat-icon>
 
@@ -103,6 +103,7 @@
 
 
                     <button mat-raised-button (click)="cancelInvitation()" class="cancel-button">
+                        <mat-icon matSuffix>cancel</mat-icon>
                         Cancelar
                     </button>
                 </form>
