@@ -54,63 +54,56 @@
 
             <form  class="form-invitation " name="lockForm" [formGroup]="invitationForm" novalidate>
 
-                
-
                 <mat-form-field appearance="outline">
-                    <mat-label>Nombre</mat-label>
-                    <input matInput formControlName="name">
-                    <mat-icon matSuffix >account_circle</mat-icon>
-
-                </mat-form-field>
-
-                <mat-form-field appearance="outline">
-                    <mat-label>Correo electronico</mat-label>
+                    <mat-label>Correo electrónico</mat-label>
                     <input matInput formControlName="email">
                     <mat-icon matSuffix >email</mat-icon>
 
                 </mat-form-field>
 
                 <mat-form-field appearance="outline">
-                    <mat-label>Compañia</mat-label>
+                    <mat-label>Nombre</mat-label>
+                    <input matInput formControlName="name">
+                    <mat-icon matSuffix >account_circle</mat-icon>
+                </mat-form-field>
+
+                <mat-form-field appearance="outline">
+                    <mat-label>Apellidos</mat-label>
+                    <input matInput formControlName="lastname">
+                    <mat-icon matSuffix >account_circle</mat-icon>
+                </mat-form-field>
+
+                
+
+                <mat-form-field appearance="outline">
+                    <mat-label>Empresa / Institución </mat-label>
                     <input matInput formControlName="company">
                     <mat-icon matSuffix>domain</mat-icon>
 
                 </mat-form-field>
 
                 <mat-form-field appearance="outline">
-                    <mat-label>Cargo</mat-label>
-                    <input matInput formControlName="jobtitle">
-                    <mat-icon matSuffix >work</mat-icon>
-
-                </mat-form-field>
-
-
-                <mat-form-field appearance="outline">
-                    <mat-label>Numero mobil</mat-label>
-                    <input matInput formControlName="phone">
-                    <mat-icon matSuffix >smartphone</mat-icon>
-
-                </mat-form-field>
-
-                <mat-form-field appearance="outline">
-                    <mat-label>Numero fijo</mat-label>
+                    <mat-label>Numero de Contacto</mat-label>
                     <input matInput formControlName="numberFijo">
-                    <mat-icon matSuffix >local_phone</mat-icon>
+                    <mat-icon matSuffix >phone</mat-icon>
 
                 </mat-form-field>
+
+
+               
 
                 <button mat-raised-button 
                 (click)="confirmInvitation()"
                 class="submit-button" color="accent">
-                    <mat-icon matSuffix >done</mat-icon>
-                    Confirmar
+                <mat-icon matSuffix >done</mat-icon>
+                Confirmar
                 </button>
 
 
                 <button mat-raised-button 
                 (click)="cancelInvitation()"
-                class="cancel-button" 
-               >
+                class="cancel-button">
+                <mat-icon matSuffix >close</mat-icon>
                 Cancelar
         </button>
             </form>

@@ -118,12 +118,11 @@ export class LockComponent implements OnInit, OnDestroy {
         return this._formBuilder.group({
             invitedId: [this.invited._id, [Validators.required]], 
             name:  [this.invited.name, [Validators.required]], 
+            lastname: [this.invited.lastname], 
             email: [this.invited.email, [Validators.required, Validators.email]], 
             company:  [this.invited.company, [Validators.required]], 
-            asiste: [],
-            jobtitle: [this.invited.jobtitle, [Validators.required]], 
-            phone: [this.invited.phone], 
-            numberFijo: [''], 
+            phone   : [this.invited.phone],
+            asiste: [] 
         });
     }
 
