@@ -225,7 +225,7 @@ export class EcommerceProductComponent implements OnInit, OnDestroy
         const data = this.productForm.getRawValue();
         data.handle = FuseUtils.handleize(data.name);
 
-        this._ecommerceProductService.addProduct(data, this._campaignService.image)
+        this._ecommerceProductService.addProduct(data, this._campaignService.previewUrlEvent)
             .then((x) => {
                 // Trigger the subscription with new data
                 this._ecommerceProductService.onProductChanged.next(x);
@@ -282,11 +282,5 @@ export class EcommerceProductComponent implements OnInit, OnDestroy
     fileUpload.click();
     
 }
-
-
-      
-
-
-      
 
 }
