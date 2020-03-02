@@ -56,6 +56,7 @@ export class EcommerceProductComponent implements OnInit, OnDestroy
     dialogRef: any;
     isCreated: boolean= false;
     private files: Array<FileUploadModel> = [];
+    disabledBtnSave: boolean = true;
 
     //@ViewChild(InvitationFormComponent, {static: false}) invitationComponent: InvitationFormComponent
 
@@ -124,19 +125,35 @@ export class EcommerceProductComponent implements OnInit, OnDestroy
                     this.isCreated = true;
                     this._contactsService.idEventNow =  product.event._id;
                     this._contactsService.eventCreated = true;
+
+                    if(this.product.imgBanner === 'assets/images/banner.jpg'){
+
+                        //console.log("exist img??", this.product.imgBanner)
+                        this._campaignService.imgProductLoad = false;
+
+                    }
+
+                    else {
+                        this._campaignService.imgProductLoad = true;
+
+                    }
                     
                 }
                 else
                 {
                     this.pageType = 'new';
                     this.product = new Product();
+
+                    this._campaignService.imgProductLoad = false;
                 }
 
                 this.productForm = this.createProductForm();
 
                 console.log(this.isCreated)
 
-                this._campaignService.previewUrlEvent = this.product.imgBanner;
+               this._campaignService.previewUrlEvent = this.product.imgBanner;
+
+             
 
                 
 
@@ -178,7 +195,8 @@ export class EcommerceProductComponent implements OnInit, OnDestroy
             description     : [this.product.desc],
             date      : [this.product.dateEvent],
             tags            : [this.product.tags],
-            active: [this.product.active]
+            active: [this.product.active],
+            img: []
         });
     }
 
@@ -190,7 +208,7 @@ export class EcommerceProductComponent implements OnInit, OnDestroy
         const data = this.productForm.getRawValue();
         data.handle = FuseUtils.handleize(data.name);
 
-        this._ecommerceProductService.saveProduct(data, this._campaignService.image)
+        this._ecommerceProductService.saveProduct(data, this._campaignService.previewUrlEvent)
             .then((result) => {
 
                 // Trigger the subscription with new data
@@ -215,6 +233,7 @@ export class EcommerceProductComponent implements OnInit, OnDestroy
 
         });
     }
+
 
 
     /**

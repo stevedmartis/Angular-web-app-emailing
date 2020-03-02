@@ -5,14 +5,18 @@ import { MatIconModule } from '@angular/material/icon';
 import { FuseSharedModule } from '@fuse/shared.module';
 
 import { Error404Component } from 'app/main/pages/errors/404/error-404.component';
+import { CancelInvitationService } from './cancel.service';
 
 const routes = [
     {
-        path     : 'errors/error-404',
-        component: Error404Component
+        path     : 'confirm/no/:campaignId',
+        component: Error404Component,
+        resolve  : {
+            data: CancelInvitationService
+        }
+        
     }
 ];
-
 @NgModule({
     declarations: [
         Error404Component
@@ -23,6 +27,9 @@ const routes = [
         MatIconModule,
 
         FuseSharedModule
+    ],
+    providers: [
+        CancelInvitationService
     ]
 })
 export class Error404Module

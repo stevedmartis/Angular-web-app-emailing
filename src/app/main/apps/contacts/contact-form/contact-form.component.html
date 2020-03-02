@@ -49,7 +49,19 @@
 
 
             <div fxLayout="row" fxLayoutAlign="start start">
-        <mat-slide-toggle class="slide-bottom" appearance="outline" fxFlex formControlName="asiste">Asiste</mat-slide-toggle>
+
+                    <mat-form-field appearance="outline" fxFlex="100">
+                            <mat-label>Estado asiste:</mat-label>
+                            <mat-select formControlName="asiste">
+                                    <mat-option *ngFor="let a of asisteOptions" [value]="a.value">
+                                            {{a.name}}
+                                          </mat-option>
+                            </mat-select>
+                          
+                        </mat-form-field>
+
+
+                          
              </div>
 
             <div fxLayout="row" fxLayoutAlign="start start">

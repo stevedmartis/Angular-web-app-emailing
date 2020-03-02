@@ -124,7 +124,6 @@ registerLocaleData(localeEsAR, 'es-Ar');
           { provide: MAT_DATE_LOCALE, useValue: 'es-ES' },
           { provide: LOCALE_ID, useValue: "es-Ar" },
 
-        AuthGuardService,
         WebsocketService
     ],
     bootstrap   : [

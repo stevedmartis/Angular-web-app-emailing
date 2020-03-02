@@ -1,6 +1,6 @@
 import { Component, OnInit, Inject, Output, Input, EventEmitter,} from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
-import { FormGroup, FormBuilder } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Campaign } from '../../campaign.model';
 import { Subscription, of } from 'rxjs';
 import { HttpRequest, HttpEventType, HttpErrorResponse, HttpClient } from '@angular/common/http';
@@ -85,7 +85,8 @@ private files: Array<FileUploadModel> = [];
       return this._formBuilder.group({
           id              : [this.campaign.id],
           asunto         : [this.campaign.asunto],
-          remitente            : [this.campaign.remite],
+          img: [Validators.required],
+          remitente            : [this.campaign.remite, [Validators.required, Validators.email]],
           notes:              [this.campaign.footer],
 
   

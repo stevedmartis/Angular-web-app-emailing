@@ -36,7 +36,7 @@
 
                   <div class="container-load" *ngIf="_campaignService.previewLoading">
                     <img [src]="_campaignService.previewUrl"  class="img-load"  alt="" />
-                    <input hidden  id="fileUpload" type="file" #fileInput />
+                    <input hidden  id="fileUpload" type="file" #fileInput formControlName="img"/>
                     <div class="overlay"></div>
                     <div></div>
                     <button mat-fab  (click)="fileUpload()"  class="button fuse-white mt-24 mt-md-0">

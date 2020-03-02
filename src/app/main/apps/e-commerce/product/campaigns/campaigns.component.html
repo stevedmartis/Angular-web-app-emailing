@@ -41,75 +41,77 @@
         <!-- / HEADER -->
 
 
-        <div class="widget-group margin-card" fxLayout="row wrap" fxFlex="100" *fuseIfOnDom >
+        <div class="widget-group margin-card" fxLayout="row wrap" fxFlex="100" *fuseIfOnDom>
 
-            
+
             <!-- WIDGET 1 -->
 
             <div *ngFor="let c of _campaignService.campaigns">
 
 
-                
+
                 <fuse-widget [@animate]="{value:'*',params:{y:'100%'}}" class="widget" fxLayout="column" fxFlex="100"
                     fxFlex.gt-xs="50" fxFlex.gt-md="25">
-                <!-- PREVIEW -->
-                <div class="card-preview">
+                    <!-- PREVIEW -->
+                    <div class="card-preview">
 
-                    <div class="fuse-card">
+                        <div class="fuse-card">
 
 
-                        <div >
+                            <div>
 
-                            <div class="p-16" fxLayout="row" fxLayoutAlign="space-between center">
-                                <div class="pr-16">
-                                    <div class="text-bold ">{{ c.affair }}</div>
-                                    <div class="h5 text-bold secondary-text"> {{ c.sender }}</div>
-    
-                                </div>
+                                <div class="p-16" fxLayout="row" fxLayoutAlign="space-between center">
+                                    <div class="pr-16">
+                                        <div class="text-bold ">{{ c.affair }}</div>
+                                        <div class="h5 text-bold secondary-text"> {{ c.sender }}</div>
 
-                                <div>
-                                    <button mat-icon-button [matMenuTriggerFor]="card19Menu" aria-label="more">
-                                        <mat-icon>more_vert</mat-icon>
-                                    </button>
+                                    </div>
 
-                                    <mat-menu #card19Menu="matMenu">
+                                    <div>
+                                        <button mat-icon-button [matMenuTriggerFor]="card19Menu" aria-label="more">
+                                            <mat-icon>more_vert</mat-icon>
+                                        </button>
+
+                                        <mat-menu #card19Menu="matMenu">
+                                            <!--
                                         <button mat-menu-item (click)="openEditor(c)" >
                                             <mat-icon>edit</mat-icon>
                                             <span>Editar</span>
                                         </button>
-                                        <button mat-menu-item (click)="deleteCampaign(c)">
-                                            <mat-icon>delete</mat-icon>
-                                            <span>Eliminar</span>
-                                        </button>
-                                        <button mat-menu-item  >
+                                        -->
+
+                                            <button mat-menu-item (click)="deleteCampaign(c)">
+                                                <mat-icon>delete</mat-icon>
+                                                <span>Eliminar</span>
+                                            </button>
+                                            <!--
+                                            <button mat-menu-item  >
                                             <mat-icon>file_copy</mat-icon>
                                             <span>Duplicar</span>
                                         </button>
-                                    </mat-menu>
+                                            -->
+                                        </mat-menu>
+                                    </div>
                                 </div>
+
                             </div>
 
-                        </div>
-                        
-                        <img [src]="c.imgBlob">
+                            <img [src]="c.imgBlob">
 
-                        <div class="pl-16 pr-8 py-16 h-52 widget-front" fxLayout="row">
-                            <button 
-                                (click)="sendCampaignDialog(c)"
-                                mat-raised-button  
-                                color="accent"  
-                                class="mt-24 mt-md-0">
-                                <span>Enviar invitación
-                                </span>
-                            </button>
+                            <div class="pl-16 pr-8 py-16 h-52 widget-front" fxLayout="row">
+                                <button (click)="sendCampaignDialog(c)" mat-raised-button color="accent"
+                                    class="mt-24 mt-md-0">
+                                    <span>Enviar invitación
+                                    </span>
+                                </button>
+
+                            </div>
 
                         </div>
 
                     </div>
+                    <!-- / PREVIEW -->
 
-                </div>
-                <!-- / PREVIEW -->
- 
 
                 </fuse-widget>
                 <!-- / WIDGET 1 -->

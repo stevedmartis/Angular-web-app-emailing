@@ -150,6 +150,11 @@ export class ContactsService implements Resolve<any>
                         resolve(this.contacts);
 
 
+                    this.editCountInvited(this.contacts.length)
+                    .then( (x ) => {
+                        console.log(x)
+                    })
+
                     }, reject);
             }
         );
@@ -288,6 +293,7 @@ export class ContactsService implements Resolve<any>
                     console.log(response)
                     console.log(this.contactsCount, arrayLenght)
 
+
                     if(this.contactsCount === arrayLenght){
                         this.getContacts(this.idEventNow)
                         .then(x => {
@@ -314,6 +320,8 @@ export class ContactsService implements Resolve<any>
                     resolve(response);
                     console.log(response)
 
+
+
                     this.getContacts(this.idEventNow)
                     .then(x => {
                         this.loadingContact = false;
@@ -325,6 +333,30 @@ export class ContactsService implements Resolve<any>
                 });
         });
     }
+
+
+
+    editCountInvited(count): Promise<any>
+    {
+       
+        
+        
+        return new Promise((resolve, reject) => {
+
+
+            this._httpClient.post(environment.apiUrl + '/api/event/edit-count-invited/',             {
+                countInvited: count, 
+                eventId: this.idEventNow
+            })
+                .subscribe((response: any) => {
+                    //this.getContacts(this.idEventNow)
+                    resolve(response);
+                    console.log(response)   
+                });
+        });
+    }
+
+   
 
     editContact(obj): Promise<any>
     {
@@ -344,7 +376,7 @@ export class ContactsService implements Resolve<any>
                 jobtilte: obj.jobtitle, 
                 company: obj.company, 
                 phone: obj.phone, 
-                asiste: obj.asiste? 'si': 'no'
+                asiste: obj.asiste
             })
                 .subscribe((response: any) => {
                     //this.getContacts(this.idEventNow)

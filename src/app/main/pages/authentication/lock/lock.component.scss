@@ -4,7 +4,7 @@ lock {
 
     #lock {
         width: 100%;
-        background: url('/assets/images/backgrounds/dark-material-bg.jpg') no-repeat;
+     
         background-size: cover;
 
         #lock-form-wrapper {
@@ -18,19 +18,21 @@ lock {
             #lock-form {
                 display: flex;
                 flex-direction: column;
-                width: 420px;
-                max-width: 420px;
-                padding: 48px 32px 32px 32px;
+                width: 100%;
+                max-width: 100%;
+                //padding: 0px 32px 32px 32px;
                 @include mat-elevation(16);
 
                 @include media-breakpoint('xs') {
-                    padding: 24px;
+                 
                     width: 100%;
                 }
 
                 .lock-form-header {
                     display: flex;
                     flex: 1 0 auto;
+                    padding-left: 3%;
+                    padding-right: 3%;
 
                     .avatar-container {
                         position: relative;
@@ -78,7 +80,7 @@ lock {
                     }
 
                     .submit-button {
-                        width: 220px;
+                        width: 90%;
                         margin: 16px auto;
                         display: block;
 
@@ -86,6 +88,18 @@ lock {
                             width: 90%;
                         }
                     }
+
+                    .cancel-button {
+
+width: 90%;
+margin: 16px auto;
+display: block;
+
+@include media-breakpoint('xs') {
+    width: 90%;
+}
+
+}
                 }
 
                 .message {
@@ -97,14 +111,11 @@ lock {
     }
 }
 
-.cancel-button {
 
-width: 220px;
-margin: 16px auto;
-display: block;
-
+.form-invitation {
+    padding-left: 3%;
+    padding-right: 3%;
 }
-
 
 .form-card {
     max-width: 100%;
@@ -116,4 +127,63 @@ display: block;
 .img-banner {
     width: 100%;
     border-radius: 3%;
+}
+
+
+
+#profile {
+
+    .header {
+
+       
+        background-size: cover;
+
+
+        .name {
+            font-size: 34px;
+            color: #FFFFFF;
+
+            @include media-breakpoint('sm') {
+                margin-bottom: 32px;
+            }
+        }
+
+        .actions {
+
+            button {
+                text-transform: none;
+                padding: 0 16px;
+                margin: 0 0 0 8px;
+            }
+        }
+    }
+
+    .content {
+        flex: 1;
+
+        mat-tab-group {
+            height: 100%;
+
+            .mat-tab-body-wrapper {
+                flex-grow: 1;
+            }
+        }
+    }
+}
+
+.layout-invitation{
+        height: 150px;
+        min-height: 200px;
+        max-height: 200px;
+
+        @include media-breakpoint('xs') {
+
+            min-height: 60px;
+            max-height: 60px;
+        }
+
+        @include media-breakpoint('sm') {
+            min-height: 100px;
+            max-height: 100px;
+        }
 }
