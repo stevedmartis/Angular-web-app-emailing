@@ -80,7 +80,6 @@ export class CampaignsComponent implements OnInit {
             this._campaignService.allContacts = 0;
             this._campaignService.statusSendInvitation = "";
             this._campaignService.invitedFails = [];
-            this.
 
             this.dialogRef = null;
         });
