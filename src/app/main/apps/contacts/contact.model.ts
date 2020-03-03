@@ -1,7 +1,6 @@
 import { FuseUtils } from '@fuse/utils';
 
-export class Contact
-{
+export class Contact {
     id: string;
     name: string;
     lastname: string;
@@ -18,13 +17,17 @@ export class Contact
     birthday: string;
     notes: string;
 
+    street: string;
+    city: string;
+    country: string;
+    phoneMobil: string
+
     /**
      * Constructor
      *
      * @param contact
      */
-    constructor(contact)
-    {
+    constructor(contact) {
         {
             this.id = contact._id || '';
             this.name = contact.name || '';
@@ -41,6 +44,10 @@ export class Contact
             this.address = contact.address || '';
             this.birthday = contact.birthday || '';
             this.notes = contact.notes || '';
+            this.street = contact.street || '';
+            this.city = contact.city || ''
+            this.country = contact.country || '';
+            this.phoneMobil = contact.phoneMobil || '';
         }
     }
 }

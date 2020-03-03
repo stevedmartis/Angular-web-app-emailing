@@ -5,14 +5,13 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Contact } from 'app/main/apps/contacts/contact.model';
 
 @Component({
-    selector     : 'contacts-contact-form-dialog',
-    templateUrl  : './contact-form.component.html',
-    styleUrls    : ['./contact-form.component.scss'],
+    selector: 'contacts-contact-form-dialog',
+    templateUrl: './contact-form.component.html',
+    styleUrls: ['./contact-form.component.scss'],
     encapsulation: ViewEncapsulation.None
 })
 
-export class ContactsContactFormDialogComponent
-{
+export class ContactsContactFormDialogComponent {
     action: string;
     contact: Contact;
     contactForm: FormGroup;
@@ -29,9 +28,9 @@ export class ContactsContactFormDialogComponent
     ]
 
     asisteOptions: any[] = [
-        {value: 'null', name: 'En proceso'},
-        {value: 'si', name: 'Confirmado'},
-        {value: 'no', name: 'Cancelado'}
+        { value: 'null', name: 'En proceso' },
+        { value: 'si', name: 'Confirmado' },
+        { value: 'no', name: 'Cancelado' }
 
 
     ]
@@ -46,18 +45,15 @@ export class ContactsContactFormDialogComponent
         public matDialogRef: MatDialogRef<ContactsContactFormDialogComponent>,
         @Inject(MAT_DIALOG_DATA) private _data: any,
         private _formBuilder: FormBuilder
-    )
-    {
+    ) {
         // Set the defaults
         this.action = _data.action;
 
-        if ( this.action === 'edit' )
-        {
+        if (this.action === 'edit') {
             this.dialogTitle = 'Editar invitado';
             this.contact = _data.contact;
         }
-        else
-        {
+        else {
             this.dialogTitle = 'Nuevo Invitado';
             this.contact = new Contact({});
         }
@@ -80,20 +76,23 @@ export class ContactsContactFormDialogComponent
 
 
         return this._formBuilder.group({
-            id      : [this.contact.id],
-            name    : [this.contact.name, [Validators.required]],
+            id: [this.contact.id],
+            name: [this.contact.name, [Validators.required]],
             lastname: [this.contact.lastname],
-            avatar  : [this.contact.avatar],
+            avatar: [this.contact.avatar],
             nickname: [this.contact.nickname],
-            company : [this.contact.company],
+            company: [this.contact.company],
             jobtitle: [this.contact.jobtitle],
-            email   : [this.contact.email, [Validators.email]],
+            email: [this.contact.email, [Validators.required, Validators.email]],
             asiste: [this.contact.asiste],
             contactado: [this.contact.contactado],
-            phone   : [this.contact.phone],
-            address : [this.contact.address],
+            phone: [this.contact.phone],
+            address: [this.contact.address],
             birthday: [this.contact.birthday],
-            notes   : [this.contact.notes]
+            notes: [this.contact.notes],
+            street: [this.contact.street],
+            city: [this.contact.city],
+            country: [this.contact.country],
         });
     }
 }
