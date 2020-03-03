@@ -16,6 +16,7 @@ lock {
             }
 
             #lock-form {
+                border-radius: 3%;
                 display: flex;
                 flex-direction: column;
                 width: 100%;
@@ -196,24 +197,22 @@ display: block;
   }
   
   header {
-    height: 290px;
+    
+    margin-bottom: 2%;
     width: 100%;
     overflow: hidden;
     background-size: cover;
-    -webkit-background-size: cover;
-    -moz-background-size: cover;
-    -o-background-size: cover;
-    /* The two lines below make the photo opaque. No Apacity = 1  Full Opacity = 0  :-) */
-    opacity: 0.6;
     line-height: 2.8em;
 
     
     @include media-breakpoint('xs') {
 
-        height: 70px;
+        height: 130px;
     }
 
     @include media-breakpoint('sm') {
-        height: 130px;
+        height: 260px;
     }
+
+
   }
