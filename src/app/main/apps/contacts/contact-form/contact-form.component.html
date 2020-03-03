@@ -46,7 +46,21 @@
             </div>
 
            
+            <div fxLayout="row" fxLayoutAlign="start start">
 
+                <mat-form-field appearance="outline" fxFlex="100">
+                        <mat-label>Estado contactado:</mat-label>
+                        <mat-select formControlName="contactado">
+                                <mat-option *ngFor="let a of contactOptions" [value]="a.value">
+                                        {{a.name}}
+                                      </mat-option>
+                        </mat-select>
+                      
+                    </mat-form-field>
+
+
+                      
+         </div>
 
             <div fxLayout="row" fxLayoutAlign="start start">
 

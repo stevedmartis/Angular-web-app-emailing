@@ -13,6 +13,7 @@ export class Contact
     send_email: boolean;
     phone: string;
     asiste: string;
+    contactado: string;
     address: string;
     birthday: string;
     notes: string;
@@ -36,6 +37,7 @@ export class Contact
             this.send_email = contact.send_email;
             this.phone = contact.phone || '';
             this.asiste = contact.asiste || 'null';
+            this.contactado = contact.contactado || 'null';
             this.address = contact.address || '';
             this.birthday = contact.birthday || '';
             this.notes = contact.notes || '';

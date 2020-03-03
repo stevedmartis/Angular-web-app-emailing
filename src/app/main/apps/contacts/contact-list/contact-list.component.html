@@ -83,11 +83,26 @@
         </mat-cell>
     </ng-container>
 
+
+    <ng-container matColumnDef="company">
+        <mat-header-cell *matHeaderCellDef>Empresa</mat-header-cell>
+        <mat-cell *matCellDef="let contact">
+            <p class="text-truncate font-weight-600">{{contact.company}} </p>
+        </mat-cell>
+    </ng-container>
+
     <!-- Name Column -->
     <ng-container matColumnDef="name">
-        <mat-header-cell *matHeaderCellDef>Name</mat-header-cell>
+        <mat-header-cell *matHeaderCellDef>Nombre</mat-header-cell>
         <mat-cell *matCellDef="let contact">
-            <p class="text-truncate font-weight-600">{{contact.name}} {{contact.lastname}}</p>
+            <p class="text-truncate font-weight-600">{{contact.name}}</p>
+        </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="lastname">
+        <mat-header-cell *matHeaderCellDef>Apellido</mat-header-cell>
+        <mat-cell *matCellDef="let contact">
+            <p class="text-truncate font-weight-600">{{contact.lastname}} </p>
         </mat-cell>
     </ng-container>
 
@@ -101,8 +116,21 @@
         </mat-cell>
     </ng-container>
 
+
+    <ng-container matColumnDef="contact">
+        <mat-header-cell *matHeaderCellDef >Contactado</mat-header-cell>
+        <mat-cell *matCellDef="let contact"  >
+            <mat-icon *ngIf="contact.contactado === 'phone' " class="active-icon green-600 s-16">phone</mat-icon>
+            <mat-icon *ngIf="contact.contactado === 'web' " class="active-icon green-500 s-16">mail</mat-icon>
+
+            <mat-icon *ngIf="contact.contactado === 'null' " class="active-icon blue-500 s-16">pause_circle_outline</mat-icon>
+
+            
+        </mat-cell>
+    </ng-container>
+
     <!-- Phone Column -->
-    <ng-container matColumnDef="phone">
+    <ng-container matColumnDef="asiste">
         <mat-header-cell *matHeaderCellDef >Asiste</mat-header-cell>
         <mat-cell *matCellDef="let contact"  >
             <mat-icon *ngIf="contact.asiste === 'si' " class="active-icon green-600 s-16">check</mat-icon>
@@ -114,25 +142,6 @@
         </mat-cell>
     </ng-container>
 
-    <!-- Job Title Column -->
-    <ng-container matColumnDef="jobTitle">
-        <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-lg>Job title</mat-header-cell>
-        <mat-cell *matCellDef="let contact" fxHide fxShow.gt-lg>
-            <p class="job-title text-truncate">
-                {{contact.jobTitle}}
-            </p>
-        </mat-cell>
-    </ng-container>
-
-    <!-- Company Column -->
-    <ng-container matColumnDef="company">
-        <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-lg>Company</mat-header-cell>
-        <mat-cell *matCellDef="let contact" fxHide fxShow.gt-lg>
-            <p class="company text-truncate">
-                {{contact.company}}
-            </p>
-        </mat-cell>
-    </ng-container>
 
     <!-- Buttons Column -->
     <ng-container matColumnDef="buttons">

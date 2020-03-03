@@ -19,7 +19,14 @@ export class ContactsContactFormDialogComponent
     dialogTitle: string;
     checked = true;
 
-    asisteOptionvalue = '1';
+
+    contactOptions: any[] = [
+        {value: 'null', name: 'No contactado'},
+        {value: 'phone', name: 'Por teléfono'},
+        {value: 'email', name: 'Por email'}
+
+
+    ]
 
     asisteOptions: any[] = [
         {value: 'null', name: 'En proceso'},
@@ -70,21 +77,6 @@ export class ContactsContactFormDialogComponent
     createContactForm(): FormGroup
     {
         
-       if(this.contact.asiste === 'null'){
-        this.asisteOptionvalue = 'null'
-       }
-
-       if(this.contact.asiste === 'no'){
-        this.asisteOptionvalue = 'no'
-
-       }
-
-       if (this.contact.asiste === 'si'){
-        this.asisteOptionvalue = 'si'
-
-       }
-
-       console.log(this.asisteOptionvalue)
 
 
         return this._formBuilder.group({
@@ -95,8 +87,9 @@ export class ContactsContactFormDialogComponent
             nickname: [this.contact.nickname],
             company : [this.contact.company],
             jobtitle: [this.contact.jobtitle],
-            email   : [this.contact.email, [Validators.required, Validators.email]],
-            asiste: [this.asisteOptionvalue],
+            email   : [this.contact.email, [Validators.email]],
+            asiste: [this.contact.asiste],
+            contactado: [this.contact.contactado],
             phone   : [this.contact.phone],
             address : [this.contact.address],
             birthday: [this.contact.birthday],
