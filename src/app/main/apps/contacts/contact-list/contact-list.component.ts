@@ -41,7 +41,7 @@ export class ContactsContactListComponent implements OnInit, OnDestroy
     displayedColumns = [
         
     'checkbox',
-    'avatar',
+
     'company',
     'name',
     'lastname',

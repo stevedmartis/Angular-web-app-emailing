@@ -93,6 +93,7 @@ export class ContactsContactFormDialogComponent {
             street: [this.contact.street],
             city: [this.contact.city],
             country: [this.contact.country],
+            phoneMobil: [this.contact.phoneMobil]
         });
     }
 }

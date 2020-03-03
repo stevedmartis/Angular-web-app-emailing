@@ -1,13 +1,13 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot } from '@angular/router';
-import { BehaviorSubject, Observable, Subject , Subscription} from 'rxjs';
-import {SelectionModel} from '@angular/cdk/collections';
+import { BehaviorSubject, Observable, Subject, Subscription } from 'rxjs';
+import { SelectionModel } from '@angular/cdk/collections';
 import { FuseUtils } from '@fuse/utils';
 import { environment } from 'environments/environment';
-import { Contact } from 'app/main/apps/contacts/contact.model';
-import * as XLSX from 'xlsx';  
-import * as FileSaver from 'file-saver'; 
+import { Contact, ContactForXls } from 'app/main/apps/contacts/contact.model';
+import * as XLSX from 'xlsx';
+import * as FileSaver from 'file-saver';
 import { AuthService } from 'app/services/authentication/auth.service';
 
 @Injectable()
@@ -30,7 +30,7 @@ export class ContactsService implements Resolve<any>
 
     searchText: string;
     filterBy: string;
-    jsonData: any;  
+    jsonData: any;
     contactsCount: number = 0;
     countSelect: number = 0;
     fileUploaded: File;
@@ -38,6 +38,11 @@ export class ContactsService implements Resolve<any>
     selection = new SelectionModel<any>(true, []);
     idEventNow: any;
     eventCreated: boolean = false;
+
+    EXCEL_TYPE = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8';
+    EXCEL_EXTENSION = '.xlsx';
+
+    contactsArrayXls: ContactForXls[] = [];
 
     /**
      * Constructor
@@ -47,8 +52,7 @@ export class ContactsService implements Resolve<any>
     constructor(
         private _httpClient: HttpClient,
         private authServices: AuthService
-    )
-    {
+    ) {
         // Set the defaults
         this.onContactsChanged = new BehaviorSubject([]);
         this.onSelectedContactsChanged = new BehaviorSubject([]);
@@ -69,8 +73,7 @@ export class ContactsService implements Resolve<any>
      * @param {RouterStateSnapshot} state
      * @returns {Observable<any> | Promise<any> | any}
      */
-    resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<any> | Promise<any> | any
-    {
+    resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<any> | Promise<any> | any {
         return new Promise((resolve, reject) => {
 
             Promise.all([
@@ -98,88 +101,87 @@ export class ContactsService implements Resolve<any>
         });
     }
 
+
+
     /**
      * Get contacts
      *
      * @returns {Promise<any>}
      */
-    getContacts(idEvent): Promise<any>
-    {
+    getContacts(idEvent): Promise<any> {
 
 
 
         return new Promise((resolve, reject) => {
-                this._httpClient.get(environment.apiUrl+'/api/invited/event/' + idEvent)
-                    .subscribe((response: any) => {
+            this._httpClient.get(environment.apiUrl + '/api/invited/event/' + idEvent)
+                .subscribe((response: any) => {
 
-                        console.log(response)
-                        
-                        this.contacts = response.invited;
+                    console.log(response)
 
-                
+                    this.contacts = response.invited;
 
-                        /*
-                        if ( this.filterBy === 'starred' )
-                        {
-                            this.contacts = this.contacts.filter(_contact => {
-                                return this.user.starred.includes(_contact.id);
-                            });
-                        }
 
-                        if ( this.filterBy === 'frequent' )
-                        {
-                            this.contacts = this.contacts.filter(_contact => {
-                                return this.user.frequentContacts.includes(_contact.id);
-                            });
-                        }
 
-  */
- console.log(this.searchText)
-  
-  if ( this.searchText && this.searchText !== '' )
-                        {
-                            console.log('akjajja',this.searchText)
-
-                            this.contacts = FuseUtils.filterArrayByString(this.contacts, this.searchText);
-
-                        }
-                      
-
-                        this.contacts = this.contacts.map(contact => {
-                            return new Contact(contact);
+                    /*
+                    if ( this.filterBy === 'starred' )
+                    {
+                        this.contacts = this.contacts.filter(_contact => {
+                            return this.user.starred.includes(_contact.id);
                         });
+                    }
 
-                        console.log( this.contacts)
-                        
-                        this.onContactsChanged.next(this.contacts);
-                        resolve(this.contacts);
+                    if ( this.filterBy === 'frequent' )
+                    {
+                        this.contacts = this.contacts.filter(_contact => {
+                            return this.user.frequentContacts.includes(_contact.id);
+                        });
+                    }
+
+*/
+                    console.log(this.searchText)
+
+                    if (this.searchText && this.searchText !== '') {
+                        console.log('akjajja', this.searchText)
+
+                        this.contacts = FuseUtils.filterArrayByString(this.contacts, this.searchText);
+
+                    }
+
+
+                    this.contacts = this.contacts.map(contact => {
+                        return new Contact(contact);
+                    });
+
+                    console.log(this.contacts)
+
+                    this.onContactsChanged.next(this.contacts);
+                    resolve(this.contacts);
 
 
                     this.editCountInvited(this.contacts.length)
-                    .then( (x ) => {
-                        console.log(x)
-                    })
+                        .then((x) => {
+                            console.log(x)
+                        })
 
-                    }, reject);
-            }
+                }, reject);
+        }
         );
     }
 
 
-    getContact(idInvited): Promise<any>
-    {
+    getContact(idInvited): Promise<any> {
 
 
 
         return new Promise((resolve, reject) => {
-                this._httpClient.get(environment.apiUrl+'/api/invited/' + idInvited)
-                    .subscribe((response: any) => {
+            this._httpClient.get(environment.apiUrl + '/api/invited/' + idInvited)
+                .subscribe((response: any) => {
 
-                        console.log(response)
+                    console.log(response)
 
 
-                    }, reject);
-            }
+                }, reject);
+        }
         );
     }
 
@@ -188,16 +190,15 @@ export class ContactsService implements Resolve<any>
      *
      * @returns {Promise<any>}
      */
-    getUserData(): Promise<any>
-    {
+    getUserData(): Promise<any> {
         return new Promise((resolve, reject) => {
-                this._httpClient.get('api/contacts-user/5725a6802d10e277a0f35724')
-                    .subscribe((response: any) => {
-                        this.user = response;
-                        this.onUserDataChanged.next(this.user);
-                        resolve(this.user);
-                    }, reject);
-            }
+            this._httpClient.get('api/contacts-user/5725a6802d10e277a0f35724')
+                .subscribe((response: any) => {
+                    this.user = response;
+                    this.onUserDataChanged.next(this.user);
+                    resolve(this.user);
+                }, reject);
+        }
         );
     }
 
@@ -206,16 +207,13 @@ export class ContactsService implements Resolve<any>
      *
      * @param id
      */
-    toggleSelectedContact(id): void
-    {
+    toggleSelectedContact(id): void {
 
         // First, check if we already have that contact as selected...
-        if ( this.selectedContacts.length > 0 )
-        {
+        if (this.selectedContacts.length > 0) {
             const index = this.selectedContacts.indexOf(id);
 
-            if ( index !== -1 )
-            {
+            if (index !== -1) {
                 this.selectedContacts.splice(index, 1);
 
                 // Trigger the next event
@@ -234,19 +232,16 @@ export class ContactsService implements Resolve<any>
         this.onSelectedContactsChanged.next(this.selectedContacts);
     }
 
- 
+
 
     /**
      * Toggle select all
      */
-    toggleSelectAll(): void
-    {
-        if ( this.selectedContacts.length > 0 )
-        {
+    toggleSelectAll(): void {
+        if (this.selectedContacts.length > 0) {
             this.deselectContacts();
         }
-        else
-        {
+        else {
             this.selectContacts();
         }
     }
@@ -257,13 +252,11 @@ export class ContactsService implements Resolve<any>
      * @param filterParameter
      * @param filterValue
      */
-    selectContacts(filterParameter?, filterValue?): void
-    {
+    selectContacts(filterParameter?, filterValue?): void {
         this.selectedContacts = [];
 
         // If there is no filter, select all contacts
-        if ( filterParameter === undefined || filterValue === undefined )
-        {
+        if (filterParameter === undefined || filterValue === undefined) {
             this.selectedContacts = [];
             this.contacts.map(contact => {
                 this.selectedContacts.push(contact.id);
@@ -271,7 +264,7 @@ export class ContactsService implements Resolve<any>
 
             });
 
-            
+
         }
 
         // Trigger the next event
@@ -284,8 +277,7 @@ export class ContactsService implements Resolve<any>
      * @param contact
      * @returns {Promise<any>}
      */
-    createContacts(obj, arrayLenght): Promise<any>
-    {
+    createContacts(obj, arrayLenght): Promise<any> {
 
         return new Promise((resolve, reject) => {
 
@@ -299,26 +291,25 @@ export class ContactsService implements Resolve<any>
                     console.log(this.contactsCount, arrayLenght)
 
 
-                    if(this.contactsCount === arrayLenght){
+                    if (this.contactsCount === arrayLenght) {
                         this.getContacts(this.idEventNow)
-                        .then(x => {
-                            this.contactsCount = 0;
-                            this.loadingContact = false;
-                        })
-  
+                            .then(x => {
+                                this.contactsCount = 0;
+                                this.loadingContact = false;
+                            })
+
                     }
-                   
+
                 });
         });
     }
 
-    createContact(obj): Promise<any>
-    {
+    createContact(obj): Promise<any> {
 
         return new Promise((resolve, reject) => {
 
             console.log('entro update', obj)
-            this._httpClient.post(environment.apiUrl + '/api/invited/add-new-invited/',  obj)
+            this._httpClient.post(environment.apiUrl + '/api/invited/add-new-invited/', obj)
 
                 .subscribe((response: any) => {
                     //this.getContacts(this.idEventNow)
@@ -328,60 +319,64 @@ export class ContactsService implements Resolve<any>
 
 
                     this.getContacts(this.idEventNow)
-                    .then(x => {
-                        this.loadingContact = false;
-                    })
+                        .then(x => {
+                            this.loadingContact = false;
+                        })
 
-                    
-                   
-                   
+
+
+
                 });
         });
     }
 
 
 
-    editCountInvited(count): Promise<any>
-    {
-       
-        
-        
+    editCountInvited(count): Promise<any> {
+
+
+
         return new Promise((resolve, reject) => {
 
 
-            this._httpClient.post(environment.apiUrl + '/api/event/edit-count-invited/',             {
-                countInvited: count, 
+            this._httpClient.post(environment.apiUrl + '/api/event/edit-count-invited/', {
+                countInvited: count,
                 eventId: this.idEventNow
             })
                 .subscribe((response: any) => {
                     //this.getContacts(this.idEventNow)
                     resolve(response);
-                    console.log(response)   
+                    console.log(response)
                 });
         });
     }
 
-   
 
-    editContact(obj): Promise<any>
-    {
-       
-        
-        
+
+    editContact(obj): Promise<any> {
+
+
+
         return new Promise((resolve, reject) => {
 
-            obj.send_email? true: false;
-            console.log('editor',  obj)
-            this._httpClient.post(environment.apiUrl + '/api/invited/edit-invited/',             {
-                invitedId: obj.id, 
-                codeEvento: this.idEventNow, 
-                name: obj.name, 
-                lastname: obj.lastname, 
-                email: obj.email, 
-                jobtilte: obj.jobtitle, 
-                company: obj.company, 
-                phone: obj.phone, 
-                asiste: obj.asiste
+            obj.send_email ? true : false;
+            console.log('editor', obj)
+            this._httpClient.post(environment.apiUrl + '/api/invited/edit-invited/', {
+                invitedId: obj.id,
+                codeEvento: this.idEventNow,
+                name: obj.name,
+                lastname: obj.lastname,
+                email: obj.email,
+                jobtilte: obj.jobtitle,
+                company: obj.company,
+                phone: obj.phone,
+                asiste: obj.asiste,
+                contactado: obj.contactado,
+                address: obj.address,
+                street: obj.street,
+                city: obj.city,
+                country: obj.country,
+                phoneMobil: obj.phoneMobil
             })
                 .subscribe((response: any) => {
                     //this.getContacts(this.idEventNow)
@@ -389,9 +384,9 @@ export class ContactsService implements Resolve<any>
                     console.log(response)
 
                     this.getContacts(this.idEventNow)
-                    .then(x => {
-                        this.loadingContact = false;
-                    })    
+                        .then(x => {
+                            this.loadingContact = false;
+                        })
                 });
         });
     }
@@ -405,10 +400,9 @@ export class ContactsService implements Resolve<any>
      * @param userData
      * @returns {Promise<any>}
      */
-    updateUserData(userData): Promise<any>
-    {
+    updateUserData(userData): Promise<any> {
         return new Promise((resolve, reject) => {
-            this._httpClient.post('api/contacts-user/' + this.user.id, {...userData})
+            this._httpClient.post('api/contacts-user/' + this.user.id, { ...userData })
                 .subscribe(response => {
                     this.getUserData();
                     this.getContacts(this.idEventNow);
@@ -420,8 +414,7 @@ export class ContactsService implements Resolve<any>
     /**
      * Deselect contacts
      */
-    deselectContacts(): void
-    {
+    deselectContacts(): void {
         this.selectedContacts = [];
 
         // Trigger the next event
@@ -433,15 +426,14 @@ export class ContactsService implements Resolve<any>
      *
      * @param contact
      */
-    deleteContact(id)
-    {
+    deleteContact(id) {
 
         return new Promise((resolve, reject) => {
 
             console.log('entro delete', id)
             this._httpClient.delete(environment.apiUrl + '/api/delete-invited/' + id)
-                .subscribe(response => {                
-                   // this.conditionConatctExist();
+                .subscribe(response => {
+                    // this.conditionConatctExist();
 
 
                 });
@@ -452,53 +444,52 @@ export class ContactsService implements Resolve<any>
 
     conditionConatctExist() {
 
-        console.log('conosle',this.contacts)
+        console.log('conosle', this.contacts)
 
-        if(this.contacts.length > 0){
+        if (this.contacts.length > 0) {
 
 
             this.contactsExist = true;
             this.loadingContact = false;
         }
-    
+
         else {
             console.log('is else ')
             this.contactsExist = false;
-            this.loadingContact = false; 
+            this.loadingContact = false;
         }
 
     }
-    
 
 
-    deleteAllContacts()
-    {
+
+    deleteAllContacts() {
 
         this.loadingContact = true;
 
-        
+
         return new Promise((resolve, reject) => {
             this._httpClient.delete(environment.apiUrl + '/api/delete-all-invited/event/' + this.idEventNow)
                 .subscribe(response => {
 
                     console.log(response)
                     this.getContacts(this.idEventNow)
-                    .then(x => {
-                        
+                        .then(x => {
 
-                        this.deselectContacts();
 
-                        this.conditionConatctExist();
+                            this.deselectContacts();
 
-                        setTimeout(() => {
-                            this.loadingContact = false;
-                        }, (600));
-                    })
+                            this.conditionConatctExist();
 
-  
+                            setTimeout(() => {
+                                this.loadingContact = false;
+                            }, (600));
+                        })
 
-                   
-                    
+
+
+
+
                 });
         });
 
@@ -508,24 +499,22 @@ export class ContactsService implements Resolve<any>
     /**
      * Delete selected contacts
      */
-    deleteSelectedContacts(): void
-    {
+    deleteSelectedContacts(): void {
 
         this.loadingContact = true;
 
-        
-        for ( const contactId of this.selectedContacts )
-        {
-            
+
+        for (const contactId of this.selectedContacts) {
+
 
             console.log(contactId)
             const contact = this.contacts.find(_contact => {
 
-               
+
                 return _contact.id === contactId;
             });
 
-           
+
 
             this.deleteContact(contact.id)
 
@@ -534,60 +523,107 @@ export class ContactsService implements Resolve<any>
         this.deselectContacts();
     }
 
-    excelToJson(){
+    jsonToExcel() {
 
-        this.jsonData = XLSX.utils.sheet_to_json(this.worksheet, { raw: false });  
-        this.jsonData = JSON.stringify(this.jsonData);  
+        this.jsonData = XLSX.utils.json_to_sheet(this.worksheet);
         console.log(this.jsonData)
-        const data: Blob = new Blob([this.jsonData], { type: "application/json" });  
-        FileSaver.saveAs(data, "JsonFile" + new Date().getTime() + '.json'); 
+        this.jsonData = JSON.stringify(this.jsonData);
+
+
+        const data: Blob = new Blob([this.jsonData], { type: "application/json" });
+        FileSaver.saveAs(data, "JsonFile" + new Date().getTime() + '.json');
 
     }
 
-    xlsxToJson(){
+    public exportAsExcelFile(excelFileName: string): void {
+
+
+        this.contacts.forEach(c => {
+
+            let obj = {
+                EMPRESA: c.company,
+                NOMBRE: c.name,
+                APELLIDOS: c.lastname,
+                CARGO: c.jobtitle,
+                EMAIL: c.email,
+                TELEONO: c.phone,
+                TELEFONO_2: c.phoneMobil,
+                ASISTE: c.asiste,
+                CONTACTADO: c.contactado,
+                DIRECCION: c.address,
+                COMUNA: c.street,
+                CIUDAD: c.city,
+                PAIS: c.country,
+                OBSERVACION: c.notes
+
+
+            }
+
+            this.contactsArrayXls.push(obj)
+        });
+        const worksheet: XLSX.WorkSheet = XLSX.utils.json_to_sheet( this.contactsArrayXls);
+        const workbook: XLSX.WorkBook = { Sheets: { 'data': worksheet }, SheetNames: ['data'] };
+        const excelBuffer: any = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
+        this.saveAsExcelFile(excelBuffer, excelFileName);
+    }
+
+    private saveAsExcelFile(buffer: any, fileName: string): void {
+        const data: Blob = new Blob([buffer], {
+            type: this.EXCEL_TYPE
+        });
+        FileSaver.saveAs(data, fileName + '_export_' + new Date().getTime() + this.EXCEL_EXTENSION);
+    }
+
+
+
+
+
+    xlsxToJson() {
         const fileUpload = document.getElementById('fileUpload') as HTMLInputElement;
-        
-    
+
+
         fileUpload.onchange = () => {
 
-            
-             const xlsx = fileUpload.files[0]
 
-                let workBook = null;
-                let jsonData = null;
-                const reader = new FileReader();
-                const file = xlsx
-                reader.onload = (event) => {
+            const xlsx = fileUpload.files[0]
+
+            let workBook = null;
+            let jsonData = null;
+            const reader = new FileReader();
+            const file = xlsx
+            reader.onload = (event) => {
 
                 this.loadingContact = true;
 
-                  const data = reader.result;
-                  workBook = XLSX.read(data, { type: 'binary' });
-                  jsonData = workBook.SheetNames.reduce((initial, name) => {
+                const data = reader.result;
+                workBook = XLSX.read(data, { type: 'binary' });
+                jsonData = workBook.SheetNames.reduce((initial, name) => {
                     const sheet = workBook.Sheets[name];
                     initial[name] = XLSX.utils.sheet_to_json(sheet);
 
                     let array = initial[name];
 
                     let contactsArray = []
-                
 
-                    
+
+
 
                     array.forEach(e => {
 
-                    
+                        console.log('E', e)
+
                         let obj = {
                             codeEvento: this.idEventNow,
-                            name: e.name || e.NOMBRES || e.nameEmployee,
-                            lastname: e.lastname || e.APELLIDO_1,
-                            email: e.email || e.EMAIL_1,
+                            name: e.name || e.NOMBRES || e.NOMBRE || e.nameEmployee || e.nombres || e.nombre,
+                            lastname: e.lastname || e.APELLIDO_1 || e.apellidos || e.APELLIDOS,
+                            email: e.email || e.email_1 || e.EMAIL_1 || e.EMAIL,
                             asiste: 'null',
                             status: null,
-                            contractado: e.CONTACTADO,
-                            jobtitle: e.jobtitle || e.CARGO,
-                            company: e.company || e.EMPRESA,
-                            phone: e.number || e.FONO_1,
+                            contactado: 'null',
+                            jobtitle: e.jobtitle || e.CARGO || e.cargo,
+                            company: e.company || e.EMPRESA || e.empresa,
+                            phone: e.number || e.FONO || e.FONO_1 || e.TELEFONO || e.TELEFONO_1 || e.fono || e.fono_1 || e.telefono || e.telefono_1,
+                            phoneMobil: e.CELULAR || e.FONO_2 || e.CELULAR_1 || e.TELEFONO_2 || e.celular || e.celular_2 || e.telefono_2 || e.TELEFONO_2 || e.FONO_2,
                             asistio: false,
                             update: e.MODIFICADO_FECHA,
                             codeQr: e.COD_BARRA
@@ -595,37 +631,37 @@ export class ContactsService implements Resolve<any>
 
                         contactsArray.push(obj);
 
-                                        
+
                     })
 
                     contactsArray.forEach(e => {
 
 
-                  
+
                         this.createContacts(e, contactsArray.length)
-                        
-                        
+
+
                     });
 
 
-                
+
 
                     return this.contactsArray;
-                  }, {});
-                  const dataString = JSON.stringify(jsonData);
+                }, {});
+                const dataString = JSON.stringify(jsonData);
 
-                 
-                  //document.getElementById('output').innerHTML = dataString.slice(0, 300).concat("...");
-                  //this.setDownload(dataString);
-                }
-                reader.readAsBinaryString(file)
+
+                //document.getElementById('output').innerHTML = dataString.slice(0, 300).concat("...");
+                //this.setDownload(dataString);
+            }
+            reader.readAsBinaryString(file)
 
         }
         fileUpload.click();
-        
+
     }
 
- 
-  
+
+
 
 }

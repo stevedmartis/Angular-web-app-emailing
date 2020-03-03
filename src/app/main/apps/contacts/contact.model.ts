@@ -4,8 +4,7 @@ export class Contact {
     id: string;
     name: string;
     lastname: string;
-    avatar: string;
-    nickname: string;
+ 
     company: string;
     jobtitle: string;
     email: string;
@@ -32,8 +31,7 @@ export class Contact {
             this.id = contact._id || '';
             this.name = contact.name || '';
             this.lastname = contact.lastname || '';
-            this.avatar = contact.avatar || 'assets/images/avatars/profile.jpg';
-            this.nickname = contact.nickname || '';
+
             this.company = contact.company || '';
             this.jobtitle = contact.jobtitle || '';
             this.email = contact.email || '';
@@ -51,3 +49,25 @@ export class Contact {
         }
     }
 }
+
+
+
+export interface ContactForXls {
+    EMPRESA: string;
+    NOMBRE?: string;
+    APELLIDOS?: string;
+    CARGO?: string;
+    EMAIL?: string;
+    TELEONO?: string;
+    TELEFONO_2?: string
+    ASISTE?: string;
+    CONTACTADO?: string;
+    DIRECCION?: string;
+    COMUNA?: string;
+    CIUDAD?: string;
+    PAIS?: string;
+    OBSERVACION?: string;
+
+
+}
+

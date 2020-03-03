@@ -74,14 +74,6 @@
         </mat-cell>
     </ng-container>
 
-    <!-- Avatar Column -->
-    <ng-container matColumnDef="avatar">
-        <mat-header-cell *matHeaderCellDef></mat-header-cell>
-        <mat-cell *matCellDef="let contact">
-            <img class="avatar" *ngIf="contact.avatar" [alt]="contact.name"
-                 [src]="contact.avatar"/>
-        </mat-cell>
-    </ng-container>
 
 
     <ng-container matColumnDef="company">
@@ -189,6 +181,7 @@
 
 
 <mat-paginator #paginator
+class="paginator-left"
 [length]="dataSource.filteredData.length"
 [pageIndex]="0"
 [pageSize]="25">

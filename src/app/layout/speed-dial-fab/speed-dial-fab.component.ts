@@ -22,6 +22,10 @@ export class SpeedDialFabComponent implements OnInit {
 
   fabButtons = [
     {
+      icon: 'cloud_download',
+      click: 'exportToXls'
+    },
+    {
       icon: 'insert_drive_file',
       click: 'exportContacts'
     },
@@ -29,6 +33,7 @@ export class SpeedDialFabComponent implements OnInit {
       icon: 'person_add',
       click: 'newContact'
     },
+
 
   ];
   buttons = [];
@@ -120,6 +125,13 @@ this._contactsService.xlsxToJson()
   }
 
 
+  exportToXls(){
+
+    this._contactsService.exportAsExcelFile('bd_turevento');
+
+  }
+
+
 
   handleClick(method: string) {
     switch (method) {
@@ -129,6 +141,8 @@ this._contactsService.xlsxToJson()
       case 'exportContacts':
       this.exportContacts()
      break;
+     case 'exportToXls':
+     this.exportToXls()
  
    default:
      break;

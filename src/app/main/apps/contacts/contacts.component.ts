@@ -117,10 +117,14 @@ export class ContactsComponent implements OnInit, OnDestroy
     }
 
     readExcelToJson(){
-        this._contactsService.excelToJson()
 
+        console.log('excel json')
 
+        this._contactsService.exportAsExcelFile(this._contactsService.contacts, 'sample');
     }
+
+    exportAsXLSX():void {
+     }
 
     /**
      * Toggle the sidebar
