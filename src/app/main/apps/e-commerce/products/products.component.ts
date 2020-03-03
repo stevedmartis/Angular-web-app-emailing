@@ -26,6 +26,8 @@ export class EcommerceProductsComponent implements OnInit, OnDestroy
 {
     dataSource: FilesDataSource | null;
     displayedColumns = ['image', 'eventName', 'category', 'price', 'active', 'buttons'];
+    eventExist: boolean = true;
+
 
     @ViewChild(MatPaginator, {static: true})
     paginator: MatPaginator;
@@ -69,7 +71,21 @@ export class EcommerceProductsComponent implements OnInit, OnDestroy
         this.dataSource = new FilesDataSource(this._ecommerceProductsService, this.paginator, this.sort);
 
         console.log('asd', this.dataSource)
+        if(this._ecommerceProductsService.products.length > 0) {
 
+
+
+            this.eventExist = true
+
+            console.log(this.eventExist)
+        }
+        else {
+            this.eventExist = false
+
+            console.log(this.eventExist)
+            
+
+        }
 
         fromEvent(this.filter.nativeElement, 'keyup')
         .pipe(
@@ -292,3 +308,8 @@ export class FilesDataSource extends DataSource<any>
     {
     }
 }
+
+
+
+
+

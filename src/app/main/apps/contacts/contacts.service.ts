@@ -86,7 +86,6 @@ export class ContactsService implements Resolve<any>
 
                     this.onFilterChanged.subscribe(filter => {
 
-             
                         this.filterBy = filter;
                         this.getContacts(this.idEventNow);
                     });
@@ -134,11 +133,17 @@ export class ContactsService implements Resolve<any>
                             });
                         }
 
-                        if ( this.searchText && this.searchText !== '' )
+  */
+ console.log(this.searchText)
+  
+  if ( this.searchText && this.searchText !== '' )
                         {
+                            console.log('akjajja',this.searchText)
+
                             this.contacts = FuseUtils.filterArrayByString(this.contacts, this.searchText);
+
                         }
-                        */
+                      
 
                         this.contacts = this.contacts.map(contact => {
                             return new Contact(contact);

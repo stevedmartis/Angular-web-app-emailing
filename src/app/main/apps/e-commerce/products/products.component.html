@@ -46,8 +46,8 @@
 
         <!-- CONTENT CARD -->
         <div [ngClass]="{
-            'table-hidden': !dataSource.filteredData.length === 0,
-            'table-visible': dataSource.filteredData.length > 0 }"
+            'table-hidden': !eventExist,
+            'table-visible': eventExist }"
                 class="content-card">
 
             <mat-table  class="products-table"
@@ -184,7 +184,7 @@
         </div>
 
 
-        <div class="content-card empty-card" *ngIf="dataSource.filteredData.length === 0 ">
+        <div class="content-card empty-card" *ngIf="!eventExist">
 
 
             <img src="assets/images/emptyevent.png">

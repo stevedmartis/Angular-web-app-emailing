@@ -1,8 +1,8 @@
-import { Component, OnDestroy, OnInit, TemplateRef, ViewChild, ViewEncapsulation } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import { Component, OnDestroy, OnInit, TemplateRef, ViewChild, ViewEncapsulation, ElementRef } from '@angular/core';
+import { FormGroup, FormControl } from '@angular/forms';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { DataSource } from '@angular/cdk/collections';
-import { takeUntil } from 'rxjs/operators';
+import { takeUntil, debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { BehaviorSubject, fromEvent, merge, Observable, Subject } from 'rxjs';
 import { fuseAnimations } from '@fuse/animations';
 import { FuseConfirmDialogComponent } from '@fuse/components/confirm-dialog/confirm-dialog.component';
@@ -12,6 +12,7 @@ import { ContactsContactFormDialogComponent } from 'app/main/apps/contacts/conta
 import { MatPaginator } from '@angular/material/paginator';
 import { FuseUtils } from '@fuse/utils';
 import {ChangeDetectorRef } from '@angular/core';
+import { FuseSidebarService } from '@fuse/components/sidebar/sidebar.service';
 
 @Component({
     selector     : 'contacts-contact-list',
@@ -22,10 +23,16 @@ import {ChangeDetectorRef } from '@angular/core';
 })
 export class ContactsContactListComponent implements OnInit, OnDestroy
 {
+
+    searchInput: FormControl;
+    hasSelectedContacts: boolean;
+    
     @ViewChild('dialogContent', {static: false})
     dialogContent: TemplateRef<any>;
     @ViewChild(MatPaginator, {static: true})
     paginator: MatPaginator;
+
+
 
     contacts: any;
     user: any;
@@ -49,10 +56,14 @@ export class ContactsContactListComponent implements OnInit, OnDestroy
     constructor(
         public _contactsService: ContactsService,
         public _matDialog: MatDialog,
-        private cdref: ChangeDetectorRef
+        private cdref: ChangeDetectorRef,
+        private _fuseSidebarService: FuseSidebarService,
     )
     
     {
+
+        this.searchInput = new FormControl('');
+
         // Set the private defaults
         this._unsubscribeAll = new Subject();
     }
@@ -125,6 +136,7 @@ export class ContactsContactListComponent implements OnInit, OnDestroy
                 }
 
 
+
         this._contactsService.onSelectedContactsChanged
             .pipe(takeUntil(this._unsubscribeAll))
             .subscribe(selectedContacts => {
@@ -140,21 +152,31 @@ export class ContactsContactListComponent implements OnInit, OnDestroy
                    
                 }
                 this.selectedContacts = selectedContacts;
+                this.hasSelectedContacts = selectedContacts.length > 0
             });
 
 
-        this._contactsService.onFilterChanged
-            .pipe(takeUntil(this._unsubscribeAll))
-            .subscribe(() => {
-                this._contactsService.deselectContacts();
+
+
+            this.searchInput.valueChanges
+            .pipe(
+                takeUntil(this._unsubscribeAll),
+                debounceTime(300),
+                distinctUntilChanged()
+            )
+            .subscribe(searchText => {
+
+              
+
+                this._contactsService.searchText = searchText;
+
+                this._contactsService.getContacts(this._contactsService.idEventNow)
+
             });
-
        
     }
 
-    onContactchanged(){
-       
-    }
+
 
     /**
      * On destroy
@@ -264,18 +286,29 @@ export class ContactsContactListComponent implements OnInit, OnDestroy
 
         this._contactsService.updateUserData(this.user);
     }
+
+    toggleSidebar(name): void
+{
+    this._fuseSidebarService.getSidebar(name).toggleOpen();
 }
+}
+
+
 
 export class FilesDataSource extends DataSource<any>
 {
-    /**
+
+
+    private _filterChange = new BehaviorSubject('');
+    private _filteredDataChange = new BehaviorSubject('');
+
+
+        /**
      * Constructor
      *
      * @param {ContactsService} _contactsService,
      * 
      */
-    private _filterChange = new BehaviorSubject('');
-    private _filteredDataChange = new BehaviorSubject('');
 
     constructor(
         public _contactsService: ContactsService,
@@ -283,45 +316,9 @@ export class FilesDataSource extends DataSource<any>
     )
     {
         super();
-    }
 
-    /**
-     * Connect function called by the table to retrieve one stream containing the data to render.
-     * @returns {Observable<any[]>}
-     */
-    connect(): Observable<any[]>
-    {
+        this.filteredData = this._contactsService.contacts;
 
-        const displayDataChanges = [
-            this._contactsService.onContactsChanged,
-            this._matPaginator.page
-        ];
-   
-        return merge(...displayDataChanges)
-            .pipe(
-                map(() => {
-
-
-                  
-                    if(this._contactsService.contacts) {
-                        let data = this._contactsService.contacts.slice();
-                        data = this.filterData(data);
-
-                        this.filteredData = [...data];
-
-                        // Grab the page's slice of data.
-                        const startIndex = this._matPaginator.pageIndex * this._matPaginator.pageSize;
-                        return data.splice(startIndex, this._matPaginator.pageSize);
-                    }
-
-                    let data = [];
-                    return data;
-   
-
-                    }
-
-                
-                ));
     }
 
         // Filtered data
@@ -334,17 +331,56 @@ export class FilesDataSource extends DataSource<any>
         {
             this._filteredDataChange.next(value);
         }
+    
+        // Filter
+        get filter(): string
+        {
+            return this._filterChange.value;
+        }
+    
+        set filter(filter: string)
+        {
+            this._filterChange.next(filter);
+        }
 
-            // Filter
-    get filter(): string
+    /**
+     * Connect function called by the table to retrieve one stream containing the data to render.
+     * @returns {Observable<any[]>}
+     */
+    connect(): Observable<any[]>
     {
-        return this._filterChange.value;
+
+        const displayDataChanges = [
+            this._contactsService.onContactsChanged,
+            this._matPaginator.page,
+            this._filterChange,
+        ];
+   
+        return merge(...displayDataChanges)
+            .pipe(
+                map(() => {
+
+
+                
+                        let data = this._contactsService.contacts.slice();
+                        data = this.filterData(data);
+
+                        this.filteredData = [...data];
+
+                        // Grab the page's slice of data.
+                        const startIndex = this._matPaginator.pageIndex * this._matPaginator.pageSize;
+                        return data.splice(startIndex, this._matPaginator.pageSize);
+                    
+
+   
+
+                    }
+
+                
+                ));
     }
 
-    set filter(filter: string)
-    {
-        this._filterChange.next(filter);
-    }
+    
 
         filterData(data): any
         {
