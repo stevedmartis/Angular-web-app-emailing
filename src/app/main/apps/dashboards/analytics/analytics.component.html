@@ -1,8 +1,11 @@
 <div id="dashboard-analytics" class="page-layout blank">
-
+   <!-- 
     <div class="main-widget">
 
-        <div class="position-relative p-24 blue-600"
+
+    
+
+           <div class="position-relative p-24 blue-600"
              fxLayout="row" fxLayoutAlign="space-between center">
             <div fxLayout="column" fxLayoutAlign="start start">
                 <span class="h2">Visitors</span>
@@ -27,6 +30,8 @@
             </div>
         </div>
 
+  
+
         <div class="position-relative h-256 pb-16 blue-600">
             <canvas baseChart
                     [datasets]="widgets.widget1.datasets[widget1SelectedYear]"
@@ -38,9 +43,9 @@
         </div>
 
     </div>
-
+  -->
     <div class="content">
-
+<!--
         <div class="left mr-lg-32">
 
             <div class="pb-24 font-size-18 font-weight-300">
@@ -50,7 +55,7 @@
             <div fxLayout="column" fxLayoutAlign="start"
                  fxLayout.gt-sm="row" fxLayoutAlign.gt-sm="start start">
 
-                <!-- Widget 2 -->
+            
                 <div class="widget" fxFlex="100" fxFlex.gt-sm="33">
 
                     <div class="fuse-card auto-width mb-32" [ngClass.gt-sm]="'mb-0 mr-32'">
@@ -93,9 +98,9 @@
                     </div>
 
                 </div>
-                <!-- / Widget 2 -->
+              
 
-                <!-- Widget 3 -->
+     
                 <div class="widget" fxFlex="100" fxFlex.gt-sm="34">
 
                     <div class="fuse-card auto-width mb-32" [ngClass.gt-sm]="'mb-0 mr-32'">
@@ -138,9 +143,9 @@
                     </div>
 
                 </div>
-                <!-- / Widget 3 -->
+           
 
-                <!-- Widget 4 -->
+         
                 <div class="widget" fxFlex="100" fxFlex.gt-sm="33">
 
                     <div class="fuse-card auto-width">
@@ -183,11 +188,10 @@
                     </div>
 
                 </div>
-                <!-- / Widget 4 -->
+               
 
             </div>
 
-            <!-- Widget 5 -->
             <div class="pt-48 pb-24 font-size-18 font-weight-300">
                 How many pages your users visit?
             </div>
@@ -224,9 +228,7 @@
                 </div>
 
             </div>
-            <!-- / Widget 5 -->
 
-            <!-- Widget 6 -->
             <div class="pt-48 pb-24 font-size-18 font-weight-300">
                 Where are your users?
             </div>
@@ -256,79 +258,79 @@
                 </agm-map>
 
             </div>
-            <!-- / Widget 6 -->
+          
 
         </div>
 
+
+    -->
         <div class="right">
 
             <div fxLayout="row wrap" fxLayout.gt-md="column">
 
                 <!-- Widget 7 -->
-                <div class="mb-48" [ngClass.lt-lg]="'mr-32'" [ngClass.xs]="'mr-0'">
+                <div   class="mb-48" [ngClass.lt-lg]="'mr-32'" [ngClass.xs]="'mr-0'">
 
                     <div class="pb-24 font-size-18 font-weight-300">
-                        What are your top devices?
+                        Eventos:
                     </div>
 
-                    <div class="fuse-card">
+                    <div class="fuse-card" *ngFor="let e of _analyticsDashboardService.eventsArray" >
 
                         <div class="p-16">
-                            <div class="h1 font-weight-300">Sessions by device</div>
+                            <div class="h1 font-weight-300">{{ e.name }}</div>
                         </div>
+
 
                         <div class="h-200">
                             <ngx-charts-pie-chart
                                 *fuseIfOnDom
-                                [scheme]="widgets.widget7.scheme"
-                                [results]="widgets.widget7.devices"
+                                [scheme]="e.scheme"
+                                [results]="e.devices"
                                 [doughnut]="true">
                             </ngx-charts-pie-chart>
                         </div>
 
                         <div class="p-16" fxLayout="row" fxLayoutAlign="center center">
 
+
+
                             <div class="px-16" fxLayout="column" fxLayoutAlign="start center"
-                                 *ngFor="let device of widgets.widget7.devices">
+                            *ngFor="let d of e.devices"
+                            >
 
-                                <div class="h4 secondary-text">{{device.name}}</div>
-                                <div class="h2 font-weight-300 py-8">{{device.value}}%</div>
+                            <div class="h4 secondary-text">{{d.name}}</div>
+                            <div class="h2 font-weight-300 py-8">{{d.value}}</div>
 
-                                <div fxLayout="row" fxLayoutAlign="center center">
-                                    <mat-icon class="s-18 pr-4 red-fg"
-                                              *ngIf="device.change < 0">
-                                        arrow_downward
-                                    </mat-icon>
+                            <div fxLayout="row" fxLayoutAlign="center center">
+                                <mat-icon class="s-18 pr-4 red-fg"
+                                          *ngIf="d.value < 0">
+                                    arrow_downward
+                                </mat-icon>
 
-                                    <mat-icon class="s-18 pr-4 green-fg"
-                                              *ngIf="device.change > 0">
-                                        arrow_upward
-                                    </mat-icon>
+                                <mat-icon class="s-18 pr-4 green-fg"
+                                          *ngIf="d.value > 0">
+                                    arrow_upward
+                                </mat-icon>
 
-                                    <div class="h5 red-fg"
-                                         [ngClass]="{'red-fg': device.change < 0, 'green-fg': device.change > 0}">
-                                        {{device.change}}%
-                                    </div>
+                                <div class="h5 red-fg"
+                                     [ngClass]="{'red-fg': d.value < 0, 'green-fg': d.value > 0}">
+                                   
                                 </div>
-
                             </div>
+
+                        </div>
 
                         </div>
 
                         <div class="card-divider mb-0"></div>
 
+                        
                         <div class="px-16" fxLayout="row" fxLayoutAlign="space-between center">
-                            <mat-form-field>
-                                <mat-select class="simplified" value="7days">
-                                    <mat-option value="today">Today</mat-option>
-                                    <mat-option value="yesterday">Yesterday</mat-option>
-                                    <mat-option value="7days">Last 7 days</mat-option>
-                                    <mat-option value="28days">Last 28 days</mat-option>
-                                    <mat-option value="90days">Last 90 days</mat-option>
-                                </mat-select>
-                            </mat-form-field>
 
-                            <button mat-button color="accent">OVERVIEW</button>
+                            <button
+                            [routerLink]="'/apps/e-commerce/products/'+e.id+'/'+e.handle"
+                                                        mat-button color="accent">Ir al evento</button>
                         </div>
 
                     </div>
@@ -336,7 +338,7 @@
                 </div>
                 <!-- / Widget 7 -->
 
-                <!-- Widget 8 -->
+                <!-- 
                 <div class="mb-48" [ngClass.lt-lg]="'mr-32'" [ngClass.xs]="'mr-0'">
 
                     <div class="pb-24 font-size-18 font-weight-300">
@@ -436,9 +438,9 @@
 
                 </div>
 
-                <!-- / Widget 8 -->
+                 -->
 
-                <!-- Widget 9 -->
+        <!--
                 <div class="mb-48" [ngClass.lt-lg]="'mr-32'" [ngClass.xs]="'mr-0'">
 
                     <div class="pb-24 font-size-18 font-weight-300" [ngClass.lt-lg]="'pt-0'">
@@ -498,7 +500,7 @@
                     </div>
 
                 </div>
-                <!-- / widget 9 -->
+            -->
 
             </div>
 

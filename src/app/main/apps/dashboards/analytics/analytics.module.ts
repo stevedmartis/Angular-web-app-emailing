@@ -16,6 +16,7 @@ import { FuseWidgetModule } from '@fuse/components/widget/widget.module';
 import { AnalyticsDashboardComponent } from 'app/main/apps/dashboards/analytics/analytics.component';
 import { AnalyticsDashboardService } from 'app/main/apps/dashboards/analytics/analytics.service';
 import { AuthGuardService } from 'app/main/helpers/auth-guard.service';
+import { EcommerceProductsService } from '../../e-commerce/products/products.service';
 
 const routes: Routes = [
     {
@@ -52,7 +53,8 @@ const routes: Routes = [
         FuseWidgetModule
     ],
     providers   : [
-        AnalyticsDashboardService
+        AnalyticsDashboardService,
+        EcommerceProductsService
     ]
 })
 export class AnalyticsDashboardModule

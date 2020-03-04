@@ -312,7 +312,7 @@ export class ContactsService implements Resolve<any>
             this._httpClient.post(environment.apiUrl + '/api/invited/add-new-invited/', obj)
 
                 .subscribe((response: any) => {
-                    //this.getContacts(this.idEventNow)
+                   
                     resolve(response);
                     console.log(response)
 
@@ -435,7 +435,7 @@ export class ContactsService implements Resolve<any>
                 .subscribe(response => {
                     // this.conditionConatctExist();
 
-
+                    this.getContacts(this.idEventNow)
                 });
         });
 

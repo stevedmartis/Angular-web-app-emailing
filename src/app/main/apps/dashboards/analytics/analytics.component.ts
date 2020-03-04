@@ -3,6 +3,8 @@ import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { fuseAnimations } from '@fuse/animations';
 
 import { AnalyticsDashboardService } from 'app/main/apps/dashboards/analytics/analytics.service';
+import { EcommerceProductsService } from '../../e-commerce/products/products.service';
+
 
 @Component({
     selector     : 'analytics-dashboard',
@@ -23,7 +25,8 @@ export class AnalyticsDashboardComponent implements OnInit
      * @param {AnalyticsDashboardService} _analyticsDashboardService
      */
     constructor(
-        private _analyticsDashboardService: AnalyticsDashboardService
+        public _analyticsDashboardService: AnalyticsDashboardService,
+        
     )
     {
         // Register the custom chart.js plugin
@@ -41,6 +44,10 @@ export class AnalyticsDashboardComponent implements OnInit
     {
         // Get the widgets from the service
         this.widgets = this._analyticsDashboardService.widgets;
+
+
+        console.log(this.widgets)
+        
     }
 
     // -----------------------------------------------------------------------------------------------------
