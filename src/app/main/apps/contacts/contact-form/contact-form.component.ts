@@ -86,7 +86,6 @@ export class ContactsContactFormDialogComponent {
             contactado: [this.contact.contactado],
             phone: [this.contact.phone],
             address: [this.contact.address],
-            birthday: [this.contact.birthday],
             notes: [this.contact.notes],
             street: [this.contact.street],
             city: [this.contact.city],
