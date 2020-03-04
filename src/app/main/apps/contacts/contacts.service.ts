@@ -359,7 +359,7 @@ export class ContactsService implements Resolve<any>
 
         return new Promise((resolve, reject) => {
 
-            obj.send_email ? true : false;
+            //obj.send_email ? true : false;
             console.log('editor', obj)
             this._httpClient.post(environment.apiUrl + '/api/invited/edit-invited/', {
                 invitedId: obj.id,

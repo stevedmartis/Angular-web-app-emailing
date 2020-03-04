@@ -3,23 +3,19 @@ import { FuseUtils } from '@fuse/utils';
 export class Contact {
     id: string;
     name: string;
-    lastname: string;
- 
+    lastname: string; 
     company: string;
     jobtitle: string;
     email: string;
-    send_email: boolean;
     phone: string;
     asiste: string;
     contactado: string;
     address: string;
-    birthday: string;
     notes: string;
-
     street: string;
     city: string;
     country: string;
-    phoneMobil: string
+    phoneMobil: string;
 
     /**
      * Constructor
@@ -31,16 +27,13 @@ export class Contact {
             this.id = contact._id || '';
             this.name = contact.name || '';
             this.lastname = contact.lastname || '';
-
             this.company = contact.company || '';
             this.jobtitle = contact.jobtitle || '';
             this.email = contact.email || '';
-            this.send_email = contact.send_email;
             this.phone = contact.phone || '';
             this.asiste = contact.asiste || 'null';
             this.contactado = contact.contactado || 'null';
             this.address = contact.address || '';
-            this.birthday = contact.birthday || '';
             this.notes = contact.notes || '';
             this.street = contact.street || '';
             this.city = contact.city || ''

@@ -94,12 +94,18 @@ export class SpeedDialFabComponent implements OnInit {
                   name: res.name,
                   lastname: res.lastname,
                   email: res.email,
-                  //address: res.address,
+                  address: res.address,
                   jobtitle: res.jobtitle,
                   company: res.company,
                   phone: res.phone,
                   asiste: 'null',
-                  contactado: res.contactado
+                  contactado: res.contactado,
+                  street: res.street,
+                  city: res.city,
+                  country: res.country,
+                  phoneMobil: res.phoneMobil,
+                  notes: res.notes
+
               }
 
               console.log('obj ',obj)
