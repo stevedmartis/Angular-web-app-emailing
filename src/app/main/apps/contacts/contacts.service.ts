@@ -367,7 +367,7 @@ export class ContactsService implements Resolve<any>
                 name: obj.name,
                 lastname: obj.lastname,
                 email: obj.email,
-                jobtilte: obj.jobtitle,
+                jobtitle: obj.jobtitle,
                 company: obj.company,
                 phone: obj.phone,
                 asiste: obj.asiste,
@@ -376,7 +376,8 @@ export class ContactsService implements Resolve<any>
                 street: obj.street,
                 city: obj.city,
                 country: obj.country,
-                phoneMobil: obj.phoneMobil
+                phoneMobil: obj.phoneMobil,
+                notes: obj.notes
             })
                 .subscribe((response: any) => {
                     //this.getContacts(this.idEventNow)

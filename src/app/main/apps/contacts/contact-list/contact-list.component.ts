@@ -46,6 +46,7 @@ export class ContactsContactListComponent implements OnInit, OnDestroy
     'name',
     'lastname',
     'email',
+    'phone',
     'contact',
     'asiste',
     'buttons'
