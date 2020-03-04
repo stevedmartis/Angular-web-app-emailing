@@ -376,7 +376,8 @@ export class ContactsService implements Resolve<any>
                 street: obj.street,
                 city: obj.city,
                 country: obj.country,
-                phoneMobil: obj.phoneMobil
+                phoneMobil: obj.phoneMobil,
+                notes: obj.notes
             })
                 .subscribe((response: any) => {
                     //this.getContacts(this.idEventNow)
