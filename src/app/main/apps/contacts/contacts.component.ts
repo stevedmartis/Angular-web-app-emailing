@@ -120,7 +120,7 @@ export class ContactsComponent implements OnInit, OnDestroy
 
         console.log('excel json')
 
-        this._contactsService.exportAsExcelFile(this._contactsService.contacts, 'sample');
+        this._contactsService.exportAsExcelFile('sample');
     }
 
     exportAsXLSX():void {

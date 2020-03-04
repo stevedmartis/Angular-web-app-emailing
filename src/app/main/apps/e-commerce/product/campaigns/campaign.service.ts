@@ -199,18 +199,14 @@ console.log('campaign', campaign, this._productService.idNowEvent)
         const arrayInvitedSelected = this._contactService.contacts;
 
 
-        console.log('arrayInvitedSelected', arrayInvitedSelected)
-
         const array = arrayInvitedSelected.map( obj => obj.id)
 
-        setTimeout(() => {
+
 
           this.invitedArrayforSend(array, invitation);
 
           
-        }, 1000);
-
-
+      
     }
     else {
         this.selectLoading = true;
@@ -219,16 +215,13 @@ console.log('campaign', campaign, this._productService.idNowEvent)
 
         const arrayInvitedSelected = this._contactService.selectedContacts;
 
-        console.log('arrayInvitedSelected', arrayInvitedSelected);
 
-
-        setTimeout(() => {
+       
 
           this.invitedArrayforSend(arrayInvitedSelected,invitation);
 
           
-        }, 1000);
-
+     
         
 
 
@@ -238,6 +231,7 @@ console.log('campaign', campaign, this._productService.idNowEvent)
 
   invitedArrayforSend(array, invitation){
 
+    setTimeout(() => {
 
     array.forEach(obj => {
 
@@ -246,18 +240,16 @@ console.log('campaign', campaign, this._productService.idNowEvent)
         this._authServices.InvitedByUserId(obj)
         .then( (person ) => {
             
-
-            console.log(person)
-            
+       
             this.sendInvited(invitation, person)
             .subscribe( (mail ) => {
-                console.log(mail)
+    
 
                 this.value ++
 
                 this.value200 ++
 
-                console.log( this.value)
+
 
 
                 if(this.value === array.length){
@@ -313,6 +305,8 @@ this.value500 ++
 
        
     });
+
+  }, 500)
 
   }
 
