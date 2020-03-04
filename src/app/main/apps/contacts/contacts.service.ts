@@ -367,7 +367,7 @@ export class ContactsService implements Resolve<any>
                 name: obj.name,
                 lastname: obj.lastname,
                 email: obj.email,
-                jobtilte: obj.jobtitle,
+                jobtitle: obj.jobtitle,
                 company: obj.company,
                 phone: obj.phone,
                 asiste: obj.asiste,
