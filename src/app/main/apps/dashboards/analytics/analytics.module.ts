@@ -17,6 +17,7 @@ import { AnalyticsDashboardComponent } from 'app/main/apps/dashboards/analytics/
 import { AnalyticsDashboardService } from 'app/main/apps/dashboards/analytics/analytics.service';
 import { AuthGuardService } from 'app/main/helpers/auth-guard.service';
 import { EcommerceProductsService } from '../../e-commerce/products/products.service';
+import { MaterialModule } from 'app/main/angular-material-elements/material.module';
 
 const routes: Routes = [
     {
@@ -36,12 +37,7 @@ const routes: Routes = [
     imports     : [
         RouterModule.forChild(routes),
 
-        MatButtonModule,
-        MatFormFieldModule,
-        MatIconModule,
-        MatMenuModule,
-        MatSelectModule,
-        MatTabsModule,
+        MaterialModule,
 
         AgmCoreModule.forRoot({
             apiKey: 'AIzaSyD81ecsCj4yYpcXSLFcYU97PvRsE_X8Bx8'
