@@ -86,15 +86,15 @@ export class AnalyticsDashboardService implements Resolve<any>
 
                             scheme: {
                                 domain: [
-                                    "#4867d2",
-                                    "#5c84f1",
-                                    "#89a9f4"
+                                    "#46ef72", 
+                                    "#ff6a00",
+                                    "#0065ff"
                                 ]
                             },
                                 devices: [
-                                    {name: "Asiste", value: this.siAsiste.length },
-                                    {name: "No asiste", value: this.noAsiste.length },
-                                    {name: "Sin respuesta", value: this.pauseAsiste.length }
+                                    {name: "Asisten", value: this.siAsiste.length },
+                                    {name: "Cancelan", value: this.noAsiste.length },
+                                    {name: "Esperan", value: this.pauseAsiste.length }
 
                                 ],
 

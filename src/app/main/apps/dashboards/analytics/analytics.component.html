@@ -1,429 +1,161 @@
-<div id="dashboard-analytics" class="page-layout blank">
-   <!-- 
-    <div class="main-widget">
+<div id="dashboard-analytics" class="page-layout carded fullwidth inner-scroll">
+  
 
+    <div class="center" fusePerfectScrollbar>
 
-
-           <div class="position-relative p-24 blue-600"
-             fxLayout="row" fxLayoutAlign="space-between center">
-            <div fxLayout="column" fxLayoutAlign="start start">
-                <span class="h2">Visitors</span>
-                <span class="h5 secondary-text">Unique visitors by month</span>
-            </div>
-            <div fxLayout="row" fxLayoutAlign="start center">
-                <div class="py-8 px-12 border-radius-2 line-height-1 mr-8 cursor-pointer"
-                     (click)="widget1SelectedYear = '2016'"
-                     [ngClass]="{'blue-700': widget1SelectedYear === '2016'}">
-                    2016
-                </div>
-                <div class="py-8 px-12 border-radius-2 line-height-1 mr-8 cursor-pointer"
-                     (click)="widget1SelectedYear = '2017'"
-                     [ngClass]="{'blue-700': widget1SelectedYear === '2017'}">
-                    2017
-                </div>
-                <div class="py-8 px-12 border-radius-2 line-height-1 cursor-pointer"
-                     (click)="widget1SelectedYear = '2018'"
-                     [ngClass]="{'blue-700': widget1SelectedYear === '2018'}">
-                    2018
-                </div>
-            </div>
-        </div>
-
-
-        <div class="position-relative h-256 pb-16 blue-600">
-            <canvas baseChart
-                    [datasets]="widgets.widget1.datasets[widget1SelectedYear]"
-                    [labels]="widgets.widget1.labels"
-                    [colors]="widgets.widget1.colors"
-                    [options]="widgets.widget1.options"
-                    [chartType]="widgets.widget1.chartType">
-            </canvas>
-        </div>
-
-    </div>
-  -->
-    <div class="content">
-
-        <div>
-
-            <div class="pb-24 font-size-18 font-weight-300">
-                Eventos:
-            </div>
-
-<!--
-            <div class="pt-48 pb-24 font-size-18 font-weight-300">
-                How many pages your users visit?
-            </div>
-
-            <div class="fuse-card auto-width">
-
-                <div class="position-relative p-24"
-                     fxLayout="row" fxLayoutAlign="space-between center">
-                    <div fxLayout="column" fxLayoutAlign="start start">
-                        <span class="h2">Visitors & Page views</span>
-                    </div>
-                    <div fxLayout="row" fxLayoutAlign="start center">
-                        <div class="py-8 px-12 border-radius-2 line-height-1 mr-8 cursor-pointer"
-                             (click)="widget5SelectedDay = 'yesterday'"
-                             [ngClass]="{'accent': widget5SelectedDay === 'yesterday'}">
-                            Yesterday
-                        </div>
-                        <div class="py-8 px-12 border-radius-2 line-height-1 mr-8 cursor-pointer"
-                             (click)="widget5SelectedDay = 'today'"
-                             [ngClass]="{'accent': widget5SelectedDay === 'today'}">
-                            Today
-                        </div>
-                    </div>
-                </div>
-
-                <div class="position-relative h-368 pb-16">
-                    <canvas baseChart
-                            [datasets]="widgets.widget5.datasets[widget5SelectedDay]"
-                            [labels]="widgets.widget5.labels"
-                            [colors]="widgets.widget5.colors"
-                            [options]="widgets.widget5.options"
-                            [chartType]="widgets.widget5.chartType">
-                    </canvas>
-                </div>
-
-            </div>
-
-            <div class="pt-48 pb-24 font-size-18 font-weight-300">
-                Where are your users?
-            </div>
-
-            <div class="fuse-card auto-width p-16">
-
-                <agm-map class="h-640 w-100-p"
-                         [minZoom]="2"
-                         [maxZoom]="2"
-                         [fullscreenControl]="false"
-                         [rotateControl]="false"
-                         [zoomControl]="false"
-                         [scaleControl]="false"
-                         [streetViewControl]="false"
-                         [scrollwheel]="false"
-                         [styles]="widgets.widget6.styles">
-                    <agm-marker
-                        *ngFor="let marker of widgets.widget6.markers"
-                        [latitude]="marker.lat"
-                        [longitude]="marker.lng">
-
-                        <agm-info-window>
-                            <strong>{{marker.label}}</strong>
-                        </agm-info-window>
-
-                    </agm-marker>
-                </agm-map>
-
-            </div>
-          
-
-        </div>
-
-
-    -->
-
-
-
-            <div fxLayout="row wrap" fxLayout.gt-md="column">
-
-               
-                <div   class="mb-48" [ngClass.lt-lg]="'mr-32'" [ngClass.xs]="'mr-0'">
-
-
-
-                    <div class="fuse-card card-container" *ngFor="let e of _analyticsDashboardService.eventsArray" >
-
-
-                                <!-- CONTENT -->
-        <div class="content">
-
-
-
-                    <div class=" p-12" fxLayout="row wrap" fxFlex="100" *fuseIfOnDom
-                         [@animateStagger]="{value:'50'}">
-
-                        <!-- WIDGET 1 -->
-                        <fuse-widget [@animate]="{value:'*',params:{y:'100%'}}" class="widget" fxLayout="column"
-                                     fxFlex="100" fxFlex.gt-xs="100" fxFlex.gt-md="100">
-
-                            <!-- Front -->
-                            <div class="fuse-widget-front">
-
-
-                                <div class="pt-8 pb-32" fxLayout="column" fxLayoutAlign="center center">
-                                    <div class="light-blue-fg font-size-72 line-height-72">
-                                        1
-                                    </div>
-                                    <div class="h3 secondary-text font-weight-500">label
-                                    </div>
-                                </div>
-
-                                <div class="p-16 border-top" fxLayout="row" fxLayoutAlign="start center">
-                                    <span class="h4 secondary-text text-truncate">
-                                        label:
-                                    </span>
-                                    <span class="h4 ml-8">
-                                        range
-                                    </span>
-                                </div>
-                            </div>
-                            <!-- / Front -->
-
- 
-
-                        </fuse-widget>
-                        <!-- / WIDGET 1 -->
-
-
-
- 
-
-
-                    </div>
-                    <!-- / WIDGET GROUP -->
-
-
-        </div>
-        <!-- / CONTENT -->
-
-                        <div class="fuse-card">
+        <!-- TOP BACKGROUND -->
+        <div class="top-bg accent"></div>
+        <!-- / TOP BACKGROUND -->
+    
 
                     
-                        <div class="p-16">
-                            <div class="h1 font-weight-300">{{ e.name }}</div>
-                        </div>
+        <div fxLayout="row" fxLayoutAlign="space-between start">
 
-                        
-
-                        <div class="h-200">
-                            <ngx-charts-pie-chart
-                                *fuseIfOnDom
-                                [scheme]="e.scheme"
-                                [results]="e.devices"
-                                [doughnut]="true">
-                            </ngx-charts-pie-chart>
-                        </div>
-
-                        <div class="p-16" fxLayout="row" fxLayoutAlign="center center">
-
-
-
-                            <div class="px-16" fxLayout="column" fxLayoutAlign="start center"
-                            *ngFor="let d of e.devices"
-                            >
-
-                            <div class="h4 secondary-text">{{d.name}}</div>
-                            <div class="h2 font-weight-300 py-8">{{d.value}}</div>
-
-                            <div fxLayout="row" fxLayoutAlign="center center">
-                                <mat-icon class="s-18 pr-4 red-fg"
-                                          *ngIf="d.value < 0">
-                                    arrow_downward
-                                </mat-icon>
-
-                                <mat-icon class="s-18 pr-4 green-fg"
-                                          *ngIf="d.value > 0">
-                                    arrow_upward
-                                </mat-icon>
-
-                                <div class="h5 red-fg"
-                                     [ngClass]="{'red-fg': d.value < 0, 'green-fg': d.value > 0}">
-                                   
-                                </div>
-                            </div>
-
-                        </div>
-
-                        </div>
-
-                        <div class="card-divider mb-0"></div>
-
-                        
-                        <div class="px-16" fxLayout="row" fxLayoutAlign="space-between center">
-
-                            <button
-                            [routerLink]="'/apps/e-commerce/products/'+e.id+'/'+e.handle"
-                             mat-button color="accent">Ir al evento</button>
-                        </div>
-
-                    </div>
-
-                </div>
-
-                </div>
-               
-
-                <!-- 
-                <div class="mb-48" [ngClass.lt-lg]="'mr-32'" [ngClass.xs]="'mr-0'">
-
-                    <div class="pb-24 font-size-18 font-weight-300">
-                        How are your sales?
-                    </div>
-
-                    <div class="fuse-card">
-
-                        <div class="light-blue-600">
-
-                            <div class="p-16" fxLayout="row" fxLayoutAlign="space-between center">
-                                <div class="pr-16">
-                                    <div class="h1 font-weight-300">Sales</div>
-                                    <div class="h5 secondary-text">Lifetime sum of your sales</div>
-                                </div>
-
-                                <div>
-                                    <button mat-icon-button [matMenuTriggerFor]="card19Menu" aria-label="more">
-                                        <mat-icon>more_vert</mat-icon>
-                                    </button>
-
-                                    <mat-menu #card19Menu="matMenu">
-                                        <button mat-menu-item>
-                                            <mat-icon>trending_up</mat-icon>
-                                            <span>Trend</span>
-                                        </button>
-                                        <button mat-menu-item>
-                                            <mat-icon>history</mat-icon>
-                                            <span>History</span>
-                                        </button>
-                                        <button mat-menu-item>
-                                            <mat-icon>notifications_off</mat-icon>
-                                            <span>Disable alerts</span>
-                                        </button>
-                                    </mat-menu>
-                                </div>
-                            </div>
-
-                            <div class="p-16 pt-8" fxLayout="row" fxLayoutAlign="space-between end">
-                                <div class="font-size-48 font-weight-300 line-height-1">{{widgets.widget8.today}}</div>
-                                <div fxLayout="row" fxLayoutAlign="start center">
-                                    <mat-icon *ngIf="widgets.widget8.change.value > 0">trending_up</mat-icon>
-                                    <mat-icon *ngIf="widgets.widget8.change.value < 0">trending_down</mat-icon>
-                                    <div class="ml-8">{{widgets.widget8.change.value}}
-                                        ({{widgets.widget8.change.percentage}}%)
-                                    </div>
-                                </div>
-                            </div>
-
-                        </div>
-
-                        <mat-tab-group backgroundColor="accent">
-                            <mat-tab label="1DAY">
-                                <div class="h-200 my-16">
-                                    <ngx-charts-line-chart
-                                        *fuseIfOnDom
-                                        [scheme]="widgets.widget8.scheme"
-                                        [results]="widgets.widget8.data"
-                                        [xAxis]="false"
-                                        [yAxis]="true"
-                                        [yScaleMin]="widgets.widget8.dataMin"
-                                        [yScaleMax]="widgets.widget8.dataMax">
-                                    </ngx-charts-line-chart>
-                                </div>
-                            </mat-tab>
-
-                            <mat-tab label="1WEEK">
-                                <div class="h-200 my-16">
-                                    <ngx-charts-line-chart
-                                        *fuseIfOnDom
-                                        [scheme]="widgets.widget8.scheme"
-                                        [results]="widgets.widget8.data"
-                                        [xAxis]="false"
-                                        [yAxis]="true"
-                                        [yScaleMin]="widgets.widget8.dataMin"
-                                        [yScaleMax]="widgets.widget8.dataMax">
-                                    </ngx-charts-line-chart>
-                                </div>
-                            </mat-tab>
-
-                            <mat-tab label="1MONTH">
-                                <div class="h-200 my-16">
-                                    <ngx-charts-line-chart
-                                        *fuseIfOnDom
-                                        [scheme]="widgets.widget8.scheme"
-                                        [results]="widgets.widget8.data"
-                                        [xAxis]="false"
-                                        [yAxis]="true"
-                                        [yScaleMin]="widgets.widget8.dataMin"
-                                        [yScaleMax]="widgets.widget8.dataMax">
-                                    </ngx-charts-line-chart>
-                                </div>
-                            </mat-tab>
-                        </mat-tab-group>
-
-                    </div>
-
-                </div>
-
-                 -->
-
-        <!--
-                <div class="mb-48" [ngClass.lt-lg]="'mr-32'" [ngClass.xs]="'mr-0'">
-
-                    <div class="pb-24 font-size-18 font-weight-300" [ngClass.lt-lg]="'pt-0'">
-                        What are your top campaigns?
-                    </div>
-
-                    <div class="fuse-card">
-
-                        <div class="p-16" fxLayout="row" fxLayoutAlign="space-between center">
-                            <div class="h1 pr-16">Top campaigns</div>
-
-                            <div>
-                                <button mat-icon-button [matMenuTriggerFor]="card20Menu" aria-label="more">
-                                    <mat-icon>more_vert</mat-icon>
-                                </button>
-
-                                <mat-menu #card20Menu="matMenu">
-                                    <button fxLayout="row" fxLayoutAlign="start center" mat-menu-item>
-                                        <mat-icon color="accent">check_box</mat-icon>
-                                        <span>Show Clicks</span>
-                                    </button>
-                                    <button fxLayout="row" fxLayoutAlign="start center" mat-menu-item>
-                                        <mat-icon color="accent">check_box</mat-icon>
-                                        <span>Show Conversion</span>
-                                    </button>
-                                    <button fxLayout="row" fxLayoutAlign="start center" mat-menu-item>
-                                        <mat-icon>check_box_outline_blank</mat-icon>
-                                        <span>Show CPC</span>
-                                    </button>
-                                </mat-menu>
-                            </div>
-                        </div>
-
-                        <table class="simple clickable">
-                            <thead>
-                                <tr>
-                                    <th></th>
-                                    <th class="text-right">Clicks</th>
-                                    <th class="text-right">Conv</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr *ngFor="let row of widgets.widget9.rows">
-                                    <td>{{row.title}}</td>
-                                    <td class="text-right">{{row.clicks}}</td>
-                                    <td class="text-right">{{row.conversion}}</td>
-                                </tr>
-                            </tbody>
-                        </table>
-
-                        <div class="card-divider full-width"></div>
-
-                        <div class="p-8 pt-16" fxLayout="row" fxLayoutAlign="start center">
-                            <button mat-button color="accent">GO TO CAMPAIGNS</button>
-                        </div>
-
-                    </div>
-
-                </div>
-            -->
-
+            <span class="mat-display-1 my-0 my-sm-24 welcome-message"
+                  [@animate]="{value:'*',params:{x:'50px'}}">Asistencia por evento
+            </span>
 
         </div>
 
+        <!-- CENTER -->
+        <div class="center">
 
+
+
+    
+            <div class="widget-group margin-card" fxLayout="row wrap" fxFlex="100" *fuseIfOnDom>
+
+                <!-- WIDGET 1 -->
+    
+                <div *ngFor="let e of _analyticsDashboardService.eventsArray">
+    
+    
+    
+                    <fuse-widget [@animate]="{value:'*',params:{y:'100%'}}" class="widget" fxLayout="column" fxFlex="100"
+                        fxFlex.gt-xs="50" fxFlex.gt-md="25">
+                        <!-- PREVIEW -->
+                        <div class="card-preview">
+    
+                            <div class="fuse-card">
+    
+    
+                                <div>
+    
+                                    <div class="p-16" fxLayout="row" fxLayoutAlign="space-between center">
+                                        <div class="pr-16">
+                                            <span class="h2">{{e.name}}</span>
+                                            <div class="h4 text-bold secondary-text"> {{ e.company }}</div>
+    
+                                        </div>
+    
+                                        <div>
+
+                                            <!--
+                                            <button mat-icon-button [matMenuTriggerFor]="card19Menu" aria-label="more">
+                                                <mat-icon>more_vert</mat-icon>
+                                            </button>
+    
+                                            <mat-menu #card19Menu="matMenu">
+                                                
+                                            <button mat-menu-item (click)="openEditor(c)" >
+                                                <mat-icon>edit</mat-icon>
+                                                <span>Editar</span>
+                                            </button>
+                                         
+    
+                                             
+                                                <button mat-menu-item  >
+                                                <mat-icon>file_copy</mat-icon>
+                                                <span>Duplicar</span>
+                                            </button>
+                                            
+                                            </mat-menu>
+
+                                        -->
+                                        </div>
+                                    </div>
+    
+                                </div>
+    
+                                            
+                                <div class="h-200">
+                                    <ngx-charts-pie-chart
+                                        *fuseIfOnDom
+                                        [scheme]="e.scheme"
+                                        [results]="e.devices"
+                                        [doughnut]="true">
+                                    </ngx-charts-pie-chart>
+                                </div>
+        
+                                <div class="p-16" fxLayout="row" fxLayoutAlign="center center">
+        
+
+
+                                    <div class="px-16" fxLayout="column" fxLayoutAlign="start center"
+                                    *ngFor="let d of e.devices"
+                                    >
+        
+                                    <div class="h4 secondary-text">{{d.name}}</div>
+                                    <div class="h2 font-weight-300 py-8">{{d.value}}</div>
+        
+                                    <div fxLayout="row" fxLayoutAlign="center center">
+                                        <mat-icon class="s-18 pr-4 red-fg"
+                                                  *ngIf="d.value < 0">
+                                            arrow_downward
+                                        </mat-icon>
+        
+                                        <mat-icon class="s-18 pr-4 green-fg"
+                                                  *ngIf="d.value > 0">
+                                            arrow_upward
+                                        </mat-icon>
+        
+                                        <div class="h5 red-fg"
+                                             [ngClass]="{'red-fg': d.value < 0, 'green-fg': d.value > 0}">
+                                           
+                                        </div>
+                                    </div>
+        
+                                </div>
+        
+                                </div>
+    
+                                <div class="pl-16 pr-8 py-16 h-52 widget-front" fxLayout="row">
       
-    </div>
+    
+                                </div>
+    
+                            </div>
+    
 
-</div>
+                        </div>
+                        <!-- / PREVIEW -->
+    
+    
+                    </fuse-widget>
+                   
+                </div>
+    
+                <div>
+    
+    
+
+                </div>
+                    
+                <div>
+    
+                </div>
+
+                    
+                <div>
+    
+
+                </div>
+            </div>
+            <!-- / WIDGET GROUP -->
+    
+    
+            <!-- / CONTENT CARD -->
+        </div>
+        <!-- / CENTER -->
+    </div>
+ 
