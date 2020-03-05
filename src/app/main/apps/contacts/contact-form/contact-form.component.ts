@@ -72,8 +72,7 @@ export class ContactsContactFormDialogComponent {
      */
     createContactForm(): FormGroup
     {
-        
-
+    
 
         return this._formBuilder.group({
             id: [this.contact.id],

@@ -124,7 +124,7 @@ export class LockComponent implements OnInit, OnDestroy {
             asiste: [],
             jobtitle: [this.invited.jobtitle, [Validators.required]], 
             phone: [this.invited.phone], 
-            numberFijo: [''], 
+            contactado: ['email']
         });
     }
 
