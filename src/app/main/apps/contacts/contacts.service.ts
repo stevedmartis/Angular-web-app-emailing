@@ -618,16 +618,20 @@ export class ContactsService implements Resolve<any>
                             name: e.name || e.NOMBRES || e.NOMBRE || e.nameEmployee || e.nombres || e.nombre,
                             lastname: e.lastname || e.APELLIDO_1 || e.apellidos || e.APELLIDOS,
                             email: e.email || e.email_1 || e.EMAIL_1 || e.EMAIL,
-                            asiste: 'null',
+                            asiste: e.ASISTE,
                             status: null,
-                            contactado: 'null',
+                            contactado: e.CONTACTADO,
                             jobtitle: e.jobtitle || e.CARGO || e.cargo,
                             company: e.company || e.EMPRESA || e.empresa,
                             phone: e.number || e.FONO || e.FONO_1 || e.TELEFONO || e.TELEFONO_1 || e.fono || e.fono_1 || e.telefono || e.telefono_1,
                             phoneMobil: e.CELULAR || e.FONO_2 || e.CELULAR_1 || e.TELEFONO_2 || e.celular || e.celular_2 || e.telefono_2 || e.TELEFONO_2 || e.FONO_2,
                             asistio: false,
                             update: e.MODIFICADO_FECHA,
-                            codeQr: e.COD_BARRA
+                            address: e.DIRECCION,
+                            street: e.COMUNA,
+                            city: e.CIUDAD,
+                            country: e.PAIS
+
                         }
 
                         contactsArray.push(obj);
