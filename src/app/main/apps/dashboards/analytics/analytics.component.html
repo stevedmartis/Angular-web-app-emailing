@@ -6,12 +6,10 @@
         <!-- TOP BACKGROUND -->
         <div class="top-bg accent"></div>
         <!-- / TOP BACKGROUND -->
-    
-
                     
         <div fxLayout="row" fxLayoutAlign="space-between start">
 
-            <span class="mat-display-1 my-0 my-sm-24 welcome-message"
+            <span class="h1 my-0 my-sm-24 welcome-message"
                   [@animate]="{value:'*',params:{x:'50px'}}">Asistencia por evento
             </span>
 
@@ -20,15 +18,15 @@
         <!-- CENTER -->
         <div class="center">
 
-
-
     
             <div class="widget-group margin-card" fxLayout="row wrap" fxFlex="100" *fuseIfOnDom>
 
                 <!-- WIDGET 1 -->
+
+                <mat-spinner class="spinner-fab" *ngIf="_analyticsDashboardService.loadingEvents"  diameter="50"></mat-spinner>
+
     
                 <div *ngFor="let e of _analyticsDashboardService.eventsArray">
-    
     
     
                     <fuse-widget [@animate]="{value:'*',params:{y:'100%'}}" class="widget" fxLayout="column" fxFlex="100"
@@ -38,7 +36,7 @@
     
                             <div class="fuse-card">
     
-    
+
                                 <div>
     
                                     <div class="p-16" fxLayout="row" fxLayoutAlign="space-between center">
@@ -62,8 +60,7 @@
                                                 <span>Editar</span>
                                             </button>
                                          
-    
-                                             
+
                                                 <button mat-menu-item  >
                                                 <mat-icon>file_copy</mat-icon>
                                                 <span>Duplicar</span>
@@ -73,7 +70,18 @@
 
                                         -->
                                         </div>
+
+                                        <button
+                                        mat-button
+                                        class="mr-8"
+                                        [routerLink]="'/apps/e-commerce/products/'+e.id+'/'+e.handle"
+     
+                                        matTooltip="Ir a evento">
+                                       Ir al evento 
+                                </button>
                                     </div>
+
+
     
                                 </div>
     

@@ -6,6 +6,7 @@ import { EcommerceProductsService } from '../../e-commerce/products/products.ser
 import { Product } from '../../e-commerce/product/product.model';
 import { Contact } from '../../contacts/contact.model';
 import { environment } from 'environments/environment';
+import { AuthService } from 'app/services/authentication/auth.service';
 
 @Injectable()
 export class AnalyticsDashboardService implements Resolve<any>
@@ -17,6 +18,7 @@ export class AnalyticsDashboardService implements Resolve<any>
     siAsiste: any[];
     noAsiste: any[];
     pauseAsiste: any[]
+    loadingEvents: boolean = false;
 
     /**
      * Constructor
@@ -26,6 +28,7 @@ export class AnalyticsDashboardService implements Resolve<any>
     constructor(
         private _httpClient: HttpClient,
         private  _ecommerceProductsService: EcommerceProductsService,
+        private authServices: AuthService
     )
     {
     }
@@ -42,8 +45,8 @@ export class AnalyticsDashboardService implements Resolve<any>
         return new Promise((resolve, reject) => {
 
             Promise.all([
-                this.getWidgets(),
-                this.getEvents(),
+               // this.getWidgets(),
+                this.getEventForChart(),
                 
 
             ]).then(
@@ -55,9 +58,11 @@ export class AnalyticsDashboardService implements Resolve<any>
         });
     }
 
-    getEvents(){
+    getEventForChart(){
 
-        this._ecommerceProductsService.getEventsByUser()
+        this.loadingEvents = true;
+
+        this.getEventsByUser()
         .then( (data: any) => {
 
             this.events = data.events;
@@ -102,6 +107,9 @@ export class AnalyticsDashboardService implements Resolve<any>
                         }
 
                         this.eventsArray.push(eventObj)
+
+                        this.loadingEvents = false;
+
                     
 
                     console.log('eventObj', eventObj)
@@ -116,6 +124,25 @@ export class AnalyticsDashboardService implements Resolve<any>
         })
 
     }
+
+    
+    getEventsByUser(): Promise<any> {
+
+
+
+        return new Promise((resolve, reject) => {
+            this._httpClient.get(environment.apiUrl + '/api/events/user/' + this.authServices.currentUserValue.user._id )
+                .subscribe((response: any) => {
+                
+
+                    resolve(response);
+
+
+                }, reject);
+        });
+
+    }
+
 
     getContacts(idEvent): Promise<any> {
 

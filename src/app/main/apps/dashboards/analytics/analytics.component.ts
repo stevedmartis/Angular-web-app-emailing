@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation,OnDestroy } from '@angular/core';
 
 import { fuseAnimations } from '@fuse/animations';
 
@@ -13,7 +13,7 @@ import { EcommerceProductsService } from '../../e-commerce/products/products.ser
     encapsulation: ViewEncapsulation.None,
     animations   : fuseAnimations
 })
-export class AnalyticsDashboardComponent implements OnInit
+export class AnalyticsDashboardComponent implements OnInit, OnDestroy
 {
     widgets: any;
     widget1SelectedYear = '2016';
@@ -113,6 +113,10 @@ export class AnalyticsDashboardComponent implements OnInit
                 });
             }
         });
+    }
+
+    ngOnDestroy(){
+        this._analyticsDashboardService.eventsArray = [];
     }
 }
 
