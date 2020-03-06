@@ -630,7 +630,8 @@ export class ContactsService implements Resolve<any>
                             address: e.DIRECCION,
                             street: e.COMUNA,
                             city: e.CIUDAD,
-                            country: e.PAIS
+                            country: e.PAIS,
+                            notes: e.OBSERVACIONES
 
                         }
 
