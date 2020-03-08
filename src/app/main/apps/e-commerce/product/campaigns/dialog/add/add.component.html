@@ -17,7 +17,7 @@
                 <mat-form-field appearance="outline" fxFlex>
                     <mat-label>Asunto</mat-label>
                    
-                    <input name="name" formControlName="asunto" matInput required>
+                    <input name="name" formControlName="affair" matInput required>
                 </mat-form-field>
             </div>
 
@@ -36,7 +36,7 @@
 
                   <div class="container-load" *ngIf="_campaignService.previewLoading">
                     <img [src]="_campaignService.previewUrl"  class="img-load"  alt="" />
-                    <input hidden  id="fileUpload" type="file" #fileInput formControlName="img"/>
+                    <input hidden  id="fileUpload" type="file" #fileInput formControlName="imgBlob"/>
                     <div class="overlay"></div>
                     <div></div>
                     <button mat-fab  (click)="fileUpload()"  class="button fuse-white mt-24 mt-md-0">
@@ -48,14 +48,32 @@
             <div fxLayout="row" fxLayoutAlign="start start">
                 <mat-form-field appearance="outline" fxFlex>
                     <mat-label>Remitente</mat-label>
-                    <input formControlName="remitente" matInput>
+                    <input formControlName="sender" matInput>
+                </mat-form-field>
+            </div>
+
+
+            <div fxLayout="row" class="textarea-wrapper" fxLayoutAlign="start start">
+                <mat-form-field appearance="outline" fxFlex>
+                    <mat-label>Mensaje confirmación</mat-label>
+                    <textarea name="messageConfirm" formControlName="messageConfirm" matInput type="text" max-rows="4"></textarea>
+                </mat-form-field>
+            </div>
+
+            
+
+
+            <div fxLayout="row" class="textarea-wrapper" fxLayoutAlign="start start">
+                <mat-form-field appearance="outline" fxFlex>
+                    <mat-label>Mensaje cancelación</mat-label>
+                    <textarea name="messageCancel" formControlName="messageCancel" matInput type="text" max-rows="4"></textarea>
                 </mat-form-field>
             </div>
 
             <div fxLayout="row" class="textarea-wrapper" fxLayoutAlign="start start">
                 <mat-form-field appearance="outline" fxFlex>
                     <mat-label>Datos adicionales</mat-label>
-                    <textarea name="notes" formControlName="notes" matInput type="text" max-rows="4"></textarea>
+                    <textarea name="footer" formControlName="footer" matInput type="text" max-rows="4"></textarea>
                 </mat-form-field>
             </div>
 

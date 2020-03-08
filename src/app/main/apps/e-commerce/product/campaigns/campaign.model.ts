@@ -2,10 +2,12 @@ import { FuseUtils } from '@fuse/utils';
 
 export class Campaign
 {
-    id: string;
-    asunto: string;
-    img: string;
-    remite: string;
+    _id: string;
+    affair: string;
+    imgBlob: string;
+    sender: string;
+    messageConfirm: string
+    messageCancel: string
     footer: string;
     
     /**
@@ -16,11 +18,13 @@ export class Campaign
     constructor(campaign)
     {
         {
-            this.id = campaign._id || '';
-            this.asunto = campaign.asunto || '';
-            this.img = campaign.img || '';
-            this.remite = campaign.remite || '';
+            this._id = campaign._id || '';
+            this.affair = campaign.affair || '';
+            this.imgBlob = campaign.imgBlob || '';
+            this.sender = campaign.sender || '';
             this.footer = campaign.footer || '';
+            this.messageConfirm = campaign.messageConfirm || '';
+            this.messageCancel  = campaign.messageCancel || ''
 
 
         }

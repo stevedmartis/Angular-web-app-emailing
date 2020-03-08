@@ -69,6 +69,13 @@ export class AnalyticsDashboardService implements Resolve<any>
 
             console.log(this.events)
 
+            if(this.events.length === 0)
+            {
+                this.loadingEvents = false;
+                
+
+            }
+
             this.events.forEach(obj => {
 
                 this.getContacts(obj._id)

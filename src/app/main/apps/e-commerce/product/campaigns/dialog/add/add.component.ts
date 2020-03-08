@@ -62,12 +62,19 @@ private files: Array<FileUploadModel> = [];
       if ( this.action === 'edit' )
       {
           this.dialogTitle = 'Editar campaña';
-          this.campaign = _data.contact;
+          this.campaign = _data.campaign;
+
+
+          this._campaignService.previewLoading = true;
+          this._campaignService.previewUrl = this.campaign.imgBlob;
       }
       else
       {
           this.dialogTitle = 'Nueva campaña';
           this.campaign = new Campaign({});
+
+          this._campaignService.previewLoading = false;
+          this._campaignService.previewUrl = null
       }
 
       this.campaignForm = this.createCampaignForm();
@@ -83,11 +90,13 @@ private files: Array<FileUploadModel> = [];
   {
 
       return this._formBuilder.group({
-          id              : [this.campaign.id],
-          asunto         : [this.campaign.asunto],
-          img: [Validators.required],
-          remitente            : [this.campaign.remite, [Validators.required, Validators.email]],
-          notes:              [this.campaign.footer],
+          id              : [this.campaign._id],
+          affair         : [this.campaign.affair],
+          imgBlob: [],
+          sender            : [this.campaign.sender, [Validators.required, Validators.email]],
+          messageConfirm: [this.campaign.messageConfirm],
+          messageCancel:  [this.campaign.messageCancel],
+          footer:              [this.campaign.footer],
 
   
       });
@@ -100,11 +109,9 @@ private files: Array<FileUploadModel> = [];
     const fileUpload = document.getElementById('fileUpload') as HTMLInputElement;
     fileUpload.onchange = (event) => {
 
-      console.log(event, fileUpload)
         for(let index = 0; index < fileUpload.files.length; index++) {
             const file = fileUpload.files[index];
 
-            console.log('file', file)
 
             this._campaignService.fileProgress(file, type )
             this.files.push({

@@ -117,6 +117,46 @@ export class CampaignsComponent implements OnInit {
             this.dialogRef = null;
         });
     }
+
+    editCampaign(campaign): void
+    {
+        this.dialogRef = this._matDialog.open(AddComponent, {
+            disableClose: true,
+            data      : {
+                campaign: campaign,
+                action : 'edit'
+            }
+        });
+
+        this.dialogRef.afterClosed()
+            .subscribe(response => {
+                if ( !response )
+                {
+                    return;
+                }
+                const actionType: string = response[0];
+                const formData: FormGroup = response[1];
+                switch ( actionType )
+                {
+                    /**
+                     * Save
+                     */
+                    case 'save':
+
+                        this._campaignService.editCampaign(formData.getRawValue());
+
+                        break;
+                    /**
+                     * Delete
+                     */
+                    case 'delete':
+
+                        this._campaignService.deleteCampaign(campaign);
+
+                        break;
+                }
+            });
+    }
 }
 
 export class FilesDataSource extends DataSource<any> {

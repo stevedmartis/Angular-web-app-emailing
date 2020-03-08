@@ -74,6 +74,8 @@ export class CancelInvitationService implements Resolve<any> {
 
                     this.campaignName = this.campaignInvitation.affair;
 
+                
+
                     console.log(this.campaignInvitation);
 
                     resolve(response);

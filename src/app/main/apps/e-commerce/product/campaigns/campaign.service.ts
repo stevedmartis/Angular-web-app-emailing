@@ -141,10 +141,13 @@ console.log('campaign', campaign, this._productService.idNowEvent)
             {  
                 user: this.userId,
                 codeEvent: this._productService.idNowEvent,
-                affair: campaign.asunto,
-                sender: campaign.remitente,
+                affair: campaign.affair,
+                sender: campaign.sender,
                 imgBlob: this.image,
-                aditional: campaign.notes
+                footer: campaign.footer,
+                messageConfirm: campaign.messageConfirm,
+                messageCancel: campaign.messageCancel
+
             })
                 .subscribe((response: any) => {
 
@@ -177,6 +180,35 @@ console.log('campaign', campaign, this._productService.idNowEvent)
               }, reject);
       });
   }
+
+  editCampaign(campaign): Promise<any> {
+
+    console.log('campaign', campaign, this._productService.idNowEvent)        
+            return new Promise((resolve, reject) => {
+                this._httpClient.post(environment.apiUrl + '/api/campaign/edit', 
+                {  
+                    //user: this.userId,
+                    campaignId: campaign.id,
+                    affair: campaign.affair,
+                    sender: campaign.sender,
+                    imgBlob: this.previewUrl,
+                    messageConfirm: campaign.messageConfirm,
+                    messageCancel: campaign.messageCancel,
+                    footer: campaign.footer
+    
+                })
+                .subscribe((response: any) => {
+                 
+                  resolve(response);
+                  console.log(response)
+
+                  this.getCampaigns()
+                      .then(x => {
+                         // this.loadingContact = false;
+                      })
+              });
+            });
+        }
 
     
   getDataPersonForSendEmail(invitation, option){
@@ -216,13 +248,8 @@ console.log('campaign', campaign, this._productService.idNowEvent)
         const arrayInvitedSelected = this._contactService.selectedContacts;
 
 
-       
 
           this.invitedArrayforSend(arrayInvitedSelected,invitation);
-
-          
-     
-        
 
 
     }
