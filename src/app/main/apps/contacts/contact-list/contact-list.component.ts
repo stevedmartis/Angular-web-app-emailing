@@ -13,6 +13,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { FuseUtils } from '@fuse/utils';
 import {ChangeDetectorRef } from '@angular/core';
 import { FuseSidebarService } from '@fuse/components/sidebar/sidebar.service';
+import { MatSort } from '@angular/material/sort';
 
 @Component({
     selector     : 'contacts-contact-list',
@@ -27,21 +28,12 @@ export class ContactsContactListComponent implements OnInit, OnDestroy
     searchInput: FormControl;
     hasSelectedContacts: boolean;
     
-    @ViewChild('dialogContent', {static: false})
-    dialogContent: TemplateRef<any>;
-    @ViewChild(MatPaginator, {static: true})
-    paginator: MatPaginator;
-
-
-
-
     contacts: any;
     user: any;
     dataSource: FilesDataSource | null;
     displayedColumns = [
         
     'checkbox',
-
     'company',
     'name',
     'lastname',
@@ -52,6 +44,18 @@ export class ContactsContactListComponent implements OnInit, OnDestroy
     'buttons'
    
     ];
+
+    @ViewChild('dialogContent', {static: false})
+    dialogContent: TemplateRef<any>;
+
+    @ViewChild(MatPaginator, {static: true})
+    paginator: MatPaginator;
+
+    @ViewChild(MatSort, {static: true})
+    sort: MatSort;
+
+
+
     selectedContacts: any[];
     checkboxes: {};
     dialogRef: any;
@@ -92,10 +96,28 @@ export class ContactsContactListComponent implements OnInit, OnDestroy
 
     ngAfterContentChecked() {
 
-        this.dataSource = new FilesDataSource(this._contactsService, this.paginator);
+        this.dataSource = new FilesDataSource(this._contactsService, this.paginator,this.sort);
 
        // this.onContactchanged()
-        this.cdref.detectChanges();
+      
+
+        let contacts = this.dataSource._contactsService.contacts;
+        this._contactsService.contacts = contacts;
+
+       
+                   if(contacts.length > 0){
+
+
+                    this._contactsService.contactsExist = true;
+                    this._contactsService.loadingContact = false;
+                }
+            
+                else {
+                    this._contactsService.contactsExist = false;
+                    this._contactsService.loadingContact = false; 
+                }
+
+                this.cdref.detectChanges();
         
     }
 
@@ -107,7 +129,7 @@ export class ContactsContactListComponent implements OnInit, OnDestroy
        this._contactsService.loadingContact = true;
      
 
-       this.dataSource = new FilesDataSource(this._contactsService, this.paginator);
+       //this.dataSource = new FilesDataSource(this._contactsService, this.paginator, this.sort);
 
        this._contactsService.onContactsChanged
            .pipe(takeUntil(this._unsubscribeAll))
@@ -133,21 +155,7 @@ export class ContactsContactListComponent implements OnInit, OnDestroy
                });
            });
 
-        let contacts = this.dataSource._contactsService.contacts;
-        this._contactsService.contacts = contacts;
 
-       
-                   if(contacts.length > 0){
-
-
-                    this._contactsService.contactsExist = true;
-                    this._contactsService.loadingContact = false;
-                }
-            
-                else {
-                    this._contactsService.contactsExist = false;
-                    this._contactsService.loadingContact = false; 
-                }
 
 
 
@@ -315,25 +323,25 @@ export class FilesDataSource extends DataSource<any>
 {
 
 
-    private _filterChange = new BehaviorSubject('');
     private _filteredDataChange = new BehaviorSubject('');
 
 
-        /**
+    /**
      * Constructor
      *
-     * @param {ContactsService} _contactsService,
-     * 
+     * @param {EcommerceProductsService} _ecommerceProductsService
+     * @param {MatPaginator} _matPaginator
+     * @param {MatSort} _matSort
      */
 
     constructor(
         public _contactsService: ContactsService,
         private _matPaginator: MatPaginator,
+        private _matSort: MatSort
     )
     {
         super();
 
-        this.filteredData = this._contactsService.contacts;
 
     }
 
@@ -347,17 +355,8 @@ export class FilesDataSource extends DataSource<any>
         {
             this._filteredDataChange.next(value);
         }
-    
-        // Filter
-        get filter(): string
-        {
-            return this._filterChange.value;
-        }
-    
-        set filter(filter: string)
-        {
-            this._filterChange.next(filter);
-        }
+
+        
 
     /**
      * Connect function called by the table to retrieve one stream containing the data to render.
@@ -369,7 +368,7 @@ export class FilesDataSource extends DataSource<any>
         const displayDataChanges = [
             this._contactsService.onContactsChanged,
             this._matPaginator.page,
-            this._filterChange,
+            this._matSort.sortChange
         ];
    
         return merge(...displayDataChanges)
@@ -379,9 +378,11 @@ export class FilesDataSource extends DataSource<any>
 
                 
                         let data = this._contactsService.contacts.slice();
-                        data = this.filterData(data);
+                       
 
                         this.filteredData = [...data];
+
+                        data = this.sortData(data);
 
                         // Grab the page's slice of data.
                         const startIndex = this._matPaginator.pageIndex * this._matPaginator.pageSize;
@@ -396,16 +397,67 @@ export class FilesDataSource extends DataSource<any>
                 ));
     }
 
-    
+ 
 
-        filterData(data): any
+        /**
+     * Sort data
+     *
+     * @param data
+     * @returns {any[]}
+     */
+    sortData(data): any[]
+    {
+        if ( !this._matSort.active || this._matSort.direction === '' )
         {
-            if ( !this.filter )
-            {
-                return data;
-            }
-            return FuseUtils.filterArrayByString(data, this.filter);
+            return data;
         }
+
+        return data.sort((a, b) => {
+            let propertyA: number | string = '';
+            let propertyB: number | string = '';
+
+
+
+            switch ( this._matSort.active )
+            {
+                case 'id':
+                    [propertyA, propertyB] = [a.id, b.id];
+                    break;
+                case 'name':
+                    [propertyA, propertyB] = [a.name, b.name];
+                    break;
+                    case 'lastname':
+                    [propertyA, propertyB] = [a.lastname, b.lastname];
+                    break;
+                    case 'company':
+                    [propertyA, propertyB] = [a.company, b.company];
+                    break;
+                    case 'email':
+                    [propertyA, propertyB] = [a.email, b.email];
+                    break;
+                    case 'phone':
+                    [propertyA, propertyB] = [a.phone, b.phone];
+                    break;
+                    case 'contact':
+                    [propertyA, propertyB] = [a.contact, b.contact];
+                    break;
+                    case 'asiste':
+                    [propertyA, propertyB] = [a.asiste, b.asiste];
+                    break;
+
+
+            }
+            
+
+
+
+            const valueA = isNaN(+propertyA) ? propertyA : +propertyA;
+            const valueB = isNaN(+propertyB) ? propertyB : +propertyB;
+
+            return (valueA < valueB ? -1 : 1) * (this._matSort.direction === 'asc' ? 1 : -1);
+        });
+    }
+
 
     /**
      * Disconnect

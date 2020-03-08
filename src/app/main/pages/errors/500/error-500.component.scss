@@ -42,6 +42,16 @@ error-500 {
                 text-align: center;
                 font-size: 15px;
             }
+
+            .date {
+                font-size: 20px;
+                margin-bottom: 8px;
+
+                @include media-breakpoint('xs') {
+                    margin-top: 19px;
+                    text-align: center;
+                }
+            }
         }
     }
 }

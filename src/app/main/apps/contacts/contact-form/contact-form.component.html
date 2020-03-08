@@ -23,9 +23,17 @@
 
             <div fxLayout="row" fxLayoutAlign="start start">
                 <mat-form-field appearance="outline" fxFlex>
+                    <mat-label>Titulo</mat-label>
+                    <mat-icon matSuffix class="secondary-text">account_circle</mat-icon>
+                    <input name="title" formControlName="title" matInput>
+                </mat-form-field>
+            </div>
+
+            <div fxLayout="row" fxLayoutAlign="start start">
+                <mat-form-field appearance="outline" fxFlex>
                     <mat-label>Nombre</mat-label>
                     <mat-icon matSuffix class="secondary-text">account_circle</mat-icon>
-                    <input name="name" formControlName="name" matInput required>
+                    <input name="name" formControlName="name" matInput>
                 </mat-form-field>
             </div>
 

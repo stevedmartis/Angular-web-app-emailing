@@ -5,7 +5,8 @@
         <!-- <div class="name-campaign"> {{ confirmInvitationService.campaignInvitation.affair }} </div> -->
         <div class="name-campaign">
             {{  confirmInvitationService.campaignInvitation.affair }}<br>
-            Sábado 14 de Marzo a las 12:30 hrs<br>
+            <div *ngIf="confirmInvitationService.eventload" class="date">{{ confirmInvitationService.event.dateEvent | date:"fullDate" }}</div>
+
             Catedral Metropolina.</div>
         <div class="message">{{  confirmInvitationService.campaignInvitation.messageConfirm }}</div>
         <div class="message">Muchas gracias.</div>

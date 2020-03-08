@@ -1,6 +1,6 @@
 {
-    "name": "turEvento",
-    "version": "1.9.9",
+    "name": "tur-evento",
+    "version": "2.0.1",
     "license": "https://themeforest.net/licenses/terms/regular",
     "scripts": {
         "ng": "ng",

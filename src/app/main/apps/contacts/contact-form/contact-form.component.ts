@@ -76,7 +76,8 @@ export class ContactsContactFormDialogComponent {
 
         return this._formBuilder.group({
             id: [this.contact.id],
-            name: [this.contact.name, [Validators.required]],
+            name: [this.contact.name],
+            title: [this.contact.title],
             lastname: [this.contact.lastname],
             company: [this.contact.company],
             jobtitle: [this.contact.jobtitle],

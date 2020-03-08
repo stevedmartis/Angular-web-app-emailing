@@ -158,11 +158,6 @@ export class ContactsService implements Resolve<any>
                     resolve(this.contacts);
 
 
-                    this.editCountInvited(this.contacts.length)
-                        .then((x) => {
-                            console.log(x)
-                        })
-
                 }, reject);
         }
         );
@@ -296,6 +291,7 @@ export class ContactsService implements Resolve<any>
                             .then(x => {
                                 this.contactsCount = 0;
                                 this.loadingContact = false;
+                                this.editCountInvited(this.contacts.length)
                             })
 
                     }
@@ -321,6 +317,7 @@ export class ContactsService implements Resolve<any>
                     this.getContacts(this.idEventNow)
                         .then(x => {
                             this.loadingContact = false;
+                            this.editCountInvited(this.contacts.length)
                         })
 
 
@@ -365,6 +362,7 @@ export class ContactsService implements Resolve<any>
                 invitedId: obj.id,
                 codeEvento: this.idEventNow,
                 name: obj.name,
+                title: obj.title,
                 lastname: obj.lastname,
                 email: obj.email,
                 jobtitle: obj.jobtitle,
@@ -387,6 +385,10 @@ export class ContactsService implements Resolve<any>
                     this.getContacts(this.idEventNow)
                         .then(x => {
                             this.loadingContact = false;
+
+                            
+
+                            this.editCountInvited(this.contacts.length)
                         })
                 });
         });
@@ -436,7 +438,11 @@ export class ContactsService implements Resolve<any>
                 .subscribe(response => {
                     // this.conditionConatctExist();
 
+                    this.editCountInvited(this.contacts.length)
+
                     this.getContacts(this.idEventNow)
+
+                    
                 });
         });
 
@@ -616,6 +622,7 @@ export class ContactsService implements Resolve<any>
                         let obj = {
                             codeEvento: this.idEventNow,
                             name: e.name || e.NOMBRES || e.NOMBRE || e.nameEmployee || e.nombres || e.nombre,
+                            title: e.title || e.TITLE || e.titulo || e.TITULO,
                             lastname: e.lastname || e.APELLIDO_1 || e.apellidos || e.APELLIDOS,
                             email: e.email || e.email_1 || e.EMAIL_1 || e.EMAIL,
                             asiste: e.ASISTE,

@@ -3,6 +3,7 @@ import { FuseUtils } from '@fuse/utils';
 export class Contact {
     id: string;
     name: string;
+    title: string;
     lastname: string; 
     company: string;
     jobtitle: string;
@@ -26,6 +27,8 @@ export class Contact {
         {
             this.id = contact._id || '';
             this.name = contact.name || '';
+            this.title = contact.title || '';
+
             this.lastname = contact.lastname || '';
             this.company = contact.company || '';
             this.jobtitle = contact.jobtitle || '';

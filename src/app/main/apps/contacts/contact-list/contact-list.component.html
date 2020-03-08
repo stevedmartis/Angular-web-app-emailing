@@ -60,8 +60,10 @@
 
 
 <mat-table  class="table-invited"
-  #table [dataSource]="dataSource"
-           [@animateStagger]="{value:'50'}">
+        #table [dataSource]="dataSource"
+        matSort
+        [@animateStagger]="{value:'50'}"
+        fusePerfectScrollbar>
     <!-- Checkbox Column -->
 
 
@@ -77,7 +79,7 @@
 
 
     <ng-container matColumnDef="company">
-        <mat-header-cell *matHeaderCellDef>Empresa</mat-header-cell>
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Empresa</mat-header-cell>
         <mat-cell *matCellDef="let contact">
             <p class="text-truncate font-weight-600">{{contact.company}} </p>
         </mat-cell>
@@ -85,14 +87,14 @@
 
     <!-- Name Column -->
     <ng-container matColumnDef="name">
-        <mat-header-cell *matHeaderCellDef>Nombre</mat-header-cell>
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Nombre</mat-header-cell>
         <mat-cell *matCellDef="let contact">
             <p class="text-truncate font-weight-600">{{contact.name}}</p>
         </mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="lastname">
-        <mat-header-cell *matHeaderCellDef>Apellido</mat-header-cell>
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Apellido</mat-header-cell>
         <mat-cell *matCellDef="let contact">
             <p class="text-truncate font-weight-600">{{contact.lastname}} </p>
         </mat-cell>
@@ -100,7 +102,7 @@
 
     <!-- Email Column -->
     <ng-container matColumnDef="email">
-        <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-sm>Email</mat-header-cell>
+        <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-sm mat-sort-header>Email</mat-header-cell>
         <mat-cell *matCellDef="let contact" fxHide fxShow.gt-sm>
             <p class="email text-truncate">
                 {{contact.email}}
@@ -109,7 +111,7 @@
     </ng-container>
 
     <ng-container matColumnDef="phone">
-        <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-sm>Teléfono</mat-header-cell>
+        <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-sm mat-sort-header>Teléfono</mat-header-cell>
         <mat-cell *matCellDef="let contact" fxHide fxShow.gt-sm>
             <p class="phone text-truncate">
                 {{contact.phone}}
@@ -119,7 +121,7 @@
 
 
     <ng-container matColumnDef="contact">
-        <mat-header-cell *matHeaderCellDef fxFlex="80px">Contactado</mat-header-cell>
+        <mat-header-cell *matHeaderCellDef fxFlex="80px" mat-sort-header>Contactado</mat-header-cell>
         <mat-cell *matCellDef="let contact"  fxFlex="70px">
             <mat-icon *ngIf="contact.contactado === 'phone' " class="active-icon green-600 s-20">phone</mat-icon>
             <mat-icon *ngIf="contact.contactado === 'email' " class="active-icon green-500 s-20">alternate_email</mat-icon>
@@ -132,7 +134,7 @@
 
     <!-- Phone Column -->
     <ng-container matColumnDef="asiste" >
-        <mat-header-cell *matHeaderCellDef fxFlex="80px" >Asiste</mat-header-cell>
+        <mat-header-cell *matHeaderCellDef fxFlex="80px" mat-sort-header>Asiste</mat-header-cell>
         <mat-cell *matCellDef="let contact"  fxFlex="70px">
             <mat-icon *ngIf="contact.asiste === 'si' " class="active-icon green-600 s-20">check</mat-icon>
             <mat-icon *ngIf="contact.asiste === 'no' " class="active-icon red-500 s-20">close</mat-icon>

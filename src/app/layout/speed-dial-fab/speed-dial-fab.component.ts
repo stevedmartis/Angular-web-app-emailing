@@ -92,6 +92,7 @@ export class SpeedDialFabComponent implements OnInit {
               let obj = {
                   codeEvento: this._contactsService.idEventNow,
                   name: res.name,
+                  title: res.title,
                   lastname: res.lastname,
                   email: res.email,
                   address: res.address,

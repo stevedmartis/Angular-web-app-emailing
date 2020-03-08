@@ -64,6 +64,16 @@ lock {
                         }
                     }
 
+                    .date {
+                        font-size: 16px;
+                        margin-bottom: 8px;
+
+                        @include media-breakpoint('xs') {
+                            margin-top: 13px;
+                            text-align: center;
+                        }
+                    }
+
                     .subtitle {
 
                         @include media-breakpoint('xs') {

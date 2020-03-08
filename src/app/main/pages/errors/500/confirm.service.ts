@@ -20,6 +20,8 @@ export class ConfirmInvitationService implements Resolve<any> {
     campaignInvitation: any;
     invited: any;
     campaignName: any;
+    event: any;
+    eventload: boolean = false;
 
     /**
      * Constructor
@@ -51,8 +53,23 @@ export class ConfirmInvitationService implements Resolve<any> {
             Promise.all([
                 this.getCampaignById(this.campaignId)
                 .then(() => {
-                    resolve();
-                }, reject)
+                    this.getEventById(this.campaignInvitation.eventId)
+                    .then( (data ) => {
+                        console.log(data)
+    
+                        this.event = data.event;
+
+                       
+
+                        if(this.event.dateEvent){
+
+                            this.eventload = true;
+
+                        }
+
+    
+                    })
+                }),
 
                 //this.getEventsByUser()
             ]).then(() => {
@@ -80,4 +97,24 @@ export class ConfirmInvitationService implements Resolve<any> {
                 }, reject);
         });
     }
+
+    getEventById(idEvent): Promise<any>{
+
+        return new Promise((resolve, reject) => {
+    
+          this._httpClient.get(environment.apiUrl + '/api/event/' + idEvent)
+              .subscribe((response: any) => {
+                  resolve(response);
+    
+                  console.log(response);
+    
+           
+    
+    
+              }, reject);
+            
+      });
+        
+    
+      }
 }
