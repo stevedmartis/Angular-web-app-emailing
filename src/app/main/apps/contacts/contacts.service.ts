@@ -154,6 +154,8 @@ export class ContactsService implements Resolve<any>
 
                     console.log(this.contacts)
 
+                   
+
                     this.onContactsChanged.next(this.contacts);
                     resolve(this.contacts);
 

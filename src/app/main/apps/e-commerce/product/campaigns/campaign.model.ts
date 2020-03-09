@@ -7,6 +7,7 @@ export class Campaign
     imgBlob: string;
     sender: string;
     messageConfirm: string
+    nameSender: string
     messageCancel: string
     footer: string;
     
@@ -22,6 +23,8 @@ export class Campaign
             this.affair = campaign.affair || '';
             this.imgBlob = campaign.imgBlob || '';
             this.sender = campaign.sender || '';
+            this.nameSender = campaign.nameSender || '';
+
             this.footer = campaign.footer || '';
             this.messageConfirm = campaign.messageConfirm || '';
             this.messageCancel  = campaign.messageCancel || ''

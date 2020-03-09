@@ -145,6 +145,7 @@ console.log('campaign', campaign, this._productService.idNowEvent)
                 codeEvent: this._productService.idNowEvent,
                 affair: campaign.affair,
                 sender: campaign.sender,
+                nameSender: campaign.nameSender,
                 imgBlob: this.image,
                 footer: campaign.footer,
                 messageConfirm: campaign.messageConfirm,
@@ -193,6 +194,7 @@ console.log('campaign', campaign, this._productService.idNowEvent)
                     campaignId: campaign.id,
                     affair: campaign.affair,
                     sender: campaign.sender,
+                    nameSender: campaign.nameSender,
                     imgBlob: this.previewUrl,
                     messageConfirm: campaign.messageConfirm,
                     messageCancel: campaign.messageCancel,
@@ -347,6 +349,7 @@ this.value500 ++
     const obj = {
         _id: invitation._id,
         affair: invitation.affair,
+        nameSender: invitation.nameSender,
         sender: invitation.sender,
         imgBlob: imagen,
           _idInvited: person.invited._id,

@@ -22,6 +22,8 @@ export class ConfirmInvitationService implements Resolve<any> {
     campaignName: any;
     event: any;
     eventload: boolean = false;
+    addressLoad: boolean = false;
+    addressLink: any;
 
     /**
      * Constructor
@@ -61,11 +63,18 @@ export class ConfirmInvitationService implements Resolve<any> {
 
                        
 
-                        if(this.event.dateEvent){
+                        if(this.event.dateEvent ){
 
                             this.eventload = true;
 
                         }
+                        if(this.event.address){
+                            this.addressLoad = true;
+
+                            this.addressLink = 'https://maps.google.com/maps?q=' + this.event.address + '&amp;t=&amp;z=13&amp;ie=UTF8&amp;iwloc=&amp;output=embed'  
+
+                        }
+
 
     
                     })

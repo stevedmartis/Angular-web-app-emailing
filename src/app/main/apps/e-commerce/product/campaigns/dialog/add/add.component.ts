@@ -94,6 +94,7 @@ private files: Array<FileUploadModel> = [];
           affair         : [this.campaign.affair],
           imgBlob: [],
           sender            : [this.campaign.sender, [Validators.required, Validators.email]],
+          nameSender         : [this.campaign.nameSender],
           messageConfirm: [this.campaign.messageConfirm],
           messageCancel:  [this.campaign.messageCancel],
           footer:              [this.campaign.footer],

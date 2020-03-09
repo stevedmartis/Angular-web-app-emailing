@@ -125,7 +125,8 @@ export class EcommerceProductComponent implements OnInit, OnDestroy
                     this.isCreated = true;
                     this._contactsService.idEventNow =  product.event._id;
                     this._contactsService.eventCreated = true;
-                    this._campaignService.eventOpen = product.event.active
+                    this._campaignService.eventOpen = product.event.active;
+                    this._contactsService.editCountInvited(this._contactsService.contacts.length)
 
                     if(this.product.imgBanner === 'assets/images/banner.jpg'){
 
@@ -195,6 +196,7 @@ export class EcommerceProductComponent implements OnInit, OnDestroy
             company          : [this.product.company],
             description     : [this.product.desc],
             date      : [this.product.dateEvent],
+            address      : [this.product.address],
             tags            : [this.product.tags],
             active: [this.product.active],
             img: []

@@ -5,7 +5,6 @@ import { fuseAnimations } from '@fuse/animations';
 import { AnalyticsDashboardService } from 'app/main/apps/dashboards/analytics/analytics.service';
 import { EcommerceProductsService } from '../../e-commerce/products/products.service';
 
-
 @Component({
     selector     : 'analytics-dashboard',
     templateUrl  : './analytics.component.html',

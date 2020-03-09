@@ -8,6 +8,7 @@ export class Product
     handle: string;
     company: String;
     desc: string;
+    address: string;
     dateEvent: string;
     categories: string[];
     tags: string[];
@@ -42,6 +43,7 @@ export class Product
         this._id = product._id || '';
         this.eventName = product.eventName || '';
         this.company = product.company || '';
+        this.address = product.address || '';
         this.dateEvent = product.dateEvent || '';
         this.handle = product.handle || FuseUtils.handleize(this.eventName);
         this.desc = product.desc || '';

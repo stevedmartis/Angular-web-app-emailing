@@ -123,6 +123,7 @@ export class EcommerceProductService implements Resolve<any>
                 imgBanner: img,
                 eventId: product.id, 
                 eventName: product.name, 
+                address: product.address,
                 handle: product.handle, 
                 company: product.company, 
                 desc: product.description, 
@@ -159,6 +160,7 @@ export class EcommerceProductService implements Resolve<any>
                 company: product.company, 
                 handle: product.handle, 
                 desc: product.description, 
+                address: product.address,
                 dateEvent: product.date, 
                 active: product.active, 
 
