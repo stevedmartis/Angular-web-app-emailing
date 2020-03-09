@@ -11,6 +11,10 @@ import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { Router } from '@angular/router';
 import { FormInvitedNewService } from './form-invited-new.service';
+import { Title } from '@angular/platform-browser';
+
+
+
 
 @Component({
     selector: "lock",
@@ -39,7 +43,8 @@ export class NewInvitedComponent implements OnInit, OnDestroy {
         private _fuseConfigService: FuseConfigService,
         private _formBuilder: FormBuilder,
         public _formInvitationNewService: FormInvitedNewService,
-        private router: Router
+        private router: Router,
+        private titleService: Title
     ) {
 
         this.invited = new Invited();
@@ -75,6 +80,9 @@ export class NewInvitedComponent implements OnInit, OnDestroy {
 
         this.invitationForm = this.createInvitedForm();
 
+
+        this.setDocTitle(this._formInvitationNewService.event.affair)
+
    
         /*
         this._formInvitationService.onInvitedChanged
@@ -109,6 +117,11 @@ export class NewInvitedComponent implements OnInit, OnDestroy {
             */
 
     }
+
+    setDocTitle(title: string) {
+        console.log('current title:::::' + this.titleService.getTitle());
+        this.titleService.setTitle(title);
+     }
 
     ngOnDestroy(): void
     {

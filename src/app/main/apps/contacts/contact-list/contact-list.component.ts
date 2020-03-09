@@ -261,6 +261,12 @@ export class ContactsContactListComponent implements OnInit, OnDestroy
             });
     }
 
+    duplicateContact(contact){
+
+        this._contactsService.duplicateContact(contact);
+
+    }
+
     /**
      * Delete Contact
      */

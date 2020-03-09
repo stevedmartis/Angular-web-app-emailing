@@ -1,5 +1,5 @@
 import { NgModule,LOCALE_ID } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
+import { BrowserModule, Title  } from '@angular/platform-browser';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule, Routes } from '@angular/router';
@@ -113,7 +113,7 @@ registerLocaleData(localeEsAR, 'es-Ar');
         //SocketIoModule.forRoot(config),
     ],
     providers: [
-
+        Title,
 
         {
             provide: HTTP_INTERCEPTORS,

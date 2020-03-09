@@ -344,6 +344,7 @@ this.value500 ++
   sendInvited(invitation, person){
 
 
+    console.log(invitation)
     const imagen =  invitation.imgBlob.substr(22)
         
     const obj = {
@@ -352,9 +353,9 @@ this.value500 ++
         nameSender: invitation.nameSender,
         sender: invitation.sender,
         imgBlob: imagen,
-          _idInvited: person.invited._id,
-            emailInvited: person.invited.email,
-            nameInvited: person.invited.name,
+        _idInvited: person.invited._id,
+        emailInvited: person.invited.email,
+        nameInvited: person.invited.name + ' ' + person.invited.lastname,
 
 
     }
