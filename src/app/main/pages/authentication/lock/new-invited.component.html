@@ -1,0 +1,120 @@
+<div id="lock" fxLayout="column">
+
+    <div id="lock-form-wrapper" fxLayout="column" fxLayoutAlign="center center">
+
+
+        <div *ngIf="_formInvitationNewService.eventLoad" id="lock-form"
+            [@animate]="{value:'*',params:{duration:'300ms',y:'100px'}}">
+
+
+            <div id="wrapper">
+
+                <header>
+
+                    <div class="header" fxLayout="column" fxLayoutAlign="center center" fxLayout.gt-sm="row"
+                        fxLayoutAlign.gt-sm="space-between end">
+                        <img class="img-banner" [src]="_formInvitationNewService.event.imgBanner">
+
+
+
+                    </div>
+
+                </header>
+
+            </div>
+
+
+
+
+
+            <div class="form-card">
+
+
+                <div class="lock-form-header" fxLayout="column" fxLayoutAlign="center center" fxLayout.gt-xs="row"
+                    fxLayoutAlign.gt-xs="start center">
+
+                    <div>
+                        <div class="title">{{ _formInvitationNewService.event.eventName }}</div>
+                        <div class="date">{{ _formInvitationNewService.event.dateEvent | date:"fullDate" }}</div>
+                      
+                        <div class="subtitle">
+                            Completar Formulario
+                        </div>
+                    </div>
+
+                </div>
+
+                <form class="form-invitation " name="lockForm" [formGroup]="invitationForm" novalidate>
+
+                    <mat-form-field appearance="outline">
+                        <mat-label>Correo Electrónico</mat-label>
+                        <input matInput formControlName="email">
+                        <mat-icon matSuffix>email</mat-icon>
+
+                    </mat-form-field>
+
+                    <mat-form-field appearance="outline">
+                        <mat-label>Nombre</mat-label>
+                        <input matInput formControlName="name">
+                        <mat-icon matSuffix>account_circle</mat-icon>
+
+                    </mat-form-field>
+
+                    <mat-form-field appearance="outline">
+                        <mat-label>Apellidos</mat-label>
+                        <input matInput formControlName="lastname">
+                        <mat-icon matSuffix>account_circle</mat-icon>
+
+                    </mat-form-field>
+
+                    <mat-form-field appearance="outline">
+                        <mat-label>Empresa / Institución</mat-label>
+                        <input matInput formControlName="company">
+                        <mat-icon matSuffix>domain</mat-icon>
+
+                    </mat-form-field>
+
+
+                    <!--
+
+                    
+                    <mat-form-field appearance="outline">
+                        <mat-label>Cargo</mat-label>
+                        <input matInput formControlName="jobtitle">
+                        <mat-icon matSuffix>work</mat-icon>
+
+                    </mat-form-field>
+-->
+
+                    <mat-form-field appearance="outline">
+                        <mat-label>Teléfono de Contacto</mat-label>
+                        <input matInput formControlName="phone">
+                        <mat-icon matSuffix>smartphone</mat-icon>
+
+                    </mat-form-field>
+
+
+                    <button mat-raised-button [disabled]="invitationForm.invalid" (click)="confirmInvitation()" class="submit-button  mt-24 mt-md-0" color="accent">
+                        <mat-icon matSuffix>done</mat-icon>
+                        Enviar
+                    </button>
+                </form>
+
+
+            </div>
+  
+            <!--
+
+
+          
+            <div class="message">
+                <a class="link" [routerLink]="'/pages/auth/login'">Are you not Katherine?</a>
+            </div>
+  -->
+        </div>
+
+        
+
+    </div>
+
+</div>

@@ -157,6 +157,29 @@ export class CampaignsComponent implements OnInit {
                 }
             });
     }
+    linkOfEventOpen(idCampaign){
+
+    const val = 'http://www.turevento.net/#/pages/invitacion/' + idCampaign;
+    let selBox = document.createElement('textarea');
+      selBox.style.position = 'fixed';
+      selBox.style.left = '0';
+      selBox.style.top = '0';
+      selBox.style.opacity = '0';
+      selBox.value = val;
+      document.body.appendChild(selBox);
+      selBox.focus();
+      selBox.select();
+      document.execCommand('copy');
+      document.body.removeChild(selBox);
+
+      this._matSnackBar.open("Link copiado en portapapeles!", "OK", {
+        verticalPosition: "top",
+        duration: 3000
+    });
+
+    }
+    
+    
 }
 
 export class FilesDataSource extends DataSource<any> {

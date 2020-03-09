@@ -7,6 +7,8 @@ import { MatInputModule } from '@angular/material/input';
 import { FuseSharedModule } from '@fuse/shared.module';
 import { LockComponent } from 'app/main/pages/authentication/lock/lock.component';
 import { FormInvitedService } from '../lock/form-invited.service';
+import { FormInvitedNewService } from '../lock/form-invited-new.service';
+import { NewInvitedComponent } from './new-invited-event.component';
 
 const routes = [
     {
@@ -16,12 +18,21 @@ const routes = [
             data: FormInvitedService
         }
         
+    },
+    {
+        path     : 'invitacion/:campaignId',
+        component: NewInvitedComponent,
+        resolve  : {
+            data: FormInvitedNewService
+        }
+        
     }
 ];
 
 @NgModule({
     declarations: [
-        LockComponent
+        LockComponent,
+        NewInvitedComponent
     ],
     imports     : [
         RouterModule.forChild(routes),
@@ -33,7 +44,8 @@ const routes = [
         FuseSharedModule
     ],
     providers: [
-        FormInvitedService
+        FormInvitedService,
+        FormInvitedNewService
     ]
 })
 export class LockModule

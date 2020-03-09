@@ -7,20 +7,17 @@ import { AuthService } from 'app/services/authentication/auth.service';
 import { map } from 'rxjs/operators';
 
 @Injectable()
-export class FormInvitedService implements Resolve<any>
+export class FormInvitedNewService implements Resolve<any>
 {
     
     routeParams: any;
 
     onInvitedChanged: BehaviorSubject<any>;
     campaignId: any
-    invitedId: any
     campaignInvitation: any;
-    invited: any;
-    campaignName: any;
     event: any;
+    eventId: any;
     eventLoad: boolean = false;
-    editInvited: boolean = false;
 
     /**
      * Constructor
@@ -29,7 +26,6 @@ export class FormInvitedService implements Resolve<any>
      */
     constructor(
         private _httpClient: HttpClient,
-        private authServices: AuthService,
         private router: Router
  
     ) {
@@ -54,8 +50,6 @@ export class FormInvitedService implements Resolve<any>
 
             this.campaignId = this.routeParams.campaignId;
 
-            this.invitedId = this.routeParams.invitedId;
-
         
                 Promise.all([
 
@@ -64,25 +58,24 @@ export class FormInvitedService implements Resolve<any>
                     this.getCampaignById(this.campaignId)
                     .then(() => {
 
-                        this.editInvited = true
+                      
                         
                         this.getEventById(this.campaignInvitation.eventId)
                         .then( (data ) => {
                             console.log(data)
         
                             this.event = data.event;
+
+                            if(!this.event.active){
+
+                            window.location.href='http://www.turevento.net/';
+
+                            }
         
                             this.eventLoad = true
                         })
+                     
                     }),
-
-                    this.getInvited()
-                    .then(() => {
-
-
-                        resolve();
-
-                    }, reject),
 
 
 
@@ -100,7 +93,6 @@ export class FormInvitedService implements Resolve<any>
         });
     }
 
-
     getCampaignById(idCampaign) {
 
         console.log(idCampaign)
@@ -114,7 +106,7 @@ export class FormInvitedService implements Resolve<any>
 
                 this.campaignInvitation = response.campaign;
 
-                this.campaignName = this.campaignInvitation.affair;
+  
 
                 console.log( this.campaignInvitation)
 
@@ -131,32 +123,6 @@ export class FormInvitedService implements Resolve<any>
 
     }
 
-    
-    getInvited(): Promise<any>{
-
-    return new Promise((resolve, reject) => {
-
-
-    console.log('elseseeee', this.invitedId)
-
-      this._httpClient.get(environment.apiUrl + '/api/invited-confirm/' + this.invitedId)
-          .subscribe((response: any) => {
-              resolve(response);
-
-              console.log(response);
-
-              this.invited = response;
-
-              this.onInvitedChanged.next(this.invited);
-              resolve(response)
-
-              console.log(response)
-          }, reject);
-        
-  });
-    
-
-  }
 
       
   getEventById(idEvent): Promise<any>{
@@ -180,22 +146,27 @@ export class FormInvitedService implements Resolve<any>
   }
 
 
-    
-  confirmInvitation(invited) {
+      
+
+addNewInvitation(obj): Promise<any> {
 
         return new Promise((resolve, reject) => {
-            this._httpClient.post(environment.apiUrl + '/api/invited/confirm-invited', invited )
-            .subscribe((response: any) => {
 
-                console.log(response)
+            console.log('entro update', obj)
+            this._httpClient.post(environment.apiUrl + '/api/invited/add-new-invited/', obj)
 
-                resolve(response);
-                
-            }, reject);     
+                .subscribe((response: any) => {
+                   
+                    resolve(response);
+                    console.log(response)
 
-      })
 
+
+
+                });
+        });
     }
+
 
     /**
      * Get products

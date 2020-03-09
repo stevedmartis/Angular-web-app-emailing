@@ -107,6 +107,8 @@ export class SpeedDialFabComponent implements OnInit {
                   phoneMobil: res.phoneMobil,
                   notes: res.notes
 
+ 
+
               }
 
               console.log('obj ',obj)

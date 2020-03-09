@@ -125,6 +125,7 @@ export class EcommerceProductComponent implements OnInit, OnDestroy
                     this.isCreated = true;
                     this._contactsService.idEventNow =  product.event._id;
                     this._contactsService.eventCreated = true;
+                    this._campaignService.eventOpen = product.event.active
 
                     if(this.product.imgBanner === 'assets/images/banner.jpg'){
 

@@ -79,12 +79,19 @@
                                             <span>Editar</span>
                                         </button>
                                     
-
+                                        
                                             <button mat-menu-item (click)="deleteCampaign(c)">
                                                 <mat-icon>delete</mat-icon>
                                                 <span>Eliminar</span>
                                             </button>
-                                            <!--
+                                        
+                                            <button *ngIf="_campaignService.eventOpen"  (click)="linkOfEventOpen(c._id)" mat-menu-item  >
+                                            <mat-icon>link</mat-icon>
+                                            <span>Link para compartir</span>
+                                        </button>
+                                         
+
+                                                                                <!--
                                             <button mat-menu-item  >
                                             <mat-icon>file_copy</mat-icon>
                                             <span>Duplicar</span>

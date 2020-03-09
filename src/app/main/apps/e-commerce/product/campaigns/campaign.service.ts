@@ -54,6 +54,7 @@ export class CampaignService
     value500: 0;
     fileUp: any;
     imgProductLoad: boolean = false;
+    eventOpen: boolean = false;
 
     @Input() text = 'Upload';
     @Input() param = 'file';
@@ -76,7 +77,7 @@ export class CampaignService
     constructor(
         private _httpClient: HttpClient,
         private _authServices: AuthService,
-        private _productService: EcommerceProductService,
+        public _productService: EcommerceProductService,
         public _contactService: ContactsService
 
 
@@ -117,6 +118,7 @@ export class CampaignService
                        const campByEvent =  allCampaigs.filter(x => x.eventId === this._productService.idNowEvent)
 
                         console.log('map by id:', this._productService.idNowEvent, campByEvent)
+
                         this.campaigns = campByEvent;
                         this.onCampaignhanged.next(this.campaigns);
                         resolve(response);
