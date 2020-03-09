@@ -25,7 +25,7 @@ import { WebsocketService } from 'app/services/websocket.service';
 export class EcommerceProductsComponent implements OnInit, OnDestroy
 {
     dataSource: FilesDataSource | null;
-    displayedColumns = ['image', 'eventName', 'category', 'price', 'active', 'buttons'];
+    displayedColumns = [ 'eventName', 'category', 'price', 'active', 'buttons'];
     eventExist: boolean = true;
 
 

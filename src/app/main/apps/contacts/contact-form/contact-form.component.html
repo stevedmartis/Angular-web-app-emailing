@@ -156,13 +156,15 @@
 
     <div mat-dialog-actions class="m-0 p-16" fxLayout="row" fxLayoutAlign="end center">
 
+
+
         <button *ngIf="action === 'edit'"
-                mat-button
-                class="mr-8"
-                (click)="matDialogRef.close(['delete',contactForm])"
-                aria-label="Delete"
-                matTooltip="Delete">
-            ELIMINAR INVITADO
+        mat-button
+        class="mr-8"
+        (click)="matDialogRef.close(['duplicate',contactForm])"
+        aria-label="Duplicate"
+        matTooltip="Duplica invitado">
+        DUPLICAR
         </button>
 
         <button *ngIf="action !== 'edit'"
@@ -171,7 +173,7 @@
                 (click)="matDialogRef.close(contactForm)"
                 [disabled]="contactForm.invalid"
                 aria-label="SAVE">
-            AGREGAR INVITADO
+            AGREGAR
         </button>
 
         <button *ngIf="action === 'edit'"
@@ -182,6 +184,19 @@
                 aria-label="SAVE">
             GUARDAR
         </button>
+
+
+
+
+<button *ngIf="action === 'edit'"
+mat-button
+class="mr-8"
+(click)="matDialogRef.close(['delete',contactForm])"
+aria-label="Delete"
+matTooltip="Eliminar">
+<mat-icon matSuffix>delete</mat-icon></button>
+
+
 
     </div>
 </div>

@@ -232,10 +232,21 @@ console.log('campaign', campaign, this._productService.idNowEvent)
         this.allLoading = true;
 
         console.log('allllll')
-        const arrayInvitedSelected = this._contactService.contacts;
+        const arrayInvitedAll = this._contactService.contacts;
+      const arrayNew = []
+      arrayInvitedAll.forEach(c => {
+            if(c.email){
+               arrayNew.push(c)
+            }
+            else {
+              return;
+            }
 
 
-        const array = arrayInvitedSelected.map( obj => obj.id)
+        });
+
+        console.log(arrayNew)
+        const array = arrayNew.map( obj => obj.id)
 
 
 
@@ -269,9 +280,12 @@ console.log('campaign', campaign, this._productService.idNowEvent)
         console.log(obj)
 
         this._authServices.InvitedByUserId(obj)
-        .then( (person ) => {
+        .then( (person: any ) => {
             
        
+          if(person.invited.email){
+
+        
             this.sendInvited(invitation, person)
             .subscribe( (mail ) => {
     
@@ -302,8 +316,6 @@ console.log('campaign', campaign, this._productService.idNowEvent)
 console.log(' error ',  this.value, array.length)
 
 
-this.value500 ++
-
 
                     this.statusSendInvitation = 'Enviado!';
 
@@ -330,6 +342,8 @@ this.value500 ++
  
 
               },)
+
+            }
             
             
         })

@@ -66,7 +66,7 @@
                 -->
 
 
-                <!-- Image Column -->
+                <!--  
                 <ng-container matColumnDef="image">
                     <mat-header-cell *matHeaderCellDef></mat-header-cell>
                     <mat-cell *matCellDef="let product">
@@ -78,10 +78,10 @@
                     </mat-cell>
                 </ng-container>
 
-                <!-- Name Column -->
+                -->
 
                 <ng-container matColumnDef="eventName">
-                    <mat-header-cell *matHeaderCellDef mat-sort-header>Name</mat-header-cell>
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>Nombre</mat-header-cell>
                     <mat-cell *matCellDef="let product" >
                         <p class="category text-truncate">{{product.eventName}}</p>
                     </mat-cell>
@@ -89,8 +89,8 @@
 
                 <!-- Category Column -->
                 <ng-container matColumnDef="category">
-                    <mat-header-cell *matHeaderCellDef mat-sort-header fxHide fxShow.gt-xs>Compañia</mat-header-cell>
-                    <mat-cell *matCellDef="let product" fxHide fxShow.gt-xs>
+                    <mat-header-cell *matHeaderCellDef mat-sort-header >Empresa</mat-header-cell>
+                    <mat-cell *matCellDef="let product">
                         <p class="category text-truncate">
                             {{ product.company }}
                         </p>
@@ -133,7 +133,7 @@
                 </ng-container>
 
                     <!-- Buttons Column -->
-    <ng-container matColumnDef="buttons">
+    <ng-container class="align-menu" matColumnDef="buttons">
         <mat-header-cell *matHeaderCellDef></mat-header-cell>
         <mat-cell *matCellDef="let product">
             <div fxFlex="row" fxLayoutAlign="end center">
@@ -178,8 +178,8 @@
                             class="paginator-left"
                            [length]="dataSource.filteredData.length"
                            [pageIndex]="0"
-                           [pageSize]="10"
-                           [pageSizeOptions]="[5, 10, 25, 100]">
+                           [pageSize]="25"
+                           >
             </mat-paginator>
 
         </div>

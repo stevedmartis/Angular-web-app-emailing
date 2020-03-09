@@ -166,7 +166,19 @@ e-commerce-products {
 }
 
 
+.mat-paginator-container {
+
+    justify-content: right !important;
+
+}
 
 
+.table-product {
+    padding-right: 50px !important;
+}
+
+mat-cell:last-of-type {
+    padding-right: 50px !important;
+}
 
 

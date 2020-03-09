@@ -257,6 +257,12 @@ export class ContactsContactListComponent implements OnInit, OnDestroy
                         this.deleteContact(contact);
 
                         break;
+
+                        case 'duplicate':
+
+                        this.duplicateContact(contact)
+
+                        break;
                 }
             });
     }

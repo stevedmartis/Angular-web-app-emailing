@@ -105,23 +105,7 @@
         
                                     <div class="h4 secondary-text">{{d.name}}</div>
                                     <div class="h2 font-weight-300 py-8">{{d.value}}</div>
-        
-                                    <div fxLayout="row" fxLayoutAlign="center center">
-                                        <mat-icon class="s-18 pr-4 red-fg"
-                                                  *ngIf="d.value < 0">
-                                            arrow_downward
-                                        </mat-icon>
-        
-                                        <mat-icon class="s-18 pr-4 green-fg"
-                                                  *ngIf="d.value > 0">
-                                            arrow_upward
-                                        </mat-icon>
-        
-                                        <div class="h5 red-fg"
-                                             [ngClass]="{'red-fg': d.value < 0, 'green-fg': d.value > 0}">
-                                           
-                                        </div>
-                                    </div>
+
         
                                 </div>
         

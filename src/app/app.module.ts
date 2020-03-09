@@ -25,6 +25,7 @@ import { FuseProgressBarModule, FuseSidebarModule, FuseThemeOptionsModule } from
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { fuseConfig } from 'app/fuse-config';
 import {MAT_DATE_LOCALE} from '@angular/material';
+import { MatPaginatorIntl } from '@angular/material/paginator';
 import { FakeDbService } from 'app/fake-db/fake-db.service';
 import { AppComponent } from 'app/app.component';
 import { AppStoreModule } from 'app/store/store.module';
@@ -36,6 +37,7 @@ import { InterceptorService } from './services/interceptor.service';
 import { SocketIoModule, SocketIoConfig} from 'ngx-socket-io';
 import { environment } from 'environments/environment.prod';
 import { WebsocketService } from 'app/services/websocket.service';
+import { getSpanishPaginatorIntl } from './paginator.translate';
 
 const appRoutes: Routes = [
     {
@@ -123,6 +125,7 @@ registerLocaleData(localeEsAR, 'es-Ar');
 
           { provide: MAT_DATE_LOCALE, useValue: 'es-ES' },
           { provide: LOCALE_ID, useValue: "es-Ar" },
+          { provide: MatPaginatorIntl, useValue: getSpanishPaginatorIntl() },
 
         WebsocketService
     ],

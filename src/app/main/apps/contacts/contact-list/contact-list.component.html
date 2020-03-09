@@ -94,8 +94,8 @@
     </ng-container>
 
     <ng-container matColumnDef="lastname">
-        <mat-header-cell *matHeaderCellDef mat-sort-header>Apellido</mat-header-cell>
-        <mat-cell *matCellDef="let contact">
+        <mat-header-cell *matHeaderCellDef mat-sort-header fxHide fxShow.gt-xs >Apellido</mat-header-cell>
+        <mat-cell *matCellDef="let contact" fxHide fxShow.gt-xs>
             <p class="text-truncate font-weight-600">{{contact.lastname}} </p>
         </mat-cell>
     </ng-container>
@@ -111,8 +111,8 @@
     </ng-container>
 
     <ng-container matColumnDef="phone">
-        <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-sm mat-sort-header>Teléfono</mat-header-cell>
-        <mat-cell *matCellDef="let contact" fxHide fxShow.gt-sm>
+        <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-xs mat-sort-header>Teléfono</mat-header-cell>
+        <mat-cell *matCellDef="let contact" fxHide fxShow.gt-xs>
             <p class="phone text-truncate">
                 {{contact.phone}}
             </p>
@@ -121,8 +121,8 @@
 
 
     <ng-container matColumnDef="contact">
-        <mat-header-cell *matHeaderCellDef fxFlex="80px" mat-sort-header>Contactado</mat-header-cell>
-        <mat-cell *matCellDef="let contact"  fxFlex="70px">
+        <mat-header-cell *matHeaderCellDef  mat-sort-header>Contactado</mat-header-cell>
+        <mat-cell *matCellDef="let contact"  >
             <mat-icon *ngIf="contact.contactado === 'phone' " class="active-icon green-600 s-20">phone</mat-icon>
             <mat-icon *ngIf="contact.contactado === 'email' " class="active-icon green-500 s-20">alternate_email</mat-icon>
 
@@ -134,8 +134,8 @@
 
     <!-- Phone Column -->
     <ng-container matColumnDef="asiste" >
-        <mat-header-cell *matHeaderCellDef fxFlex="80px" mat-sort-header>Asiste</mat-header-cell>
-        <mat-cell *matCellDef="let contact"  fxFlex="70px">
+        <mat-header-cell *matHeaderCellDef  mat-sort-header>Asiste</mat-header-cell>
+        <mat-cell *matCellDef="let contact"  >
             <mat-icon *ngIf="contact.asiste === 'si' " class="active-icon green-600 s-20">check</mat-icon>
             <mat-icon *ngIf="contact.asiste === 'no' " class="active-icon red-500 s-20">close</mat-icon>
 
