@@ -18,6 +18,8 @@ export class SpeedDialFabComponent implements OnInit {
   dialogRef: any;
   contactInitial: boolean = false;
 
+  loadingContact: boolean = false;
+
 
 
   fabButtons = [
@@ -82,7 +84,7 @@ export class SpeedDialFabComponent implements OnInit {
                   return;
               }
 
-              this._contactsService.loadingContact = true;
+              this.loadingContact = true;
              
 
               let res = response.getRawValue();
@@ -114,7 +116,14 @@ export class SpeedDialFabComponent implements OnInit {
               console.log('obj ',obj)
 
 
-              this._contactsService.createContact(obj);
+              this._contactsService.createContact(obj)
+              .then(( ) => {
+                this.loadingContact = false;
+              })
+              .catch( () => {
+                this.loadingContact = false;
+
+              });
 
 
             
@@ -126,7 +135,40 @@ export class SpeedDialFabComponent implements OnInit {
     //this._contactsService.excelToJson()
     this.onToggleFab()
   
-this._contactsService.xlsxToJson()
+  
+  this._contactsService.xlsxToJson()
+  .then((data) => {
+
+    this.loadingContact = true;
+    
+    data.forEach(e => {
+      this._contactsService.createContacts(e, data.length)
+      .then(() => {
+
+        this._contactsService.contactsCount++;
+
+        if (this._contactsService.contactsCount === data.length) {
+            this._contactsService.getContacts(this._contactsService.idEventNow)
+            .then(x => {
+                this._contactsService.contactsCount = 0;
+                this.loadingContact = false;
+               
+                this._contactsService.editCountInvited(this._contactsService.contacts.length);
+            });
+        }
+
+       
+
+          
+      })
+      .catch(() =>{
+        this.loadingContact = false;
+
+      })
+  });
+  })
+
+
 
 
 

@@ -29,7 +29,7 @@ export class ContactsService implements Resolve<any> {
     user: any;
     selectedContacts: string[] = [];
     contactsArray: any[] = [];
-    loadingContact: boolean = false;
+    public loadingContact: boolean = false;
 
     searchText: string;
     filterBy: string;
@@ -253,18 +253,13 @@ export class ContactsService implements Resolve<any> {
             this._httpClient
                 .post(environment.apiUrl + "/api/invited/add-new-invited/", obj)
                 .subscribe(response => {
-                    this.contactsCount++;
+                   
 
                     console.log(response);
                     console.log(this.contactsCount, arrayLenght);
 
-                    if (this.contactsCount === arrayLenght) {
-                        this.getContacts(this.idEventNow).then(x => {
-                            this.contactsCount = 0;
-                            this.loadingContact = false;
-                            this.editCountInvited(this.contacts.length);
-                        });
-                    }
+                    resolve(response)
+                  
                 });
         });
     }
@@ -332,7 +327,7 @@ export class ContactsService implements Resolve<any> {
                     console.log(response);
 
                     this.getContacts(this.idEventNow).then(x => {
-                        this.loadingContact = false;
+                       
 
                         this.editCountInvited(this.contacts.length);
                     });
@@ -366,7 +361,7 @@ export class ContactsService implements Resolve<any> {
                 .subscribe((response: any) => {
 
                     this.getContacts(this.idEventNow).then(x => {
-                        this.loadingContact = false;
+                      
 
                         this.editCountInvited(this.contacts.length);
                     });
@@ -534,7 +529,10 @@ export class ContactsService implements Resolve<any> {
         );
     }
 
-    xlsxToJson() {
+    xlsxToJson():Promise<any> {
+
+        return new Promise((resolve, reject) => {
+
         const fileUpload = document.getElementById(
             "fileUpload"
         ) as HTMLInputElement;
@@ -548,6 +546,8 @@ export class ContactsService implements Resolve<any> {
             const file = xlsx;
             reader.onload = event => {
                 this.loadingContact = true;
+
+                console.log( this.loadingContact)
 
                 const data = reader.result;
                 workBook = XLSX.read(data, { type: "binary" });
@@ -613,13 +613,16 @@ export class ContactsService implements Resolve<any> {
                         };
 
                         contactsArray.push(obj);
+
+                        
                     });
 
-                    contactsArray.forEach(e => {
-                        this.createContacts(e, contactsArray.length);
-                    });
+                    resolve(contactsArray);
 
-                    return this.contactsArray;
+
+                    
+
+                   
                 }, {});
                 const dataString = JSON.stringify(jsonData);
 
@@ -628,6 +631,12 @@ export class ContactsService implements Resolve<any> {
             };
             reader.readAsBinaryString(file);
         };
+
         fileUpload.click();
+
+    });
+        
     }
+
+
 }
