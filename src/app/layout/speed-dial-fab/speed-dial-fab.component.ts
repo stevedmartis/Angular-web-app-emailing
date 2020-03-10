@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { speedDialFabAnimations } from './speed-dial-fab.animations';
 import { ContactsContactFormDialogComponent } from 'app/main/apps/contacts/contact-form/contact-form.component';
 import { FormGroup } from '@angular/forms';
-import { MatDialog } from '@angular/material';
+import { MatDialog, MatSnackBar } from '@angular/material';
 import { ContactsService } from 'app/main/apps/contacts/contacts.service';
 import { nullSafeIsEquivalent } from '@angular/compiler/src/output/output_ast';
 
@@ -43,7 +43,8 @@ export class SpeedDialFabComponent implements OnInit {
 
   constructor(
     private _matDialog: MatDialog,
-    public _contactsService: ContactsService
+    public _contactsService: ContactsService,
+    private _matSnackBar: MatSnackBar,
   ) { }
 
   showItems() {
@@ -85,7 +86,7 @@ export class SpeedDialFabComponent implements OnInit {
               }
 
               this.loadingContact = true;
-             
+          
 
               let res = response.getRawValue();
 
@@ -109,8 +110,6 @@ export class SpeedDialFabComponent implements OnInit {
                   phoneMobil: res.phoneMobil,
                   notes: res.notes
 
- 
-
               }
 
               console.log('obj ',obj)
@@ -126,7 +125,6 @@ export class SpeedDialFabComponent implements OnInit {
               });
 
 
-            
 
           });
   }
@@ -147,32 +145,45 @@ export class SpeedDialFabComponent implements OnInit {
 
         this._contactsService.contactsCount++;
 
-        if (this._contactsService.contactsCount === data.length) {
-            this._contactsService.getContacts(this._contactsService.idEventNow)
-            .then(x => {
-                this._contactsService.contactsCount = 0;
-                this.loadingContact = false;
-               
-                this._contactsService.editCountInvited(this._contactsService.contacts.length);
-            });
-        }
+        this.conditionCompleteCharge(data)
 
-       
 
-          
+
+      
       })
       .catch(() =>{
         this.loadingContact = false;
+
+        this._contactsService.contactsCount++;
+
+        this.conditionCompleteCharge(data)
+
+
 
       })
   });
   })
 
 
+  }
 
 
+  conditionCompleteCharge(data){
+    if (this._contactsService.contactsCount === data.length) {
+      this._contactsService.getContacts(this._contactsService.idEventNow)
+      .then(x => {
+          this._contactsService.contactsCount = 0;
+          this.loadingContact = false;
+         
+          this._contactsService.editCountInvited(this._contactsService.contacts.length);
 
-
+          
+        this._matSnackBar.open('Carga completada', 'OK', {
+          verticalPosition: 'top',
+          duration        : 2000
+      });
+      });
+  }
   }
 
 

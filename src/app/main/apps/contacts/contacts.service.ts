@@ -13,6 +13,7 @@ import { Contact, ContactForXls } from "app/main/apps/contacts/contact.model";
 import * as XLSX from "xlsx";
 import * as FileSaver from "file-saver";
 import { AuthService } from "app/services/authentication/auth.service";
+import { MatSnackBar } from '@angular/material';
 
 @Injectable()
 export class ContactsService implements Resolve<any> {
@@ -55,7 +56,8 @@ export class ContactsService implements Resolve<any> {
      */
     constructor(
         private _httpClient: HttpClient,
-        private authServices: AuthService
+        private authServices: AuthService,
+        private _matSnackBar: MatSnackBar,
     ) {
         // Set the defaults
         this.onContactsChanged = new BehaviorSubject([]);
@@ -254,7 +256,6 @@ export class ContactsService implements Resolve<any> {
                 .post(environment.apiUrl + "/api/invited/add-new-invited/", obj)
                 .subscribe(response => {
                    
-
                     console.log(response);
                     console.log(this.contactsCount, arrayLenght);
 
@@ -540,10 +541,14 @@ export class ContactsService implements Resolve<any> {
         fileUpload.onchange = () => {
             const xlsx = fileUpload.files[0];
 
+            console.log('xlsx ', xlsx)
+
             let workBook = null;
             let jsonData = null;
             const reader = new FileReader();
             const file = xlsx;
+
+            if(xlsx.type === "application/vnd.ms-excel"){
             reader.onload = event => {
                 this.loadingContact = true;
 
@@ -551,6 +556,8 @@ export class ContactsService implements Resolve<any> {
 
                 const data = reader.result;
                 workBook = XLSX.read(data, { type: "binary" });
+
+               
                 jsonData = workBook.SheetNames.reduce((initial, name) => {
                     const sheet = workBook.Sheets[name];
                     initial[name] = XLSX.utils.sheet_to_json(sheet);
@@ -620,16 +627,26 @@ export class ContactsService implements Resolve<any> {
                     resolve(contactsArray);
 
 
-                    
-
-                   
+                
                 }, {});
                 const dataString = JSON.stringify(jsonData);
 
                 //document.getElementById('output').innerHTML = dataString.slice(0, 300).concat("...");
                 //this.setDownload(dataString);
             };
+
+
             reader.readAsBinaryString(file);
+        }
+        else {
+            this._matSnackBar.open('Archivo invalido', 'OK', {
+                verticalPosition: 'top',
+                duration        : 2000
+            });
+
+
+        }
+        
         };
 
         fileUpload.click();
