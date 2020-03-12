@@ -57,6 +57,7 @@ export class EcommerceProductComponent implements OnInit, OnDestroy
     isCreated: boolean= false;
     private files: Array<FileUploadModel> = [];
     disabledBtnSave: boolean = true;
+    removeTag: boolean = false;
 
     //@ViewChild(InvitationFormComponent, {static: false}) invitationComponent: InvitationFormComponent
 
@@ -126,7 +127,18 @@ export class EcommerceProductComponent implements OnInit, OnDestroy
                     this._contactsService.idEventNow =  product.event._id;
                     this._contactsService.eventCreated = true;
                     this._campaignService.eventOpen = product.event.active;
+
+                    this._ecommerceProductService.getTagsByEvent()
+                    .then( (data: any)=> {
+
+                       const x = data.tag.map(obj => obj.name);
+                
+                        this.product.tags = x;
+                        
+                    } )
                     this._contactsService.editCountInvited(this._contactsService.contacts.length)
+
+                    
 
                     if(this.product.imgBanner === 'assets/images/banner.jpg'){
 
@@ -156,7 +168,7 @@ export class EcommerceProductComponent implements OnInit, OnDestroy
                this._campaignService.previewUrlEvent = this.product.imgBanner;
 
              
-
+                
                 
 
             });
@@ -199,9 +211,12 @@ export class EcommerceProductComponent implements OnInit, OnDestroy
             address      : [this.product.address],
             tags            : [this.product.tags],
             active: [this.product.active],
-            img: []
+            img: [ ]
         });
     }
+
+    get f() { return this.productForm.controls; }
+
 
     /**
      * Save product
@@ -211,18 +226,39 @@ export class EcommerceProductComponent implements OnInit, OnDestroy
         const data = this.productForm.getRawValue();
         data.handle = FuseUtils.handleize(data.name);
 
-        this._ecommerceProductService.saveProduct(data, this._campaignService.previewUrlEvent)
-            .then((result) => {
 
-                // Trigger the subscription with new data
-                this._ecommerceProductService.onProductChanged.next(result);
 
-                // Show the success message
-                this._matSnackBar.open('Evento editado', 'OK', {
-                    verticalPosition: 'top',
-                    duration        : 2000
+
+          console.log(' this.product.tags',  this.product.tags)
+
+            this._ecommerceProductService.deleteAllTags(this.product.tags)
+            .then( () => {
+
+                this._ecommerceProductService.saveProduct(data, this._campaignService.previewUrlEvent)
+                .then((result) => {
+        
+                    // Trigger the subscription with new data
+                    this._ecommerceProductService.onProductChanged.next(result);
+        
+                    console.log('tag to post')
+        
+        
+                        // Show the success message
+                        this._matSnackBar.open('Evento editado', 'OK', {
+                            verticalPosition: 'top',
+                            duration        : 2000
+                        });
+        
+        
                 });
-            });
+
+            })
+
+
+
+
+
+
     }
 
     openContacts() {
@@ -252,17 +288,23 @@ export class EcommerceProductComponent implements OnInit, OnDestroy
                 // Trigger the subscription with new data
                 this._ecommerceProductService.onProductChanged.next(x);
 
+                this._ecommerceProductService.addTagsInProduct(data.tags)
+                .then( () => {
                 // Show the success message
                 this._matSnackBar.open('Evento creado', 'OK', {
                     verticalPosition: 'top',
                     duration        : 3000
                 });
 
-                console.log(x)
+           
                 this.isCreated = true;
 
                 // Change the location with new one
                 this._location.go('apps/e-commerce/products/' + x.event._id + '/' + x.event.handle);
+
+                })
+
+ 
             });
     }
 
@@ -286,7 +328,7 @@ export class EcommerceProductComponent implements OnInit, OnDestroy
         for(let index = 0; index < fileUpload.files.length; index++) {
             const file = fileUpload.files[index];
 
-            console.log('file', file)
+           
 
             this._campaignService.fileProgress(file, type)
             this.files.push({
@@ -304,5 +346,19 @@ export class EcommerceProductComponent implements OnInit, OnDestroy
     fileUpload.click();
     
 }
+
+removeDetected(tag){
+
+    this.product.removeTag(tag)
+
+    this.productForm.controls['tags'].updateValueAndValidity();
+
+    this.removeTag = true;
+
+    console.log(' this.removeTag',  this.removeTag)
+    
+
+}
+
 
 }

@@ -150,7 +150,7 @@ export class EcommerceProductService implements Resolve<any>
      */
     addProduct(product, img): Promise<any> {
 
-
+         console.log(product)
         
         return new Promise((resolve, reject) => {
             this._httpClient.post(environment.apiUrl + '/api/event/add-new-event', 
@@ -179,6 +179,69 @@ export class EcommerceProductService implements Resolve<any>
     }
 
 
+    getTagsByEvent(): Promise<any> {
 
+       
+        return new Promise((resolve, reject) => {
+            this._httpClient.get(environment.apiUrl + '/api/tag/event/' + this.contactServices.idEventNow)
+                .subscribe((response: any) => {
+ 
+                 console.log(response)
+                    resolve(response);
+                    
+                }, reject);
+        });
+    }
+
+    addTagsInProduct(tag): Promise<any> {
+
+       
+       return new Promise((resolve, reject) => {
+           this._httpClient.post(environment.apiUrl + '/api/tag/add-new-tag', 
+           {   
+                eventId:  this.contactServices.idEventNow,
+                name: tag,
+                desc: ""
+
+           })
+               .subscribe((response: any) => {
+
+                console.log(response)
+                   resolve(response);
+                   
+               }, reject);
+       });
+   }
+
+
+   deleteAllTags(array) {
+
+    return new Promise((resolve, reject) => {
+        this._httpClient
+            .delete(
+                environment.apiUrl +
+                    "/api/delete-all-tag/event/" +
+                    this.contactServices.idEventNow
+            )
+            .subscribe(response => {
+                console.log(response);
+
+
+                array.forEach(tag => {
+            
+                    console.log('tag to post :', tag)
+                    this.addTagsInProduct(tag)
+                    .then( (x) => {
+        
+                        console.log(x)
+                    })
+            
+    
+            })
+
+                resolve(response)
+            });
+    });
+}
 
 }

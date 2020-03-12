@@ -72,6 +72,10 @@ export class RegisterComponent implements OnInit, OnDestroy
             passwordConfirm: ['', [Validators.required, confirmPasswordValidator]]
         });
 
+        this.f.password.statusChanges.subscribe( (x) => {
+            console.log(x)
+        })
+
         // Update the validity of the 'passwordConfirm' field
         // when the 'password' field changes
         this.registerForm.get('password').valueChanges

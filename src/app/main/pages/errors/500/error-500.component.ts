@@ -9,10 +9,22 @@ import { ConfirmInvitationService } from './confirm.service';
     styleUrls    : ['./error-500.component.scss'],
     encapsulation: ViewEncapsulation.None
 })
-export class Error500Component
+export class Error500Component implements OnInit
 {
 
     affair: any;
+    public myAngularxQrCode: string = null;    
+    
+    qrcodename : string;
+    title = 'generate-qrcode';
+    elementType: 'url' | 'canvas' | 'img' = 'url';
+    value: string;
+    display = false;
+    href : string;
+
+    ngOnInit(){
+        this.generateQRCode()
+    }
     /**
      * Constructor
      */
@@ -37,4 +49,13 @@ export class Error500Component
         };
     }
 
+
+    generateQRCode(){
+
+        this.myAngularxQrCode = 'http://www.turevento.net/#/pages/invited-qr-pass/5e5ef3de7289df4630602f53/5e5fb1047289df4630602f56'
+        
+        
+      
+
+    }
 }

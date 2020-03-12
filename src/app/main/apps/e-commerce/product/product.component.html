@@ -35,7 +35,7 @@
             <span>CREAR</span>
         </button>
 
-        <button mat-raised-button class="save-product-button" [disabled]="productForm.invalid || productForm.pristine"
+        <button mat-raised-button class="save-product-button" [disabled]="(productForm.invalid || productForm.pristine ) && !removeTag ? true:false"
             *ngIf="pageType ==='edit'" (click)="saveProduct()">
             <span>GUARDAR</span>
         </button>
@@ -131,15 +131,16 @@
 
                                     <mat-label>Tags</mat-label>
 
-                                    <mat-chip-list #tagList name="tags" formControlName="tags">
+                                    <mat-chip-list #tagList >
 
                                         <mat-chip *ngFor="let tag of product.tags" [removable]="true"
-                                            (removed)="product.removeTag(tag)">
+                                            (removed)="removeDetected(tag)" >
                                             {{tag}}
                                             <mat-icon matChipRemove>cancel</mat-icon>
                                         </mat-chip>
 
-                                        <input [matChipInputFor]="tagList" [matChipInputAddOnBlur]="true"
+                                        <input name="tags"  formControlName="tags"
+                                        [matChipInputFor]="tagList" [matChipInputAddOnBlur]="true"
                                             (matChipInputTokenEnd)="product.addTag($event)" />
 
                                     </mat-chip-list>
@@ -151,17 +152,19 @@
                          </div>
                             </div>
 
-                            <button *ngIf="isCreated && productForm.pristine" class="mr-8 w-30-p" mat-raised-button matStepperNext type="button"
+                            <button *ngIf="(isCreated && productForm.pristine) && !removeTag " class="mr-8 w-30-p" mat-raised-button matStepperNext type="button"
                             color="accent">
                             Siguiente
                         </button>
+
                             <button *ngIf="pageType ==='new'" [disabled]="productForm.invalid"  (click)="addProduct()" class="mr-8 w-30-p" mat-raised-button type="button"
                             color="accent">
                             Crear
                         </button>
-                            <button *ngIf="pageType ==='edit' && !productForm.pristine" (click)="saveProduct()" class="mr-8 w-30-p" mat-raised-button matStepperNext type="button"
+
+                            <button *ngIf="(pageType ==='edit' && !productForm.pristine) || removeTag" (click)="saveProduct()" class="mr-8 w-30-p" mat-raised-button matStepperNext type="button"
                                 color="accent">
-                                Siguiente
+                                Siguiente <mat-icon>save</mat-icon>
                             </button>
                         </form>
 

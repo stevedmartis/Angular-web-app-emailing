@@ -52,6 +52,8 @@ export class ConfirmInvitationService implements Resolve<any> {
 
             this.campaignId = this.routeParams.campaignId;
 
+            this.invitedId = this.routeParams.invitedId;
+
             Promise.all([
                 this.getCampaignById(this.campaignId)
                 .then(() => {
@@ -71,7 +73,6 @@ export class ConfirmInvitationService implements Resolve<any> {
                         if(this.event.address){
                             this.addressLoad = true;
 
-                            this.addressLink = 'https://maps.google.com/maps?q=' + this.event.address + '&amp;t=&amp;z=13&amp;ie=UTF8&amp;iwloc=&amp;output=embed'  
 
                         }
 
@@ -80,7 +81,8 @@ export class ConfirmInvitationService implements Resolve<any> {
                     })
                 }),
 
-                //this.getEventsByUser()
+                this.getInvited()
+                
             ]).then(() => {
                 resolve();
             }, reject);
@@ -106,6 +108,30 @@ export class ConfirmInvitationService implements Resolve<any> {
                 }, reject);
         });
     }
+    getInvited(): Promise<any>{
+
+        return new Promise((resolve, reject) => {
+    
+    
+        console.log('invited id', this.invitedId)
+    
+          this._httpClient.get(environment.apiUrl + '/api/invited-confirm/' + this.invitedId)
+              .subscribe((response: any) => {
+                  resolve(response);
+    
+                  console.log(response);
+    
+                  this.invited = response;
+    
+                  resolve(response)
+    
+                  console.log(response)
+              }, reject);
+            
+      });
+        
+    
+      }
 
     getEventById(idEvent): Promise<any>{
 
@@ -118,12 +144,12 @@ export class ConfirmInvitationService implements Resolve<any> {
                   console.log(response);
     
            
-    
-    
+
               }, reject);
             
       });
         
     
       }
+
 }

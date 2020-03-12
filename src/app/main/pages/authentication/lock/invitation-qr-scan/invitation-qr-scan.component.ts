@@ -1,26 +1,30 @@
+
 import { Component, OnInit, ViewEncapsulation, OnDestroy } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 
 import { FuseConfigService } from "@fuse/services/config.service";
 import { fuseAnimations } from "@fuse/animations";
-import { FormInvitedService } from './form-invited.service';
-import { Invited } from './invited.module';
+import { InvitationQrScanService } from './invitation-qr-scan.service';
+import { Invited } from '../invited.module';
 import { takeUntil } from 'rxjs/operators';
 
 import { Subject } from 'rxjs';
 import { Router } from '@angular/router';
 
+
 @Component({
-    selector: "lock",
-    templateUrl: "./lock.component.html",
-    styleUrls: ["./lock.component.scss"],
-    encapsulation: ViewEncapsulation.None,
-    animations: fuseAnimations
+  selector: 'lock',
+  templateUrl: './invitation-qr-scan.component.html',
+  styleUrls: ['./invitation-qr-scan.component.scss'],
+  encapsulation: ViewEncapsulation.None,
+  animations: fuseAnimations
 })
-export class LockComponent implements OnInit, OnDestroy {
+
+export class InvitationQrScanComponent implements OnInit, OnDestroy {
     invitationForm: FormGroup;
 
     invited: Invited;
+    assit_checked: boolean = false;
   
 
     private _unsubscribeAll: Subject<any>;
@@ -36,7 +40,7 @@ export class LockComponent implements OnInit, OnDestroy {
     constructor(
         private _fuseConfigService: FuseConfigService,
         private _formBuilder: FormBuilder,
-        public _formInvitationService: FormInvitedService,
+        public _formInvitationService: InvitationQrScanService,
         private router: Router
     ) {
 
@@ -139,39 +143,22 @@ export class LockComponent implements OnInit, OnDestroy {
 
        console.log('invited data: ', data)
 
-        this._formInvitationService.confirmInvitation(data)
+
+        this._formInvitationService.assistCheced(data)
         .then( (inv: Invited ) => {
 
             console.log(inv)
 
 
-            this.router.navigate(['/pages/confirm/si/' + this._formInvitationService.campaignId + '/' + this.invited._id])
+            //this.router.navigate(['/pages/confirm/si/' + this._formInvitationService.campaignId + '/' + this.invited._id])
 
-            
+            this.assit_checked = true;
         })
 
 
     }
 
-    cancelInvitation(){
 
-        const  value = 'no'
-        this.invitationForm.controls['asiste'].setValue(value);
-
-        const data = this.invitationForm.getRawValue();
-
-        console.log('invited data: ', data)
- 
-         this._formInvitationService.confirmInvitation(data)
-         .then( (inv: Invited ) => {
- 
-             console.log(inv)
- 
-             this.router.navigate(['/pages/confirm/no/' + this._formInvitationService.campaignId])
- 
-             
-         })
- 
-
-    }
 }
+
+

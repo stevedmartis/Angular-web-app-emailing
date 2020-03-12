@@ -9,14 +9,20 @@
         <br>
             <div *ngIf="confirmInvitationService.eventload" class="date">{{ confirmInvitationService.event.dateEvent | date:"fullDate" }}</div>
 
-
-
             <div *ngIf="confirmInvitationService.addressLoad" class="message">{{  confirmInvitationService.event.address }}</div>
             
         <div class="message">{{  confirmInvitationService.campaignInvitation.messageConfirm }}</div>
         <div class="message">Muchas gracias.</div>
 
         <!-- <a class="report-link" href="http://www.turevento.net/">turEvento.net</a>-->
+
+
+        <div class="container-qr">
+
+            <qrcode [qrdata]="myAngularxQrCode" [size]="300" [level]="'M'"></qrcode>
+     
+    </div>
+      
 
     </div>
 

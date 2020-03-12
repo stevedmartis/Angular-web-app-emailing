@@ -146,27 +146,18 @@ export class SpeedDialFabComponent implements OnInit {
         this._contactsService.contactsCount++;
 
         this.conditionCompleteCharge(data)
-
-
-
-      
       })
       .catch(() =>{
         this.loadingContact = false;
 
         this._contactsService.contactsCount++;
 
-        this.conditionCompleteCharge(data)
-
-
-
+        this.conditionCompleteCharge(data);
       })
   });
   })
 
-
   }
-
 
   conditionCompleteCharge(data){
     if (this._contactsService.contactsCount === data.length) {
@@ -176,7 +167,6 @@ export class SpeedDialFabComponent implements OnInit {
           this.loadingContact = false;
          
           this._contactsService.editCountInvited(this._contactsService.contacts.length);
-
           
         this._matSnackBar.open('Carga completada', 'OK', {
           verticalPosition: 'top',

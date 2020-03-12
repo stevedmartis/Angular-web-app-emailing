@@ -9,6 +9,9 @@ import { LockComponent } from 'app/main/pages/authentication/lock/lock.component
 import { FormInvitedService } from '../lock/form-invited.service';
 import { FormInvitedNewService } from '../lock/form-invited-new.service';
 import { NewInvitedComponent } from './new-invited-event.component';
+import { InvitationQrScanService } from './invitation-qr-scan/invitation-qr-scan.service';
+import { InvitationQrScanComponent } from './invitation-qr-scan/invitation-qr-scan.component';
+import { AuthGuardService } from 'app/main/helpers/auth-guard.service';
 
 const routes = [
     {
@@ -26,13 +29,23 @@ const routes = [
             data: FormInvitedNewService
         }
         
+    },
+    {
+        path     : 'invited-qr-pass/:campaignId/:invitedId',
+        canActivate: [ AuthGuardService ],
+        component: InvitationQrScanComponent,
+        resolve  : {
+            data: InvitationQrScanService
+        }
+        
     }
 ];
 
 @NgModule({
     declarations: [
         LockComponent,
-        NewInvitedComponent
+        NewInvitedComponent,
+        InvitationQrScanComponent
     ],
     imports     : [
         RouterModule.forChild(routes),
@@ -45,7 +58,8 @@ const routes = [
     ],
     providers: [
         FormInvitedService,
-        FormInvitedNewService
+        FormInvitedNewService,
+        InvitationQrScanService
     ]
 })
 export class LockModule

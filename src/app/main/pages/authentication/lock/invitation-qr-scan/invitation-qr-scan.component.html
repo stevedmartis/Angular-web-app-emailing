@@ -3,7 +3,11 @@
     <div id="lock-form-wrapper" fxLayout="column" fxLayoutAlign="center center">
 
 
-        <div *ngIf="_formInvitationNewService.eventLoad" id="lock-form"
+
+
+
+
+        <div *ngIf="_formInvitationService.eventLoad" id="lock-form"
             [@animate]="{value:'*',params:{duration:'300ms',y:'100px'}}">
 
 
@@ -13,7 +17,9 @@
 
                     <div class="header" fxLayout="column" fxLayoutAlign="center center" fxLayout.gt-sm="row"
                         fxLayoutAlign.gt-sm="space-between end">
-                        <img class="img-banner" [src]="_formInvitationNewService.event.imgBanner">
+                        <img class="img-banner" [src]="_formInvitationService.event.imgBanner">
+
+
 
                     </div>
 
@@ -32,11 +38,11 @@
                     fxLayoutAlign.gt-xs="start center">
 
                     <div>
-                        <div class="title">{{ _formInvitationNewService.event.eventName }}</div>
-                        <div class="date">{{ _formInvitationNewService.event.dateEvent | date:"fullDate" }}</div>
+                        <div class="title">{{ _formInvitationService.campaignName }}</div>
+                        <div class="date">{{ _formInvitationService.event.dateEvent | date:"fullDate" }}</div>
                       
                         <div class="subtitle">
-                            Completar Formulario
+                            Validar invitado
                         </div>
                     </div>
 
@@ -92,9 +98,15 @@
                     </mat-form-field>
 
 
-                    <button mat-raised-button [disabled]="invitationForm.invalid" (click)="confirmInvitation()" class="submit-button  mt-24 mt-md-0" color="accent">
+                    <button *ngIf="!assit_checked" mat-raised-button (click)="confirmInvitation()" class="submit-button  mt-24 mt-md-0" color="accent">
                         <mat-icon matSuffix>done</mat-icon>
-                        PONERME EN LA LISTA!
+                        CONFIRMAR ASISTENCIA
+                    </button>
+
+
+                    <button *ngIf="assit_checked" mat-raised-button class="submit-button  mt-24 mt-md-0" color="cancel-button">
+                        <mat-icon matSuffix>done_all</mat-icon>
+                        CONFIRMADO!
                     </button>
                 </form>
 
@@ -107,7 +119,6 @@
           
             <div class="message">
                 <a class="link" [routerLink]="'/pages/auth/login'">Are you not Katherine?</a>
-            </div>
   -->
         </div>
 

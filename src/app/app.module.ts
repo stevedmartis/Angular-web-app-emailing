@@ -38,6 +38,7 @@ import { SocketIoModule, SocketIoConfig} from 'ngx-socket-io';
 import { environment } from 'environments/environment.prod';
 import { WebsocketService } from 'app/services/websocket.service';
 import { getSpanishPaginatorIntl } from './paginator.translate';
+import { InvitationQrScanComponent } from './main/pages/authentication/lock/invitation-qr-scan/invitation-qr-scan.component';
 
 const appRoutes: Routes = [
     {

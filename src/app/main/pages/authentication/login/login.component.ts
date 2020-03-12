@@ -1,26 +1,27 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, AbstractControl } from '@angular/forms';
+import { Component, OnInit, ViewEncapsulation } from "@angular/core";
+import {
+    FormBuilder,
+    FormGroup,
+    Validators,
+    AbstractControl
+} from "@angular/forms";
 
-import { FuseConfigService } from '@fuse/services/config.service';
-import { fuseAnimations } from '@fuse/animations';
-import { AuthService } from 'app/services/authentication/auth.service';
-import { first } from 'rxjs/operators';
+import { FuseConfigService } from "@fuse/services/config.service";
+import { fuseAnimations } from "@fuse/animations";
+import { AuthService } from "app/services/authentication/auth.service";
+import { first } from "rxjs/operators";
 
-import { MatSnackBar } from '@angular/material/snack-bar';
-import { Router } from '@angular/router';
-
+import { MatSnackBar } from "@angular/material/snack-bar";
+import { Router } from "@angular/router";
 
 @Component({
-    selector     : 'login',
-    templateUrl  : './login.component.html',
-    styleUrls    : ['./login.component.scss'],
+    selector: "login",
+    templateUrl: "./login.component.html",
+    styleUrls: ["./login.component.scss"],
     encapsulation: ViewEncapsulation.None,
-    animations   : fuseAnimations,
-    
+    animations: fuseAnimations
 })
-export class LoginComponent implements OnInit
-{
-
+export class LoginComponent implements OnInit {
     loginForm: FormGroup;
     loading: boolean = false;
     /**
@@ -35,20 +36,17 @@ export class LoginComponent implements OnInit
         private authServices: AuthService,
         private router: Router,
         private _matSnackBar: MatSnackBar
-
-    )
-    {
-
+    ) {
         // Configure the layout
         this._fuseConfigService.config = {
             layout: {
-                navbar   : {
+                navbar: {
                     hidden: true
                 },
-                toolbar  : {
+                toolbar: {
                     hidden: true
                 },
-                footer   : {
+                footer: {
                     hidden: true
                 },
                 sidepanel: {
@@ -58,7 +56,6 @@ export class LoginComponent implements OnInit
         };
     }
 
-
     // -----------------------------------------------------------------------------------------------------
     // @ Lifecycle hooks
     // -----------------------------------------------------------------------------------------------------
@@ -66,44 +63,50 @@ export class LoginComponent implements OnInit
     /**
      * On init
      */
-    ngOnInit(): void
-    {
+    ngOnInit(): void {
         this.loginForm = this._formBuilder.group({
-            email   : ['', [Validators.required, Validators.email]],
-            password: ['', Validators.required]
+            email: ["", [Validators.required, Validators.email]],
+            password: ["", Validators.required]
         });
-
-  
     }
 
     login() {
-
         this.loading = true;
 
-        const email = this.loginForm.get('email')
-        const password = this.loginForm.get('password')
-        this.authServices.login(email.value, password.value)
-        .pipe(first())
-        .subscribe(user => {
+        const email = this.loginForm.get("email");
+        const password = this.loginForm.get("password");
+        this.authServices
+            .login(email.value, password.value)
+            .pipe(first())
+            .subscribe(
+                user => {
+                    console.log(user);
 
-            console.log(user)
+                    const urlStatePass = this.authServices.invitedPassStateUrl;
+                    const url = "pages/";
 
-                this.router.navigate(['/apps/dashboards/analytics']);
+                    console.log(urlStatePass)
 
-                
-            
-        },
-        err => {
-            console.log('error api: ', err)    
-            this._matSnackBar.open(err.error.message, 'OK', {
-                verticalPosition: 'top',
-                duration        : 3000
-            });        
-           
-            this.loading = false;
-        })
+                    if(!urlStatePass){
+
+                        this.router.navigate(["/apps/dashboards/analytics"]);
+                    }
+
+                    else {
+                        this.router.navigate([urlStatePass]);
+                    }
+
+
+                },
+                err => {
+                    console.log("error api: ", err);
+                    this._matSnackBar.open(err.error.message, "OK", {
+                        verticalPosition: "top",
+                        duration: 3000
+                    });
+
+                    this.loading = false;
+                }
+            );
     }
-
-
-
 }

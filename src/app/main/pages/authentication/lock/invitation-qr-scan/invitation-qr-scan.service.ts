@@ -1,3 +1,4 @@
+
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot, Router } from '@angular/router';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
@@ -7,7 +8,7 @@ import { AuthService } from 'app/services/authentication/auth.service';
 import { map } from 'rxjs/operators';
 
 @Injectable()
-export class FormInvitedService implements Resolve<any>
+export class InvitationQrScanService implements Resolve<any>
 {
     routeParams: any;
     onInvitedChanged: BehaviorSubject<any>;
@@ -159,6 +160,8 @@ export class FormInvitedService implements Resolve<any>
 
     return new Promise((resolve, reject) => {
 
+
+      
       this._httpClient.get(environment.apiUrl + '/api/event/' + idEvent)
           .subscribe((response: any) => {
               resolve(response);
@@ -177,10 +180,18 @@ export class FormInvitedService implements Resolve<any>
 
 
     
-  confirmInvitation(invited) {
+  assistCheced(invited) {
+
+    const  obj = {
+      invitedId: invited.invitedId,
+      assist_checked: true,
+      contactado: 'web'
+    }
+
+    console.log(obj)
 
         return new Promise((resolve, reject) => {
-            this._httpClient.post(environment.apiUrl + '/api/invited/confirm-invited', invited )
+            this._httpClient.post(environment.apiUrl + '/api/invited/assist-checked', obj )
             .subscribe((response: any) => {
 
                 console.log(response)

@@ -133,11 +133,20 @@ export class Product
      */
     removeTag(tag): void
     {
+
+    
+
+
         const index = this.tags.indexOf(tag);
 
         if ( index >= 0 )
         {
             this.tags.splice(index, 1);
         }
+
+         // add space the input value
+
+            console.log('xuaplo pnera')
+           
     }
 }

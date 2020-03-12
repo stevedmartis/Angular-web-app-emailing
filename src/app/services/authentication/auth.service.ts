@@ -12,6 +12,7 @@ import { Person } from 'app/models/person';
 export class AuthService {
   public username: any;
   public email: any;
+  public invitedPassStateUrl: any
 
   constructor(private http: HttpClient) {
 

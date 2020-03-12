@@ -27,6 +27,10 @@ export class AuthGuardService {
       }
 
       this.router.navigate(['/pages/auth/login'], { queryParams: { returnUrl: state.url } });
+
+      console.log(state.url);
+
+      this.authenticationService.invitedPassStateUrl = state.url;
       this.authenticationService.isLogged = false;
      
       return false;
