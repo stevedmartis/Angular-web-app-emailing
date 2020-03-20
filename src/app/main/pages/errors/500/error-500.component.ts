@@ -53,9 +53,6 @@ export class Error500Component implements OnInit
     generateQRCode(){
 
         this.myAngularxQrCode = 'http://www.turevento.net/#/pages/invited-qr-pass/5e5ef3de7289df4630602f53/5e5fb1047289df4630602f56'
-        
-        
-      
 
     }
 }

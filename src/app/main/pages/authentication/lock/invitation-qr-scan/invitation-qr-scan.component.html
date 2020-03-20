@@ -98,6 +98,33 @@
                     </mat-form-field>
 
 
+                    <mat-form-field class="example-chip-list">
+                        <mat-chip-list #chipList aria-label="Fruit selection">
+                          <mat-chip
+                            *ngFor="let tag of tags"
+                            [selectable]="selectable"
+                            [removable]="removable"
+                            (removed)="remove(tag)">
+                            {{tag}}
+                            <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+                          </mat-chip>
+                          <input
+                            placeholder="Seleccione tag"
+                            #tagInput
+                            [formControl]="tagCtrl"
+                            [matAutocomplete]="auto"
+                            [matChipInputFor]="chipList"
+                            [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                            (matChipInputTokenEnd)="add($event)">
+                        </mat-chip-list>
+                        <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
+                          <mat-option *ngFor="let tag of filteredTags | async" [value]="tag">
+                            {{tag}}
+                          </mat-option>
+                        </mat-autocomplete>
+                      </mat-form-field>
+
+
                     <button *ngIf="!assit_checked" mat-raised-button (click)="confirmInvitation()" class="submit-button  mt-24 mt-md-0" color="accent">
                         <mat-icon matSuffix>done</mat-icon>
                         CONFIRMAR ASISTENCIA

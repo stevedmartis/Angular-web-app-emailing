@@ -12,6 +12,7 @@ import { NewInvitedComponent } from './new-invited-event.component';
 import { InvitationQrScanService } from './invitation-qr-scan/invitation-qr-scan.service';
 import { InvitationQrScanComponent } from './invitation-qr-scan/invitation-qr-scan.component';
 import { AuthGuardService } from 'app/main/helpers/auth-guard.service';
+import { MaterialModule } from 'app/main/angular-material-elements/material.module';
 
 const routes = [
     {
@@ -49,11 +50,7 @@ const routes = [
     ],
     imports     : [
         RouterModule.forChild(routes),
-
-        MatButtonModule,
-        MatFormFieldModule,
-        MatIconModule,
-        MatInputModule,
+        MaterialModule,
         FuseSharedModule
     ],
     providers: [

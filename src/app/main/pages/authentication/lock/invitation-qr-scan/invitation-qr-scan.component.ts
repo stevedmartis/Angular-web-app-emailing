@@ -1,16 +1,18 @@
 
-import { Component, OnInit, ViewEncapsulation, OnDestroy } from "@angular/core";
-import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { Component, OnInit, ViewEncapsulation, OnDestroy, ViewChild, ElementRef } from "@angular/core";
+import { FormBuilder, FormGroup, Validators, FormControl } from "@angular/forms";
 
 import { FuseConfigService } from "@fuse/services/config.service";
 import { fuseAnimations } from "@fuse/animations";
 import { InvitationQrScanService } from './invitation-qr-scan.service';
 import { Invited } from '../invited.module';
-import { takeUntil } from 'rxjs/operators';
 
-import { Subject } from 'rxjs';
+import { Subject, Observable } from 'rxjs';
 import { Router } from '@angular/router';
-
+import { MatChipInputEvent } from '@angular/material';
+import {map, startWith, takeUntil} from 'rxjs/operators';
+import {MatAutocompleteSelectedEvent, MatAutocomplete} from '@angular/material/autocomplete';
+import {COMMA, ENTER} from '@angular/cdk/keycodes';
 
 @Component({
   selector: 'lock',
@@ -25,9 +27,23 @@ export class InvitationQrScanComponent implements OnInit, OnDestroy {
 
     invited: Invited;
     assit_checked: boolean = false;
-  
 
     private _unsubscribeAll: Subject<any>;
+
+    
+
+    
+  visible = true;
+  selectable = true;
+  removable = true;
+  separatorKeysCodes: number[] = [];
+  tagCtrl = new FormControl();
+  filteredTags: Observable<string[]>;
+  tags: string[] = [];
+
+
+  @ViewChild('tagInput', {static: false}) tagInput: ElementRef<HTMLInputElement>;
+  @ViewChild('auto', {static: false}) matAutocomplete: MatAutocomplete;
    
     
     
@@ -44,7 +60,11 @@ export class InvitationQrScanComponent implements OnInit, OnDestroy {
         private router: Router
     ) {
 
+      
+
         this.invited = new Invited();
+
+
 
         this._unsubscribeAll = new Subject();
         // Configure the layout
@@ -100,6 +120,26 @@ export class InvitationQrScanComponent implements OnInit, OnDestroy {
                     console.log('invited', invited)
                     this.invited = new Invited(invited.invited);
                     console.log('this.producte.evnd.id',invited.invited._id)
+
+                    this._formInvitationService.getTagsByEvent().then( ( ) => {
+
+                      console.log('aray name ',  this._formInvitationService.tagsArray)
+
+                      const array = this._formInvitationService.tagsArray.map(
+                        tag => tag.name
+                      )
+
+                      console.log('array', array)
+
+                      this.filteredTags = this.tagCtrl.valueChanges.pipe(
+                        
+                        startWith(null),
+
+                    
+                        map((tag: string | null) => tag ? this._filter(tag) : array.slice()));
+                    })
+
+                    
                 }
 
                 this.invitationForm = this.createInvitedForm();
@@ -125,20 +165,15 @@ export class InvitationQrScanComponent implements OnInit, OnDestroy {
             lastname:  [this.invited.lastname, [Validators.required]], 
             email: [this.invited.email, [Validators.required, Validators.email]], 
             company:  [this.invited.company, [Validators.required]], 
-            asiste: [],
+            assit_checked: [true],
             jobtitle: [this.invited.jobtitle, [Validators.required]], 
             phone: [this.invited.phone], 
-            contactado: ['email']
+            contactado: ['email'],
         });
     }
 
 
     confirmInvitation(){
-
-       const  value = 'si'
-        this.invitationForm.controls['asiste'].setValue(value);
-
-
        const data = this.invitationForm.getRawValue();
 
        console.log('invited data: ', data)
@@ -148,15 +183,52 @@ export class InvitationQrScanComponent implements OnInit, OnDestroy {
         .then( (inv: Invited ) => {
 
             console.log(inv)
-
-
             //this.router.navigate(['/pages/confirm/si/' + this._formInvitationService.campaignId + '/' + this.invited._id])
 
             this.assit_checked = true;
         })
 
-
     }
+
+
+
+
+  add(event: MatChipInputEvent): void {
+    const input = event.input;
+    const value = event.value;
+
+    // Add our fruit
+    if ((value || '').trim()) {
+      this.tags.push(value.trim());
+    }
+
+    // Reset the input value
+    if (input) {
+      input.value = '';
+    }
+
+    this.tagCtrl.setValue(null);
+  }
+
+  remove(fruit: string): void {
+    const index = this.tags.indexOf(fruit);
+
+    if (index >= 0) {
+      this.tags.splice(index, 1);
+    }
+  }
+
+  selected(event: MatAutocompleteSelectedEvent): void {
+    this.tags.push(event.option.viewValue);
+    this.tagInput.nativeElement.value = '';
+    this.tagCtrl.setValue(null);
+  }
+
+  private _filter(value: string): string[] {
+    const filterValue = value.toLowerCase();
+
+    return this._formInvitationService.tagsArray.filter(fruit => fruit.toLowerCase().indexOf(filterValue) === 0);
+  }
 
 
 }
