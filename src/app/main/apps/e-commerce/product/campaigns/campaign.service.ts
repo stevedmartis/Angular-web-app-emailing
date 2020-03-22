@@ -66,6 +66,7 @@ export class CampaignService
   private files: Array<FileUploadModel> = [];
   
   fileData: File = null;
+  nameFile: any
 
 
 
@@ -139,6 +140,8 @@ export class CampaignService
 
 console.log('campaign', campaign, this._productService.idNowEvent)        
         return new Promise((resolve, reject) => {
+
+
             this._httpClient.post(environment.apiUrl + '/api/campaign/add-new-campaign', 
             {  
                 user: this.userId,
@@ -146,10 +149,13 @@ console.log('campaign', campaign, this._productService.idNowEvent)
                 affair: campaign.affair,
                 sender: campaign.sender,
                 nameSender: campaign.nameSender,
-                imgBlob: this.image,
+                imgBlob: this.previewUrl,
                 footer: campaign.footer,
                 messageConfirm: campaign.messageConfirm,
-                messageCancel: campaign.messageCancel
+                messageCancel: campaign.messageCancel,
+                webLinkCharge: campaign.webLinkCharge,
+                webLink: campaign.webLink,
+                imgTitle: campaign.imgTitle
 
             })
                 .subscribe((response: any) => {
@@ -198,7 +204,10 @@ console.log('campaign', campaign, this._productService.idNowEvent)
                     imgBlob: this.previewUrl,
                     messageConfirm: campaign.messageConfirm,
                     messageCancel: campaign.messageCancel,
-                    footer: campaign.footer
+                    footer: campaign.footer,
+                    webLinkCharge: campaign.webLinkCharge,
+                    webLink: campaign.webLink,
+                    imgTitle: campaign.imgTitle
     
                 })
                 .subscribe((response: any) => {
@@ -435,7 +444,8 @@ console.log(' error ',  this.value, array.length)
     fileProgress(fileInput: any, type) {
         this.fileData = <File>fileInput
     
-        console.log(fileInput, this.fileData)
+        console.log(this.fileData)
+
         this.preview(type);
     }
       
@@ -447,15 +457,20 @@ console.log(' error ',  this.value, array.length)
         return;
       }
     
+      console.log( this.fileData)
       var reader = new FileReader();      
       reader.readAsDataURL(this.fileData); 
       reader.onload = (_event) => { 
         
-
+      
         if(type === 'camp'){
 
             this.previewUrl = reader.result; 
+
+           
             this.image = this.previewUrl;
+
+            console.log( this.image)
 
             this.previewLoading = true;
 

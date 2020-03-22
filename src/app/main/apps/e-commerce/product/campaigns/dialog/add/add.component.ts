@@ -16,6 +16,7 @@ export class FileUploadModel {
   canCancel: boolean;
   sub?: Subscription;
   type: string;
+  name: string
 }
 
 
@@ -31,7 +32,7 @@ export class AddComponent implements OnInit {
   @Input() param = 'file';
 @Input() target = 'https://file.io';
 
-fileData: File = null
+fileData = new FileUploadModel()
 
 fileUp: any;
 
@@ -93,38 +94,42 @@ private files: Array<FileUploadModel> = [];
           id              : [this.campaign._id],
           affair         : [this.campaign.affair],
           imgBlob: [],
+          imgTitle: [{value: this.campaign.imgTitle, disabled: true}],
           sender            : [this.campaign.sender, [Validators.required, Validators.email]],
+         
           nameSender         : [this.campaign.nameSender],
           messageConfirm: [this.campaign.messageConfirm],
           messageCancel:  [this.campaign.messageCancel],
           footer:              [this.campaign.footer],
+          webLinkCharge: [this.campaign.webLinkCharge],
+          webLink: [this.campaign.webLink],
+          
 
   
       });
   }
+
+  get f() { return this.campaignForm.controls; }
 
 
   fileUpload(){
 
     const type = 'camp'
     const fileUpload = document.getElementById('fileUpload') as HTMLInputElement;
-    fileUpload.onchange = (event) => {
-
-        for(let index = 0; index < fileUpload.files.length; index++) {
-            const file = fileUpload.files[index];
+    fileUpload.onchange = (event: any) => {
 
 
-            this._campaignService.fileProgress(file, type )
-            this.files.push({
-                data: file,
-                state: 'in',
-                inProgress: false,
-                progress: 0,
-                canRetry: false,
-                canCancel: true,
-                type: 'image'
-            });
-        }
+
+            this._campaignService.fileProgress(event.target.files[0], type )
+
+          
+
+           const name = event.target.files[0].name
+
+         this.f.imgTitle.setValue(name)
+
+            
+    
        // this.uploadFiles();
     }
     fileUpload.click();

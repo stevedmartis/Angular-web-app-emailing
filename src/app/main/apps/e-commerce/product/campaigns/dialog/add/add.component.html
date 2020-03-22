@@ -11,112 +11,150 @@
 
     <div mat-dialog-content class="pb-0 m-0" fusePerfectScrollbar>
 
-        <form [formGroup]="campaignForm" class="form">
+<div class="mb-24" fxLayout="column" fxLayoutAlign="start" fxLayout.gt-md="row" >
 
-            <div fxLayout="row" fxLayoutAlign="start start">
-                <mat-form-field appearance="outline" fxFlex>
-                    <mat-label>Asunto</mat-label>
-                   
-                    <input name="name" formControlName="affair" matInput required>
-                </mat-form-field>
-            </div>
+    <!-- REACTIVE FORM EXAMPLE -->
 
-            <div fxLayout="row" fxLayoutAlign="start start">
-                <div class="container" *ngIf="!_campaignService.previewLoading">
-                    <img src="assets/images/file_placeholder.png" class="img-empty" alt="" />
- 
-                    
-                    <input hidden id="fileUpload" type="file" #fileInput />
-                    <div class="overlay"></div>
-                    <div></div>
-                    <button mat-fab  (click)="fileUpload()"  class="button fuse-white mt-24 mt-md-0">
-                        <mat-icon>add_photo_alternate</mat-icon>
-                    </button>
-                  </div>
+    <form class="" fxLayout="column" fxLayoutAlign="start"
+          fxFlex="1 0 auto" name="form" [formGroup]="campaignForm"  >
 
-                  <div class="container-load" *ngIf="_campaignService.previewLoading">
-                    <img [src]="_campaignService.previewUrl"  class="img-load"  alt="" />
-                    <input hidden  id="fileUpload" type="file" #fileInput formControlName="imgBlob"/>
-                    <div class="overlay"></div>
-                    <div></div>
-                    <button mat-fab  (click)="fileUpload()"  class="button fuse-white mt-24 mt-md-0">
-                        <mat-icon>add_photo_alternate</mat-icon>
-                    </button>
-                  </div>
-            </div>
+        <div class="h3 mb-24 label-form">Datos del email</div>
 
-            <div fxLayout="row" fxLayoutAlign="start start">
-                <mat-form-field appearance="outline" fxFlex>
-                    <mat-label>Email remitente</mat-label>
-                    <input formControlName="sender" matInput>
-                </mat-form-field>
-            </div>
+        <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
 
-            <div fxLayout="row" fxLayoutAlign="start start">
-                <mat-form-field appearance="outline" fxFlex>
-                    <mat-label>Nombre remitente</mat-label>
-                    <input formControlName="nameSender" matInput>
-                </mat-form-field>
-            </div>
+            <mat-form-field appearance="outline" fxFlex="100">
+                <mat-label>Asunto</mat-label>
+                <input name="name" formControlName="affair" matInput required>
+            </mat-form-field>
 
 
-            <div fxLayout="row" class="textarea-wrapper" fxLayoutAlign="start start">
-                <mat-form-field appearance="outline" fxFlex>
-                    <mat-label>Mensaje confirmación</mat-label>
-                    <textarea name="messageConfirm" formControlName="messageConfirm" matInput type="text" max-rows="4"></textarea>
-                </mat-form-field>
-            </div>
+        </div>
 
+
+
+        <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+
+
+
+            <mat-form-field appearance="outline" fxFlex  fxFlex="100" class="pl-4" class="container">
+                <mat-label>Imagen</mat-label>
+                <input name="imgTitle" formControlName="imgTitle" matInput>
+                <mat-icon matSuffix class="secondary-text">
+                
+                        <input hidden id="fileUpload" type="file" #fileInput />
+        
+                        <button mat-fab  (click)="fileUpload()"  class="button fuse-white mt-24 mt-md-0">
+                            <mat-icon>add_photo_alternate</mat-icon>
+                        </button>
+                
+                </mat-icon>
+            </mat-form-field>
+
+
+        </div>
+
+
+        <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+
+
+            <mat-form-field appearance="outline"  fxFlex="50" class="pr-4">
+                <mat-label>Email remitente</mat-label>
+                <input formControlName="sender" matInput>
+                <mat-icon matSuffix class="secondary-text">email</mat-icon>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" fxFlex  fxFlex="50" class="pl-4">
+                <mat-label>Nombre remitente</mat-label>
+                <input formControlName="nameSender" matInput>
+                <mat-icon matSuffix class="secondary-text">account_circle</mat-icon>
+            </mat-form-field>
+
+
+        </div>
+
+        <div class="slide-bottom w-100-p">
+            <mat-slide-toggle [checked]="false" formControlName="webLinkCharge">Insertar link de invitación</mat-slide-toggle>
+         </div>
+
+         <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto" *ngIf="f.webLinkCharge.value">
+
+            <mat-form-field appearance="outline" fxFlex="100">
+                <mat-label>Link</mat-label>
+                <input name="link" formControlName="webLink" matInput required>
+                <mat-icon matSuffix class="secondary-text">insert_link</mat-icon>
+            </mat-form-field>
+            
             
 
+        </div>
 
-            <div fxLayout="row" class="textarea-wrapper" fxLayoutAlign="start start">
-                <mat-form-field appearance="outline" fxFlex>
-                    <mat-label>Mensaje cancelación</mat-label>
-                    <textarea name="messageCancel" formControlName="messageCancel" matInput type="text" max-rows="4"></textarea>
-                </mat-form-field>
-            </div>
+<div *ngIf="!f.webLinkCharge.value">
+     
 
-            <div fxLayout="row" class="textarea-wrapper" fxLayoutAlign="start start">
-                <mat-form-field appearance="outline" fxFlex>
-                    <mat-label>Datos adicionales</mat-label>
-                    <textarea name="footer" formControlName="footer" matInput type="text" max-rows="4"></textarea>
-                </mat-form-field>
-            </div>
+        <div class="h3 mb-24 label-form">Datos de respuesta</div>
 
-        </form>
+        <div fxLayout="row" class="textarea-wrapper" fxLayoutAlign="start start">
+            <mat-form-field appearance="outline" fxFlex>
+                <mat-label>Mensaje confirmación</mat-label>
+                <textarea name="messageConfirm" formControlName="messageConfirm" matInput type="text" max-rows="4"></textarea>
+            </mat-form-field>
+        </div>
+        
+        <div fxLayout="row" class="textarea-wrapper" fxLayoutAlign="start start">
+            <mat-form-field appearance="outline" fxFlex>
+                <mat-label>Mensaje cancelación</mat-label>
+                <textarea name="messageCancel" formControlName="messageCancel" matInput type="text" max-rows="4"></textarea>
+            </mat-form-field>
+        </div>
 
 
-    </div>
+        <div fxLayout="row" class="textarea-wrapper" fxLayoutAlign="start start">
+            <mat-form-field appearance="outline" fxFlex>
+                <mat-label>Datos adicionales</mat-label>
+                <textarea name="footer" formControlName="footer" matInput type="text" max-rows="4"></textarea>
+            </mat-form-field>
+        </div>
 
-    <div mat-dialog-actions class="m-0 p-16" fxLayout="row" fxLayoutAlign="end center">
+</div>
 
-        <button *ngIf="action === 'edit'"
-                mat-button
-                class="mr-8"
-                (click)="matDialogRef.close(['delete',campaignForm])"
-                aria-label="Delete"
-                matTooltip="Delete">
-            ELIMINAR
-        </button>
 
-        <button *ngIf="action !== 'edit'"
-                mat-button
-                class="save-button"
-                (click)="matDialogRef.close(campaignForm)"
-                [disabled]="campaignForm.invalid"
-                aria-label="SAVE">
-            AGREGAR
-        </button>
+    </form>
 
-        <button *ngIf="action === 'edit'"
-                mat-button
-                class="save-button"
-                (click)="matDialogRef.close(['save',campaignForm])"
-                [disabled]="campaignForm.invalid"
-                aria-label="SAVE">
-            GUARDAR
-        </button>
 
-    </div>
+</div>
+
+
+<div mat-dialog-actions class="m-0 p-16" fxLayout="row" fxLayoutAlign="end center">
+
+    <button *ngIf="action === 'edit'"
+            mat-button
+            class="mr-8"
+            (click)="matDialogRef.close(['delete',campaignForm])"
+            aria-label="Delete"
+            matTooltip="Delete">
+        ELIMINAR
+    </button>
+
+    <button *ngIf="action !== 'edit'"
+            mat-button
+            class="save-button"
+            (click)="matDialogRef.close(campaignForm)"
+            [disabled]="campaignForm.invalid"
+            aria-label="SAVE">
+        AGREGAR
+    </button>
+
+    <button *ngIf="action === 'edit'"
+            mat-button
+            class="save-button"
+            (click)="matDialogRef.close(['save',campaignForm])"
+            [disabled]="campaignForm.invalid"
+            aria-label="SAVE">
+        GUARDAR
+    </button>
+
+</div>
+
+</div>
+
 </div>

@@ -1,18 +1,22 @@
-import { Injectable } from '@angular/core';
-import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot, Router } from '@angular/router';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { BehaviorSubject, Observable } from 'rxjs';
-import { environment } from 'environments/environment';
-import { AuthService } from 'app/services/authentication/auth.service';
-import { map } from 'rxjs/operators';
+import { Injectable } from "@angular/core";
+import {
+    ActivatedRouteSnapshot,
+    Resolve,
+    RouterStateSnapshot,
+    Router
+} from "@angular/router";
+import { HttpClient, HttpHeaders } from "@angular/common/http";
+import { BehaviorSubject, Observable } from "rxjs";
+import { environment } from "environments/environment";
+import { AuthService } from "app/services/authentication/auth.service";
+import { map } from "rxjs/operators";
 
 @Injectable()
-export class FormInvitedService implements Resolve<any>
-{
+export class FormInvitedService implements Resolve<any> {
     routeParams: any;
     onInvitedChanged: BehaviorSubject<any>;
-    campaignId: any
-    invitedId: any
+    campaignId: any;
+    invitedId: any;
     campaignInvitation: any;
     invited: any;
     campaignName: any;
@@ -29,14 +33,10 @@ export class FormInvitedService implements Resolve<any>
         private _httpClient: HttpClient,
         private authServices: AuthService,
         private router: Router
- 
     ) {
         // Set the defaults
         this.onInvitedChanged = new BehaviorSubject({});
-
     }
-
-    
 
     /**
      * Resolver
@@ -45,158 +45,158 @@ export class FormInvitedService implements Resolve<any>
      * @param {RouterStateSnapshot} state
      * @returns {Observable<any> | Promise<any> | any}
      */
-    resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<any> | Promise<any> | any {
+    resolve(
+        route: ActivatedRouteSnapshot,
+        state: RouterStateSnapshot
+    ): Observable<any> | Promise<any> | any {
         return new Promise((resolve, reject) => {
-
             this.routeParams = route.params;
 
             this.campaignId = this.routeParams.campaignId;
 
             this.invitedId = this.routeParams.invitedId;
 
-        
-                Promise.all([
+            Promise.all([
+                this.getCampaignById(this.campaignId).then((res: any) => {
+                    console.log(res);
+                    const linkBol = res.campaign.webLinkCharge;
+                    const linkString = res.campaign.webLink;
 
-                    this.getCampaignById(this.campaignId)
-                    .then(() => {
+                    if (linkBol) {
+                        console.log(linkString);
 
-                        this.editInvited = true
-                        
-                        this.getEventById(this.campaignInvitation.eventId)
-                        .then( (data ) => {
-                            console.log(data)
-        
-                            this.event = data.event;
-        
-                            this.eventLoad = true
+                        this.onClickEditInvited()
+                        .then((x) => {
+
+                            console.log('x', x)
+                        window.location.href = linkString;
+
+                        return;
+
                         })
-                    }),
 
-                    this.getInvited()
-                    .then(() => {
-
-
-                        resolve();
-
-                    }, reject),
-
-
-
-                    //this.getEventsByUser()
+                    }
 
                     
-                    
-                ]).then(
-                    () => {
-                        resolve();
-                    },
-                    reject
-                );
 
+                    this.editInvited = true;
+
+                    this.getEventById(this.campaignInvitation.eventId).then(
+                        data => {
+                            console.log(data);
+
+                            this.event = data.event;
+
+                            this.eventLoad = true;
+                        }
+                    );
+                }),
+
+                this.getInvited().then(() => {
+
+                    this.onClickEditInvited()
+                    .then((x) => {
+
+                        console.log('x', x)
+  
+
+                    })
+                    
+                    resolve();
+
+                }, reject)
+
+                //this.getEventsByUser()
+            ]).then(() => {
+                resolve();
+            }, reject);
         });
     }
 
-
     getCampaignById(idCampaign) {
-
-        console.log(idCampaign)
-
-        return new Promise((resolve, reject) => {
-
-            this._httpClient.get(environment.apiUrl + '/api/get-campaign/' + idCampaign)
-            .subscribe((response: any) => {
-
-                console.log(response)
-
-                this.campaignInvitation = response.campaign;
-
-                this.campaignName = this.campaignInvitation.affair;
-
-                console.log( this.campaignInvitation)
-
-
-                resolve(response);
-
-                
-                
-            }, reject);   
-            
-            
-
-      })
-
-    }
-
-    
-    getInvited(): Promise<any>{
-
-    return new Promise((resolve, reject) => {
-
-
-    console.log('elseseeee', this.invitedId)
-
-      this._httpClient.get(environment.apiUrl + '/api/invited-confirm/' + this.invitedId)
-          .subscribe((response: any) => {
-              resolve(response);
-
-              console.log(response);
-
-              this.invited = response;
-
-              this.onInvitedChanged.next(this.invited);
-              resolve(response)
-
-              console.log(response)
-          }, reject);
-        
-  });
-    
-
-  }
-
-      
-  getEventById(idEvent): Promise<any>{
-
-    return new Promise((resolve, reject) => {
-
-      this._httpClient.get(environment.apiUrl + '/api/event/' + idEvent)
-          .subscribe((response: any) => {
-              resolve(response);
-
-              console.log(response);
-
-       
-
-
-          }, reject);
-        
-  });
-    
-
-  }
-
-
-    
-  confirmInvitation(invited) {
+        console.log(idCampaign);
 
         return new Promise((resolve, reject) => {
-            this._httpClient.post(environment.apiUrl + '/api/invited/confirm-invited', invited )
-            .subscribe((response: any) => {
+            this._httpClient
+                .get(environment.apiUrl + "/api/get-campaign/" + idCampaign)
+                .subscribe((response: any) => {
+                    console.log(response);
 
-                console.log(response)
+                    this.campaignInvitation = response.campaign;
 
-                resolve(response);
-                
-            }, reject);     
+                    this.campaignName = this.campaignInvitation.affair;
 
-      })
+                    console.log(this.campaignInvitation);
 
+                    resolve(response);
+                }, reject);
+        });
     }
 
-    /**
-     * Get products
-     *
-     * @returns {Promise<any>}
-     */
+    getInvited(): Promise<any> {
+        return new Promise((resolve, reject) => {
+            console.log("elseseeee", this.invitedId);
 
+            this._httpClient
+                .get(
+                    environment.apiUrl +
+                        "/api/invited-confirm/" +
+                        this.invitedId
+                )
+                .subscribe((response: any) => {
+                    resolve(response);
+
+                    console.log(response);
+
+                    this.invited = response;
+
+                    this.onInvitedChanged.next(this.invited);
+                    resolve(response);
+
+                    console.log(response);
+                }, reject);
+        });
+    }
+
+    getEventById(idEvent): Promise<any> {
+        return new Promise((resolve, reject) => {
+            this._httpClient
+                .get(environment.apiUrl + "/api/event/" + idEvent)
+                .subscribe((response: any) => {
+                    resolve(response);
+
+                    console.log(response);
+                }, reject);
+        });
+    }
+
+    confirmInvitation(invited) {
+        return new Promise((resolve, reject) => {
+            this._httpClient
+                .post(
+                    environment.apiUrl + "/api/invited/confirm-invited",
+                    invited
+                )
+                .subscribe((response: any) => {
+                    console.log(response);
+
+                    resolve(response);
+                }, reject);
+        });
+    }
+
+    onClickEditInvited() {
+        return new Promise((resolve, reject) => {
+            this._httpClient
+                .post(environment.apiUrl + "/api/invited/onClick", {
+                    invitedId: this.invitedId,
+                    onClick: true
+                })
+                .subscribe((response: any) => {
+                    console.log(response);
+
+                    resolve(response);
+                }, reject);
+        });
+    }
 }

@@ -10,6 +10,9 @@ export class Campaign
     nameSender: string
     messageCancel: string
     footer: string;
+    webLink: string;
+    webLinkCharge: boolean;
+    imgTitle: string
     
     /**
      * Constructor
@@ -27,7 +30,11 @@ export class Campaign
 
             this.footer = campaign.footer || '';
             this.messageConfirm = campaign.messageConfirm || '';
-            this.messageCancel  = campaign.messageCancel || ''
+            this.messageCancel  = campaign.messageCancel || '';
+            this.webLink = campaign.webLink || '';
+            this.webLinkCharge = campaign.webLinkCharge || false;
+            this.imgTitle = campaign.imgTitle || '';
+
 
 
         }

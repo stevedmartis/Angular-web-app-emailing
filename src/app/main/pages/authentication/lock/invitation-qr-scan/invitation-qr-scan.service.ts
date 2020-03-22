@@ -72,7 +72,7 @@ export class InvitationQrScanService implements Resolve<any> {
                             this.getInvited().then(() => {
                                 resolve();
 
-                                this.getTagsByEvent();
+                                
                             }, reject);
                         }
                     );

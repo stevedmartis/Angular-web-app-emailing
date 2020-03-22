@@ -211,7 +211,8 @@ export class EcommerceProductComponent implements OnInit, OnDestroy
             address      : [this.product.address],
             tags            : [this.product.tags],
             active: [this.product.active],
-            img: [ ]
+            img: [ ],
+
         });
     }
 

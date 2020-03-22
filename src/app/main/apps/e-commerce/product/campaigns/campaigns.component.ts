@@ -87,6 +87,7 @@ export class CampaignsComponent implements OnInit {
 
     addCampaignDialog() {
         this.dialogRef = this._matDialog.open(AddComponent, {
+            panelClass: "my-class-add",
             disableClose: true,
             data: {
                 action: "new"
@@ -121,6 +122,7 @@ export class CampaignsComponent implements OnInit {
     editCampaign(campaign): void
     {
         this.dialogRef = this._matDialog.open(AddComponent, {
+            panelClass: "my-class-add",
             disableClose: true,
             data      : {
                 campaign: campaign,
