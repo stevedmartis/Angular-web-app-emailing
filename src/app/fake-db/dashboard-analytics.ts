@@ -266,27 +266,14 @@ export class AnalyticsDashboardDb
         widget5: {
             chartType: 'line',
             datasets : {
-                'yesterday': [
-                    {
-                        label: 'Visitors',
-                        data : [190, 300, 340, 220, 290, 390, 250, 380, 410, 380, 320, 290],
-                        fill : 'start'
-
-                    },
-                    {
-                        label: 'Page views',
-                        data : [2200, 2900, 3900, 2500, 3800, 3200, 2900, 1900, 3000, 3400, 4100, 3800],
-                        fill : 'start'
-                    }
-                ],
                 'today'    : [
                     {
-                        label: 'Visitors',
+                        label: 'Aperturas',
                         data : [410, 380, 320, 290, 190, 390, 250, 380, 300, 340, 220, 290],
                         fill : 'start'
                     },
                     {
-                        label: 'Page Views',
+                        label: 'Invitados',
                         data : [3000, 3400, 4100, 3800, 2200, 3200, 2900, 1900, 2900, 3900, 2500, 3800],
                         fill : 'start'
 

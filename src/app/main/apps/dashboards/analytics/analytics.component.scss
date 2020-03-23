@@ -69,3 +69,14 @@
     max-width: 500px !important;
 
 }
+
+.margin-cards {
+
+    width: 500px;
+    @include media-breakpoint('xs') {
+        width: 370px;
+        /* right: 12px; */
+        margin-left: -6%;
+    }
+    
+}

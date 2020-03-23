@@ -548,7 +548,8 @@ export class ContactsService implements Resolve<any> {
             const reader = new FileReader();
             const file = xlsx;
 
-            if(xlsx.type === "application/vnd.ms-excel"){
+
+            if(xlsx.name.includes("xls") || xlsx.name.includes("xlsx")){
             reader.onload = event => {
                 this.loadingContact = true;
 

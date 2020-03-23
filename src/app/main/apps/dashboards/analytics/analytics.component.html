@@ -19,18 +19,20 @@
         <div class="center">
 
     
-            <div class="widget-group margin-card" fxLayout="row wrap" fxFlex="100" *fuseIfOnDom>
+            <div class="widget-group margin-card" fxLayout="row wrap" fxFlex="150" *fuseIfOnDom>
+
+                
 
                 <!-- WIDGET 1 -->
 
                 <mat-spinner class="spinner-fab" *ngIf="_analyticsDashboardService.loadingEvents"  diameter="50"></mat-spinner>
 
     
-                <div *ngFor="let e of _analyticsDashboardService.eventsArray">
+                <div class="margin-cards" *ngFor="let e of _analyticsDashboardService.eventsArray">
     
     
                     <fuse-widget [@animate]="{value:'*',params:{y:'100%'}}" class="widget" fxLayout="column" fxFlex="100"
-                        fxFlex.gt-xs="50" fxFlex.gt-md="25">
+                        fxFlex.gt-xs="100" fxFlex.gt-md="100">
                         <!-- PREVIEW -->
                         <div class="card-preview">
     
@@ -111,10 +113,36 @@
         
                                 </div>
     
-                                <div class="pl-16 pr-8 py-16 h-52 widget-front" fxLayout="row">
-      
-    
-                                </div>
+  
+
+         <div class="auto-width">
+
+                <div class="position-relative p-24"
+                     fxLayout="row" fxLayoutAlign="space-between center">
+                    <div fxLayout="column" fxLayoutAlign="start start">
+                        <span class="h2">Aperturas y visitas</span>
+                    </div>
+                    <div fxLayout="row" fxLayoutAlign="start center">
+
+                        <div class="py-8 px-12 border-radius-2 line-height-1 mr-8 cursor-pointer"
+                             (click)="widget5SelectedDay = 'today'"
+                             [ngClass]="{'accent': widget5SelectedDay === 'today'}">
+                            Semana
+                        </div>
+                    </div>
+                </div>
+
+                <div class="position-relative h-368 pb-16">
+                    <canvas baseChart
+                            [datasets]="widgets.widget5.datasets[widget5SelectedDay]"
+                            [labels]="widgets.widget5.labels"
+                            [colors]="widgets.widget5.colors"
+                            [options]="widgets.widget5.options"
+                            [chartType]="widgets.widget5.chartType">
+                    </canvas>
+                </div>
+
+            </div>
     
                             </div>
     
