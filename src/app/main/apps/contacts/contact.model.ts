@@ -17,6 +17,10 @@ export class Contact {
     city: string;
     country: string;
     phoneMobil: string;
+    onClick: boolean;
+    dateOnClick: Date;
+
+
 
     /**
      * Constructor

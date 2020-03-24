@@ -43,7 +43,7 @@
     
                                     <div class="p-16" fxLayout="row" fxLayoutAlign="space-between center">
                                         <div class="pr-16">
-                                            <span class="h2">{{e.name}}</span>
+                                            <span class="h2">{{ e.name}}</span>
                                             <div class="h4 text-bold secondary-text"> {{ e.company }}</div>
     
                                         </div>
@@ -91,8 +91,8 @@
                                 <div class="h-200">
                                     <ngx-charts-pie-chart
                                         *fuseIfOnDom
-                                        [scheme]="e.scheme"
-                                        [results]="e.devices"
+                                        [scheme]="e.widget1.scheme"
+                                        [results]="e.widget1.devices"
                                         [doughnut]="true">
                                     </ngx-charts-pie-chart>
                                 </div>
@@ -102,11 +102,11 @@
 
 
                                     <div class="px-16" fxLayout="column" fxLayoutAlign="start center"
-                                    *ngFor="let d of e.devices"
+                                    *ngFor="let d of e.widget1.devices"
                                     >
         
-                                    <div class="h4 secondary-text">{{d.name}}</div>
-                                    <div class="h2 font-weight-300 py-8">{{d.value}}</div>
+                                    <div class="h4 secondary-text">{{ d.name}}</div>
+                                    <div class="h2 font-weight-300 py-8">{{ d.value}}</div>
 
         
                                 </div>
@@ -134,11 +134,11 @@
 
                 <div class="position-relative h-368 pb-16">
                     <canvas baseChart
-                            [datasets]="widgets.widget5.datasets[widget5SelectedDay]"
-                            [labels]="widgets.widget5.labels"
-                            [colors]="widgets.widget5.colors"
-                            [options]="widgets.widget5.options"
-                            [chartType]="widgets.widget5.chartType">
+                            [datasets]="e.widget5.datasets[widget5SelectedDay]"
+                            [labels]="e.widget5.labels"
+                            [colors]="e.widget5.colors"
+                            [options]="e.widget5.options"
+                            [chartType]="e.widget5.chartType">
                     </canvas>
                 </div>
 

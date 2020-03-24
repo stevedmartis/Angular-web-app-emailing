@@ -18,6 +18,7 @@ import { AnalyticsDashboardService } from 'app/main/apps/dashboards/analytics/an
 import { AuthGuardService } from 'app/main/helpers/auth-guard.service';
 import { EcommerceProductsService } from '../../e-commerce/products/products.service';
 import { MaterialModule } from 'app/main/angular-material-elements/material.module';
+import { DatePipe } from '@angular/common';
 
 const routes: Routes = [
     {
@@ -50,7 +51,9 @@ const routes: Routes = [
     ],
     providers   : [
         AnalyticsDashboardService,
-        EcommerceProductsService
+        EcommerceProductsService,
+        DatePipe
+
     ]
 })
 export class AnalyticsDashboardModule
