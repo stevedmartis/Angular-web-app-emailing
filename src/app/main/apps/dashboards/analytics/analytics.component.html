@@ -1,3 +1,8 @@
+
+
+
+
+
 <div id="dashboard-analytics" class="page-layout blank">
 
 
@@ -47,9 +52,13 @@
 -->
 
     <div class="content">
-        <div class="pt-48 pb-24 font-size-24 font-weight-300">
-            Resumen de eventos
-        </div>
+
+        
+        <div class="left mr-lg-32">
+
+            <div class="pt-48 pb-24 font-size-24 font-weight-300">
+                Resumen de eventos
+            </div>
 
         <mat-spinner class="spinner-fab" *ngIf="_analyticsDashboardService.loadingEvents"  diameter="50"></mat-spinner>
  
@@ -58,7 +67,7 @@
         <div class="fuse-card card" *ngIf="e.widget1.devices[2].value > 0">
 
 
-        <div class="left mr-lg-32">
+     
 
 
             <!--
@@ -270,7 +279,7 @@
             <!-- / Widget 5 -->
 
 
-        </div>
+       
 
         <div class="right">
 
@@ -486,6 +495,7 @@
 
         </div>
 
+    </div>
     </div>
 
     </div>
