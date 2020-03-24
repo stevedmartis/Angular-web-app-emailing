@@ -10,13 +10,23 @@
     .content {
         display: flex;
         flex: 1 1 auto;
-        padding: 32px;
+        padding: 20px;
         min-width: 0;
-        margin-top: -5%;
+        margin-top: -3%;
 
         @include media-breakpoint('lt-lg') {
             flex-direction: column;
         }
+
+        @include media-breakpoint('xs') {
+            margin-top: -15%;
+        }
+
+        @include media-breakpoint('lt-md') {
+            margin-top: -10%;
+        }
+
+     
 
         .left {
             display: flex;
@@ -74,7 +84,7 @@
 .card-container {
 
     padding: 24px !important;
-    margin-bottom: 20px !important;
+    margin-bottom: 15px !important;
 }
 
 .fuse-card {

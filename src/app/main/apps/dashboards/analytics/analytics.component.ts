@@ -116,6 +116,9 @@ export class AnalyticsDashboardComponent implements OnInit, OnDestroy
 
     ngOnDestroy(){
         this._analyticsDashboardService.eventsArray = [];
+
+        this._analyticsDashboardService.arrayFormatDate = []
+        this._analyticsDashboardService.arrayInvitedForDate =[]
     }
 }
 

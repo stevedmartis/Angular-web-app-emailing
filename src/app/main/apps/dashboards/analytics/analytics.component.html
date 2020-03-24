@@ -54,8 +54,8 @@
         <mat-spinner class="spinner-fab" *ngIf="_analyticsDashboardService.loadingEvents"  diameter="50"></mat-spinner>
  
         
-        <div *ngFor="let e of _analyticsDashboardService.eventsArray" class="card"> 
-        <div class="fuse-card">
+        <div *ngFor="let e of _analyticsDashboardService.eventsArray"> 
+        <div class="fuse-card card" *ngIf="e.widget1.devices[2].value > 0">
 
 
         <div class="left mr-lg-32">
@@ -215,6 +215,14 @@
 
                     
 
+                    <button
+                    mat-button
+                    class="mr-8"
+                    [routerLink]="'/apps/e-commerce/products/'+e.id+'/'+e.handle"
+
+                    matTooltip="Ir a evento">
+                   Ir al evento 
+            </button>
                 </div>
 
                 <div *ngIf="e.widget5.datasets.today[0].data.length > 0">
@@ -485,6 +493,10 @@
     </div>
 
 </div>
+
+
+
+
 
 
 
