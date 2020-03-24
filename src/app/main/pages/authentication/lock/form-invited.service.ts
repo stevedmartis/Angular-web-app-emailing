@@ -94,15 +94,22 @@ export class FormInvitedService implements Resolve<any> {
 
                 this.getInvited().then(() => {
 
-                    this.onClickEditInvited()
-                    .then((x) => {
 
-                        console.log('x', x)
-  
+                    setTimeout(() => {
 
-                    })
+                        this.onClickEditInvited()
+                        .then((x) => {
+    
+                            console.log('x', x)
+                            
+                            resolve(x)
+    
+                        })
+                        
+                    }, 500);
+
                     
-                    resolve();
+                    
 
                 }, reject)
 

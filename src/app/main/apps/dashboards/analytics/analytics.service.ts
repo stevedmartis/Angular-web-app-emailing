@@ -51,7 +51,10 @@ export class AnalyticsDashboardService implements Resolve<any> {
         state: RouterStateSnapshot
     ): Observable<any> | Promise<any> | any {
         return new Promise((resolve, reject) => {
-            Promise.all([this.getEventForChart()]).then(() => {
+            Promise.all([
+
+                this.getWidgets(),
+                this.getEventForChart()]).then(() => {
                 resolve();
             }, reject);
         });
@@ -82,52 +85,76 @@ export class AnalyticsDashboardService implements Resolve<any> {
                     this.onClick = data.filter(x => x.onClick === true);
                     console.log(this.onClick);
 
-                    this.onClick.forEach(element => {
-                        
-                        const obj = { date: this.datepipe.transform(element.dateOnClick, "yyyy/MM/dd"),
-                                    onClick: element.onClick}
 
-                                    console.log('obj', obj)
-                            this.arrayFormatDate.push(obj)
+                   console.log( this.onClick);
+
+                  const x =  this.sortByDate( this.onClick)
+
+                  console.log(x)
+
+
+                    x.forEach(element => {
+                        const obj = {
+                            date: this.datepipe.transform(
+                                element.dateOnClick,
+                                "dd/MM/yyyy"
+                            ),
+                            fullDate: element.dateOnClick,
+                            onClick: element.onClick
+                            
+                        };
+
+                        console.log("obj", obj);
+                        this.arrayFormatDate.push(obj);
                     });
 
-console.log(' this.arrayFormatDate',  this.arrayFormatDate)
+                    console.log(" this.arrayFormatDate", this.arrayFormatDate);
 
-                    const dateOnClick = this.onClick.map(
-                        obj =>  this.datepipe.transform(obj.dateOnClick, "yyyy/MM/dd")
-                    );
+                    console.log(this.arrayFormatDate);
 
-                    console.log(dateOnClick);
 
-                    const uniqueDateOnClick = [...new Set(dateOnClick)];
+                     const uniqueDateOnClick = [...new Set(this.arrayFormatDate.map(obj => obj.date))];
 
-                    console.log(uniqueDateOnClick)
+                    console.log(uniqueDateOnClick);
 
-                    this.arrayInvitedForDate = []
+                    this.arrayInvitedForDate = [];
 
                     uniqueDateOnClick.forEach(inv => {
-                        console.log(inv)
+                        console.log(inv);
 
-                        const objFind =   this.arrayFormatDate.filter(obj => obj.date === inv)
-                        const dateFormat = this.datepipe.transform(inv, "yyyy/MM/dd")
+                        const objFind = this.arrayFormatDate.filter(
+                            obj => obj.date === inv
+                        );
 
-                       const objDate = {
-                           date: dateFormat,
-                           count: objFind.length
-                       }
 
-                       this.arrayInvitedForDate.push(objDate)
-    
+                        const objDate = {
+                            date: inv,
+                            count: objFind.length
+                        };
+
+                        this.arrayInvitedForDate.push(objDate);
                     });
 
-                    console.log('arrayInvitedForDate', this.arrayInvitedForDate)
+                    console.log(
+                        "arrayInvitedForDate",
+                        this.arrayInvitedForDate
+                    );
 
-                    const arrayDates = this.arrayInvitedForDate.map(obj => obj.date)
+                    const arrayDates = this.arrayInvitedForDate.map(
+                        obj => obj.date
+                    );
 
-                   const arrayCounts = this.arrayInvitedForDate.map(obj => obj.count)
+                    const arrayCounts = this.arrayInvitedForDate.map(
+                        obj => obj.count
+                    );
 
-                   console.log('arrayDates :', arrayDates, 'onClikers',arrayCounts)
-                  
+                    console.log(
+                        "arrayDates :",
+                        arrayDates,
+                        "onClikers",
+                        arrayCounts
+                    );
+
                     const eventObj = {
                         id: obj._id,
                         name: obj.eventName,
@@ -161,8 +188,7 @@ console.log(' this.arrayFormatDate',  this.arrayFormatDate)
                                         label: "Aperturas",
                                         data: arrayCounts,
                                         fill: "start"
-                                    },
-
+                                    }
                                 ]
                             },
                             labels: arrayDates,
@@ -289,9 +315,8 @@ console.log(' this.arrayFormatDate',  this.arrayFormatDate)
             this._httpClient
                 .get("api/analytics-dashboard-widgets")
                 .subscribe((response: any) => {
-                    const x = this.arrayWidget();
-                    console.log("x", x);
-                    this.widgets = x;
+    
+                    this.widgets = response
 
                     resolve(response);
                 }, reject);
@@ -436,4 +461,12 @@ console.log(' this.arrayFormatDate',  this.arrayFormatDate)
 
         return widget;
     }
+
+    sortByDate(arr) {
+        arr.sort(function(a,b){
+          return Number(new Date(a.dateOnClick)) - Number(new Date(b.dateOnClick));
+        });
+    
+        return arr;
+      }
 }
