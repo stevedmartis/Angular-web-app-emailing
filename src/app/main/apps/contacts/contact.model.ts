@@ -46,6 +46,9 @@ export class Contact {
             this.city = contact.city || ''
             this.country = contact.country || '';
             this.phoneMobil = contact.phoneMobil || '';
+            this.onClick = contact.onClick || '';
+            this.dateOnClick = contact.dateOnClick || '';
+            
         }
     }
 }
@@ -59,9 +62,10 @@ export interface ContactForXls {
     CARGO?: string;
     EMAIL?: string;
     TELEONO?: string;
-    TELEFONO_2?: string
+    TELEFONO_2?: string;
     ASISTE?: string;
     CONTACTADO?: string;
+    CLICK?: string;
     DIRECCION?: string;
     COMUNA?: string;
     CIUDAD?: string;
