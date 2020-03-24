@@ -112,7 +112,7 @@ export class ContactsService implements Resolve<any> {
             this._httpClient
                 .get(environment.apiUrl + "/api/invited/event/" + idEvent)
                 .subscribe((response: any) => {
-                    console.log(response);
+                    //console.log(response);
 
                     this.contacts = response.invited;
 
@@ -486,7 +486,13 @@ export class ContactsService implements Resolve<any> {
     }
 
     public exportAsExcelFile(excelFileName: string): void {
+
+        
+
         this.contacts.forEach(c => {
+
+            console.log('data: ', c);
+
             let obj = {
                 EMPRESA: c.company,
                 NOMBRE: c.name,
@@ -497,6 +503,7 @@ export class ContactsService implements Resolve<any> {
                 TELEFONO_2: c.phoneMobil,
                 ASISTE: c.asiste,
                 CONTACTADO: c.contactado,
+                CLICK: c.onClick ? 'SI' : 'NO',
                 DIRECCION: c.address,
                 COMUNA: c.street,
                 CIUDAD: c.city,
