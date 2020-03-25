@@ -241,6 +241,8 @@ export class CampaignsComponent implements OnInit, OnDestroy {
                 console.log(course)
                 return course.affair.toLowerCase().includes(searchTerm);
             });
+
+            
         
     }
     

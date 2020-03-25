@@ -8,8 +8,7 @@ products-campaigns {
 
         > .center {
 
-            height: 800px;
-
+        
             > .header {
 
                 padding: 2%;
@@ -181,7 +180,7 @@ products-campaigns {
                     }
 
                     .content {
-                        padding: 24px;
+                        
 
                         .h1 {
                             font-size: 16px;
@@ -206,7 +205,10 @@ products-campaigns {
             }
         }
     }
+.secondary-text {
 
+    text-transform: lowercase !important;
+}
 
 
 
