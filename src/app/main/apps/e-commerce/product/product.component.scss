@@ -297,7 +297,7 @@
 }
 
 .slide-bottom {
-    margin-bottom: 5%;
+    margin-bottom: 2%;
 }
 
 .container-empty
@@ -356,13 +356,15 @@ border-radius: 3%;
 .button
 {
   position: absolute;
+  left: -35px;
 
-margin: 46%;
-  left:0;
-  top:  100px;
-  text-align: center;
-  opacity:0;
-  transition: opacity .25s ease;
+    text-align: center;
+    opacity: 1;
+    z-index: 100;
+    top: -20px;
+    @include media-breakpoint('xs') {
+      top: -43px;
+  }
 }
 .button a
 {
@@ -379,6 +381,12 @@ margin: 46%;
 
 .container-load:hover .button {
   opacity: 1;
+}
+
+
+.mat-tab-body-wrapper{
+    background-color: white !important;
+
 }
 
 

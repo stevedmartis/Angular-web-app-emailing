@@ -140,10 +140,21 @@ export class CampaignsComponent implements OnInit, OnDestroy {
 
                 .then(x => {
                     console.log(x);
-                    this._matSnackBar.open("Campaña creada", "OK", {
-                        verticalPosition: "top",
-                        duration: 3000
-                    });
+
+
+                    
+                    setTimeout(() => {
+
+                        this._matSnackBar.open("Campaña creada", "OK", {
+                            verticalPosition: "top",
+                            duration: 3000
+                        });
+                        
+                    }, 600);
+
+
+
+
                 });
 
             this._campaignService.previewLoading = false;
@@ -245,6 +256,8 @@ export class CampaignsComponent implements OnInit, OnDestroy {
             
         
     }
+
+    
     
     
 }

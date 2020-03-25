@@ -130,7 +130,8 @@ export class EcommerceProductService implements Resolve<any>
                 company: product.company, 
                 desc: product.description, 
                 dateEvent: product.date ,
-                active: product.active
+                active: product.active,
+                imgTitle: product.imgTitle
             })
                 .subscribe((response: any) => {
 
@@ -165,6 +166,7 @@ export class EcommerceProductService implements Resolve<any>
                 address: product.address,
                 dateEvent: product.date, 
                 active: product.active, 
+                imgTitle: product.imgTitle
 
             })
                 .subscribe((response: any) => {

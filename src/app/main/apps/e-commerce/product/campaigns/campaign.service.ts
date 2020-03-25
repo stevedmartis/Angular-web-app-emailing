@@ -52,6 +52,9 @@ export class CampaignService {
     statusSendInvitation = "";
     invitedFails: any[] = [];
 
+    selectedIndex: number = 0;
+    maxNumberOfTabs: number = 3;
+
     value200: 0;
 
     loadingFile: boolean = false;

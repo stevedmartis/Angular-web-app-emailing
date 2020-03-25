@@ -17,10 +17,7 @@ import { EcommerceProductService } from 'app/main/apps/e-commerce/product/produc
 import { MAT_DIALOG_DATA, MatDialogRef, MatDialog } from '@angular/material/dialog';
 import { ContactsComponent } from 'app/main/apps/contacts/contacts.component';
 import { ContactsService } from 'app/main/apps/contacts/contacts.service';
-import { ContactsContactFormDialogComponent } from 'app/main/apps/contacts/contact-form/contact-form.component';
-import { EmailEditorComponent } from 'angular-email-editor';
-import { MatStepper } from '@angular/material';
-import { WebsocketService } from 'app/services/websocket.service';
+
 import { CampaignService } from './campaigns/campaign.service';
 
 export class FileUploadModel {
@@ -46,9 +43,6 @@ export class FileUploadModel {
 export class EcommerceProductComponent implements OnInit, OnDestroy
 {
 
-    @ViewChild(EmailEditorComponent, {static: false}) emailEditor: EmailEditorComponent
-    @ViewChild(MatStepper, {static: false}) stepper;
-
     product: Product;
     pageType: string;
     productForm: FormGroup;
@@ -58,6 +52,8 @@ export class EcommerceProductComponent implements OnInit, OnDestroy
     private files: Array<FileUploadModel> = [];
     disabledBtnSave: boolean = true;
     removeTag: boolean = false;
+    selectedIndex: number = 0;
+    maxNumberOfTabs: number = 2;
 
     //@ViewChild(InvitationFormComponent, {static: false}) invitationComponent: InvitationFormComponent
 
@@ -213,6 +209,7 @@ export class EcommerceProductComponent implements OnInit, OnDestroy
             tags            : [this.product.tags],
             active: [this.product.active],
             img: [ ],
+            imgTitle: [{value: '', disabled: true}]
 
         });
     }
@@ -223,7 +220,7 @@ export class EcommerceProductComponent implements OnInit, OnDestroy
     /**
      * Save product
      */
-    saveProduct(): void
+    saveProduct(next): void
     {
         const data = this.productForm.getRawValue();
         data.handle = FuseUtils.handleize(data.name);
@@ -244,12 +241,22 @@ export class EcommerceProductComponent implements OnInit, OnDestroy
         
                     console.log('tag to post')
         
-        
-                        // Show the success message
-                        this._matSnackBar.open('Evento editado', 'OK', {
-                            verticalPosition: 'top',
-                            duration        : 2000
-                        });
+                    if(next){
+                        this.nextStep()
+
+                    }
+
+                    setTimeout(() => {
+
+                                             // Show the success message
+                                             this._matSnackBar.open('Evento editado', 'OK', {
+                                                verticalPosition: 'top',
+                                                duration        : 2000
+                                            });
+                        
+                    }, 600);
+                    
+   
         
         
                 });
@@ -280,7 +287,7 @@ export class EcommerceProductComponent implements OnInit, OnDestroy
     /**
      * Add product
      */
-    addProduct(): void
+    addProduct(next): void
     {
         const data = this.productForm.getRawValue();
         data.handle = FuseUtils.handleize(data.name);
@@ -293,13 +300,23 @@ export class EcommerceProductComponent implements OnInit, OnDestroy
                 this._ecommerceProductService.addTagsInProduct(data.tags)
                 .then( () => {
                 // Show the success message
-                this._matSnackBar.open('Evento creado', 'OK', {
-                    verticalPosition: 'top',
-                    duration        : 3000
-                });
 
-           
+
+                setTimeout(() => {
+
+                    this._matSnackBar.open('Evento creado', 'OK', {
+                        verticalPosition: 'top',
+                        duration        : 3000
+                    });
+
+                }, 600);
+
                 this.isCreated = true;
+
+                if(next){
+                    this.nextStep()
+
+                }
 
                 // Change the location with new one
                 this._location.go('apps/e-commerce/products/' + x.event._id + '/' + x.event.handle);
@@ -321,34 +338,31 @@ export class EcommerceProductComponent implements OnInit, OnDestroy
         return null;
       }
 
-  fileUpload(){
-      const type =  'evento'
-    const fileUpload = document.getElementById('fileUpload') as HTMLInputElement;
-    fileUpload.onchange = (event) => {
 
-      console.log(event, fileUpload)
-        for(let index = 0; index < fileUpload.files.length; index++) {
-            const file = fileUpload.files[index];
 
-           
+      fileUpload(){
 
-            this._campaignService.fileProgress(file, type)
-            this.files.push({
-                data: file,
-                state: 'in',
-                inProgress: false,
-                progress: 0,
-                canRetry: false,
-                canCancel: true,
-                type: 'image'
-            });
-        }
-       // this.uploadFiles();
-    }
-    fileUpload.click();
+        const type = 'prod'
+        const fileUpload = document.getElementById('fileUpload') as HTMLInputElement;
+        fileUpload.onchange = (event: any) => {
     
-}
-
+    
+    
+                this._campaignService.fileProgress(event.target.files[0], type )
+    
+              
+    
+               const name = event.target.files[0].name
+    
+             this.f.imgTitle.setValue(name)
+    
+                
+        
+           // this.uploadFiles();
+        }
+        fileUpload.click();
+        
+    }
 removeDetected(tag){
 
     this.product.removeTag(tag)
@@ -361,6 +375,37 @@ removeDetected(tag){
     
 
 }
+
+
+nextStep() {
+    if (this.selectedIndex !=this.maxNumberOfTabs) {
+      this.selectedIndex = this.selectedIndex + 1;
+    }
+    console.log(this.selectedIndex);
+  }
+
+  previousStep() {
+    if (this.selectedIndex != 0) {
+      this.selectedIndex = this.selectedIndex - 1;
+    }
+    console.log(this.selectedIndex);
+  }
+
+  onClickTab(event){
+
+    if(event.index === 0){
+        this.selectedIndex = 0;
+    }
+    else if(event.index === 1){
+        this.selectedIndex = 1;
+    }
+
+    else if(event.index === 2){
+        this.selectedIndex = 2;
+    }
+
+    console.log(event)
+  }
 
 
 }

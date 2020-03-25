@@ -223,3 +223,17 @@ products-campaigns {
 
 
 
+.icon-lg {
+    display: flex !important;
+
+    @include media-breakpoint('xs') {
+
+        display: none !important;
+
+}
+
+}
+
+.logo-icon {
+    font-size: 50px;
+}

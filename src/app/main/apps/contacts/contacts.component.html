@@ -1,42 +1,17 @@
-<div id="contacts" class="page-layout simple left-sidebar inner-sidebar inner-scroll">
+<div id="contacts" >
 
  
 
-    <!-- CONTENT -->
-    <div class="content">
 
 
-        <!-- SIDEBAR 
-        <fuse-sidebar *ngIf="_contactsService.contacts.length > 2" class="sidebar" name="contacts-main-sidebar" position="left" lockedOpen="gt-sm">
-
-            <div class="content" fusePerfectScrollbar>
-                <contacts-main-sidebar [@animate]="{value:'*'}"></contacts-main-sidebar>
-            </div>
-           
-
-        </fuse-sidebar>
-        SIDEBAR -->
-
-        <!-- CENTER -->
-        <div class="center p-24 pb-56" fusePerfectScrollbar>
-
-            <!-- CONTENT -->
-            <div class="content-contact-list" *ngIf="_contactsService.eventCreated">
                 <contacts-contact-list></contacts-contact-list>
 
-            </div>
 
-            
-            <!-- / CONTENT -->
-           
-        </div>
-        <!-- / CENTER -->
 
 
         <app-speed-dial-fab></app-speed-dial-fab>
 
-    </div>
-    <!-- / CONTENT-->
+
 
 
 
