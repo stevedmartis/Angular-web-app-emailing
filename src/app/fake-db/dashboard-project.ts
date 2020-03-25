@@ -1147,6 +1147,8 @@ export class ProjectDashboardDb
             },
             'schedule': {
                 'T' : [
+
+                    /*
                     {
                         'title'   : 'Group Meeting',
                         'time'    : 'In 32 minutes',
@@ -1176,6 +1178,8 @@ export class ProjectDashboardDb
                         'title': 'Overseer\'s Retirement Party',
                         'time' : '21:30 PM'
                     }
+
+                    */
                 ],
                 'TM': [
                     {

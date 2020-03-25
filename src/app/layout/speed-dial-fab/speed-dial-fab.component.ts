@@ -28,7 +28,7 @@ export class SpeedDialFabComponent implements OnInit {
       click: 'exportToXls'
     },
     {
-      icon: 'insert_drive_file',
+      icon: 'import_contacts',
       click: 'exportContacts'
     },
     {

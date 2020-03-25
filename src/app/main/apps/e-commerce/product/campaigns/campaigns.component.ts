@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from "@angular/core";
+import { Component, OnInit, ViewChild, OnDestroy, ViewEncapsulation } from "@angular/core";
 import { fuseAnimations } from "@fuse/animations";
 import { MatDialogRef, MatDialog, MatSnackBar } from "@angular/material";
 import { MatPaginator } from "@angular/material/paginator";
@@ -7,21 +7,31 @@ import { Router } from "@angular/router";
 import { CampaignService } from "./campaign.service";
 import { DataSource } from "@angular/cdk/collections";
 import { BehaviorSubject, fromEvent, merge, Observable, Subject } from "rxjs";
-import { debounceTime, distinctUntilChanged, map } from "rxjs/operators";
+import { debounceTime, distinctUntilChanged, map, takeUntil } from "rxjs/operators";
 import { AddComponent } from "./dialog/add/add.component";
 import { FormGroup } from "@angular/forms";
 import { SendComponent } from "./dialog/send/send.component";
 
 @Component({
-    selector: "campaigns",
+    selector: "products-campaigns",
     templateUrl: "./campaigns.component.html",
     styleUrls: ["./campaigns.component.scss"],
-    animations: fuseAnimations
+    animations: fuseAnimations,
+    encapsulation: ViewEncapsulation.None
 })
-export class CampaignsComponent implements OnInit {
+export class CampaignsComponent implements OnInit, OnDestroy {
     dialogRef: any;
     campaignExists: boolean = false;
-    dataSource: FilesDataSource | null;
+
+    categories: any[];
+    campaigns: any[];
+    coursesFilteredByCategory: any[];
+    filteredCourses: any[] = [];
+
+    currentCategory: string;
+    searchTerm: string;
+
+    private _unsubscribeAll: Subject<any>;
 
     @ViewChild(MatPaginator, { static: true })
     paginator: MatPaginator;
@@ -30,22 +40,45 @@ export class CampaignsComponent implements OnInit {
     @ViewChild(MatSort, { static: true })
     sort: MatSort;
 
+   
+
     constructor(
         public _matDialog: MatDialog,
         private router: Router,
-        private _campaignService: CampaignService,
+        public _campaignService: CampaignService,
         private _matSnackBar: MatSnackBar
-    ) {}
+    ) {
+
+                // Set the defaults
+                this.currentCategory = 'all';
+                this.searchTerm = '';
+        
+                // Set the private defaults
+                this._unsubscribeAll = new Subject();
+    }
 
     ngOnInit() {
-        this._campaignService.getCampaigns().then(x => {
-            this.dataSource = new FilesDataSource(
-                this._campaignService,
-                this.paginator,
-                this.sort
-            );
-            console.log("this.dataSource ", this.dataSource);
-        });
+
+       
+        
+
+
+                // Subscribe to categories
+                this._campaignService.onCategoriesChanged
+                .pipe(takeUntil(this._unsubscribeAll))
+                .subscribe(categories => {
+                    this.categories = categories;
+                });
+    
+            // Subscribe to courses
+            this._campaignService.onCampaignChanged
+                .pipe(takeUntil(this._unsubscribeAll))
+                .subscribe(courses => {
+                    this.filteredCourses = this._campaignService.campaigns;
+
+                    console.log( this.filteredCourses)
+                });
+
     }
 
     deleteCampaign(campaign) {
@@ -61,7 +94,7 @@ export class CampaignsComponent implements OnInit {
         console.log(campaign);
         this.dialogRef = this._matDialog.open(SendComponent, {
             disableClose: true,
-            panelClass: "my-class",
+            panelClass: "my-class-send",
 
             data: {
                 campaign: campaign
@@ -180,76 +213,37 @@ export class CampaignsComponent implements OnInit {
     });
 
     }
+
+    ngOnDestroy(): void
+    {
+        // Unsubscribe from all subscriptions
+        this._unsubscribeAll.next();
+        this._unsubscribeAll.complete();
+    }
+
+
+    filterCoursesByCategory(): void
+    {
+
+
+        // Re-filter by search term
+        this.filterCoursesByTerm();
+    }
+
+    filterCoursesByTerm(): void
+    {
+        const searchTerm = this.searchTerm.toLowerCase();
+
+        console.log(searchTerm)
+
+            this.filteredCourses = this._campaignService.campaigns.filter((course) => {
+
+                console.log(course)
+                return course.affair.toLowerCase().includes(searchTerm);
+            });
+        
+    }
     
     
 }
 
-export class FilesDataSource extends DataSource<any> {
-    private _filterChange = new BehaviorSubject("");
-    private _filteredDataChange = new BehaviorSubject("");
-
-    /**
-     * Constructor
-     *
-     * @param {EcommerceProductsService} _ecommerceCampaignService
-     * @param {MatPaginator} _matPaginator
-     * @param {MatSort} _matSort
-     */
-    constructor(
-        private _ecommerceCampaignService: CampaignService,
-        private _matPaginator: MatPaginator,
-        private _matSort: MatSort
-    ) {
-        super();
-
-        this.filteredData = this._ecommerceCampaignService.campaigns;
-    }
-
-    /**
-     * Connect function called by the table to retrieve one stream containing the data to render.
-     *
-     * @returns {Observable<any[]>}
-     */
-    connect(): Observable<any[]> {
-        const displayDataChanges = [
-            this._ecommerceCampaignService.onCampaignhanged,
-            this._matPaginator.page,
-            this._filterChange,
-            this._matSort.sortChange
-        ];
-
-        return merge(...displayDataChanges).pipe(
-            map(() => {
-                let data = this._ecommerceCampaignService.campaigns.slice();
-
-                // Grab the page's slice of data.
-                const startIndex =
-                    this._matPaginator.pageIndex * this._matPaginator.pageSize;
-                return data.splice(startIndex, this._matPaginator.pageSize);
-            })
-        );
-    }
-
-    // Filtered data
-    get filteredData(): any {
-        return this._filteredDataChange.value;
-    }
-
-    set filteredData(value: any) {
-        this._filteredDataChange.next(value);
-    }
-
-    // Filter
-    get filter(): string {
-        return this._filterChange.value;
-    }
-
-    set filter(filter: string) {
-        this._filterChange.next(filter);
-    }
-
-    /**
-     * Disconnect
-     */
-    disconnect(): void {}
-}

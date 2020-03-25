@@ -1,20 +1,19 @@
-<div id="products" class="page-layout carded fullwidth inner-scroll">
+<div id="campaign" class="page-layout carded fullwidth inner-scroll">
 
-    <!-- TOP BACKGROUND -->
-    <div class="top-bg accent"></div>
-    <!-- / TOP BACKGROUND -->
 
     <!-- CENTER -->
     <div class="center">
 
         <!-- HEADER -->
-        <div class="header accent" fxLayout="column" fxLayoutAlign="center center" fxLayout.gt-sm="row"
-            fxLayoutAlign.gt-sm="space-between center">
+        <div class="header accent"
+             fxLayout="column" fxLayoutAlign="center center"
+             fxLayout.gt-sm="row" fxLayoutAlign.gt-sm="space-between center">
 
             <!-- APP TITLE -->
-            <div class="logo mb-24 mb-md-0" fxLayout="row" fxLayoutAlign="start center">
+            <div class="logo mb-24 mb-md-0"
+                 fxLayout="row" fxLayoutAlign="start center">
                 <mat-icon class="logo-icon s-32 mr-16" [@animate]="{value:'*',params:{delay:'50ms',scale:'0.2'}}">
-                    event
+                    contactless
                 </mat-icon>
                 <span class="logo-text h1" [@animate]="{value:'*',params:{delay:'100ms',x:'-25px'}}">
                     Campañas
@@ -22,17 +21,19 @@
             </div>
             <!-- / APP TITLE -->
 
-            <!-- SEARCH -->
-            <div *ngIf="campaignExists" class="search-wrapper mx-32 mx-md-0">
+             <!-- SEARCH -->
+             <div  class="search-wrapper mx-32 mx-md-0">
                 <div class="search" fxFlex fxLayout="row" fxLayoutAlign="start center">
                     <mat-icon>search</mat-icon>
-                    <input #filter placeholder="Buscar evento">
+                    <input   [(ngModel)]="searchTerm"
+                    (input)="filterCoursesByTerm()"
+                     placeholder="Buscar campaña">
                 </div>
             </div>
             <!-- / SEARCH -->
 
             <!-- ADD BUTTON -->
-            <button mat-raised-button (click)="addCampaignDialog()" class="add-product-button fuse-white mt-24 mt-md-0">
+            <button mat-raised-button (click)="addCampaignDialog()" class="add-btn fuse-white mt-24 mt-md-0">
                 <span>CREAR NUEVA</span>
             </button>
             <!-- / ADD BUTTON -->
@@ -41,95 +42,94 @@
         <!-- / HEADER -->
 
 
-        <div class="widget-group margin-card" fxLayout="row wrap" fxFlex="100" *fuseIfOnDom>
 
 
-            <!-- WIDGET 1 -->
+        <div class="courses" fxLayout="row wrap" fxLayoutAlign="center" [@animateStagger]="{value:'50'}">
 
-            <div *ngFor="let c of _campaignService.campaigns">
+            <div class="course" *ngFor="let c of filteredCourses" fxFlex="100" fxFlex.gt-xs="50"
+                 fxFlex.gt-sm="33" [@animate]="{value:'*',params:{y:'100%'}}">
 
+                <div class="course-content" fxLayout="column" fxFlex="1 1 auto">
 
+                    <div class="header" fxLayout="row" fxLayoutAlign="center center">
+                        <div class="category" fxFlex>
+                            {{c.affair}}
 
-                <fuse-widget [@animate]="{value:'*',params:{y:'100%'}}" class="widget" fxLayout="column" fxFlex="100"
-                    fxFlex.gt-xs="50" fxFlex.gt-md="25">
-                    <!-- PREVIEW -->
-                    <div class="card-preview">
-
-                        <div class="fuse-card">
-
-
-                            <div>
-
-                                <div class="p-16" fxLayout="row" fxLayoutAlign="space-between center">
-                                    <div class="pr-16">
-                                        <div class="text-bold ">{{ c.affair }}</div>
-                                        <div class="h5 text-bold secondary-text"> {{ c.sender }}</div>
-
-                                    </div>
-
-                                    <div>
-                                        <button mat-icon-button [matMenuTriggerFor]="card19Menu" aria-label="more">
-                                            <mat-icon>more_vert</mat-icon>
-                                        </button>
-
-                                        <mat-menu #card19Menu="matMenu">
-                                        
-                                        <button mat-menu-item (click)="editCampaign(c)" >
-                                            <mat-icon>edit</mat-icon>
-                                            <span>Editar</span>
-                                        </button>
-                                    
-                                        
-                                            <button mat-menu-item (click)="deleteCampaign(c)">
-                                                <mat-icon>delete</mat-icon>
-                                                <span>Eliminar</span>
-                                            </button>
-                                        
-                                            <button *ngIf="_campaignService.eventOpen"  (click)="linkOfEventOpen(c._id)" mat-menu-item  >
-                                            <mat-icon>link</mat-icon>
-                                            <span>Link para compartir</span>
-                                        </button>
-                                         
-
-                                                                                <!--
-                                            <button mat-menu-item  >
-                                            <mat-icon>file_copy</mat-icon>
-                                            <span>Duplicar</span>
-                                        </button>
-                                            -->
-                                        </mat-menu>
-                                    </div>
-                                </div>
-
-                            </div>
-
-                            <img [src]="c.imgBlob">
-
-                            <div class="pl-16 pr-8 py-16 h-52 widget-front" fxLayout="row">
-                                <button (click)="sendCampaignDialog(c)" mat-raised-button color="accent"
-                                    class="mt-24 mt-md-0">
-                                    <span>Enviar invitación
-                                    </span>
-                                </button>
-
-                            </div>
+                            <div class="h5 text-bold secondary-text" fxLayout> {{ c.sender }}</div>
 
                         </div>
 
+
+
+
+                        <div>
+                            <button mat-icon-button [matMenuTriggerFor]="card19Menu" aria-label="more">
+                                <mat-icon>more_vert</mat-icon>
+                            </button>
+
+                            <mat-menu #card19Menu="matMenu">
+                            
+                            <button mat-menu-item (click)="editCampaign(c)" >
+                                <mat-icon>edit</mat-icon>
+                                <span>Editar</span>
+                            </button>
+                        
+                            
+                                <button mat-menu-item (click)="deleteCampaign(c)">
+                                    <mat-icon>delete</mat-icon>
+                                    <span>Eliminar</span>
+                                </button>
+                            
+                                <button *ngIf="_campaignService.eventOpen"  (click)="linkOfEventOpen(c._id)" mat-menu-item  >
+                                <mat-icon>link</mat-icon>
+                                <span>Link para compartir</span>
+                            </button>
+                             
+
+                                                                    <!--
+                                <button mat-menu-item  >
+                                <mat-icon>file_copy</mat-icon>
+                                <span>Duplicar</span>
+                            </button>
+                                -->
+                            </mat-menu>
+                        </div>
+
                     </div>
-                    <!-- / PREVIEW -->
+
+                    <div class="content" fxLayout="column" fxLayoutAlign="center center" fxFlex="1 1 auto">
+                       
+
+                        <img [src]="c.imgBlob">
+
+                        <!--
+                        <div class="h5 text-bold secondary-text" fxLayout> {{c.update | date:'short'}}</div>
+
+                        -->
+
+                    </div>
+                  
+                    <div class="footer" fxLayout="row" fxLayoutAlign="center center">
+                        <button mat-button color="accent"
+                        (click)="sendCampaignDialog(c)" >
+                            Enviar
+                        </button>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <mat-spinner class="spinner-fab" *ngIf="_campaignService.loadingCampaigns"  diameter="50"></mat-spinner>
+ 
 
 
-                </fuse-widget>
-                <!-- / WIDGET 1 -->
+            <div class="no-courses" *ngIf="!_campaignService.loadingCampaigns && filteredCourses.length === 0">
+               No se encontraron campañas
             </div>
 
         </div>
-        <!-- / WIDGET GROUP -->
 
-        <div *ngIf="campaignExists" class="content-card empty-card">
-            <img src="assets/images/emptyevent.png">
-        </div>
 
 
         <!-- / CONTENT CARD -->

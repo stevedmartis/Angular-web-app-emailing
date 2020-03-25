@@ -7,7 +7,6 @@ import { AuthService } from 'app/services/authentication/auth.service';
 import { ContactsService } from 'app/main/apps/contacts/contacts.service';
 import { MatHorizontalStepper } from '@angular/material';
 import { catchError, last, tap, map } from 'rxjs/operators';
-import { CampaignService } from './campaigns/campaign.service';
 
 
 @Injectable()
@@ -55,11 +54,14 @@ export class EcommerceProductService implements Resolve<any>
         return new Promise((resolve, reject) => {
             Promise.all([
                 this.getProduct(),
-
+    
                 console.log('herr'),
                 this.contactServices.getContacts(this.routeParams.id)
             ]).then(
                 () => {
+
+                   
+
                     resolve();
                 },
                 reject

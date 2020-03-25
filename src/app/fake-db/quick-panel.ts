@@ -1,6 +1,9 @@
+
 export class QuickPanelFakeDb
 {
     public static notes = [
+
+        /*
         {
             'title' : 'Best songs to listen while working',
             'detail': 'Last edit: May 8th, 2018'
@@ -9,9 +12,13 @@ export class QuickPanelFakeDb
             'title' : 'Useful subreddits',
             'detail': 'Last edit: January 12th, 2018'
         }
+
+        */
     ];
 
     public static events = [
+
+        /*
         {
             'title' : 'Group Meeting',
             'detail': 'In 32 Minutes, Room 1B'
@@ -28,5 +35,7 @@ export class QuickPanelFakeDb
             'title' : 'Q&A Session',
             'detail': '20:30 PM'
         }
+
+        */
     ];
 }

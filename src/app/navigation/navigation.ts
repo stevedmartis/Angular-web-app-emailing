@@ -17,8 +17,9 @@ export const navigation: FuseNavigation[] = [
                 children : [
                     {
                         id   : 'analytics',
-                        title: 'Analytics',
+                        title: 'Analítica',
                         type : 'item',
+                        icon     : 'pie_chart',
                         url  : '/apps/dashboards/analytics'
                     },
                 ],

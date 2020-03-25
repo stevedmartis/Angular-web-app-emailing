@@ -83,6 +83,13 @@ export class FuseShortcutsComponent implements OnInit, AfterViewInit, OnDestroy
                     type : 'item',
                     icon : 'today',
                     url  : '/apps/e-commerce/products'
+                },
+                {
+
+                    title: 'Analítica',
+                    type : 'item',
+                    icon : 'pie_chart',
+                    url  : '/apps/dashboards/analytics'
                 }
             ];
         }

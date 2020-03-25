@@ -127,6 +127,7 @@ export class EcommerceProductComponent implements OnInit, OnDestroy
                     this._contactsService.idEventNow =  product.event._id;
                     this._contactsService.eventCreated = true;
                     this._campaignService.eventOpen = product.event.active;
+                    this._campaignService.getCampaigns()
 
                     this._ecommerceProductService.getTagsByEvent()
                     .then( (data: any)=> {

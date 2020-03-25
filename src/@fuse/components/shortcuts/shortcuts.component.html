@@ -25,7 +25,7 @@
 
                 </div>
 
-                <button mat-icon-button [matMenuTriggerFor]="addMenu" matTooltip="Click to add/remove shortcut"
+                <button mat-icon-button [matMenuTriggerFor]="addMenu" matTooltip="Click para agregar o modificar atajos"
                         (menuOpened)="onMenuOpen()">
                     <mat-icon class="amber-600-fg">star</mat-icon>
                 </button>
@@ -43,7 +43,7 @@
         <mat-menu #addMenu="matMenu" class="w-240">
 
             <mat-form-field class="px-16 w-100-p" (click)="$event.stopPropagation()" floatLabel="never">
-                <input #searchInput matInput placeholder="Search for an app or a page" (input)="search($event)">
+                <input #searchInput matInput placeholder="Busca una aplicación o una página" (input)="search($event)">
             </mat-form-field>
 
             <mat-divider></mat-divider>
