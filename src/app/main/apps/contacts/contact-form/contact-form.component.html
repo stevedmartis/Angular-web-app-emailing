@@ -1,72 +1,82 @@
-<div class="dialog-content-wrapper">
-    <mat-toolbar matDialogTitle class="mat-accent m-0">
-        <mat-toolbar-row fxLayout="row" fxLayoutAlign="space-between center">
-            <span class="title dialog-title">{{dialogTitle}}</span>
-            <button mat-icon-button (click)="matDialogRef.close()" aria-label="Close dialog">
-                <mat-icon>close</mat-icon>
-            </button>
-        </mat-toolbar-row>
-
-    </mat-toolbar>
-
-    <div mat-dialog-content class="pb-0 m-0" fusePerfectScrollbar>
-
-        <form [formGroup]="contactForm" class="form">
-
-            <div fxLayout="row" fxLayoutAlign="start start">
-                <mat-form-field appearance="outline" fxFlex>
-                    <mat-label>Correo Electrónico</mat-label>
-                    <mat-icon matSuffix class="secondary-text">email</mat-icon>
-                    <input name="email" formControlName="email" matInput type="email">
-                </mat-form-field>
-            </div>
-
-            <div fxLayout="row" fxLayoutAlign="start start">
-                <mat-form-field appearance="outline" fxFlex>
-                    <mat-label>Titulo</mat-label>
-                    <mat-icon matSuffix class="secondary-text">account_circle</mat-icon>
-                    <input name="title" formControlName="title" matInput>
-                </mat-form-field>
-            </div>
-
-            <div fxLayout="row" fxLayoutAlign="start start">
-                <mat-form-field appearance="outline" fxFlex>
-                    <mat-label>Nombre</mat-label>
-                    <mat-icon matSuffix class="secondary-text">account_circle</mat-icon>
-                    <input name="name" formControlName="name" matInput>
-                </mat-form-field>
-            </div>
-
-            <div fxLayout="row" fxLayoutAlign="start start">
-                <mat-form-field appearance="outline" fxFlex>
-                    <mat-label>Apellidos</mat-label>
-                    <mat-icon matSuffix class="secondary-text">account_circle</mat-icon>
-                    <input name="lastname" formControlName="lastname" matInput>
-                </mat-form-field>
-            </div>
 
 
-            <div fxLayout="row" fxLayoutAlign="start start">
-                <mat-form-field appearance="outline" fxFlex>
-                    <mat-label>Teléfono de Contacto</mat-label>
-                    <mat-icon matSuffix class="secondary-text">phone</mat-icon>
-                    <input formControlName="phone" matInput>
-                </mat-form-field>
-            </div>
+<div id="forms" class="page-layout simple fullwidth" fxLayout="column">
+
+    <div class="dialog-content-wrapper">
+        <mat-toolbar matDialogTitle class="mat-accent m-0">
+            <mat-toolbar-row fxLayout="row" fxLayoutAlign="space-between center">
+                <span class="title dialog-title"> <mat-icon>person_add</mat-icon> {{dialogTitle}}</span>
+                <button mat-icon-button (click)="matDialogRef.close()" aria-label="Close dialog">
+                    <mat-icon>close</mat-icon>
+                </button>
+            </mat-toolbar-row>
+    
+        </mat-toolbar>
 
 
-            <div fxLayout="row" fxLayoutAlign="start start">
-                <mat-form-field appearance="outline" fxFlex>
-                    <mat-label>Teléfono Móvil</mat-label>
-                    <mat-icon matSuffix class="secondary-text">phone</mat-icon>
-                    <input formControlName="phoneMobil" matInput>
-                </mat-form-field>
-            </div>
+    <!-- CONTENT -->
+    <div class="content p-24">
 
-           
-            <div fxLayout="row" fxLayoutAlign="start start">
 
-                <mat-form-field appearance="outline" fxFlex="100">
+        <div mat-dialog-content class="mb-24" fxLayout="column" fxLayoutAlign="start" fxLayout.gt-md="row" fusePerfectScrollbar>
+
+            <!-- REACTIVE FORM EXAMPLE -->
+
+            <form class="p-24 mr-24" fxLayout="column" fxLayoutAlign="start"
+                  fxFlex="1 0 auto" name="form" [formGroup]="contactForm">
+
+
+                <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                    <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
+                        <mat-label>Correo Electrónico</mat-label>
+                        <mat-icon matSuffix class="secondary-text">email</mat-icon>
+                        <input name="email" formControlName="email" matInput type="email">
+                    </mat-form-field>
+
+                    <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
+                        <mat-label>Titulo</mat-label>
+                        <mat-icon matSuffix class="secondary-text">account_circle</mat-icon>
+                        <input name="title" formControlName="title" matInput>
+                    </mat-form-field>
+
+                </div>
+
+                <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+
+                    <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
+                        <mat-label>Nombre</mat-label>
+                        <mat-icon matSuffix class="secondary-text">account_circle</mat-icon>
+                        <input name="name" formControlName="name" matInput>
+                    </mat-form-field>
+
+                    <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
+                        <mat-label>Apellidos</mat-label>
+                        <mat-icon matSuffix class="secondary-text">account_circle</mat-icon>
+                        <input name="lastname" formControlName="lastname" matInput>
+                    </mat-form-field>
+
+                </div>
+
+                <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+
+                    <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
+                        <mat-label>Teléfono de Contacto</mat-label>
+                        <mat-icon matSuffix class="secondary-text">phone</mat-icon>
+                        <input formControlName="phone" matInput>
+                    </mat-form-field>
+
+                    <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
+                        <mat-label>Teléfono Móvil</mat-label>
+                        <mat-icon matSuffix class="secondary-text">phone</mat-icon>
+                        <input formControlName="phoneMobil" matInput>
+                    </mat-form-field>
+
+                </div>
+
+
+                <div fxLayout="row wrap" fxLayoutAlign="start center" fxFlex="1 0 auto">
+
+                    <mat-form-field appearance="outline" fxFlex="100">
                         <mat-label>Estado contactado:</mat-label>
                         <mat-select formControlName="contactado">
                                 <mat-option *ngFor="let a of contactOptions" [value]="a.value">
@@ -76,81 +86,83 @@
                       
                     </mat-form-field>
 
-
-                      
-         </div>
-
-            <div fxLayout="row" fxLayoutAlign="start start">
-
                     <mat-form-field appearance="outline" fxFlex="100">
-                            <mat-label>Estado asiste:</mat-label>
-                            <mat-select formControlName="asiste">
-                                    <mat-option *ngFor="let a of asisteOptions" [value]="a.value">
-                                            {{a.name}}
-                                          </mat-option>
-                            </mat-select>
-                          
-                        </mat-form-field>         
-             </div>
+                        <mat-label>Estado asiste:</mat-label>
+                        <mat-select formControlName="asiste">
+                                <mat-option *ngFor="let a of asisteOptions" [value]="a.value">
+                                        {{a.name}}
+                                      </mat-option>
+                        </mat-select>
+                      
+                    </mat-form-field>  
 
-            <div fxLayout="row" fxLayoutAlign="start start">
-                <mat-form-field appearance="outline" fxFlex>
-                    <mat-label>Empresa / Institución</mat-label>
-                    <mat-icon matSuffix class="secondary-text">domain</mat-icon>
-                    <input name="company" formControlName="company" matInput>
-                </mat-form-field>
-            </div>
+                </div>
 
-            <div fxLayout="row" fxLayoutAlign="start start">
-                <mat-form-field appearance="outline" fxFlex>
-                    <mat-label>Cargo</mat-label>
-                    <mat-icon matSuffix class="secondary-text">work</mat-icon>
-                    <input name="jobtitle" formControlName="jobtitle" matInput>
-                </mat-form-field>
-            </div>
+                
+
+                <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                    <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
+                        <mat-label>Empresa / Institución</mat-label>
+                        <mat-icon matSuffix class="secondary-text">domain</mat-icon>
+                        <input name="company" formControlName="company" matInput>
+                    </mat-form-field>
+                    
+                    <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
+                        <mat-label>Cargo</mat-label>
+                        <mat-icon matSuffix class="secondary-text">work</mat-icon>
+                        <input name="jobtitle" formControlName="jobtitle" matInput>
+                    </mat-form-field>
+
+                </div>
+
+                <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                    <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
+                        <mat-label>Dirección</mat-label>
+                        <mat-icon matSuffix class="secondary-text">home</mat-icon>
+                        <input name="address" formControlName="address" matInput>
+                    </mat-form-field>
+                    
+                    <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
+                        <mat-label>Comuna</mat-label>
+                        <input name="street" formControlName="street" matInput>
+                    </mat-form-field>
+
+                </div>
+
+                
+                <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                    <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
+                        <mat-label>Ciudad</mat-label>
+                        <input name="city" formControlName="city" matInput>
+                    </mat-form-field>
+                    
+                    <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
+                        <mat-label>País</mat-label>
+                        <input name="country" formControlName="country" matInput>
+                    </mat-form-field>
+
+                </div>
+
+                <div fxLayout="row wrap" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                    <mat-form-field appearance="outline" fxFlex="100">
+                        <mat-label>Observaciones</mat-label>
+                        <textarea name="notes" formControlName="notes" matInput type="text" max-rows="4"></textarea>
+                    </mat-form-field>
+
+                </div>
+
+      
+
+            </form>
 
 
 
-            <div fxLayout="row" fxLayoutAlign="start start">
-                <mat-form-field appearance="outline" fxFlex>
-                    <mat-label>Dirección</mat-label>
-                    <mat-icon matSuffix class="secondary-text">home</mat-icon>
-                    <input name="address" formControlName="address" matInput>
-                </mat-form-field>
-            </div>
+        </div>
 
-            <div fxLayout="row" fxLayoutAlign="start start">
-                <mat-form-field appearance="outline" fxFlex>
-                    <mat-label>Comuna</mat-label>
-                    <mat-icon matSuffix class="secondary-text">home</mat-icon>
-                    <input name="street" formControlName="street" matInput>
-                </mat-form-field>
-            </div>
 
-            <div fxLayout="row" fxLayoutAlign="start start">
-                <mat-form-field appearance="outline" fxFlex>
-                    <mat-label>Ciudad</mat-label>
-                    <mat-icon matSuffix class="secondary-text">home</mat-icon>
-                    <input name="city" formControlName="city" matInput>
-                </mat-form-field>
-            </div>
 
-            <div fxLayout="row" fxLayoutAlign="start start">
-                <mat-form-field appearance="outline" fxFlex>
-                    <mat-label>País</mat-label>
-                    <mat-icon matSuffix class="secondary-text">home</mat-icon>
-                    <input name="country" formControlName="country" matInput>
-                </mat-form-field>
-            </div>
-
-            <div fxLayout="row" class="textarea-wrapper" fxLayoutAlign="start start">
-                <mat-form-field appearance="outline" fxFlex>
-                    <mat-label>Observaciones</mat-label>
-                    <textarea name="notes" formControlName="notes" matInput type="text" max-rows="4"></textarea>
-                </mat-form-field>
-            </div>
-
-        </form>
+    </div>
+    <!-- / CONTENT -->
 
     </div>
 
@@ -200,3 +212,4 @@ matTooltip="Eliminar">
 
     </div>
 </div>
+

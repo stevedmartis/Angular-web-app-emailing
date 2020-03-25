@@ -156,9 +156,6 @@ export class ContactsContactListComponent implements OnInit, OnDestroy
            });
 
 
-
-
-
         this._contactsService.onSelectedContactsChanged
             .pipe(takeUntil(this._unsubscribeAll))
             .subscribe(selectedContacts => {

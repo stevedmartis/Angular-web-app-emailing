@@ -13,6 +13,11 @@ products-campaigns {
 
                 padding: 2%;
 
+                
+    height: 100% !important;
+    min-height: 100px !important;
+    max-height: 100px !important;
+
                 .search-wrapper {
                     width: 100%;
                     max-width: 480px;
@@ -143,8 +148,12 @@ products-campaigns {
                         padding: 16px 24px;
                         height: 64px !important;
                         min-height: 64px !important;
-                        max-height: 64px !important;
 
+                        
+                        
+            @include media-breakpoint('xs') {
+                padding: 16px 10px;
+            }
                         &.web-bg {
                             background: mat-color($mat-blue, 500);
                         }
@@ -209,6 +218,8 @@ products-campaigns {
 
     text-transform: lowercase !important;
 }
+
+
 
 
 

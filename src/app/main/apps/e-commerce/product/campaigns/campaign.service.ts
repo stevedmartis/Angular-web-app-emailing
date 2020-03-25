@@ -380,7 +380,7 @@ export class CampaignService {
                             this.fileUp = event.body;
                             setTimeout(() => {
                                 this.loadingFile = false;
-                            }, 1000);
+                            }, 800);
 
                             return event;
                     }
