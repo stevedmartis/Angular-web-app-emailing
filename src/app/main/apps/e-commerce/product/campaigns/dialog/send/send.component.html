@@ -1,22 +1,37 @@
 <div class="dialog-content-wrapper">
     <mat-toolbar matDialogTitle class="mat-accent m-0">
         <mat-toolbar-row fxLayout="row" fxLayoutAlign="space-between center">
-            <span class="title-dialog dialog-title">Enviar a:</span>
-            <button mat-icon-button (click)="matDialogRef.close(true)" aria-label="Close dialog">
+            <span class="title-dialog dialog-title">{{ _campaignService.countStatus  }}</span>
+            <button mat-icon-button (click)="matDialogRef.close()" aria-label="Close dialog">
                 <mat-icon>close</mat-icon>
             </button>
         </mat-toolbar-row>
 
     </mat-toolbar>
 
+
+    
     <div mat-dialog-content class="pb-0 m-0" fusePerfectScrollbar>
 
-    <div id="send-invitation" fxLayout="column" class="content-send">
+    <div class="mb-24" fxLayout="column" fxLayoutAlign="start" fxLayout.gt-md="row" >
+    
+    
+            <div  class="center-send-spinner" *ngIf="loadingContacts">
 
-        <div  class="center-send">
-    
-            <div  >
-    
+
+        <mat-spinner diameter="100"></mat-spinner>
+
+
+    </div>
+
+
+
+    <div  class="center-send">
+
+
+<div *ngIf="!loadingContacts">
+
+
                 <div  *ngIf="!_campaignService.selectLoading">
 
                     <a appearance="outline" fxFlex mat-button class="reference-button save-button"
@@ -31,7 +46,7 @@
                 </div>
 
                 <mat-progress-bar *ngIf="_campaignService.allLoading" color="accent" class="checklist-progressbar"
-                mode="determinate" [value]="_campaignService.value" bufferValue="allContacts.length">
+                mode="determinate" [value]="(_campaignService.value * 100) / _campaignService.emailsValidForSend" bufferValue="100">
             </mat-progress-bar>
     
     
@@ -43,11 +58,16 @@
     
                 </span>
 
+                <div  class="fail">
+
+                    <span *ngIf="_campaignService.invitedFails.length > 0" fxLayoutAlign="center center" >
+                        
+                        <div class="h3">Fallidos: ({{ _campaignService.invitedFails.length }})</div>
+        
+                    </span>
+
                 <span fxLayoutAlign="center center" >
                     
-                
-                    <div class="h3" *ngIf="_campaignService.invitedFails.length > 0">Fallidos:</div>
-                    <br>
 
                     <ul >
 
@@ -83,20 +103,8 @@
     
             </div>
     
-        </div>
-    
-    </div>
+   
 
-</div>
-
-
-<div mat-dialog-content class="pb-0 m-0" fusePerfectScrollbar>
-    
-   <div id="login" fxLayout="column">
-
-        <div  class="center-send">
-    
-            <div  >
     
                 <div  *ngIf="!_campaignService.allLoading">
 
@@ -114,9 +122,11 @@
     
 
                 <mat-progress-bar *ngIf="_campaignService.selectLoading" color="accent" class="checklist-progressbar"
-                mode="determinate" [value]="_campaignService.value * 10" bufferValue="selectionCount">
+                mode="determinate" [value]="(_campaignService.value * 100) / _campaignService.emailsValidForSend " bufferValue="100">
             </mat-progress-bar>
     
+
+            
     
             <div *ngIf="_campaignService.selectLoading">
 
@@ -126,27 +136,34 @@
     
                    
    
- 
                 </span>
+
+
+                <div class="fail">
+
+                    <span *ngIf="_campaignService.invitedFails.length > 0" fxLayoutAlign="center center" >
+                        
+                        <div class="h3">Fallidos: ({{ _campaignService.invitedFails.length }})</div>
+        
+                    </span>
 
                 <span fxLayoutAlign="center center" >
                     
-                
-                    <div class="h3" *ngIf="_campaignService.invitedFails.length > 0">Fallidos:</div>
-                 
 
                     <ul >
 
                         <li *ngFor="let f of _campaignService.invitedFails"  
                         type="circle">   
-                        {{ f.email }} 
+                        <div class="h4"> {{ f.email }} </div>
                     </li>
                     
                         </ul>
-                    
-                        
- 
+
                 </span>
+
+            </div>
+    
+
 
             </div>
     
@@ -168,14 +185,18 @@
                    -->
     
 
-    
-            </div>
-    
-        </div>
-    
-    </div>
+
+
+
+</div>
 
     </div>
 
-    
+
+<div mat-dialog-actions class="m-0 p-9" fxLayout="row" fxLayoutAlign="end center">
+
+</div>
+</div>
+</div>
+
 </div>

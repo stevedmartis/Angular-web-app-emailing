@@ -46,6 +46,7 @@ export class CampaignService {
 
     allLoading: boolean = false;
     selectLoading: boolean = false;
+    countStatus = 'Enviar a:'
     value = 0;
     allContacts = this._contactService.contacts.length;
     selectedContacts = this._contactService.selectedContacts.length;
@@ -55,7 +56,7 @@ export class CampaignService {
     selectedIndex: number = 0;
     maxNumberOfTabs: number = 3;
 
-    value200: 0;
+    emailsValidForSend: number = 0;
 
     loadingFile: boolean = false;
 
@@ -234,8 +235,10 @@ export class CampaignService {
         });
     }
 
-    getDataPersonForSendEmail(invitation, option) {
+    getDataPersonForSendEmail(invitation, option, array) {
 
+
+        const totalCount = array.length;
 
         console.log(
             "contacts selects: ",
@@ -246,7 +249,7 @@ export class CampaignService {
             this.allLoading = true;
 
             console.log("allllll");
-            const arrayInvitedAll = this._contactService.contacts;
+            const arrayInvitedAll = array;
             const arrayNew = [];
             arrayInvitedAll.forEach(c => {
                 if (c.email) {
@@ -256,16 +259,44 @@ export class CampaignService {
                 }
             });
 
+
+            console.log(arrayNew)
+
+            this.emailsValidForSend = arrayNew.length;
             
 
-           this.invitedArrayforSend(arrayNew, invitation);
+           this.invitedArrayforSend(arrayNew, invitation, this.emailsValidForSend);
         } else {
             this.selectLoading = true;
 
 
+
             const arrayInvitedSelected = this._contactService.selectedContacts;
 
-            this.invitedArrayforSend(arrayInvitedSelected, invitation);
+            console.log("allllll");
+            
+            const arrayNewSelection = [];
+
+            arrayInvitedSelected.forEach(obj => {
+
+                console.log(obj)
+               const filter = array.filter(element => element._id === obj);
+
+               console.log(filter)
+
+               if(filter[0].email){
+
+                arrayNewSelection.push(filter[0])
+
+               }
+
+            });
+
+                           
+            this.emailsValidForSend = arrayNewSelection.length;
+
+            this.sendSelection(invitation, arrayNewSelection,  this.emailsValidForSend);
+           
         }
     }
 
@@ -276,15 +307,23 @@ export class CampaignService {
                 .get(environment.apiUrl + "/api/invited/event/" + idEvent)
                 .subscribe((response: any) => {
 
+
+                
                     resolve(response);
                 }, reject);
         });
     }
 
 
-    invitedArrayforSend(array, invitation) {
+    invitedArrayforSend(array, invitation, totalCount) {
         setTimeout(() => {
             array.forEach(obj => {
+
+                this.statusSendInvitation = "Enviando...";
+
+                this.countStatus = "Enviando a: " + totalCount;
+               
+                console.log(obj)
              
                     if (obj.email) {
                         this.sendInvited(invitation, obj)
@@ -295,8 +334,73 @@ export class CampaignService {
 
                                 console.log(mail,  this.value)
 
-                                if (this.value === array.length) {
-                                    this.value = 100;
+                                if (this.value === totalCount) {
+                                    this.value = totalCount;
+
+                                    this.countStatus = "Se enviaron: " + this.value + " de " + totalCount;
+
+                                    this.statusSendInvitation = "Enviado!";
+                                }
+                            })
+                            .catch(err => {
+                                this.value++;
+
+                             
+          
+                                        console.log(obj, this.value);
+
+                                        this.invitedFails.push(obj);
+
+                                        console.log(this.invitedFails);
+
+                                      
+                                
+
+                                if (this.value === totalCount) {
+                                    this.value = totalCount;
+
+
+                                    this.countStatus = "Se enviaron: " + this.value + " de " + totalCount;
+
+
+                                    this.statusSendInvitation = "Enviado!";
+
+                                }
+                            });
+                    }
+            });
+        }, 500);
+    }
+
+
+    sendSelection(invitation, array, totalCount)
+    {
+
+
+        this.countStatus = "Enviando a: " + totalCount;
+        this.statusSendInvitation = "Enviando...";
+ console.log('' ,array)
+        
+        setTimeout(() => {
+            
+            array.forEach(obj => {
+
+                console.log(obj, invitation)
+
+             
+                    if (obj.email) {
+                        this.sendInvited(invitation, obj)
+                            .then(mail => {
+
+                               
+                                this.value++;
+
+                                console.log(mail,  this.value)
+
+                                if (this.value === totalCount) {
+                                    this.value = totalCount;
+
+                                    this.countStatus = "Se enviaron: " + this.value + " de " + totalCount;
 
                                     this.statusSendInvitation = "Enviado!";
                                 }
@@ -315,15 +419,19 @@ export class CampaignService {
                                       
                                 
 
-                                if (this.value === array.length) {
-                                    this.value = 100;
+                                if (this.value === totalCount) {
+                                    this.value = totalCount;
+
+                                    this.countStatus = "Se enviaron: " + this.value + " de " + totalCount;
 
                                     this.statusSendInvitation = "Enviado!";
 
                                 }
                             });
                     }
-            });
+
+                })
+         
         }, 500);
     }
 
