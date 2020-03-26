@@ -121,13 +121,11 @@ export class FormInvitedService implements Resolve<any> {
     }
 
     getCampaignById(idCampaign) {
-        console.log(idCampaign);
 
         return new Promise((resolve, reject) => {
             this._httpClient
                 .get(environment.apiUrl + "/api/get-campaign/" + idCampaign)
                 .subscribe((response: any) => {
-                    console.log(response);
 
                     this.campaignInvitation = response.campaign;
 

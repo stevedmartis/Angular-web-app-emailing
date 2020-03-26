@@ -90,8 +90,7 @@ export class SpeedDialFabComponent implements OnInit {
 
               let res = response.getRawValue();
 
-              console.log('res', res)
-
+             
               let obj = {
                   codeEvento: this._contactsService.idEventNow,
                   name: res.name,
@@ -137,40 +136,49 @@ export class SpeedDialFabComponent implements OnInit {
   this._contactsService.xlsxToJson()
   .then((data) => {
 
+    
     this.loadingContact = true;
     
     data.forEach(e => {
-      this._contactsService.createContacts(e, data.length)
-      .then(() => {
 
-        this._contactsService.contactsCount++;
+      setTimeout(() => {
 
-        this.conditionCompleteCharge(data)
-      })
-      .catch(() =>{
-        this.loadingContact = false;
+        this._contactsService.createContacts(e)
+        .then(() => {
+  
+          this._contactsService.contactsCount++;
+  
+          this.conditionCompleteCharge(data.length)
+        })
+        .catch((err) =>{
 
-        this._contactsService.contactsCount++;
+          console.log('err', err)
+        
+  
+          this._contactsService.contactsCount++;
+  
+          this.conditionCompleteCharge(data.length);
+        })
+        
+      }, 1000);
 
-        this.conditionCompleteCharge(data);
-      })
   });
   })
 
   }
 
   conditionCompleteCharge(data){
-    if (this._contactsService.contactsCount === data.length) {
+    if (this._contactsService.contactsCount === data) {
       this._contactsService.getContacts(this._contactsService.idEventNow)
       .then(x => {
           this._contactsService.contactsCount = 0;
-          this.loadingContact = false;
          
+          this.loadingContact = false;
           this._contactsService.editCountInvited(this._contactsService.contacts.length);
           
         this._matSnackBar.open('Carga completada', 'OK', {
           verticalPosition: 'top',
-          duration        : 2000
+          duration        : undefined
       });
       });
   }

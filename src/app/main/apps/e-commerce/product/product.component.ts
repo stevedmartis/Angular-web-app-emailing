@@ -114,9 +114,7 @@ export class EcommerceProductComponent implements OnInit, OnDestroy
                 if ( product )
                 {
 
-                    console.log('product', product)
                     this.product = new Product(product.event);
-                    console.log('this.producte.evnd.id',product.event._id)
 
                     this._ecommerceProductService.idNowEvent = product.event._id
                     this.pageType = 'edit';
@@ -140,7 +138,6 @@ export class EcommerceProductComponent implements OnInit, OnDestroy
 
                     if(this.product.imgBanner === 'assets/images/banner.jpg'){
 
-                        //console.log("exist img??", this.product.imgBanner)
                         this._campaignService.imgProductLoad = false;
 
                     }
@@ -229,7 +226,6 @@ export class EcommerceProductComponent implements OnInit, OnDestroy
 
 
 
-          console.log(' this.product.tags',  this.product.tags)
 
             this._ecommerceProductService.deleteAllTags(this.product.tags)
             .then( () => {
@@ -240,7 +236,6 @@ export class EcommerceProductComponent implements OnInit, OnDestroy
                     // Trigger the subscription with new data
                     this._ecommerceProductService.onProductChanged.next(result);
         
-                    console.log('tag to post')
         
                     if(next){
                         this.nextStep()
@@ -398,7 +393,6 @@ nextStep() {
     if (this.selectedIndex != 0) {
       this.selectedIndex = this.selectedIndex - 1;
     }
-    console.log(this.selectedIndex);
   }
 
   onClickTab(event){
@@ -414,7 +408,6 @@ nextStep() {
         this.selectedIndex = 2;
     }
 
-    console.log(event)
   }
 
 

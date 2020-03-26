@@ -121,7 +121,6 @@ export class ToolbarComponent implements OnInit, OnDestroy
             this.username = currentUser.user.username;
            
 
-            console.log(this.username)
         }
     }
 
@@ -157,7 +156,7 @@ export class ToolbarComponent implements OnInit, OnDestroy
     search(value): void
     {
         // Do your search here...
-        console.log(value);
+       
     }
 
     /**

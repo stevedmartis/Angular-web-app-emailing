@@ -55,7 +55,7 @@ export class ContactsSelectedBarComponent implements OnInit, OnDestroy
                 this.selectedContacts = selectedContacts;
                 setTimeout(() => {
                     this.btnDisplay = true
-                    console.log('selectedContacts', selectedContacts)
+                  
                     this.hasSelectedContacts = selectedContacts.length > 0;
                     this.isIndeterminate = (selectedContacts.length !== this._contactsService.contacts.length && selectedContacts.length > 0);
                 }, 0);
@@ -125,7 +125,7 @@ export class ContactsSelectedBarComponent implements OnInit, OnDestroy
                 if ( result )
                 {
 
-                    console.log(result, this._contactsService.selectedContacts)
+                   
 
                     if(this._contactsService.selectedContacts.length === this._contactsService.contacts.length){
                         this._contactsService.deleteAllContacts()

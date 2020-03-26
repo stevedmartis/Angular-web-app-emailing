@@ -133,7 +133,7 @@ export class NavbarVerticalStyle1Component implements OnInit, OnDestroy
                 this.username = currentUser.user.username;
                 this.email = currentUser.user.email;
     
-                console.log(this.username)
+            
 
             }
 

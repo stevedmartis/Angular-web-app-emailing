@@ -108,10 +108,10 @@ export class CampaignService {
      * @returns {Promise<any>}
      */
 
-    getCategories(): Promise<any>
-    {
+    getCategories(): Promise<any> {
         return new Promise((resolve, reject) => {
-            this._httpClient.get('api/academy-categories')
+            this._httpClient
+                .get("api/academy-categories")
                 .subscribe((response: any) => {
                     this.onCategoriesChanged.next(response);
                     resolve(response);
@@ -120,8 +120,7 @@ export class CampaignService {
     }
 
     getCampaigns(): Promise<any> {
-
-      this.loadingCampaigns = true;
+        this.loadingCampaigns = true;
         return new Promise((resolve, reject) => {
             // console.log('eventId', this.eventId)
             console.log(
@@ -161,7 +160,6 @@ export class CampaignService {
      */
 
     addCampaign(campaign): Promise<any> {
-        console.log("campaign", campaign, this._productService.idNowEvent);
         return new Promise((resolve, reject) => {
             this._httpClient
                 .post(environment.apiUrl + "/api/campaign/add-new-campaign", {
@@ -209,7 +207,6 @@ export class CampaignService {
     }
 
     editCampaign(campaign): Promise<any> {
-        console.log("campaign", campaign, this._productService.idNowEvent);
         return new Promise((resolve, reject) => {
             this._httpClient
                 .post(environment.apiUrl + "/api/campaign/edit", {
@@ -238,9 +235,7 @@ export class CampaignService {
     }
 
     getDataPersonForSendEmail(invitation, option) {
-        console.log("invitation", invitation);
 
-        console.log("contacts all: ", this._contactService.contacts);
 
         console.log(
             "contacts selects: ",
@@ -261,14 +256,12 @@ export class CampaignService {
                 }
             });
 
-            console.log(arrayNew);
-            const array = arrayNew.map(obj => obj.id);
+            
 
-            this.invitedArrayforSend(array, invitation);
+           this.invitedArrayforSend(arrayNew, invitation);
         } else {
             this.selectLoading = true;
 
-            console.log("select");
 
             const arrayInvitedSelected = this._contactService.selectedContacts;
 
@@ -276,60 +269,60 @@ export class CampaignService {
         }
     }
 
+
+    getContacts(idEvent): Promise<any> {
+        return new Promise((resolve, reject) => {
+            this._httpClient
+                .get(environment.apiUrl + "/api/invited/event/" + idEvent)
+                .subscribe((response: any) => {
+
+                    resolve(response);
+                }, reject);
+        });
+    }
+
+
     invitedArrayforSend(array, invitation) {
         setTimeout(() => {
             array.forEach(obj => {
-                console.log(obj);
-
-                this._authServices.InvitedByUserId(obj).then((person: any) => {
-                    if (person.invited.email) {
-                        this.sendInvited(invitation, person)
+             
+                    if (obj.email) {
+                        this.sendInvited(invitation, obj)
                             .then(mail => {
+
+                               
                                 this.value++;
 
-                                this.value200++;
+                                console.log(mail,  this.value)
+
+                                if (this.value === array.length) {
+                                    this.value = 100;
+
+                                    this.statusSendInvitation = "Enviado!";
+                                }
+                            })
+                            .catch(err => {
+                                this.value++;
+
+                             
+          
+                                        console.log(obj);
+
+                                        this.invitedFails.push(obj);
+
+                                        console.log(this.invitedFails);
+
+                                      
+                                
 
                                 if (this.value === array.length) {
                                     this.value = 100;
 
                                     this.statusSendInvitation = "Enviado!";
 
-                                    console.log("ok");
                                 }
-                            })
-                            .catch(err => {
-                                this.value++;
-
-                                console.log(
-                                    " error ",
-                                    this.value,
-                                    array.length
-                                );
-
-
-                                this._authServices
-                                    .InvitedByUserId(obj)
-                                    .then((x: any) => {
-                                        console.log(x);
-
-                                        this.invitedFails.push(x.invited);
-
-                                        console.log(this.invitedFails);
-
-                                        this.value = 100;
-                                    });
-
-
-                                    if (this.value === array.length) {
-                                      this.value = 100;
-    
-                                      this.statusSendInvitation = "Enviado!";
-    
-                                      console.log("ok error", err);
-                                  }
                             });
                     }
-                });
             });
         }, 500);
     }
@@ -344,9 +337,9 @@ export class CampaignService {
             nameSender: invitation.nameSender,
             sender: invitation.sender,
             imgBlob: imagen,
-            _idInvited: person.invited._id,
-            emailInvited: person.invited.email,
-            nameInvited: person.invited.name + " " + person.invited.lastname
+            _idInvited: person._id,
+            emailInvited: person.email,
+            nameInvited: person.name + " " + person.lastname
         };
 
         return new Promise((resolve, reject) => {
@@ -414,7 +407,6 @@ export class CampaignService {
             return;
         }
 
-        console.log(this.fileData);
         var reader = new FileReader();
         reader.readAsDataURL(this.fileData);
         reader.onload = _event => {
@@ -429,9 +421,12 @@ export class CampaignService {
             } else {
                 this.imgProductLoad = true;
 
-                console.log("imgProductLoad ", this.imgProductLoad);
                 this.previewUrlEvent = reader.result;
             }
         };
     }
+
+    
+
+    
 }

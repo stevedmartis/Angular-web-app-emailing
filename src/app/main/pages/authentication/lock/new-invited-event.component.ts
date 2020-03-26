@@ -119,7 +119,6 @@ export class NewInvitedComponent implements OnInit, OnDestroy {
     }
 
     setDocTitle(title: string) {
-        console.log('current title:::::' + this.titleService.getTitle());
         this.titleService.setTitle(title);
      }
 
@@ -181,7 +180,6 @@ export class NewInvitedComponent implements OnInit, OnDestroy {
 
         const data = this.invitationForm.getRawValue();
 
-        console.log('invited data: ', data)
  
 
         /*

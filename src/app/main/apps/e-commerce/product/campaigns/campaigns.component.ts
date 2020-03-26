@@ -131,7 +131,6 @@ export class CampaignsComponent implements OnInit, OnDestroy {
             if (!response) {
                 return;
             }
-            console.log("product post delete", response);
 
             let form = response.getRawValue();
 
@@ -245,11 +244,9 @@ export class CampaignsComponent implements OnInit, OnDestroy {
     {
         const searchTerm = this.searchTerm.toLowerCase();
 
-        console.log(searchTerm)
 
             this.filteredCourses = this._campaignService.campaigns.filter((course) => {
 
-                console.log(course)
                 return course.affair.toLowerCase().includes(searchTerm);
             });
 

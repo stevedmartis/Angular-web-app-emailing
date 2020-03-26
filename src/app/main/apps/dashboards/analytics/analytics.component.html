@@ -60,7 +60,7 @@
                 Resumen de eventos
             </div>
 
-        <mat-spinner class="spinner-fab" *ngIf="_analyticsDashboardService.loadingEvents"  diameter="50"></mat-spinner>
+        <mat-spinner *ngIf="_analyticsDashboardService.loadingEvents"  diameter="50"></mat-spinner>
  
         
         <div *ngFor="let e of _analyticsDashboardService.eventsArray"> 

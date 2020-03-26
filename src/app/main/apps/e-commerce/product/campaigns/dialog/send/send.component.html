@@ -24,14 +24,14 @@
                         
                         <span class="h1">Todos:</span>
         
-                        <span class="h1"> {{allContacts }} </span>
+                        <span class="h1"> {{ contactsCount }} </span>
         
                     </a>
         
                 </div>
 
                 <mat-progress-bar *ngIf="_campaignService.allLoading" color="accent" class="checklist-progressbar"
-                mode="determinate" [value]="_campaignService.value * 10 " bufferValue="100">
+                mode="determinate" [value]="_campaignService.value" bufferValue="allContacts.length">
             </mat-progress-bar>
     
     
@@ -114,7 +114,7 @@
     
 
                 <mat-progress-bar *ngIf="_campaignService.selectLoading" color="accent" class="checklist-progressbar"
-                mode="determinate" [value]="_campaignService.value * 10" bufferValue="100">
+                mode="determinate" [value]="_campaignService.value * 10" bufferValue="selectionCount">
             </mat-progress-bar>
     
     

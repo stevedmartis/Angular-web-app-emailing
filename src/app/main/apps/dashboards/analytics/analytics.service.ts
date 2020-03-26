@@ -74,7 +74,6 @@ export class AnalyticsDashboardService implements Resolve<any> {
 
             this.events.forEach(obj => {
                 this.getContacts(obj._id).then(data => {
-                    console.log(data);
 
                     this.siAsiste = data.filter(x => x.asiste === "si");
 
@@ -83,14 +82,11 @@ export class AnalyticsDashboardService implements Resolve<any> {
                     this.pauseAsiste = data.filter(x => x.asiste === "null");
 
                     this.onClick = data.filter(x => x.onClick === true);
-                    console.log(this.onClick);
 
 
-                   console.log( this.onClick);
 
                   const x =  this.sortByDate( this.onClick)
 
-                  console.log(x)
 
 
                     x.forEach(element => {
@@ -104,23 +100,18 @@ export class AnalyticsDashboardService implements Resolve<any> {
                             
                         };
 
-                        console.log("obj", obj);
                         this.arrayFormatDate.push(obj);
                     });
 
-                    console.log(" this.arrayFormatDate", this.arrayFormatDate);
 
-                    console.log(this.arrayFormatDate);
 
 
                      const uniqueDateOnClick = [...new Set(this.arrayFormatDate.map(obj => obj.date))];
 
-                    console.log(uniqueDateOnClick);
 
                     this.arrayInvitedForDate = [];
 
                     uniqueDateOnClick.forEach(inv => {
-                        console.log(inv);
 
                         const objFind = this.arrayFormatDate.filter(
                             obj => obj.date === inv
@@ -148,12 +139,7 @@ export class AnalyticsDashboardService implements Resolve<any> {
                         obj => obj.count
                     );
 
-                    console.log(
-                        "arrayDates :",
-                        arrayDates,
-                        "onClikers",
-                        arrayCounts
-                    );
+  
 
                     const eventObj = {
                         id: obj._id,

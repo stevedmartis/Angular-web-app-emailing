@@ -104,7 +104,7 @@ export class ContactsComponent implements OnInit, OnDestroy
         this.dialogRef.afterClosed()
             .subscribe((response: FormGroup) => {
 
-                console.log('entro')
+            
 
                 if ( !response )
                 {

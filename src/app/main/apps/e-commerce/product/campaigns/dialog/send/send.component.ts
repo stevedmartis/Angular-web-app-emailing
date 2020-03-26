@@ -11,7 +11,8 @@ export class SendComponent implements OnInit {
 
   selectionCount = this._campaignService._contactService.selectedContacts.length;
 
-  allContacts = this._campaignService._contactService.contacts.length;
+  allContacts: any[]
+  contactsCount: number = 0;
 
   constructor(public matDialogRef: MatDialogRef<SendComponent>,
     public _campaignService: CampaignService,
@@ -20,9 +21,21 @@ export class SendComponent implements OnInit {
 
   ngOnInit() {
 
+    console.log(this._campaignService._contactService.idEventNow)
+
+    this._campaignService.getContacts(this._campaignService._contactService.idEventNow)
+    .then((x) => {
+      this.allContacts = x.invited;
+
+      console.log(this.allContacts)
+
+      this.contactsCount = this.allContacts.length;
+    })
+
+
    
 
-    console.log(this.allContacts)
+
 
  
   }
@@ -30,7 +43,7 @@ export class SendComponent implements OnInit {
 
   allInvitation(option){
 
-if(this.allContacts > 0){
+if(this.allContacts.length > 0){
 
   console.log('pasa')
 

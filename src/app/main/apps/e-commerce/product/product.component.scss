@@ -389,4 +389,14 @@ border-radius: 3%;
 
 }
 
+.form-custom {
+
+   padding: 24px;
+
+    @include media-breakpoint('xs') {
+        padding: -2px !important;
+}
+
+
+}
 

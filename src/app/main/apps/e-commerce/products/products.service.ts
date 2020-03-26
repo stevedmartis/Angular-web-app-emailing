@@ -131,13 +131,11 @@ export class EcommerceProductsService implements Resolve<any>
                        
                     });
 
-                    console.log(eventArray)
 
                     this.products = eventArray;
 
                     this.onProductsChanged.next(this.products);
 
-                    console.log(this.onProductsChanged)
                     resolve(this.products);
 
 
@@ -148,7 +146,6 @@ export class EcommerceProductsService implements Resolve<any>
 
     deleteEvent(product) {
 
-        console.log(product)
 
       
         return new Promise((resolve, reject) => {
