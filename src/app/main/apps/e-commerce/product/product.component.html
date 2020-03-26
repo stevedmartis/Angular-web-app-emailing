@@ -62,10 +62,12 @@
                 <mat-tab-group mat-align-tabs="start" (selectedTabChange)="onClickTab($event)" [selectedIndex]="selectedIndex">
                     <mat-tab label="General">
 
+                       
+
                         <form class="p-24 mr-24" fxLayout="column" fxLayoutAlign="start" fxFlex="1 0 auto"
                         name="productForm" [formGroup]="productForm">
 
-
+                        <div class="h2 mb-16">Formulario de información general</div>
 
                         <mat-form-field appearance="outline" fxFlex  fxFlex="100" class="pl-4" class="container">
                             <mat-label>Imagen</mat-label>
