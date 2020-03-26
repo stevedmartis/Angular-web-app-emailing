@@ -37,7 +37,7 @@
             <span>CREAR</span>
         </button>
 
-        <button mat-raised-button class="save-product-button" [disabled]="(productForm.invalid || productForm.pristine ) && !removeTag ? true:false"
+        <button mat-raised-button class="save-product-button" [disabled]="(productForm.invalid || productForm.pristine ) && (!removeTag  && !uploadFile)"
             *ngIf="pageType ==='edit'" (click)="saveProduct(true)">
             <span>GUARDAR</span>
         </button>
@@ -74,7 +74,7 @@
                             <input name="imgTitle" formControlName="imgTitle" matInput>
                             <mat-icon matSuffix class="secondary-text">
                             
-                                    <input hidden id="fileUpload" type="file" #fileInput />
+                                    <input hidden  id="fileUpload" type="file"  #fileInput   />
                     
                                     <button mat-fab  (click)="fileUpload()"  class="button fuse-white mt-24 mt-md-0">
                                         <mat-icon>add_photo_alternate</mat-icon>
@@ -118,8 +118,8 @@
 
                             <mat-form-field appearance="outline" fxFlex="100">
                                 <mat-label>Dirección</mat-label>
-                                <input matInput placeholder="Dirección" name="address" formControlName="address"
-                                    >
+                                <input matInput placeholder="Dirección" name="address" formControlName="address">
+                                    <mat-icon matSuffix class="secondary-text">home</mat-icon>
                             </mat-form-field>
 
             
@@ -161,7 +161,7 @@
 
                         </div>
 
-                        <button *ngIf="(isCreated && productForm.pristine) && !removeTag " class="mr-8 w-30-p" mat-raised-button  type="button"
+                        <button *ngIf="(isCreated && productForm.pristine) && (!removeTag && !uploadFile )" class="mr-8 w-30-p" mat-raised-button  type="button"
                         (click)="nextStep()"
                         color="accent">
                         Siguiente
@@ -172,7 +172,7 @@
                         Crear
                     </button>
 
-                        <button *ngIf="(pageType ==='edit' && !productForm.pristine) || removeTag" (click)="saveProduct(true)" class="mr-8 w-30-p" mat-raised-button  type="button"
+                        <button *ngIf="(pageType ==='edit' && !productForm.pristine) || (removeTag || uploadFile)" (click)="saveProduct(true)" class="mr-8 w-30-p" mat-raised-button  type="button"
                             color="accent">
                             Siguiente <mat-icon>save</mat-icon>
                         </button>

@@ -31,6 +31,7 @@ export class Product
     extraShippingFee: number;
     active: boolean;
     imgBanner: string;
+    imgTitle: string;
 
 
     /**
@@ -63,6 +64,7 @@ export class Product
         this.weight = product.weight || 0;
         this.extraShippingFee = product.extraShippingFee || 0;
         this.active = product.active || product.active;
+        this.imgTitle = product.imgTitle || '';
         this.imgBanner = product.imgBanner || 'assets/images/banner.jpg';
 
     }

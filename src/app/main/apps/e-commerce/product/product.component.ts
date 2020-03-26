@@ -54,6 +54,7 @@ export class EcommerceProductComponent implements OnInit, OnDestroy
     removeTag: boolean = false;
     selectedIndex: number = 0;
     maxNumberOfTabs: number = 2;
+    uploadFile: boolean = false;
 
     //@ViewChild(InvitationFormComponent, {static: false}) invitationComponent: InvitationFormComponent
 
@@ -209,7 +210,7 @@ export class EcommerceProductComponent implements OnInit, OnDestroy
             tags            : [this.product.tags],
             active: [this.product.active],
             img: [ ],
-            imgTitle: [{value: '', disabled: true}]
+            imgTitle: [{value: this.product.imgTitle, disabled: true}]
 
         });
     }
@@ -255,6 +256,9 @@ export class EcommerceProductComponent implements OnInit, OnDestroy
                                             });
                         
                     }, 600);
+
+                    this.uploadFile = false;
+                    this.removeTag = false;
                     
    
         
@@ -351,12 +355,18 @@ export class EcommerceProductComponent implements OnInit, OnDestroy
                 this._campaignService.fileProgress(event.target.files[0], type )
     
               
+             console.log('1', this.productForm)
     
                const name = event.target.files[0].name
     
-             this.f.imgTitle.setValue(name)
-    
-                
+            this.f.imgTitle.setValue(name)
+
+
+
+             this.product.imgTitle = name;
+
+             this.uploadFile = true;
+
         
            // this.uploadFiles();
         }

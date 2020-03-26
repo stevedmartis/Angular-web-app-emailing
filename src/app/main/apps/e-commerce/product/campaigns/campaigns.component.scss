@@ -115,6 +115,7 @@ products-campaigns {
 
         .courses {
             width: 100%;
+            height: 500px;
             max-width: 1040px;
             margin: 0 auto;
 
@@ -236,4 +237,8 @@ products-campaigns {
 
 .logo-icon {
     font-size: 50px;
+}
+
+.spinner-fab {
+    position: fixed !important;
 }
