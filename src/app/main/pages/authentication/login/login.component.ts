@@ -83,7 +83,7 @@ export class LoginComponent implements OnInit {
                     console.log(user);
 
                     const urlStatePass = this.authServices.invitedPassStateUrl;
-                    const url = "pages/";
+                   
 
                     console.log(urlStatePass)
 

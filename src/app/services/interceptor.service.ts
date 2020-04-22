@@ -44,7 +44,9 @@ export class InterceptorService {
     return next.handle(request).pipe(
       catchError((err: HttpErrorResponse) => {
 
-        if (err.status === 401) {
+        console.log(err)
+
+        if (err.status === 401 || err.status === 0) {
           this.router.navigate(['pages/auth/login']);
         }
 

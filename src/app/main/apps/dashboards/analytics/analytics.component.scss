@@ -2,6 +2,8 @@
 
 #dashboard-analytics {
 
+    padding: 3%;
+
     .main-widget {
         display: flex;
         flex-direction: column;
@@ -10,9 +12,9 @@
     .content {
         display: flex;
         flex: 1 1 auto;
-        padding: 80px;
+        padding: 40px;
         min-width: 0;
-        margin-top: -6%;
+        
 
         @include media-breakpoint('lt-lg') {
             flex-direction: column;
@@ -47,7 +49,7 @@
             width: 320px;
             min-width: 320px;
             max-width: 320px;
-            margin-left: 9%;
+            margin-left: 3%;
 
             @include media-breakpoint('lt-lg') {
                 flex: 1 0 100%;
@@ -74,7 +76,8 @@
                 }
 
             }
-            
+
+
 
 
         }
@@ -102,4 +105,44 @@
         margin-bottom: 10%;
     }
     
+}
+
+.spinner-chat5 {
+    display: flex !important;
+
+    position: absolute !important;
+
+
+
+
+
+    @include media-breakpoint('lt') {
+        margin-left: 45% !important;
+        /* margin-bottom: -4%; */
+        margin-top: 5% !important;
+        
+       
+    }
+
+    @include media-breakpoint('xs') {
+        margin-left: 40% !important;
+        /* margin-bottom: -4%; */
+        margin-top: 35% !important;
+    }
+
+
+
+}
+
+
+.widget5 {
+
+    margin-left: 15%;
+}
+
+.total {
+    font-size: 24px;
+}
+.single-center {
+    margin-left: 20%;
 }

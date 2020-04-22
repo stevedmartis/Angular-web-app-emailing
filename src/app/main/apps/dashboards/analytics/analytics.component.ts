@@ -18,6 +18,11 @@ export class AnalyticsDashboardComponent implements OnInit, OnDestroy
     widget1SelectedYear = '2016';
     widget5SelectedDay = 'today';
 
+    
+
+ 
+
+
     /**
      * Constructor
      *

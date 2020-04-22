@@ -23,6 +23,9 @@ export class AnalyticsDashboardService implements Resolve<any> {
     siAsiste: any[];
     noAsiste: any[];
     pauseAsiste: any[];
+    statusSent: any[];
+    statusOpen: any[];
+    statusClicked: any[];
     arrayFormatDate: Array<any> = [];
     arrayInvitedForDate: Array<any> = [];
     loadingEvents: boolean = false;
@@ -75,39 +78,70 @@ export class AnalyticsDashboardService implements Resolve<any> {
             this.events.forEach(obj => {
                 this.getContacts(obj._id).then(data => {
 
+                    console.log('data',data)
+
                     this.siAsiste = data.filter(x => x.asiste === "si");
 
                     this.noAsiste = data.filter(x => x.asiste === "no");
 
-                    this.pauseAsiste = data.filter(x => x.asiste === "null");
+                    this.pauseAsiste = data.filter(x => x.asiste === "0");
 
                     this.onClick = data.filter(x => x.onClick === true);
 
+                    this.statusSent = data.filter(x => x.Status === 'sent');
 
+                    this.statusOpen = data.filter(x => x.Status === 'opened');
 
-                  const x =  this.sortByDate( this.onClick)
+                    this.statusClicked = data.filter(x => x.Status === 'clicked');
 
+                    console.log( this.statusSent , this.statusOpen,    this.statusClicked)
 
+                    const x =  this.sortByDate(this.onClick);
+
+                    let  myDate = new Date();
+
+                    let toDay = this.datepipe.transform(
+                        myDate,
+                        "EEEE dd/LLL"
+                    )
+
+                    console.log(toDay)
+
+                    const label = [toDay, '00:00', '01:00', '02:00', '03:00', '04:00', '05:00', '06:00','07:00', '08:00', '09:00', '10:00', 
+                                    '11:00', '12:00', '13:00', '14:00', '15:00', '16:00', '17:00', '18:00', '19:00', '20:00', '21:00', '22:00', '23:00']
 
                     x.forEach(element => {
+
+                      
                         const obj = {
                             date: this.datepipe.transform(
                                 element.dateOnClick,
-                                "dd/MM/yyyy"
+                                "EEEE"
                             ),
                             fullDate: element.dateOnClick,
                             onClick: element.onClick
                             
                         };
 
+                        console.log(obj)
+
                         this.arrayFormatDate.push(obj);
                     });
 
+                    
+                     let dataStatusSent = this.dataStatus(this.statusSent);
+
+                     let dataStatusOpen = this.dataStatus(this.statusOpen);
+
+                     let dataStatusClicked = this.dataStatus(this.statusClicked);
+
+                     
+                    console.log(dataStatusSent);
+                    console.log(dataStatusOpen);
+                    console.log(dataStatusClicked);
 
 
-
-                     const uniqueDateOnClick = [...new Set(this.arrayFormatDate.map(obj => obj.date))];
-
+                    const uniqueDateOnClick = [...new Set(this.arrayFormatDate.map(obj => obj.date))];
 
                     this.arrayInvitedForDate = [];
 
@@ -148,21 +182,117 @@ export class AnalyticsDashboardService implements Resolve<any> {
                         company: obj.company,
 
                         widget1: {
+                            chartType: 'line',
+                            datasets : {
+                                '2016': [
+                                    {
+                                        label: 'Enviados',
+                                        data : dataStatusSent,
+                                        fill : 'start'
+                
+                                    },
+
+                                    {
+                                        label: 'Abiertos',
+                                        data : dataStatusOpen,
+                                        fill : 'start'
+                
+                                    },
+
+                                    {
+                                        label: 'Clicked',
+                                        data : dataStatusClicked,
+                                        fill : 'start'
+                
+                                    }
+                                ],
+
+
+                
+                            },
+                            labels   :label,
+                            colors   : [
+                                {
+                                    borderColor              : '#42a5f5',
+                                    backgroundColor          : '#42a5f5',
+                                    pointBackgroundColor     : '#1e88e5',
+                                    pointHoverBackgroundColor: '#1e88e5',
+                                    pointBorderColor         : '#ffffff',
+                                    pointHoverBorderColor    : '#ffffff'
+                                }
+                            ],
+                            options  : {
+                                spanGaps           : false,
+                                legend             : {
+                                    display: false
+                                },
+                                maintainAspectRatio: false,
+                                layout             : {
+                                    padding: {
+                                        top  : 32,
+                                        left : 32,
+                                        right: 32
+                                    }
+                                },
+                                elements: {
+                                    point: {
+                                        radius: 4,
+                                        borderWidth: 2,
+                                        hoverRadius: 4,
+                                        hoverBorderWidth: 2
+                                    },
+
+                                },
+
+                                scales             : {
+                                    xAxes: [
+                                        {
+                                            gridLines: {
+                                                display       : false,
+                                                
+                                             
+                                            },
+                                            ticks    : {
+                                                fontColor: '#ffffff'
+                                            }
+                                        }
+                                    ],
+                                    yAxes: [
+                                        {
+                                            display: false
+
+
+                                        }
+                                    ]
+                                },
+                                plugins            : {
+                                    filler      : {
+                                        propagate: false
+                                    },
+
+
+                                }
+                            }
+
+                            
+                        },
+
+                        widget3: {
                             scheme: {
                                 domain: ['#4867d2', '#5c84f1', '#89a9f4']
                             },
                             devices: [
                                 {
                                     name: "Asisten",
-                                    value: this.siAsiste.length
+                                    value: this.siAsiste? this.siAsiste.length: 0
                                 },
                                 {
                                     name: "Cancelan",
-                                    value: this.noAsiste.length
+                                    value: this.noAsiste? this.noAsiste.length: 0
                                 },
                                 {
                                     name: "Esperan",
-                                    value: this.pauseAsiste.length
+                                    value:this.pauseAsiste? this.pauseAsiste.length: 0
                                 }
                             ]
                         },
@@ -172,7 +302,7 @@ export class AnalyticsDashboardService implements Resolve<any> {
                                 today: [
                                     {
                                         label: "Aperturas",
-                                        data: arrayCounts,
+                                        data: arrayCounts? arrayCounts: 0,
                                         fill: "start"
                                     }
                                 ]
@@ -256,10 +386,10 @@ export class AnalyticsDashboardService implements Resolve<any> {
 
                     this.eventsArray.push(eventObj);
 
-             setTimeout(() => {
+        
                 this.loadingEvents = false;
 
-             }, 1000);
+     
                 
                    
 
@@ -323,4 +453,190 @@ export class AnalyticsDashboardService implements Resolve<any> {
     
         return arr;
       }
+
+      dataStatus(arrayStatus){
+
+        let arrayStatusTimes = [];
+
+        arrayStatus.forEach(item => {
+
+            const obj = {
+                time: this.datepipe.transform(
+                    item.StatusDateTime,
+                    "HH"
+                ),
+
+                 
+            };
+
+            arrayStatusTimes.push(obj)
+
+         
+        })
+
+        console.log(arrayStatusTimes)
+
+        const dataStatus = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
+            0, 0, 0, 0, 0, 0,0, 0, 0, 0, 0, 0, 0];
+
+            let count00 = 1;
+            let count01 = 1;
+            let count02 = 1;
+            let count03 = 1;
+            let count04 = 1;
+            let count05 = 1;
+            let count06 = 1;
+            let count07 = 1;
+            let count08 = 1;
+            let count09 = 1;
+            let count10 = 1;
+            let count11 = 1;
+            let count12 = 1;
+            let count13 = 1;
+            let count14 = 1;
+            let count15 = 1;
+            let count16 = 1;
+            let count17 = 1;
+            let count18 = 1;
+            let count19 = 1;
+            let count20 = 1;
+            let count21 = 1;
+            let count22 = 1;
+            let count23 = 1;
+           
+            
+            arrayStatusTimes.forEach(item => {
+
+            switch (item.time) {
+                case "00":
+                   
+                    dataStatus[1] = count00++;
+
+                    break;
+                case "01":
+                   
+                    dataStatus[2] = count01++;
+
+                    break;
+                case "02":
+                   
+                    dataStatus[3] = count02++;
+
+                    break;
+                case "03":
+                   
+                    dataStatus[4] = count03++;
+
+                    break;
+                case "04":
+                   
+                    dataStatus[5] = count04++;
+
+                    break;
+                case "05":
+                   
+                    dataStatus[6] = count05++;
+
+                    break;
+                case "06":
+                   
+                    dataStatus[7] = count06++;
+
+                    break;
+                case "07":
+                   
+                    dataStatus[8] = count07++;
+
+                    break;
+                case "08":
+                   
+                    dataStatus[9] = count08++;
+
+                    break;
+                case "09":
+                   
+                    dataStatus[10] = count09++;
+
+                    break;
+                case "10":
+                   
+                    dataStatus[11] = count10++;
+
+                    break;
+                case "11":
+                   
+                    dataStatus[12] = count11++;
+
+                    break;
+                case "12":
+                   
+                    dataStatus[13] = count12++;
+
+                    break;
+                case "13":
+                   
+                    dataStatus[14] = count13++;
+
+                    break;
+                case "14":
+                   
+                    dataStatus[15] = count14++;
+
+                    break;
+                case "15":
+                   
+                    dataStatus[16] = count15++;
+
+                    break;
+
+                case "16":
+                   
+                    dataStatus[17] = count16++;
+
+                    break;
+
+                case "17":
+                   
+                    dataStatus[18] = count17++;
+
+                    break;
+                case "18":
+                   
+                    dataStatus[19] = count18++;
+
+                    break;
+                case "19":
+                   
+                    dataStatus[20] = count19++;
+
+                    break;                                                               
+                case "20":
+                   
+                    dataStatus[21] = count20++;
+
+                    break;
+                case "21":
+                   
+                    dataStatus[22] = count21++;
+
+                    break;     
+                case "22":
+                   
+                    dataStatus[23] = count22++;
+
+                    break;                                                                                      
+                case "23":
+                   
+                    dataStatus[24] = count23++;
+
+                    break;                                
+                default:
+                    break;
+            }
+        })
+
+        return dataStatus;
+      }
+
+
 }

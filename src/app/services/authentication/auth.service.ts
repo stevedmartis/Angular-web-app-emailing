@@ -30,6 +30,8 @@ export class AuthService {
   isLogged: boolean = false;
   loading: boolean = false;
 
+  apiMailJet: boolean = false;
+
   public get currentUserValue(): User {
     return this.currentUserSubject.value;
 }

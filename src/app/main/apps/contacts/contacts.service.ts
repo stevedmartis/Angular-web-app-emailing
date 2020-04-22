@@ -295,6 +295,21 @@ export class ContactsService implements Resolve<any> {
         });
     }
 
+    editMessageId(invitedId, messageId): Promise<any> {
+        return new Promise((resolve, reject) => {
+            this._httpClient
+                .post(environment.apiUrl + "/api/invited/messageId", {
+                    invitedId: invitedId,
+                    messageId: messageId
+                })
+                .subscribe((response: any) => {
+                   
+                    resolve(response);
+                    console.log(response);
+                }, reject);
+        });
+    }
+
     editContact(obj): Promise<any> {
         return new Promise((resolve, reject) => {
             //obj.send_email ? true : false;

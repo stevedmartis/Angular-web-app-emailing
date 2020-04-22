@@ -334,12 +334,21 @@ export class CampaignService {
 
                                 console.log(mail,  this.value)
 
+                                let id = mail.resBody.Messages[0].To[0].MessageID;
+                                   
+                                this._contactService.editMessageId(obj._id, id)
+                                .then(() => {
+                                    this._productService.Is_mailJet()
+                                    
+                                })
+                           
+
                                 if (this.value === totalCount) {
                                     this.value = totalCount;
 
-                                    this.countStatus = "Se enviaron: " + this.value + " de " + totalCount;
+                                    this.countStatus = "Enviados: " + this.value + " de " + totalCount;
 
-                                    this.statusSendInvitation = "Enviado!";
+                                    this.statusSendInvitation = "Completado!";
                                 }
                             })
                             .catch(err => {
@@ -347,7 +356,7 @@ export class CampaignService {
 
                              
           
-                                        console.log(obj, this.value);
+                                        console.log(err);
 
                                         this.invitedFails.push(obj);
 
@@ -360,10 +369,10 @@ export class CampaignService {
                                     this.value = totalCount;
 
 
-                                    this.countStatus = "Se enviaron: " + this.value + " de " + totalCount;
+                                    this.countStatus = "Enviados: " + this.value + " de " + totalCount;
 
 
-                                    this.statusSendInvitation = "Enviado!";
+                                    this.statusSendInvitation = "Completado!";
 
                                 }
                             });
@@ -397,12 +406,20 @@ export class CampaignService {
 
                                 console.log(mail,  this.value)
 
+                                let id = mail.resBody.Messages[0].To[0].MessageID;
+
+                                this._contactService.editMessageId(obj._id, id)
+                                .then(() => {
+                                    this._productService.Is_mailJet()
+                                    
+                                })
+
                                 if (this.value === totalCount) {
                                     this.value = totalCount;
 
-                                    this.countStatus = "Se enviaron: " + this.value + " de " + totalCount;
+                                    this.countStatus = "Enviados: " + this.value + " de " + totalCount;
 
-                                    this.statusSendInvitation = "Enviado!";
+                                    this.statusSendInvitation = "Completado!";
                                 }
                             })
                             .catch(err => {
@@ -422,9 +439,9 @@ export class CampaignService {
                                 if (this.value === totalCount) {
                                     this.value = totalCount;
 
-                                    this.countStatus = "Se enviaron: " + this.value + " de " + totalCount;
+                                    this.countStatus = "Enviados: " + this.value + " de " + totalCount;
 
-                                    this.statusSendInvitation = "Enviado!";
+                                    this.statusSendInvitation = "Completado!";
 
                                 }
                             });
@@ -532,6 +549,24 @@ export class CampaignService {
                 this.previewUrlEvent = reader.result;
             }
         };
+    }
+
+
+
+    mailJetStatusTo(id): Promise<any> {
+
+        console.log('id', id)
+        return new Promise((resolve, reject) => {
+            this._httpClient
+            .get<any>(`${environment.apiUrl}/api/status-to-mailjet/${id}`,)                
+            .subscribe((response: any) => {
+
+
+                    console.log(response);
+                    resolve(response);
+                   
+                }, reject);
+        });
     }
 
     

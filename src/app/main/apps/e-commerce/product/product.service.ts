@@ -144,6 +144,25 @@ export class EcommerceProductService implements Resolve<any>
         });
     }
 
+    Is_mailJet(): Promise<any>
+    {
+       
+        return new Promise((resolve, reject) => {
+            this._httpClient.post(environment.apiUrl + '/api/event/edit/is_mail-jet', 
+            {   
+                
+                eventId:this.contactServices.idEventNow, 
+            })
+                .subscribe((response: any) => {
+
+                    
+                    resolve(response);
+
+                    
+                    console.log(response)
+                }, reject);
+        });
+    }
 
     /**
      * Add product
