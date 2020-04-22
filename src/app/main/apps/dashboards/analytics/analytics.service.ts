@@ -29,6 +29,8 @@ export class AnalyticsDashboardService implements Resolve<any> {
     arrayFormatDate: Array<any> = [];
     arrayInvitedForDate: Array<any> = [];
     loadingEvents: boolean = false;
+    countAllInvited: any;
+    allInvited: any[];
 
     /**
      * Constructor
@@ -76,9 +78,16 @@ export class AnalyticsDashboardService implements Resolve<any> {
             }
 
             this.events.forEach(obj => {
-                this.getContacts(obj._id).then(data => {
+                this.getContacts(obj._id)
+                .then(data => {
 
                     console.log('data',data)
+                
+                    let allOk: any[] = data.filter(x => x.messageOk === true);
+
+                    console.log(allOk)
+
+                    this.countAllInvited = allOk.length;
 
                     this.siAsiste = data.filter(x => x.asiste === "si");
 
@@ -107,7 +116,9 @@ export class AnalyticsDashboardService implements Resolve<any> {
 
                     console.log(toDay)
 
-                    const label = [toDay, '00:00', '01:00', '02:00', '03:00', '04:00', '05:00', '06:00','07:00', '08:00', '09:00', '10:00', 
+                
+
+                    const label = ['00:00', '01:00', '02:00', '03:00', '04:00', '05:00', '06:00','07:00', '08:00', '09:00', '10:00', 
                                     '11:00', '12:00', '13:00', '14:00', '15:00', '16:00', '17:00', '18:00', '19:00', '20:00', '21:00', '22:00', '23:00']
 
                     x.forEach(element => {
@@ -134,6 +145,8 @@ export class AnalyticsDashboardService implements Resolve<any> {
                      let dataStatusOpen = this.dataStatus(this.statusOpen);
 
                      let dataStatusClicked = this.dataStatus(this.statusClicked);
+    
+
 
                      
                     console.log(dataStatusSent);
@@ -180,13 +193,15 @@ export class AnalyticsDashboardService implements Resolve<any> {
                         name: obj.eventName,
                         handle: obj.handle,
                         company: obj.company,
+                        countInvited: obj.countInvited,
 
                         widget1: {
+                            toDay: toDay,
                             chartType: 'line',
                             datasets : {
                                 '2016': [
                                     {
-                                        label: 'Enviados',
+                                        label: 'Sin respuesta',
                                         data : dataStatusSent,
                                         fill : 'start'
                 
@@ -465,13 +480,11 @@ export class AnalyticsDashboardService implements Resolve<any> {
                     item.StatusDateTime,
                     "HH"
                 ),
-
-                 
+ 
             };
 
             arrayStatusTimes.push(obj)
 
-         
         })
 
         console.log(arrayStatusTimes)

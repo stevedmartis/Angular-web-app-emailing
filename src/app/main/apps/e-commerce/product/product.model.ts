@@ -7,6 +7,7 @@ export class Product
     eventName: string;
     handle: string;
     company: String;
+    countInvited: number;
     desc: string;
     address: string;
     dateEvent: string;

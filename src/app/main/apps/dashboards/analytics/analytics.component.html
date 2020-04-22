@@ -7,7 +7,7 @@
 <mat-spinner *ngIf="_analyticsDashboardService.loadingEvents"  diameter="100"></mat-spinner>
 
 
-<div *ngFor="let e of _analyticsDashboardService.eventsArray" class="fuse-card card" [@animate]="{value:'*',params:{y:'100%'}}">
+<div *ngFor="let e of _analyticsDashboardService.eventsArray" class="mat-card card mat-elevation-z4" [@animate]="{value:'*',params:{y:'100%'}}">
 
     <div class="main-widget auto-width"  >
 
@@ -16,11 +16,9 @@
        <div fxLayout="column" fxLayoutAlign="start start">
            <span class="h1">{{ e.name }}</span>
 
-           <span class="h4 text-bold secondary-text"> {{ e.company }}</span>
+           <span class="h4 text-bold secondary-text"> Invitados: {{ e.countInvited }}</span>
 
        </div>
-
-      
 
        <button
        mat-button
@@ -37,26 +35,33 @@
         <div class="position-relative p-24 blue-600"
              fxLayout="row" fxLayoutAlign="space-between center">
             <div fxLayout="column" fxLayoutAlign="start start">
-                <span class="h2">Visitantes</span>
-                <span class="h5 secondary-text">Cantidad de visitas</span>
+                <span class="h2">Actividad emails</span>
+                <span class="h5 secondary-text">Estados de respuesta</span>
             </div>
+
+            <div fxLayout="column" fxLayoutAlign="start start">
+                <span *ngIf="widget1SelectedYear === '2016'" class="h2">{{ e.widget1.toDay }}</span>
+
+                <span *ngIf="widget1SelectedYear === '2017'" class="h2"> otro día..</span>
+              
+            </div>
+
+           
             <div fxLayout="row" fxLayoutAlign="start center">
                 <div class="py-8 px-12 border-radius-2 line-height-1 mr-8 cursor-pointer"
                      (click)="widget1SelectedYear = '2016'"
                      [ngClass]="{'blue-700': widget1SelectedYear === '2016'}">
-                    2016
+                   Hoy
                 </div>
                 <div class="py-8 px-12 border-radius-2 line-height-1 mr-8 cursor-pointer"
                      (click)="widget1SelectedYear = '2017'"
                      [ngClass]="{'blue-700': widget1SelectedYear === '2017'}">
-                    2017
+                     <mat-icon>event</mat-icon>
                 </div>
-                <div class="py-8 px-12 border-radius-2 line-height-1 cursor-pointer"
-                     (click)="widget1SelectedYear = '2018'"
-                     [ngClass]="{'blue-700': widget1SelectedYear === '2018'}">
-                    2018
-                </div>
+
             </div>
+
+        
         </div>
 
         <div class="position-relative h-256 pb-16 blue-600">
@@ -80,11 +85,9 @@
         <div class="left mr-lg-32">
 
             <div class="pb-24 font-size-18 font-weight-300">
-                Total invitados: <b class="total"> 300</b>
-             </div>
 
             <div class="pb-24 font-size-18 font-weight-300">
-               Como respondieron a los correos?
+                Porcentajes y totales
             </div>
 
             <div fxLayout="column" fxLayoutAlign="start"
@@ -102,7 +105,7 @@
                                     <div class="pr-16">
                                         <div class="h3 secondary-text">Enviados</div>
                                         <div class="font-size-54 font-weight-300 line-height-1 mt-8">
-                                            90%
+                                            100%
                                         </div>
                                     </div>
        
@@ -113,7 +116,7 @@
                                     <div class="pr-16">
                                       
                                         <div class="font-size-40 font-weight-300 line-height-1 mt-8">
-                                            250
+                                            {{  _analyticsDashboardService.countAllInvited }}
                                         </div>
                                     </div>
        
@@ -146,7 +149,7 @@
                                     <div class="pr-16">
                                       
                                         <div class="font-size-40 font-weight-300 line-height-1 mt-8">
-                                            40
+                                            {{  _analyticsDashboardService.statusOpen.length }} 
                                         </div>
                                     </div>
        
@@ -179,7 +182,7 @@
                                         <div class="pr-16 single-center">
                                           
                                             <div class="font-size-40 font-weight-300 line-height-1 mt-8">
-                                                100
+                                                {{  _analyticsDashboardService.statusClicked.length }} 
                                             </div>
                                         </div>
            
@@ -195,7 +198,7 @@
 
             <!-- Widget 5 -->
             <div class="pt-48 pb-24 font-size-18 font-weight-300">
-                Cuando respondieron las campañas?
+                Cuantos visitaron el sitio?
             </div>
 
             <div class="fuse-card auto-width">
@@ -203,8 +206,10 @@
                 <div class="position-relative p-24"
                      fxLayout="row" fxLayoutAlign="space-between center">
                     <div fxLayout="column" fxLayoutAlign="start start">
-                        <span class="h2">Estados de campañas</span>
+                        <span class="h2">Visitas realizadas</span>
                     </div>
+                    
+                    <!--
                     <div fxLayout="row" fxLayoutAlign="start center">
                         <div class="py-8 px-12 border-radius-2 line-height-1 mr-8 cursor-pointer"
                              (click)="widget5SelectedDay = 'yesterday'"
@@ -217,6 +222,8 @@
                             Today
                         </div>
                     </div>
+
+                -->
                 </div>
 
                 <div class="position-relative h-368 pb-16">
