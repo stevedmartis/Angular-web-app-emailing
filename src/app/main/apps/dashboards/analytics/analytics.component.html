@@ -38,7 +38,7 @@
                 <span class="h2">Actividad emails</span>
                 <span class="h5 secondary-text">Estados de respuesta</span>
 
-                <span *ngIf="widget1SelectedYear === '2016'" class="h2">{{ e.widget1.toDay }}</span>
+                <span *ngIf="widget1SelectedYear === 'toDay'" class="h2">{{ e.widget1.toDay }}</span>
 
                 <span *ngIf="widget1SelectedYear === '2017'" class="h2"> otro día..</span>
             </div>
@@ -47,8 +47,8 @@
            
             <div fxLayout="row" fxLayoutAlign="start center">
                 <div class="py-8 px-12 border-radius-2 line-height-1 mr-8 cursor-pointer"
-                     (click)="widget1SelectedYear = '2016'"
-                     [ngClass]="{'blue-700': widget1SelectedYear === '2016'}">
+                     (click)="widget1SelectedYear = 'toDay'"
+                     [ngClass]="{'blue-700': widget1SelectedYear === 'toDay'}">
                    Hoy
                 </div>
                 <div class="py-8 px-12 border-radius-2 line-height-1 mr-8 cursor-pointer"

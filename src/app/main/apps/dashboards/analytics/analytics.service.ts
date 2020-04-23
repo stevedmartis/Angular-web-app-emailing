@@ -125,9 +125,7 @@ export class AnalyticsDashboardService implements Resolve<any> {
                         "EEEE dd/LLL"
                     )
 
-                    console.log(toDay)
-
-                
+                    console.log(toDay)                
 
                     const label = ['00:00', '01:00', '02:00', '03:00', '04:00', '05:00', '06:00','07:00', '08:00', '09:00', '10:00', 
                                     '11:00', '12:00', '13:00', '14:00', '15:00', '16:00', '17:00', '18:00', '19:00', '20:00', '21:00', '22:00', '23:00']
@@ -210,7 +208,7 @@ export class AnalyticsDashboardService implements Resolve<any> {
                             toDay: toDay,
                             chartType: 'line',
                             datasets : {
-                                '2016': [
+                                'toDay': [
                                     {
                                         label: 'Sin respuesta',
                                         data : dataStatusSent,
@@ -336,12 +334,12 @@ export class AnalyticsDashboardService implements Resolve<any> {
                             labels: arrayDates,
                             colors: [
                                 {
-                                    borderColor: "#3949ab",
-                                    backgroundColor: "#3949ab",
-                                    pointBackgroundColor: "#3949ab",
-                                    pointHoverBackgroundColor: "#3949ab",
-                                    pointBorderColor: "#ffffff",
-                                    pointHoverBorderColor: "#ffffff"
+                                    borderColor              : '#42a5f5',
+                                    backgroundColor          : '#42a5f5',
+                                    pointBackgroundColor     : '#1e88e5',
+                                    pointHoverBackgroundColor: '#1e88e5',
+                                    pointBorderColor         : '#ffffff',
+                                    pointHoverBorderColor    : '#ffffff'
                                 },
                                 {
                                     borderColor: "rgba(30, 136, 229, 0.87)",

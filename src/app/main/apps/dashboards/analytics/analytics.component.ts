@@ -15,7 +15,7 @@ import { EcommerceProductsService } from '../../e-commerce/products/products.ser
 export class AnalyticsDashboardComponent implements OnInit, OnDestroy
 {
     widgets: any;
-    widget1SelectedYear = '2016';
+    widget1SelectedYear = 'toDay';
     widget5SelectedDay = 'today';
 
     
@@ -53,7 +53,7 @@ export class AnalyticsDashboardComponent implements OnInit, OnDestroy
         console.log(this.widgets)
 
 
-        
+
         
     }
 
