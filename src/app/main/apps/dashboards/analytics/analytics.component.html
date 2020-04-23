@@ -103,7 +103,7 @@
                                     <div class="pr-16">
                                         <div class="h3 secondary-text">Enviados</div>
                                         <div class="font-size-54 font-weight-300 line-height-1 mt-8">
-                                            {{  _analyticsDashboardService.percentSent }}%
+                                            {{  _analyticsDashboardService.percentSent | number: '1.0-0' }}%
                                         </div>
                                     </div>
        
@@ -136,7 +136,7 @@
                                     <div class="pr-16">
                                         <div class="h3 secondary-text">Abiertos</div>
                                         <div class="font-size-54 font-weight-300 line-height-1 mt-8">
-                                            {{  _analyticsDashboardService.percentOpen }}%  
+                                            {{  _analyticsDashboardService.percentOpen | number: '1.0-0'  }}%  
                                         </div>
                                     </div>
        
@@ -169,7 +169,7 @@
                                         <div class="pr-16 single-center">
                                             <div class="h3 secondary-text">Clicked</div>
                                             <div class="font-size-54 font-weight-300 line-height-1 mt-8">
-                                                {{  _analyticsDashboardService.percentClicked }}%
+                                                {{  _analyticsDashboardService.percentClicked | number: '1.0-0' }}%
                                             </div>
                                         </div>
            
