@@ -39,7 +39,7 @@
                 <span class="h5 secondary-text">Estados de respuesta</span>
             </div>
 
-            <div fxLayout="column" fxLayoutAlign="start start">
+            <div fxLayout="column" fxLayoutAlign="start start" class="day-fixed">
                 <span *ngIf="widget1SelectedYear === '2016'" class="h2">{{ e.widget1.toDay }}</span>
 
                 <span *ngIf="widget1SelectedYear === '2017'" class="h2"> otro día..</span>
@@ -255,7 +255,7 @@
                         Que respondieron a la invitación?
                     </div>
 
-                    <div class="fuse-card">
+                    <div class="fuse-card auto-width">
 
                         <div class="p-16">
                             <div class="h1 font-weight-300"> Estados de participación </div>

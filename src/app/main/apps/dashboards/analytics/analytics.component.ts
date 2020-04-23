@@ -51,6 +51,9 @@ export class AnalyticsDashboardComponent implements OnInit, OnDestroy
 
 
         console.log(this.widgets)
+
+
+        
         
     }
 

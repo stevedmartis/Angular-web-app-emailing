@@ -21,13 +21,11 @@
         }
 
         @include media-breakpoint('xs') {
-            margin-top: -15%;
+           
             padding: 20px;
         }
 
-        @include media-breakpoint('lt-md') {
-            margin-top: -10%;
-        }
+
 
      
 
@@ -145,4 +143,18 @@
 }
 .single-center {
     margin-left: 20%;
+}
+
+.day-fixed {
+
+    margin: 5%;
+    z-index: 100;
+    position: absolute;
+
+    @include media-breakpoint('xs') {
+           
+        margin: 20%;
+        z-index: 100;
+    }
+    
 }
