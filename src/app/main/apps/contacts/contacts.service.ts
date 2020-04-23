@@ -513,7 +513,9 @@ export class ContactsService implements Resolve<any> {
                 COMUNA: c.street,
                 CIUDAD: c.city,
                 PAIS: c.country,
-                OBSERVACION: c.notes
+                OBSERVACION: c.notes,
+                ESTADO: c.Status,
+                FECHA_ESTADO: c.StatusDateTime
             };
 
             this.contactsArrayXls.push(obj);

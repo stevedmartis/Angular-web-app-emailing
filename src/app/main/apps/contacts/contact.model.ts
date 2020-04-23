@@ -19,6 +19,8 @@ export class Contact {
     phoneMobil: string;
     onClick: boolean;
     dateOnClick: Date;
+    Status: string;
+    StatusDateTime: Date;
 
 
 
@@ -48,6 +50,9 @@ export class Contact {
             this.phoneMobil = contact.phoneMobil || '';
             this.onClick = contact.onClick || '';
             this.dateOnClick = contact.dateOnClick || '';
+            this.Status = contact.Status || '';
+            this.StatusDateTime = contact.StatusDateTime || '';
+
             
         }
     }
