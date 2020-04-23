@@ -127,7 +127,7 @@ export class AnalyticsDashboardService implements Resolve<any> {
                         const obj = {
                             date: this.datepipe.transform(
                                 element.dateOnClick,
-                                "EEEE"
+                                "EEEE dd/LLL"
                             ),
                             fullDate: element.dateOnClick,
                             onClick: element.onClick
