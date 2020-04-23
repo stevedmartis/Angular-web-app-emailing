@@ -11,12 +11,12 @@
 
     <div class="main-widget auto-width"  >
 
-        <div class="position-relative p-24"
+        <div class="position-relative card-activity"
         fxLayout="row" fxLayoutAlign="space-between center">
        <div fxLayout="column" fxLayoutAlign="start start">
            <span class="h1">{{ e.name }}</span>
 
-           <span class="h4 text-bold secondary-text"> Invitados: {{ e.countInvited }}</span>
+           <span class="h4 text-bold secondary-text"> Invitados: {{ e.countInvited }}</span> 
 
        </div>
 
@@ -32,19 +32,17 @@
 
 
 
-        <div class="position-relative p-24 blue-600"
+        <div class="position-relative blue-600 card-activity"
              fxLayout="row" fxLayoutAlign="space-between center">
             <div fxLayout="column" fxLayoutAlign="start start">
                 <span class="h2">Actividad emails</span>
                 <span class="h5 secondary-text">Estados de respuesta</span>
-            </div>
 
-            <div fxLayout="column" fxLayoutAlign="start start" class="day-fixed">
                 <span *ngIf="widget1SelectedYear === '2016'" class="h2">{{ e.widget1.toDay }}</span>
 
                 <span *ngIf="widget1SelectedYear === '2017'" class="h2"> otro día..</span>
-              
             </div>
+
 
            
             <div fxLayout="row" fxLayoutAlign="start center">
@@ -105,7 +103,7 @@
                                     <div class="pr-16">
                                         <div class="h3 secondary-text">Enviados</div>
                                         <div class="font-size-54 font-weight-300 line-height-1 mt-8">
-                                            100%
+                                            {{  _analyticsDashboardService.percentSent }}%
                                         </div>
                                     </div>
        
@@ -138,7 +136,7 @@
                                     <div class="pr-16">
                                         <div class="h3 secondary-text">Abiertos</div>
                                         <div class="font-size-54 font-weight-300 line-height-1 mt-8">
-                                            20%
+                                            {{  _analyticsDashboardService.percentOpen }}%  
                                         </div>
                                     </div>
        
@@ -171,7 +169,7 @@
                                         <div class="pr-16 single-center">
                                             <div class="h3 secondary-text">Clicked</div>
                                             <div class="font-size-54 font-weight-300 line-height-1 mt-8">
-                                                90%
+                                                {{  _analyticsDashboardService.percentClicked }}%
                                             </div>
                                         </div>
            

@@ -31,6 +31,9 @@ export class AnalyticsDashboardService implements Resolve<any> {
     loadingEvents: boolean = false;
     countAllInvited: any;
     allInvited: any[];
+    percentSent: any;
+    percentOpen: any;
+    percentClicked: any;
 
     /**
      * Constructor
@@ -103,7 +106,15 @@ export class AnalyticsDashboardService implements Resolve<any> {
 
                     this.statusClicked = data.filter(x => x.Status === 'clicked');
 
-                    console.log( this.statusSent , this.statusOpen,    this.statusClicked)
+            
+
+                    this.percentSent = (this.countAllInvited  * 100 )/data.length;
+
+                    this.percentOpen = ( this.statusOpen.length  * 100 )/  this.countAllInvited;
+
+                    this.percentClicked = ( this.statusClicked.length  * 100 )/  this.countAllInvited;
+
+                   
 
                     const x =  this.sortByDate(this.onClick);
 
@@ -523,124 +534,124 @@ export class AnalyticsDashboardService implements Resolve<any> {
             switch (item.time) {
                 case "00":
                    
-                    dataStatus[1] = count00++;
+                    dataStatus[0] = count00++;
 
                     break;
                 case "01":
                    
-                    dataStatus[2] = count01++;
+                    dataStatus[1] = count01++;
 
                     break;
                 case "02":
                    
-                    dataStatus[3] = count02++;
+                    dataStatus[2] = count02++;
 
                     break;
                 case "03":
                    
-                    dataStatus[4] = count03++;
+                    dataStatus[3] = count03++;
 
                     break;
                 case "04":
                    
-                    dataStatus[5] = count04++;
+                    dataStatus[4] = count04++;
 
                     break;
                 case "05":
                    
-                    dataStatus[6] = count05++;
+                    dataStatus[5] = count05++;
 
                     break;
                 case "06":
                    
-                    dataStatus[7] = count06++;
+                    dataStatus[6] = count06++;
 
                     break;
                 case "07":
                    
-                    dataStatus[8] = count07++;
+                    dataStatus[7] = count07++;
 
                     break;
                 case "08":
                    
-                    dataStatus[9] = count08++;
+                    dataStatus[8] = count08++;
 
                     break;
                 case "09":
                    
-                    dataStatus[10] = count09++;
+                    dataStatus[9] = count09++;
 
                     break;
                 case "10":
                    
-                    dataStatus[11] = count10++;
+                    dataStatus[10] = count10++;
 
                     break;
                 case "11":
                    
-                    dataStatus[12] = count11++;
+                    dataStatus[11] = count11++;
 
                     break;
                 case "12":
                    
-                    dataStatus[13] = count12++;
+                    dataStatus[12] = count12++;
 
                     break;
                 case "13":
                    
-                    dataStatus[14] = count13++;
+                    dataStatus[13] = count13++;
 
                     break;
                 case "14":
                    
-                    dataStatus[15] = count14++;
+                    dataStatus[14] = count14++;
 
                     break;
                 case "15":
                    
-                    dataStatus[16] = count15++;
+                    dataStatus[15] = count15++;
 
                     break;
 
                 case "16":
                    
-                    dataStatus[17] = count16++;
+                    dataStatus[16] = count16++;
 
                     break;
 
                 case "17":
                    
-                    dataStatus[18] = count17++;
+                    dataStatus[17] = count17++;
 
                     break;
                 case "18":
                    
-                    dataStatus[19] = count18++;
+                    dataStatus[18] = count18++;
 
                     break;
                 case "19":
                    
-                    dataStatus[20] = count19++;
+                    dataStatus[19] = count19++;
 
                     break;                                                               
                 case "20":
                    
-                    dataStatus[21] = count20++;
+                    dataStatus[20] = count20++;
 
                     break;
                 case "21":
                    
-                    dataStatus[22] = count21++;
+                    dataStatus[21] = count21++;
 
                     break;     
                 case "22":
                    
-                    dataStatus[23] = count22++;
+                    dataStatus[22] = count22++;
 
                     break;                                                                                      
                 case "23":
                    
-                    dataStatus[24] = count23++;
+                    dataStatus[23] = count23++;
 
                     break;                                
                 default:
