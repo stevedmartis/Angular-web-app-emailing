@@ -207,15 +207,16 @@ export class AnalyticsDashboardService implements Resolve<any> {
                         widget1: {
                             toDay: toDay,
                             chartType: 'line',
+
                             datasets : {
                                 'toDay': [
+
                                     {
-                                        label: 'Sin respuesta',
-                                        data : dataStatusSent,
+                                        label: 'Clicked',
+                                        data : dataStatusClicked,
                                         fill : 'start'
                 
                                     },
-
                                     {
                                         label: 'Abiertos',
                                         data : dataStatusOpen,
@@ -223,12 +224,14 @@ export class AnalyticsDashboardService implements Resolve<any> {
                 
                                     },
 
+
+                                    
                                     {
-                                        label: 'Clicked',
-                                        data : dataStatusClicked,
+                                        label: 'Sin respuesta',
+                                        data : dataStatusSent,
                                         fill : 'start'
                 
-                                    }
+                                    },
                                 ],
 
 
@@ -240,21 +243,25 @@ export class AnalyticsDashboardService implements Resolve<any> {
                                     borderColor              : '#42a5f5',
                                     backgroundColor          : '#42a5f5',
                                     pointBackgroundColor     : '#1e88e5',
-                                    pointHoverBackgroundColor: '#1e88e5',
+                                    pointHoverBackgroundColor: '#ffffff',
                                     pointBorderColor         : '#ffffff',
                                     pointHoverBorderColor    : '#ffffff'
                                 }
                             ],
-                            options  : {
-                                spanGaps           : false,
-                                legend             : {
+                            options: {
+                                spanGaps: false,
+                                legend: {
                                     display: false
                                 },
                                 maintainAspectRatio: false,
-                                layout             : {
+                                tooltips: {
+                                    position: "nearest",
+                                    mode: "index",
+                                    intersect: false
+                                },
+                                layout: {
                                     padding: {
-                                        top  : 32,
-                                        left : 32,
+                                        left: 24,
                                         right: 32
                                     }
                                 },
@@ -264,37 +271,34 @@ export class AnalyticsDashboardService implements Resolve<any> {
                                         borderWidth: 2,
                                         hoverRadius: 4,
                                         hoverBorderWidth: 2
-                                    },
-
+                                    }
                                 },
-
-                                scales             : {
+                                scales: {
                                     xAxes: [
                                         {
                                             gridLines: {
-                                                display       : false,
-                                                
-                                             
+                                                display: false
                                             },
-                                            ticks    : {
-                                                fontColor: '#ffffff'
+                                            ticks: {
+                                                fontColor: "rgba(0,0,0,0.54)"
                                             }
                                         }
                                     ],
                                     yAxes: [
                                         {
-                                            display: false
-
-
+                                            gridLines: {
+                                                tickMarkLength: 16
+                                            },
+                                            ticks: {
+                                                stepSize: 1000
+                                            }
                                         }
                                     ]
                                 },
-                                plugins            : {
-                                    filler      : {
+                                plugins: {
+                                    filler: {
                                         propagate: false
-                                    },
-
-
+                                    }
                                 }
                             }
 

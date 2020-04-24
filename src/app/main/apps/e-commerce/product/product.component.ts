@@ -289,38 +289,73 @@ export class EcommerceProductComponent implements OnInit, OnDestroy
     addProduct(next): void
     {
         const data = this.productForm.getRawValue();
+
+        
         data.handle = FuseUtils.handleize(data.name);
+
+        console.log(data)
 
         this._ecommerceProductService.addProduct(data, this._campaignService.previewUrlEvent)
             .then((x) => {
                 // Trigger the subscription with new data
                 this._ecommerceProductService.onProductChanged.next(x);
 
-                this._ecommerceProductService.addTagsInProduct(data.tags)
-                .then( () => {
-                // Show the success message
+                if(data.tags.length === 0){
 
 
-                setTimeout(() => {
-
-                    this._matSnackBar.open('Evento creado', 'OK', {
-                        verticalPosition: 'top',
-                        duration        : 3000
-                    });
-
-                }, 600);
-
-                this.isCreated = true;
-
-                if(next){
-                    this.nextStep()
+                console.log('entro', data.tags.length)
+                    //,  Show the success message
+    
+    
+                    setTimeout(() => {
+    
+                        this._matSnackBar.open('Evento creado', 'OK', {
+                            verticalPosition: 'top',
+                            duration        : 3000
+                        });
+    
+                    }, 600);
+    
+                    this.isCreated = true;
+    
+                    if(next){
+                        this.nextStep()
+    
+                    }
+    
+                    // Change the location with new one
+                    this._location.go('apps/e-commerce/products/' + x.event._id + '/' + x.event.handle);
+    
+              
+    
 
                 }
 
-                // Change the location with new one
-                this._location.go('apps/e-commerce/products/' + x.event._id + '/' + x.event.handle);
+                this._ecommerceProductService.addTagsInProduct(data.tags)
+                .then( () => {
+
+
+                    setTimeout(() => {
+    
+                        this._matSnackBar.open('Evento creado', 'OK', {
+                            verticalPosition: 'top',
+                            duration        : 3000
+                        });
+    
+                    }, 600);
+    
+                    this.isCreated = true;
+    
+                    if(next){
+                        this.nextStep()
+    
+                    }
+    
+                    // Change the location with new one
+                    this._location.go('apps/e-commerce/products/' + x.event._id + '/' + x.event.handle);
 
                 })
+
 
  
             });

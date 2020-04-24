@@ -23,6 +23,7 @@ export class FormInvitedService implements Resolve<any> {
     event: any;
     eventLoad: boolean = false;
     editInvited: boolean = false;
+    loadingPage: boolean = false;
 
     /**
      * Constructor
@@ -56,29 +57,14 @@ export class FormInvitedService implements Resolve<any> {
 
             this.invitedId = this.routeParams.invitedId;
 
+            this.loadingPage = true;
+
+
             Promise.all([
                 this.getCampaignById(this.campaignId).then((res: any) => {
                     console.log(res);
-                    const linkBol = res.campaign.webLinkCharge;
-                    const linkString = res.campaign.webLink;
-
-                    if (linkBol) {
-                        console.log(linkString);
-
-                        this.onClickEditInvited()
-                        .then((x) => {
-
-                            console.log('x', x)
-                        window.location.href = linkString;
-
-                        return;
-
-                        })
-
-                    }
 
                     
-
                     this.editInvited = true;
 
                     this.getEventById(this.campaignInvitation.eventId).then(
@@ -93,6 +79,8 @@ export class FormInvitedService implements Resolve<any> {
                 }),
 
                 this.getInvited().then(() => {
+
+                
 
 
                     setTimeout(() => {
@@ -132,6 +120,30 @@ export class FormInvitedService implements Resolve<any> {
                     this.campaignName = this.campaignInvitation.affair;
 
                     console.log(this.campaignInvitation);
+
+
+                    const linkBol = response.campaign.webLinkCharge;
+                    const linkString = response.campaign.webLink;
+
+                    if (linkBol) {
+                        console.log(linkString);
+
+                        this.onClickEditInvited()
+                        .then((x) => {
+
+                            console.log('x', x)
+                        window.location.href = linkString;
+
+                        return;
+
+                        })
+
+                    }
+
+                    else {
+
+                        this.loadingPage = true;
+                    }
 
                     resolve(response);
                 }, reject);

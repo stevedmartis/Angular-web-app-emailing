@@ -70,12 +70,15 @@ export class LockComponent implements OnInit, OnDestroy {
      * On init
      */
     ngOnInit(): void {
+        
 
    
         // Subscribe to update product on changes
         this._formInvitationService.onInvitedChanged
             .pipe(takeUntil(this._unsubscribeAll))
             .subscribe(invited => {
+
+
 
 
                 console.log('invited', invited)
@@ -86,6 +89,8 @@ export class LockComponent implements OnInit, OnDestroy {
                     this.invited = new Invited();
 
                     console.log(  this.invited)
+
+                   
     
                 }
                 else
@@ -96,6 +101,7 @@ export class LockComponent implements OnInit, OnDestroy {
                     console.log('invited', invited)
                     this.invited = new Invited(invited.invited);
                     console.log('this.producte.evnd.id',invited.invited._id)
+                   
                 }
 
                 this.invitationForm = this.createInvitedForm();
