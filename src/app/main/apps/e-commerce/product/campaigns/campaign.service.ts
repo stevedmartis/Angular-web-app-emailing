@@ -63,7 +63,7 @@ export class CampaignService {
     previewUrl: any = null;
     previewLoading: boolean = false;
     previewLoadingEvent: boolean = false;
-    value500: 0;
+    valueOk: 0;
     fileUp: any;
     imgProductLoad: boolean = false;
     eventOpen: boolean = false;
@@ -329,8 +329,10 @@ export class CampaignService {
                         this.sendInvited(invitation, obj)
                             .then(mail => {
 
-                               
                                 this.value++;
+
+                               
+                                this.valueOk++;
 
                                 console.log(mail,  this.value)
 
@@ -346,7 +348,7 @@ export class CampaignService {
                                 if (this.value === totalCount) {
                                     this.value = totalCount;
 
-                                    this.countStatus = "Enviados: " + this.value + " de " + totalCount;
+                                    this.countStatus = "Enviados: " + this.valueOk + " de " + totalCount;
 
                                     this.statusSendInvitation = "Completado!";
                                 }
@@ -369,7 +371,7 @@ export class CampaignService {
                                     this.value = totalCount;
 
 
-                                    this.countStatus = "Enviados: " + this.value + " de " + totalCount;
+                                    this.countStatus = "Enviados: " + this.valueOk + " de " + totalCount;
 
 
                                     this.statusSendInvitation = "Completado!";
