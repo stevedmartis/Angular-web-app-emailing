@@ -78,28 +78,7 @@ export class FormInvitedService implements Resolve<any> {
                     );
                 }),
 
-                this.getInvited().then(() => {
-
-                
-
-
-                    setTimeout(() => {
-
-                        this.onClickEditInvited()
-                        .then((x) => {
-    
-                            console.log('x', x)
-                            
-                            resolve(x)
-    
-                        })
-                        
-                    }, 500);
-
-                    
-                    
-
-                }, reject)
+                this.getInvited()
 
                 //this.getEventsByUser()
             ]).then(() => {
@@ -131,7 +110,7 @@ export class FormInvitedService implements Resolve<any> {
                         this.onClickEditInvited()
                         .then((x) => {
 
-                            console.log('x', x)
+                        console.log('x', x)
                         window.location.href = linkString;
 
                         return;

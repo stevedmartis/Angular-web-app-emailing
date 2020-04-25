@@ -92,31 +92,33 @@ export class AnalyticsDashboardService implements Resolve<any> {
 
                     this.countAllInvited = allOk.length;
 
-                    this.siAsiste = data.filter(x => x.asiste === "si");
+                    this.siAsiste = allOk.filter(x => x.asiste === "si");
 
-                    this.noAsiste = data.filter(x => x.asiste === "no");
+                    this.noAsiste = allOk.filter(x => x.asiste === "no");
 
-                    this.pauseAsiste = data.filter(x => x.asiste === "0");
+                    this.pauseAsiste = allOk.filter(x => x.asiste === "0");
 
-                    this.onClick = data.filter(x => x.onClick === true);
+                    this.onClick = allOk.filter(x => x.onClick === true);
 
-                    this.statusSent = data.filter(x => x.Status === 'sent');
+                    this.statusSent = allOk.filter(x => x.Status === 'sent');
 
-                    this.statusOpen = data.filter(x => x.Status === 'opened');
+                    this.statusOpen = allOk.filter(x => x.Status === 'opened');
 
-                    this.statusClicked = data.filter(x => x.Status === 'clicked');
+                    this.statusClicked = allOk.filter(x => x.Status === 'clicked');
 
             
 
-                    this.percentSent = (this.countAllInvited  * 100 )/data.length;
+                    this.percentSent = (this.countAllInvited  * 100 )/allOk.length;
 
                     this.percentOpen = ( this.statusOpen.length  * 100 )/  this.countAllInvited;
 
                     this.percentClicked = ( this.statusClicked.length  * 100 )/  this.countAllInvited;
 
-                   
-
+                
                     const x =  this.sortByDate(this.onClick);
+
+
+                    console.log( 'this.onClick',this.onClick)
 
                     let  myDate = new Date();
 
@@ -161,6 +163,9 @@ export class AnalyticsDashboardService implements Resolve<any> {
                     console.log(dataStatusSent);
                     console.log(dataStatusOpen);
                     console.log(dataStatusClicked);
+
+
+                    console.log('this.arrayFormatDate', this.arrayFormatDate)
 
 
                     const uniqueDateOnClick = [...new Set(this.arrayFormatDate.map(obj => obj.date))];
@@ -319,7 +324,7 @@ export class AnalyticsDashboardService implements Resolve<any> {
                                     value: this.noAsiste? this.noAsiste.length: 0
                                 },
                                 {
-                                    name: "Esperan",
+                                    name: "Sin respuesta",
                                     value:this.pauseAsiste? this.pauseAsiste.length: 0
                                 }
                             ]
@@ -329,7 +334,7 @@ export class AnalyticsDashboardService implements Resolve<any> {
                             datasets: {
                                 today: [
                                     {
-                                        label: "Aperturas",
+                                        label: "Visitas",
                                         data: arrayCounts? arrayCounts: 0,
                                         fill: "start"
                                     }
