@@ -62,7 +62,9 @@ const initialStatus =  'Cargando...'
     
     const invitation = this._data.campaign;
 
-    this._campaignService.getDataPersonForSendEmail(invitation, option, this.allContacts)
+    this._campaignService.ManiInvited(invitation, this.allContacts)
+
+   // this._campaignService.getDataPersonForSendEmail(invitation, option, this.allContacts)
 
 
   }
