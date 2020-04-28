@@ -271,7 +271,7 @@ export class CampaignService {
         });
 
 
-
+        this.allLoading = true;
 
         let arrayvalidEmials = arrayNew.map(obj => obj._id);
 
@@ -284,8 +284,6 @@ export class CampaignService {
 
         let totalCount = arrayvalidEmials.length
 
-
-
         this.statusSendInvitation = "Enviando...";
 
         this.countStatus = "Enviando a: " + totalCount;
@@ -296,24 +294,21 @@ export class CampaignService {
         .then( (res) => {
             console.log('res', res)
 
-            this.value++
 
+            console.log('value', this.value )
 
-            console.log('value', this.value, )
-
-            valueOk++;
-
-            if(this.value === arrayvalidEmials.length) {
-
+            this.value = totalCount;
 
                 console.log('completed')
 
+                
 
-                this.countStatus = "Enviados: " + this.valueOk + " de " + totalCount;
+
+                this.countStatus = "Enviados: " + this.value + " de " + totalCount;
 
                 this.statusSendInvitation = "Completado!";
 
-            }
+        
 
             
         })
@@ -322,6 +317,21 @@ export class CampaignService {
             this.value++
 
             valueBad++;
+
+            if(this.value === arrayvalidEmials.length) {
+
+
+                console.log('completed')
+
+                
+            
+                this.countStatus = "Enviados: " + this.valueOk + " de " + totalCount;
+
+                this.statusSendInvitation = "Completado!";
+
+            }
+
+            
             console.log(err)
         })
 
