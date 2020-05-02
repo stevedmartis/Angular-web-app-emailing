@@ -4,6 +4,8 @@ import { fuseAnimations } from '@fuse/animations';
 
 import { AnalyticsDashboardService } from 'app/main/apps/dashboards/analytics/analytics.service';
 import { EcommerceProductsService } from '../../e-commerce/products/products.service';
+import { DatePipe } from '@angular/common';
+import { Location } from '@angular/common';
 
 @Component({
     selector     : 'analytics-dashboard',
@@ -17,6 +19,9 @@ export class AnalyticsDashboardComponent implements OnInit, OnDestroy
     widgets: any;
     widget1SelectedYear = 'toDay';
     widget5SelectedDay = 'today';
+    dateSelect: any;
+
+    
 
     
 
@@ -30,6 +35,8 @@ export class AnalyticsDashboardComponent implements OnInit, OnDestroy
      */
     constructor(
         public _analyticsDashboardService: AnalyticsDashboardService,
+        public datepipe: DatePipe,
+        private _location: Location
         
     )
     {
@@ -120,6 +127,70 @@ export class AnalyticsDashboardComponent implements OnInit, OnDestroy
                 });
             }
         });
+    }
+
+    dateChange(index, event){
+
+        let  myDate = event._d
+
+                    
+        let toDayShort = this.datepipe.transform(
+            myDate,
+            "dd/MM"
+        )
+
+        let DateSelect = this.datepipe.transform(
+            myDate,
+            "EEEE dd/LLL"
+        )
+
+        console.log('date change', index, toDayShort)
+
+     let item = this._analyticsDashboardService.eventsArray[index];
+
+     console.log(item)
+
+    const daySelect = item.widget1.datasets.selectDay;
+
+
+                                
+     let dataStatusSent = this._analyticsDashboardService.dataStatus(item.countSent[0], toDayShort);
+
+     let dataStatusOpen = this._analyticsDashboardService.dataStatus(item.countOpen[0], toDayShort);
+
+     let dataStatusClicked = this._analyticsDashboardService.dataStatus(item.countClicked[0], toDayShort);
+
+     console.log(dataStatusSent,
+        dataStatusOpen,
+        dataStatusClicked)
+
+        console.log('daySelect', daySelect)
+
+       
+        daySelect[0].data = dataStatusClicked;
+
+
+        
+            daySelect[1].data = dataStatusOpen 
+    
+
+    
+            daySelect[2].data = dataStatusSent;
+    
+
+
+
+        console.log('new', item)
+
+        
+        console.log('new', item)
+
+        this.widget1SelectedYear = 'selectDay'
+
+        item.widget1.dateSelect = DateSelect;
+
+
+        
     }
 
     ngOnDestroy(){

@@ -382,7 +382,7 @@ export class EcommerceProductComponent implements OnInit, OnDestroy
     
     
     
-                this._campaignService.fileProgress(event.target.files[0], type )
+            this._campaignService.fileProgress(event.target.files[0], type )
     
               
              console.log('1', this.productForm)

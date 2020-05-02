@@ -74,7 +74,6 @@ export class AnalyticsDashboardService implements Resolve<any> {
         this.getEventsByUser().then((data: any) => {
             this.events = data.events;
 
-            console.log(this.events);
 
             if (this.events.length === 0) {
                 this.loadingEvents = false;
@@ -90,35 +89,49 @@ export class AnalyticsDashboardService implements Resolve<any> {
 
                     console.log(allOk)
 
-                    this.countAllInvited = allOk.length;
+                
+                    let countAllSent = allOk.length;
 
-                    this.siAsiste = allOk.filter(x => x.asiste === "si");
+                    let siAsiste: any[]
 
-                    this.noAsiste = allOk.filter(x => x.asiste === "no");
+                    siAsiste = allOk.filter(x => x.asiste === "si");
 
-                    this.pauseAsiste = allOk.filter(x => x.asiste === "0");
+                    let noAsiste: any[];
 
-                    this.onClick = allOk.filter(x => x.onClick === true);
+                    noAsiste = allOk.filter(x => x.asiste === "no");
 
-                    this.statusSent = allOk.filter(x => x.Status === 'sent');
+                    let pauseAsiste: any[];
 
-                    this.statusOpen = allOk.filter(x => x.Status === 'opened');
+                    pauseAsiste = allOk.filter(x => x.asiste === "0");
 
-                    this.statusClicked = allOk.filter(x => x.Status === 'clicked');
+                    let onClick : any[];
+
+                    onClick = allOk.filter(x => x.onClick === true);
+
+                    let statusSent: any[];
+
+                    statusSent = allOk.filter(x => x.Status === 'sent');
+
+                    let statusOpen: any[];
+
+                    statusOpen = allOk.filter(x => x.Status === 'opened');
+
+                    let statusClicked: any[]
+
+                    statusClicked = allOk.filter(x => x.Status === 'clicked');
 
             
 
-                    this.percentSent = (this.countAllInvited  * 100 )/allOk.length;
+                   let percentSent = (countAllSent  * 100 )/allOk.length;
 
-                    this.percentOpen = ( this.statusOpen.length  * 100 )/  this.countAllInvited;
+                    let percentOpen = ( statusOpen.length  * 100 )/  countAllSent;
 
-                    this.percentClicked = ( this.statusClicked.length  * 100 )/  this.countAllInvited;
+                    let percentClicked = ( statusClicked.length  * 100 )/  countAllSent;
 
                 
-                    const x =  this.sortByDate(this.onClick);
+                    const x =  this.sortByDate(onClick);
 
 
-                    console.log( 'this.onClick',this.onClick)
 
                     let  myDate = new Date();
 
@@ -127,10 +140,13 @@ export class AnalyticsDashboardService implements Resolve<any> {
                         "EEEE dd/LLL"
                     )
 
-                    console.log(toDay)                
+
+                              
 
                     const label = ['00:00', '01:00', '02:00', '03:00', '04:00', '05:00', '06:00','07:00', '08:00', '09:00', '10:00', 
                                     '11:00', '12:00', '13:00', '14:00', '15:00', '16:00', '17:00', '18:00', '19:00', '20:00', '21:00', '22:00', '23:00']
+
+                    let arrayFormatDate = []
 
                     x.forEach(element => {
 
@@ -145,36 +161,31 @@ export class AnalyticsDashboardService implements Resolve<any> {
                             
                         };
 
-                        console.log(obj)
+                     (obj)
 
-                        this.arrayFormatDate.push(obj);
+                        arrayFormatDate.push(obj);
                     });
 
                     
-                     let dataStatusSent = this.dataStatus(this.statusSent);
+                    let toDayShort = this.datepipe.transform(
+                        myDate,
+                        "dd/MM"
+                    )
 
-                     let dataStatusOpen = this.dataStatus(this.statusOpen);
+                    
+                     let dataStatusSent = this.dataStatus(statusSent, toDayShort);
 
-                     let dataStatusClicked = this.dataStatus(this.statusClicked);
+                     let dataStatusOpen = this.dataStatus(statusOpen, toDayShort);
+
+                     let dataStatusClicked = this.dataStatus(statusClicked, toDayShort);
     
+                    const uniqueDateOnClick = [...new Set(arrayFormatDate.map(obj => obj.date))];
 
-
-                     
-                    console.log(dataStatusSent);
-                    console.log(dataStatusOpen);
-                    console.log(dataStatusClicked);
-
-
-                    console.log('this.arrayFormatDate', this.arrayFormatDate)
-
-
-                    const uniqueDateOnClick = [...new Set(this.arrayFormatDate.map(obj => obj.date))];
-
-                    this.arrayInvitedForDate = [];
+                    let arrayInvitedForDate = [];
 
                     uniqueDateOnClick.forEach(inv => {
 
-                        const objFind = this.arrayFormatDate.filter(
+                        const objFind = arrayFormatDate.filter(
                             obj => obj.date === inv
                         );
 
@@ -184,23 +195,20 @@ export class AnalyticsDashboardService implements Resolve<any> {
                             count: objFind.length
                         };
 
-                        this.arrayInvitedForDate.push(objDate);
+                        arrayInvitedForDate.push(objDate);
                     });
 
-                    console.log(
-                        "arrayInvitedForDate",
-                        this.arrayInvitedForDate
-                    );
 
-                    const arrayDates = this.arrayInvitedForDate.map(
+                    const arrayDates = arrayInvitedForDate.map(
                         obj => obj.date
                     );
 
-                    const arrayCounts = this.arrayInvitedForDate.map(
+                    const arrayCounts = arrayInvitedForDate.map(
                         obj => obj.count
                     );
 
-  
+
+
 
                     const eventObj = {
                         id: obj._id,
@@ -209,8 +217,19 @@ export class AnalyticsDashboardService implements Resolve<any> {
                         company: obj.company,
                         countInvited: obj.countInvited,
 
+                        countSent: [statusSent],
+                        countOpen: [statusOpen],
+                        countClicked: [statusClicked],
+
+                        countAllSent,
+                        percentSent,
+                        percentOpen,
+                        percentClicked,
+
+
                         widget1: {
                             toDay: toDay,
+                            dateSelect: null,
                             chartType: 'line',
 
                             datasets : {
@@ -238,6 +257,31 @@ export class AnalyticsDashboardService implements Resolve<any> {
                 
                                     },
                                 ],
+                                'selectDay': [
+
+                                    {
+                                        label: 'Clicked',
+                                        data : [],
+                                        fill : 'start'
+                
+                                    },
+                                    {
+                                        label: 'Abiertos',
+                                        data : [],
+                                        fill : 'start'
+                
+                                    },
+
+
+                                    
+                                    {
+                                        label: 'Sin respuesta',
+                                        data : [],
+                                        fill : 'start'
+                
+                                    },
+
+                                ]
 
 
                 
@@ -317,15 +361,15 @@ export class AnalyticsDashboardService implements Resolve<any> {
                             devices: [
                                 {
                                     name: "Asisten",
-                                    value: this.siAsiste? this.siAsiste.length: 0
+                                    value: siAsiste? siAsiste.length: 0
                                 },
                                 {
                                     name: "Cancelan",
-                                    value: this.noAsiste? this.noAsiste.length: 0
+                                    value: noAsiste? noAsiste.length: 0
                                 },
                                 {
                                     name: "Sin respuesta",
-                                    value:this.pauseAsiste? this.pauseAsiste.length: 0
+                                    value: pauseAsiste? pauseAsiste.length: 0
                                 }
                             ]
                         },
@@ -426,7 +470,7 @@ export class AnalyticsDashboardService implements Resolve<any> {
                 
                    
 
-                    console.log("eventObj", eventObj);
+                   
                 });
             });
         });
@@ -487,9 +531,11 @@ export class AnalyticsDashboardService implements Resolve<any> {
         return arr;
       }
 
-      dataStatus(arrayStatus){
+      dataStatus(arrayStatus, day){
 
         let arrayStatusTimes = [];
+
+
 
         arrayStatus.forEach(item => {
 
@@ -498,14 +544,28 @@ export class AnalyticsDashboardService implements Resolve<any> {
                     item.StatusDateTime,
                     "HH"
                 ),
+                dateShort: this.datepipe.transform(
+                    item.StatusDateTime,
+                    "dd/MM"
+                ),
  
             };
 
-            arrayStatusTimes.push(obj)
+            if(obj.dateShort === day){
+
+                arrayStatusTimes.push(obj);
+
+            }
+
+            else {
+
+                return;
+            }
+
+           
 
         })
 
-        console.log(arrayStatusTimes)
 
         const dataStatus = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
             0, 0, 0, 0, 0, 0,0, 0, 0, 0, 0, 0, 0];

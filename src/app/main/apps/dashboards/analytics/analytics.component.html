@@ -7,9 +7,11 @@
 <mat-spinner *ngIf="_analyticsDashboardService.loadingEvents"  diameter="100"></mat-spinner>
 
 
-<div *ngFor="let e of _analyticsDashboardService.eventsArray" class="mat-card card mat-elevation-z4" [@animate]="{value:'*',params:{y:'100%'}}">
+<div *ngFor="let e of _analyticsDashboardService.eventsArray; let i = index">
 
-    <div class="main-widget auto-width"  >
+    <div *ngIf="e.countAllSent > 0"  class="mat-card card mat-elevation-z4" [@animate]="{value:'*',params:{y:'100%'}}"> 
+
+    <div class="main-widget auto-width" >
 
         <div class="position-relative card-activity"
         fxLayout="row" fxLayoutAlign="space-between center">
@@ -40,7 +42,7 @@
 
                 <span *ngIf="widget1SelectedYear === 'toDay'" class="h2">{{ e.widget1.toDay }}</span>
 
-                <span *ngIf="widget1SelectedYear === '2017'" class="h2"> otro día..</span>
+                <span *ngIf="widget1SelectedYear === 'selectDay'" class="h2"> {{ e.widget1.dateSelect }}</span>
             </div>
 
 
@@ -52,9 +54,17 @@
                    Hoy
                 </div>
                 <div class="py-8 px-12 border-radius-2 line-height-1 mr-8 cursor-pointer"
-                     (click)="widget1SelectedYear = '2017'"
-                     [ngClass]="{'blue-700': widget1SelectedYear === '2017'}">
-                     <mat-icon>event</mat-icon>
+                   
+                     >
+
+                     <mat-form-field style="width:1px;visibility:hidden;">
+                     <input matInput (ngModelChange)="dateChange(i, $event)"  [matDatepicker]="picker" [(ngModel)]="dateSelect">
+                    
+                     </mat-form-field>
+
+                     <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                     <mat-datepicker #picker></mat-datepicker>
+                     
                 </div>
 
             </div>
@@ -103,7 +113,7 @@
                                     <div class="pr-16">
                                         <div class="h3 secondary-text">Enviados</div>
                                         <div class="font-size-54 font-weight-300 line-height-1 mt-8">
-                                            {{  _analyticsDashboardService.percentSent | number: '1.0-0' }}%
+                                            {{ e.percentSent | number: '1.0-0' }}%
                                         </div>
                                     </div>
        
@@ -114,7 +124,7 @@
                                     <div class="pr-16">
                                       
                                         <div class="font-size-40 font-weight-300 line-height-1 mt-8">
-                                            {{  _analyticsDashboardService.countAllInvited }}
+                                            {{  e.countAllSent }}
                                         </div>
                                     </div>
        
@@ -136,7 +146,7 @@
                                     <div class="pr-16">
                                         <div class="h3 secondary-text">Abiertos</div>
                                         <div class="font-size-54 font-weight-300 line-height-1 mt-8">
-                                            {{  _analyticsDashboardService.percentOpen | number: '1.0-0'  }}%  
+                                            {{  e.percentOpen | number: '1.0-0'  }}%  
                                         </div>
                                     </div>
        
@@ -147,7 +157,7 @@
                                     <div class="pr-16">
                                       
                                         <div class="font-size-40 font-weight-300 line-height-1 mt-8">
-                                            {{  _analyticsDashboardService.statusOpen.length }} 
+                                            {{  e.countOpen[0].length }} 
                                         </div>
                                     </div>
        
@@ -169,7 +179,7 @@
                                         <div class="pr-16 single-center">
                                             <div class="h3 secondary-text">Clicked</div>
                                             <div class="font-size-54 font-weight-300 line-height-1 mt-8">
-                                                {{  _analyticsDashboardService.percentClicked | number: '1.0-0' }}%
+                                                {{  e.percentClicked | number: '1.0-0' }}%
                                             </div>
                                         </div>
            
@@ -180,7 +190,7 @@
                                         <div class="pr-16 single-center">
                                           
                                             <div class="font-size-40 font-weight-300 line-height-1 mt-8">
-                                                {{  _analyticsDashboardService.statusClicked.length }} 
+                                                {{  e.countClicked[0].length }} 
                                             </div>
                                         </div>
            
@@ -466,6 +476,8 @@
         </div>
 
     </div>
+
+</div>
 
 </div>
 
