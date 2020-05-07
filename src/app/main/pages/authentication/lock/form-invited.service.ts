@@ -1,10 +1,9 @@
-
 import { Injectable } from "@angular/core";
 import {
     ActivatedRouteSnapshot,
     Resolve,
     RouterStateSnapshot,
-    Router
+    Router,
 } from "@angular/router";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { BehaviorSubject, Observable } from "rxjs";
@@ -33,9 +32,7 @@ export class FormInvitedService implements Resolve<any> {
      *
      * @param {HttpClient} _httpClient
      */
-    constructor(
-        private _httpClient: HttpClient,
-    ) {
+    constructor(private _httpClient: HttpClient) {
         // Set the defaults
         this.onInvitedChanged = new BehaviorSubject({});
     }
@@ -58,58 +55,36 @@ export class FormInvitedService implements Resolve<any> {
 
             this.invitedId = this.routeParams.invitedId;
 
-
-
             this.loadingPage = true;
-
 
             Promise.all([
                 this.getCampaignById(this.campaignId).then((res: any) => {
                     console.log(res);
 
-                    
                     this.editInvited = true;
 
                     this.getEventById(this.campaignInvitation.eventId).then(
-                        data => {
+                        (data) => {
                             console.log(data);
 
                             this.event = data.event;
 
-                            console.log('this.event', this.event)
+                            console.log("this.event", this.event);
 
                             this.eventLoad = true;
 
-
-                            if(this.invitedId !== 'new'){
-
-                                console.log('invitedId', this.invitedId)
+                            if (this.invitedId !== "new") {
+                                console.log("invitedId", this.invitedId);
 
                                 this.getInvited().then(() => {
-
                                     this.invitedExist = true;
-
-                                })
-
-                          
-                             
-                    
-                            }
-
-                            else {
-
+                                });
+                            } else {
                                 this.invitedExist = false;
-
-
                             }
-                            
                         }
                     );
                 }),
-
-
-
-             
 
                 //this.getEventsByUser()
             ]).then(() => {
@@ -119,12 +94,10 @@ export class FormInvitedService implements Resolve<any> {
     }
 
     getCampaignById(idCampaign) {
-
         return new Promise((resolve, reject) => {
             this._httpClient
                 .get(environment.apiUrl + "/api/get-campaign/" + idCampaign)
                 .subscribe((response: any) => {
-
                     this.campaignInvitation = response.campaign;
 
                     this.campaignName = this.campaignInvitation.affair;
@@ -135,23 +108,15 @@ export class FormInvitedService implements Resolve<any> {
                     const linkString = response.campaign.webLink;
 
                     if (linkBol) {
-
                         console.log(linkString);
 
-                        this.onClickEditInvited()
-                        .then((x) => {
+                        this.onClickEditInvited().then((x) => {
+                            console.log("x", x);
+                            window.location.href = linkString;
 
-                        console.log('x', x)
-                        window.location.href = linkString;
-
-                        return;
-
-                        })
-
-                    }
-
-                    else {
-
+                            return;
+                        });
+                    } else {
                         this.loadingPage = true;
                     }
 
@@ -176,9 +141,7 @@ export class FormInvitedService implements Resolve<any> {
                     console.log(response);
 
                     this.invited = response;
-                
-                    
-                    
+
                     this.onInvitedChanged.next(this.invited);
                     resolve(response);
 
@@ -192,8 +155,7 @@ export class FormInvitedService implements Resolve<any> {
             this._httpClient
                 .get(environment.apiUrl + "/api/invited-email/" + email)
                 .subscribe((response: any) => {
-
-                    let invited = response.invited[0]
+                    let invited = response.invited[0];
 
                     this.invited = invited;
                     resolve(invited);
@@ -230,32 +192,39 @@ export class FormInvitedService implements Resolve<any> {
         });
     }
 
-    
-addNewInvitation(obj): Promise<any> {
+    addNewInvitation(data): Promise<any> {
+        const obj = {
+            asiste: data.asiste,
+            codeEvento: this.event._id,
+            company: data.company,
+            contactado: data.contactado,
+            email: data.email,
+            invitedId: data.invitedId,
+            lastname: data.lastname,
+            name: data.name,
+            phone: data.phone,
+            rut: data.rut,
+        };
 
-    return new Promise((resolve, reject) => {
+        return new Promise((resolve, reject) => {
+            console.log("entro add", obj);
+            this._httpClient
+                .post(environment.apiUrl + "/api/invited/add-new-invited/", obj)
+                
 
-        console.log('entro add', obj)
-        this._httpClient.post(environment.apiUrl + '/api/invited/add-new-invited/', obj)
-
-            .subscribe((response: any) => {
-               
-                resolve(response);
-                console.log(response)
-
-
-
-
-            });
-    });
-}
+                .subscribe((response: any) => {
+                    resolve(response);
+                    console.log(response);
+                });
+        });
+    }
 
     onClickEditInvited() {
         return new Promise((resolve, reject) => {
             this._httpClient
                 .post(environment.apiUrl + "/api/invited/onClick", {
                     invitedId: this.invitedId,
-                    onClick: true
+                    onClick: true,
                 })
                 .subscribe((response: any) => {
                     console.log(response);

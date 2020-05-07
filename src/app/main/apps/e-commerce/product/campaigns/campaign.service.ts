@@ -566,14 +566,14 @@ export class CampaignService {
     }
 
     sendInvited(invitation, person): Promise<any> {
-        console.log(invitation);
+        console.log( this.eventObj);
         const imagen = invitation.imgBlob.substr(22);
 
         const obj = {
             _id: invitation._id,
             affair: invitation.affair,
-            nameEvent: this.eventObj.nameEvent,
-            nameSender: invitation.nameSender,
+            eventName: this.eventObj.eventName,
+            nameSender: invitation.eventName,
             sender: invitation.sender,
             imgBlob: imagen,
             _idInvited: person._id,

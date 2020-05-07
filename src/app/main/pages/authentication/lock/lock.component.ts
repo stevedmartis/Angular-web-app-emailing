@@ -9,6 +9,7 @@ import { takeUntil } from 'rxjs/operators';
 
 import { Subject } from 'rxjs';
 import { Router } from '@angular/router';
+import { PolarChartComponent } from '@swimlane/ngx-charts';
 
 @Component({
     selector: "lock",
@@ -202,7 +203,6 @@ console.log('data', data)
             if(this._formInvitationService.invitedExist){
 
 
-    
  
         console.log('invited data: ', data)
  
@@ -221,6 +221,8 @@ console.log('data', data)
         else {
 
             console.log('hi', data)
+
+
 
             this._formInvitationService.addNewInvitation(data)
             .then((res) => {
