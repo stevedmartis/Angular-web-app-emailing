@@ -122,41 +122,123 @@ export class LockComponent implements OnInit, OnDestroy {
     {
 
         return this._formBuilder.group({
-            invitedId: [this.invited._id, [Validators.required]], 
+            rut: [this.invited.rut, [Validators.required]],
+            invitedId: [this.invited._id],
             name:  [this.invited.name, [Validators.required]], 
             lastname:  [this.invited.lastname, [Validators.required]], 
             email: [this.invited.email, [Validators.required, Validators.email]], 
             company:  [this.invited.company, [Validators.required]], 
             asiste: [],
-            jobtitle: [this.invited.jobtitle, [Validators.required]], 
+           // jobtitle: [this.invited.jobtitle, [Validators.required]], 
             phone: [this.invited.phone], 
             contactado: ['email']
         });
     }
 
+    get f() { return this.invitationForm.controls; }
+
+  
+    getDataInvited(){
+
+        if(this.f.email.valid){
+
+       
+
+            this._formInvitationService.getInvitedByEmail(this.f.email.value).
+            then( (invited) => {
+             
+
+                console.log(invited)
+
+                if(invited){
+
+                    this.invited = invited;
+
+                    this._formInvitationService.invitedExist = true;
+
+                    this.invitationForm = this.createInvitedForm();
+
+                }
+
+                else {
+
+                    this.invitationForm.controls['invitedId'].setValue('');
+
+                    this._formInvitationService.invitedExist = false;
+
+                 
+
+                }
+
+
+            })
+            .catch(err => {
+
+                this._formInvitationService.invitedExist = false;
+
+            })
+        
+
+    }
+
+    }
+
 
     confirmInvitation(){
 
-       const  value = 'si'
+
+        
+        const  value = 'si';
         this.invitationForm.controls['asiste'].setValue(value);
+ 
+ 
+        const data = this.invitationForm.getRawValue()
+      
+console.log('data', data)
+        if(this.invitationForm.valid){
+
+            console.log('valid!: ')
+
+            if(this._formInvitationService.invitedExist){
 
 
-       const data = this.invitationForm.getRawValue();
-
-       console.log('invited data: ', data)
-
-        this._formInvitationService.confirmInvitation(data)
-        .then( (inv: Invited ) => {
-
-            console.log(inv)
-
-
-            this.router.navigate(['/pages/confirm/si/' + this._formInvitationService.campaignId + '/' + this.invited._id])
-
+    
+ 
+        console.log('invited data: ', data)
+ 
+         this._formInvitationService.confirmInvitation(data)
+         .then( (inv: Invited ) => {
+ 
+             console.log(inv)
+ 
+             this.router.navigate(['/pages/confirm/si/' + this._formInvitationService.campaignId + '/' + this.invited._id])
+ 
+         })
             
-        })
+        
+        }
+
+        else {
+
+            console.log('hi', data)
+
+            this._formInvitationService.addNewInvitation(data)
+            .then((res) => {
+
+                let inv = res.post;
+
+                console.log(inv)
+                this.router.navigate(['/pages/confirm/si/' + this._formInvitationService.campaignId + '/' + inv._id])
+            })
 
 
+        }
+
+    }
+
+    else {
+        return;
+    }
     }
 
     cancelInvitation(){

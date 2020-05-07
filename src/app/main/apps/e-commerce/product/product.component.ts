@@ -105,7 +105,6 @@ export class EcommerceProductComponent implements OnInit, OnDestroy
     ngOnInit(): void
     {
         
-
         // Subscribe to update product on changes
         this._ecommerceProductService.onProductChanged
             .pipe(takeUntil(this._unsubscribeAll))
@@ -119,12 +118,13 @@ export class EcommerceProductComponent implements OnInit, OnDestroy
                     this._ecommerceProductService.idNowEvent = product.event._id
                     this.pageType = 'edit';
                     this.isCreated = true;
+                    this._campaignService.eventObj = product.event;
                     this._contactsService.idEventNow =  product.event._id;
                     this._contactsService.eventCreated = true;
                     this._campaignService.eventOpen = product.event.active;
                     this._campaignService.getCampaigns()
 
-                    console.log('2342')
+                  
 
                     this._ecommerceProductService.getTagsByEvent()
                     .then( (data: any)=> {
@@ -136,17 +136,13 @@ export class EcommerceProductComponent implements OnInit, OnDestroy
                     } )
                     this._contactsService.editCountInvited(this._contactsService.contacts.length)
 
-                    
-
+                
                     if(this.product.imgBanner === 'assets/images/banner.jpg'){
-
                         this._campaignService.imgProductLoad = false;
-
                     }
 
                     else {
                         this._campaignService.imgProductLoad = true;
-
                     }
                     
                 }

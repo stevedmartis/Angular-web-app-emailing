@@ -202,9 +202,13 @@ export class CampaignsComponent implements OnInit, OnDestroy {
                 }
             });
     }
+
+
     linkOfEventOpen(idCampaign){
 
-    const val = 'http://www.turevento.net/#/pages/invitacion/' + idCampaign;
+
+        console.log(this._campaignService.eventObj)
+    const val = 'http://www.turevento.net/#/pages/' + this._campaignService.eventObj.eventName + '/' + idCampaign + '/new';
     let selBox = document.createElement('textarea');
       selBox.style.position = 'fixed';
       selBox.style.left = '0';
@@ -229,6 +233,7 @@ export class CampaignsComponent implements OnInit, OnDestroy {
         // Unsubscribe from all subscriptions
         this._unsubscribeAll.next();
         this._unsubscribeAll.complete();
+        this.filteredCourses = [];
     }
 
 

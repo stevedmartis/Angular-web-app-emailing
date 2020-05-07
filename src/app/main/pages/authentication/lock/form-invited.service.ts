@@ -26,6 +26,7 @@ export class FormInvitedService implements Resolve<any> {
     editInvited: boolean = false;
     loadingPage: boolean = false;
     openEvent: boolean = false;
+    invitedExist: boolean = false;
 
     /**
      * Constructor
@@ -34,8 +35,6 @@ export class FormInvitedService implements Resolve<any> {
      */
     constructor(
         private _httpClient: HttpClient,
-        private authServices: AuthService,
-        private router: Router
     ) {
         // Set the defaults
         this.onInvitedChanged = new BehaviorSubject({});
@@ -59,6 +58,8 @@ export class FormInvitedService implements Resolve<any> {
 
             this.invitedId = this.routeParams.invitedId;
 
+
+
             this.loadingPage = true;
 
 
@@ -79,17 +80,36 @@ export class FormInvitedService implements Resolve<any> {
 
                             this.eventLoad = true;
 
-                            if(this.event.active){
 
-                                this.openEvent = true;
+                            if(this.invitedId !== 'new'){
 
-                                console.log('this.openEvent', this.openEvent)
+                                console.log('invitedId', this.invitedId)
+
+                                this.getInvited().then(() => {
+
+                                    this.invitedExist = true;
+
+                                })
+
+                          
+                             
+                    
                             }
+
+                            else {
+
+                                this.invitedExist = false;
+
+
+                            }
+                            
                         }
                     );
                 }),
 
-                this.getInvited()
+
+
+             
 
                 //this.getEventsByUser()
             ]).then(() => {
@@ -111,11 +131,11 @@ export class FormInvitedService implements Resolve<any> {
 
                     console.log(this.campaignInvitation);
 
-
                     const linkBol = response.campaign.webLinkCharge;
                     const linkString = response.campaign.webLink;
 
                     if (linkBol) {
+
                         console.log(linkString);
 
                         this.onClickEditInvited()
@@ -156,11 +176,29 @@ export class FormInvitedService implements Resolve<any> {
                     console.log(response);
 
                     this.invited = response;
-
+                
+                    
+                    
                     this.onInvitedChanged.next(this.invited);
                     resolve(response);
 
                     console.log(response);
+                }, reject);
+        });
+    }
+
+    getInvitedByEmail(email): Promise<any> {
+        return new Promise((resolve, reject) => {
+            this._httpClient
+                .get(environment.apiUrl + "/api/invited-email/" + email)
+                .subscribe((response: any) => {
+
+                    let invited = response.invited[0]
+
+                    this.invited = invited;
+                    resolve(invited);
+
+                    console.log(this.invited);
                 }, reject);
         });
     }
@@ -191,6 +229,26 @@ export class FormInvitedService implements Resolve<any> {
                 }, reject);
         });
     }
+
+    
+addNewInvitation(obj): Promise<any> {
+
+    return new Promise((resolve, reject) => {
+
+        console.log('entro add', obj)
+        this._httpClient.post(environment.apiUrl + '/api/invited/add-new-invited/', obj)
+
+            .subscribe((response: any) => {
+               
+                resolve(response);
+                console.log(response)
+
+
+
+
+            });
+    });
+}
 
     onClickEditInvited() {
         return new Promise((resolve, reject) => {

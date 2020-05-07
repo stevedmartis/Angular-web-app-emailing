@@ -16,7 +16,7 @@ import { MaterialModule } from 'app/main/angular-material-elements/material.modu
 
 const routes = [
     {
-        path     : 'confirm-invited/:campaignId/:invitedId',
+        path     : ':nameEvent/:campaignId/:invitedId',
         component: LockComponent,
         resolve  : {
             data: FormInvitedService

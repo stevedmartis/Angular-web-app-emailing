@@ -64,7 +64,6 @@ export class ConfirmInvitationService implements Resolve<any> {
                         this.event = data.event;
 
                        
-
                         if(this.event.dateEvent ){
 
                             this.eventload = true;

@@ -2,6 +2,7 @@
 
 export class Invited {
     codeEvento: string;
+    rut: string;
     name: string;
     lastname: string;
     email: string;
@@ -34,6 +35,7 @@ export class Invited {
      */
     constructor(invited?) {
         invited = invited || {};
+        this.rut = invited.rut || '';
         this.codeEvento = invited.codeEvento || '';
         this.name = invited.name || '';
         this.lastname = invited.lastname || '';
@@ -59,6 +61,7 @@ export class Invited {
         this.observation = invited.observation || '';
         this._id = invited._id || '';
         this.user = invited.user || '';
+      
 
     }
 }

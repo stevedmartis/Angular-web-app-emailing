@@ -4,7 +4,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { environment } from 'environments/environment';
 import { AuthService } from 'app/services/authentication/auth.service';
-import { CampaignService } from 'app/main/apps/e-commerce/product/campaigns/campaign.service';
+
 
 @Injectable()
 export class EcommerceProductsService implements Resolve<any>

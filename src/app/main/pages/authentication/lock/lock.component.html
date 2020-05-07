@@ -52,13 +52,19 @@
 
                     <mat-form-field appearance="outline">
                         <mat-label>Correo Electrónico</mat-label>
-                        <input matInput formControlName="email">
+                        <input matInput formControlName="email" (change)="getDataInvited()">
                         <mat-icon matSuffix>email</mat-icon>
 
                     </mat-form-field>
 
                     <mat-form-field appearance="outline">
-                        <mat-label>Nombre</mat-label>
+                        <mat-label>Rut</mat-label>
+                        <input matInput formControlName="rut">
+                        <mat-icon matSuffix>perm_identity</mat-icon>
+                    </mat-form-field>
+
+                    <mat-form-field appearance="outline">
+                        <mat-label>Nombres</mat-label>
                         <input matInput formControlName="name">
                         <mat-icon matSuffix>account_circle</mat-icon>
 
@@ -100,22 +106,21 @@
 
                     
 
-                    <div *ngIf="_formInvitationService.openEvent">
-
+                    <div *ngIf="!_formInvitationService.invitedExist">
 
                     <button mat-raised-button (click)="confirmInvitation()" class="submit-button  mt-24 mt-md-0" color="accent">
                         <mat-icon matSuffix>done</mat-icon>
-                        Registrarme
+                        ¡REGISTARME!
                     </button>
 
                 </div>
 
-                <div *ngIf="!_formInvitationService.openEvent">
+                <div *ngIf="_formInvitationService.invitedExist">
 
 
                     <button mat-raised-button (click)="confirmInvitation()" class="submit-button  mt-24 mt-md-0" color="accent">
                         <mat-icon matSuffix>done</mat-icon>
-                        CONFIRMAR
+                        CONFIRMAR MI ASISTENCIA
                     </button>
 
 

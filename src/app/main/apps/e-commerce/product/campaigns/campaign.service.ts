@@ -43,6 +43,7 @@ export class CampaignService {
     idEventNow: any;
     base64Image: any;
     loadingCampaigns: boolean = false;
+    eventObj: any;
 
     allLoading: boolean = false;
     selectLoading: boolean = false;
@@ -571,6 +572,7 @@ export class CampaignService {
         const obj = {
             _id: invitation._id,
             affair: invitation.affair,
+            nameEvent: this.eventObj.nameEvent,
             nameSender: invitation.nameSender,
             sender: invitation.sender,
             imgBlob: imagen,
