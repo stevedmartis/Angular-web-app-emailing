@@ -63,7 +63,7 @@ export class CampaignService {
     previewUrl: any = null;
     previewLoading: boolean = false;
     previewLoadingEvent: boolean = false;
-    valueOk: 0;
+    valueOk = 0;
     fileUp: any;
     imgProductLoad: boolean = false;
     eventOpen: boolean = false;

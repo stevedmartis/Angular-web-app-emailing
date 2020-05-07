@@ -124,6 +124,8 @@ export class EcommerceProductComponent implements OnInit, OnDestroy
                     this._campaignService.eventOpen = product.event.active;
                     this._campaignService.getCampaigns()
 
+                    console.log('2342')
+
                     this._ecommerceProductService.getTagsByEvent()
                     .then( (data: any)=> {
 
@@ -395,7 +397,13 @@ export class EcommerceProductComponent implements OnInit, OnDestroy
 
              this.product.imgTitle = name;
 
-             this.uploadFile = true;
+             if(this.isCreated){
+
+                this.uploadFile = true;
+
+             }
+
+            
 
         
            // this.uploadFiles();

@@ -1,4 +1,4 @@
-<div *ngIf="!_formInvitationService.loadingPage"  id="lock" fxLayout="column">
+<div *ngIf="_formInvitationService.loadingPage"  id="lock" fxLayout="column">
 
     <div id="lock-form-wrapper" fxLayout="column" fxLayoutAlign="center center">
 
@@ -42,7 +42,7 @@
                         <div class="date">{{ _formInvitationService.event.dateEvent | date:"fullDate" }}</div>
                       
                         <div class="subtitle">
-                            Completar Formulario
+                            {{ _formInvitationService.event.company }}
                         </div>
                     </div>
 
@@ -98,6 +98,21 @@
                     </mat-form-field>
 
 
+                    
+
+                    <div *ngIf="_formInvitationService.openEvent">
+
+
+                    <button mat-raised-button (click)="confirmInvitation()" class="submit-button  mt-24 mt-md-0" color="accent">
+                        <mat-icon matSuffix>done</mat-icon>
+                        Registrarme
+                    </button>
+
+                </div>
+
+                <div *ngIf="!_formInvitationService.openEvent">
+
+
                     <button mat-raised-button (click)="confirmInvitation()" class="submit-button  mt-24 mt-md-0" color="accent">
                         <mat-icon matSuffix>done</mat-icon>
                         CONFIRMAR
@@ -108,6 +123,10 @@
                         <mat-icon matSuffix>cancel</mat-icon>
                         CANCELAR
                     </button>
+
+
+                </div>
+
                 </form>
 
 

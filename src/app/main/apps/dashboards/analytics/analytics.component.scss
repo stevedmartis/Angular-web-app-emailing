@@ -172,3 +172,17 @@
 .mat-datepicker-toggle-default-icon {
     color: #fff !important;
 }
+
+.baseChart {
+
+
+    @include media-breakpoint('xs') {
+           
+      
+    margin-left: -10% !important;
+
+    height: 251px;
+    width: 399px !important;
+
+    }
+}

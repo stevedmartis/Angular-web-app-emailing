@@ -1,3 +1,4 @@
+
 import { Injectable } from "@angular/core";
 import {
     ActivatedRouteSnapshot,
@@ -24,6 +25,7 @@ export class FormInvitedService implements Resolve<any> {
     eventLoad: boolean = false;
     editInvited: boolean = false;
     loadingPage: boolean = false;
+    openEvent: boolean = false;
 
     /**
      * Constructor
@@ -73,7 +75,16 @@ export class FormInvitedService implements Resolve<any> {
 
                             this.event = data.event;
 
+                            console.log('this.event', this.event)
+
                             this.eventLoad = true;
+
+                            if(this.event.active){
+
+                                this.openEvent = true;
+
+                                console.log('this.openEvent', this.openEvent)
+                            }
                         }
                     );
                 }),

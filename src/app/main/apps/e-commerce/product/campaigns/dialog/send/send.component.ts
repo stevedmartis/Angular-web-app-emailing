@@ -106,6 +106,10 @@ const initialStatus =  'Cargando...'
     this._campaignService.emailsValidForSend = 0;
     this._campaignService.value = 0
     this._campaignService.invitedFails = [];
+    this._campaignService.valueOk = 0;
+    this._campaignService.value = 0;
+    this._campaignService.countStatus = "Enviar a:"
+
   
 
   }

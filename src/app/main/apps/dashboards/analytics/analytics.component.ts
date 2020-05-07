@@ -169,16 +169,10 @@ export class AnalyticsDashboardComponent implements OnInit, OnDestroy
        
         daySelect[0].data = dataStatusClicked;
 
-
-        
-            daySelect[1].data = dataStatusOpen 
+        daySelect[1].data = dataStatusOpen;
     
-
+        daySelect[2].data = dataStatusSent;
     
-            daySelect[2].data = dataStatusSent;
-    
-
-
 
         console.log('new', item)
 
