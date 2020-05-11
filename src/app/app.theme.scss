@@ -89,6 +89,7 @@ $typography: mat-typography-config(
 @import "src/app/main/apps/e-commerce/orders/orders.theme";
 @import "src/app/main/apps/e-commerce/products/products.theme";
 @import "src/app/main/apps/e-commerce/product/campaigns/campaign.theme";
+@import "src/app/main/apps/e-commerce/product/users/users.theme";
 @import "src/app/main/apps/file-manager/file-manager.theme";
 @import "src/app/main/apps/mail/mail.theme";
 @import "src/app/main/apps/mail-ngrx/mail.theme";
@@ -141,6 +142,7 @@ $typography: mat-typography-config(
     @include e-commerce-orders-theme($theme);
     @include e-commerce-products-theme($theme);
     @include products-campaigns-theme($theme);
+    @include app-users-theme($theme);
     @include file-manager-theme($theme);
     @include mail-theme($theme);
     @include mail-ngrx-theme($theme);

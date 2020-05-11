@@ -1,4 +1,10 @@
-import { Component, OnInit, ViewChild, OnDestroy, ViewEncapsulation } from "@angular/core";
+import {
+    Component,
+    OnInit,
+    ViewChild,
+    OnDestroy,
+    ViewEncapsulation,
+} from "@angular/core";
 import { fuseAnimations } from "@fuse/animations";
 import { MatDialogRef, MatDialog, MatSnackBar } from "@angular/material";
 import { MatPaginator } from "@angular/material/paginator";
@@ -7,17 +13,23 @@ import { Router } from "@angular/router";
 import { CampaignService } from "./campaign.service";
 import { DataSource } from "@angular/cdk/collections";
 import { BehaviorSubject, fromEvent, merge, Observable, Subject } from "rxjs";
-import { debounceTime, distinctUntilChanged, map, takeUntil } from "rxjs/operators";
+import {
+    debounceTime,
+    distinctUntilChanged,
+    map,
+    takeUntil,
+} from "rxjs/operators";
 import { AddComponent } from "./dialog/add/add.component";
 import { FormGroup } from "@angular/forms";
 import { SendComponent } from "./dialog/send/send.component";
+import { FuseConfirmDialogComponent } from '@fuse/components/confirm-dialog/confirm-dialog.component';
 
 @Component({
     selector: "products-campaigns",
     templateUrl: "./campaigns.component.html",
     styleUrls: ["./campaigns.component.scss"],
     animations: fuseAnimations,
-    encapsulation: ViewEncapsulation.None
+    encapsulation: ViewEncapsulation.None,
 })
 export class CampaignsComponent implements OnInit, OnDestroy {
     dialogRef: any;
@@ -40,53 +52,38 @@ export class CampaignsComponent implements OnInit, OnDestroy {
     @ViewChild(MatSort, { static: true })
     sort: MatSort;
 
-   
-
     constructor(
         public _matDialog: MatDialog,
         private router: Router,
         public _campaignService: CampaignService,
         private _matSnackBar: MatSnackBar
     ) {
+        // Set the defaults
+        this.currentCategory = "all";
+        this.searchTerm = "";
 
-                // Set the defaults
-                this.currentCategory = 'all';
-                this.searchTerm = '';
-        
-                // Set the private defaults
-                this._unsubscribeAll = new Subject();
+        // Set the private defaults
+        this._unsubscribeAll = new Subject();
     }
 
     ngOnInit() {
+        // Subscribe to categories
+        this._campaignService.onCategoriesChanged
+            .pipe(takeUntil(this._unsubscribeAll))
+            .subscribe((categories) => {
+                this.categories = categories;
+            });
 
-       
-        
+        // Subscribe to courses
+        this._campaignService.onCampaignChanged
+            .pipe(takeUntil(this._unsubscribeAll))
+            .subscribe((courses) => {
+                this.filteredCourses = this._campaignService.campaigns;
 
-
-                // Subscribe to categories
-                this._campaignService.onCategoriesChanged
-                .pipe(takeUntil(this._unsubscribeAll))
-                .subscribe(categories => {
-                    this.categories = categories;
-                });
-    
-            // Subscribe to courses
-            this._campaignService.onCampaignChanged
-                .pipe(takeUntil(this._unsubscribeAll))
-                .subscribe(courses => {
-                    this.filteredCourses = this._campaignService.campaigns;
-
-                    console.log( this.filteredCourses)
-                });
-
+                console.log(this.filteredCourses);
+            });
     }
 
-    deleteCampaign(campaign) {
-        console.log("campaign", campaign);
-        this._campaignService.deleteCampaign(campaign).then(x => {
-            console.log(x);
-        });
-    }
 
     //this.allLoading = false;
     //this.selectLoading = false;
@@ -97,11 +94,11 @@ export class CampaignsComponent implements OnInit, OnDestroy {
             panelClass: "my-class-send",
 
             data: {
-                campaign: campaign
-            }
+                campaign: campaign,
+            },
         });
 
-        this.dialogRef.afterClosed().subscribe(response => {
+        this.dialogRef.afterClosed().subscribe((response) => {
             if (!response) {
                 return;
             }
@@ -123,8 +120,8 @@ export class CampaignsComponent implements OnInit, OnDestroy {
             panelClass: "my-class-add",
             disableClose: true,
             data: {
-                action: "new"
-            }
+                action: "new",
+            },
         });
 
         this.dialogRef.afterClosed().subscribe((response: FormGroup) => {
@@ -137,23 +134,15 @@ export class CampaignsComponent implements OnInit, OnDestroy {
             this._campaignService
                 .addCampaign(form)
 
-                .then(x => {
+                .then((x) => {
                     console.log(x);
 
-
-                    
                     setTimeout(() => {
-
                         this._matSnackBar.open("Campaña creada", "OK", {
                             verticalPosition: "top",
-                            duration: 3000
+                            duration: 3000,
                         });
-                        
                     }, 600);
-
-
-
-
                 });
 
             this._campaignService.previewLoading = false;
@@ -162,105 +151,106 @@ export class CampaignsComponent implements OnInit, OnDestroy {
         });
     }
 
-    editCampaign(campaign): void
-    {
+    editCampaign(campaign): void {
         this.dialogRef = this._matDialog.open(AddComponent, {
             panelClass: "my-class-add",
             disableClose: true,
-            data      : {
+            data: {
                 campaign: campaign,
-                action : 'edit'
-            }
+                action: "edit",
+            },
         });
 
-        this.dialogRef.afterClosed()
-            .subscribe(response => {
-                if ( !response )
-                {
-                    return;
-                }
-                const actionType: string = response[0];
-                const formData: FormGroup = response[1];
-                switch ( actionType )
-                {
-                    /**
-                     * Save
-                     */
-                    case 'save':
+        this.dialogRef.afterClosed().subscribe((response) => {
+            if (!response) {
+                return;
+            }
+            const actionType: string = response[0];
+            const formData: FormGroup = response[1];
+            console.log('actionType', )
+            console.log('formData', formData)
+            switch (actionType) {
+                /**
+                 * Save
+                 */
+                case "save":
+                    this._campaignService.editCampaign(formData.getRawValue());
 
-                        this._campaignService.editCampaign(formData.getRawValue());
+                    break;
+                /**
+                 * Delete
+                 */
+                case "delete":
+                    this.deleteCampaign(formData);
 
-                        break;
-                    /**
-                     * Delete
-                     */
-                    case 'delete':
-
-                        this._campaignService.deleteCampaign(campaign);
-
-                        break;
-                }
-            });
+                    break;
+            }
+        });
     }
 
-
-    linkOfEventOpen(idCampaign){
-
-
-        console.log(this._campaignService.eventObj)
-    const val = 'http://www.turevento.net/#/pages/' + this._campaignService.eventObj.eventName + '/' + idCampaign + '/new';
-    let selBox = document.createElement('textarea');
-      selBox.style.position = 'fixed';
-      selBox.style.left = '0';
-      selBox.style.top = '0';
-      selBox.style.opacity = '0';
-      selBox.value = val;
-      document.body.appendChild(selBox);
-      selBox.focus();
-      selBox.select();
-      document.execCommand('copy');
-      document.body.removeChild(selBox);
-
-      this._matSnackBar.open("Link copiado en portapapeles!", "OK", {
-        verticalPosition: "top",
-        duration: 3000
-    });
-
-    }
-
-    ngOnDestroy(): void
+    deleteCampaign(campaign): void
     {
+        this.dialogRef = this._matDialog.open(FuseConfirmDialogComponent, {
+            disableClose: false,
+            panelClass: 'custom-dialog-container'
+        });
+
+        this.dialogRef.componentInstance.confirmMessage = 'Esta seguro de eliminar esta campaña?';
+
+        this.dialogRef.afterClosed().subscribe(result => {
+            if ( result )
+            {
+                this._campaignService.deleteCampaign(campaign.id);
+            }
+            this.dialogRef = null;
+        });
+    }
+
+    linkOfEventOpen(idCampaign) {
+        console.log(this._campaignService.eventObj);
+        const val =
+            "http://www.turevento.net/#/pages/" +
+            this._campaignService.eventObj.handle +
+            "/" +
+            idCampaign +
+            "/new";
+        let selBox = document.createElement("textarea");
+        selBox.style.position = "fixed";
+        selBox.style.left = "0";
+        selBox.style.top = "0";
+        selBox.style.opacity = "0";
+        selBox.value = val;
+        document.body.appendChild(selBox);
+        selBox.focus();
+        selBox.select();
+        document.execCommand("copy");
+        document.body.removeChild(selBox);
+
+        this._matSnackBar.open("Link copiado en portapapeles!", "OK", {
+            verticalPosition: "top",
+            duration: 3000,
+        });
+    }
+
+    ngOnDestroy(): void {
         // Unsubscribe from all subscriptions
         this._unsubscribeAll.next();
         this._unsubscribeAll.complete();
         this.filteredCourses = [];
     }
 
-
-    filterCoursesByCategory(): void
-    {
-
-
+    filterCoursesByCategory(): void {
         // Re-filter by search term
         this.filterCoursesByTerm();
-    }
+    } hhg  
 
-    filterCoursesByTerm(): void
-    {
+    filterCoursesByTerm(): void {
         const searchTerm = this.searchTerm.toLowerCase();
 
-
-            this.filteredCourses = this._campaignService.campaigns.filter((course) => {
-
+        this.filteredCourses = this._campaignService.campaigns.filter(
+            (course) => {
                 return course.affair.toLowerCase().includes(searchTerm);
-            });
-
-            
-        
+            }
+        );
     }
-
-    
-    
-    
 }
-

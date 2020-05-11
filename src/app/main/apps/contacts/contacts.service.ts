@@ -16,7 +16,7 @@ import { AuthService } from "app/services/authentication/auth.service";
 import { MatSnackBar } from '@angular/material';
 
 @Injectable()
-export class ContactsService implements Resolve<any> {
+export class ContactsService {
     onContactsChanged: BehaviorSubject<any>;
     onSelectedContactsChanged: BehaviorSubject<any>;
     onUserDataChanged: BehaviorSubject<any>;
@@ -71,36 +71,6 @@ export class ContactsService implements Resolve<any> {
     // @ Public methods
     // -----------------------------------------------------------------------------------------------------
 
-    /**
-     * Resolver
-     *
-     * @param {ActivatedRouteSnapshot} route
-     * @param {RouterStateSnapshot} state
-     * @returns {Observable<any> | Promise<any> | any}
-     */
-    resolve(
-        route: ActivatedRouteSnapshot,
-        state: RouterStateSnapshot
-    ): Observable<any> | Promise<any> | any {
-        return new Promise((resolve, reject) => {
-            Promise.all([
-                this.getContacts(this.idEventNow)
-                //this.getUserData()
-            ]).then(([files]) => {
-                this.onSearchTextChanged.subscribe(searchText => {
-                    this.searchText = searchText;
-                    this.getContacts(this.idEventNow);
-                });
-
-                this.onFilterChanged.subscribe(filter => {
-                    this.filterBy = filter;
-                    this.getContacts(this.idEventNow);
-                });
-
-                resolve();
-            }, reject);
-        });
-    }
 
     /**
      * Get contacts

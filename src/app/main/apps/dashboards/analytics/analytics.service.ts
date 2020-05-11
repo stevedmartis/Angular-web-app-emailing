@@ -463,8 +463,12 @@ export class AnalyticsDashboardService implements Resolve<any> {
 
                     this.eventsArray.push(eventObj);
 
-        
-                this.loadingEvents = false;
+                    setTimeout(() => {
+
+                        this.loadingEvents = false;
+                        
+                    }, 2000);
+               
 
      
                 

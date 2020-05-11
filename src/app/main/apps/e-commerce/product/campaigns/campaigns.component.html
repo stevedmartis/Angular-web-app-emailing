@@ -5,35 +5,27 @@
     <div class="center">
 
         <!-- HEADER -->
-        <div class="header accent"
-             fxLayout="column" fxLayoutAlign="center center"
-             fxLayout.gt-sm="row" fxLayoutAlign.gt-sm="space-between center">
-
-             
-
-             
-         <div class=" icon-lg ml-sm-32 " fxLayout="row" fxLayoutAlign="center center">
+        <div class="header accent" fxLayout="column" fxLayoutAlign="center center" fxLayout.gt-sm="row"
+            fxLayoutAlign.gt-sm="space-between center">
 
 
-            <mat-icon class="logo-icon mr-24"
-            >assignment
-   </mat-icon>
-       
-
-    </div>
+            <div class=" icon-lg ml-sm-32 " fxLayout="row" fxLayoutAlign="center center">
 
 
-             <!-- SEARCH -->
+                <mat-icon class="logo-icon mr-24">assignment
+                </mat-icon>
 
-             <div class="ml-sm-32 icon-xs" fxLayout="row" fxLayoutAlign="center center">
+            </div>
 
-        </div>
-             <div  class="search-wrapper mx-32 mx-md-0">
+            <!-- SEARCH -->
+
+            <div class="ml-sm-32 icon-xs" fxLayout="row" fxLayoutAlign="center center">
+
+            </div>
+            <div class="search-wrapper mx-32 mx-md-0">
                 <div class="search" fxFlex fxLayout="row" fxLayoutAlign="start center">
                     <mat-icon>search</mat-icon>
-                    <input   [(ngModel)]="searchTerm"
-                    (input)="filterCoursesByTerm()"
-                     placeholder="Buscar campaña">
+                    <input [(ngModel)]="searchTerm" (input)="filterCoursesByTerm()" placeholder="Buscar campaña">
                 </div>
             </div>
             <!-- / SEARCH -->
@@ -47,13 +39,10 @@
         </div>
         <!-- / HEADER -->
 
+        <div class="courses" fxLayout="row wrap" >
 
-
-
-        <div class="courses" fxLayout="row wrap" fxLayoutAlign="center" [@animateStagger]="{value:'50'}">
-
-            <div class="course" *ngFor="let c of filteredCourses" fxFlex="100" fxFlex.gt-xs="50"
-                 fxFlex.gt-sm="33" [@animate]="{value:'*',params:{y:'100%'}}">
+            <div class="course" *ngFor="let c of filteredCourses" fxFlex="100" fxFlex.gt-xs="50" fxFlex.gt-sm="33"
+                [@animate]="{value:'*',params:{y:'100%'}}">
 
                 <div class="course-content" fxLayout="column" fxFlex="1 1 auto">
 
@@ -74,25 +63,26 @@
                             </button>
 
                             <mat-menu #card19Menu="matMenu">
-                            
-                            <button mat-menu-item (click)="editCampaign(c)" >
-                                <mat-icon>edit</mat-icon>
-                                <span>Editar</span>
-                            </button>
-                        
-                            
+
+                                <button mat-menu-item (click)="editCampaign(c)">
+                                    <mat-icon>edit</mat-icon>
+                                    <span>Editar</span>
+                                </button>
+
+
                                 <button mat-menu-item (click)="deleteCampaign(c)">
                                     <mat-icon>delete</mat-icon>
                                     <span>Eliminar</span>
                                 </button>
-                            
-                                <button *ngIf="_campaignService.eventOpen"  (click)="linkOfEventOpen(c._id)" mat-menu-item  >
-                                <mat-icon>link</mat-icon>
-                                <span>Link de compartir</span>
-                            </button>
-                             
 
-                                                                    <!--
+                                <button *ngIf="_campaignService.eventOpen" (click)="linkOfEventOpen(c._id)"
+                                    mat-menu-item>
+                                    <mat-icon>link</mat-icon>
+                                    <span>Link para compartir</span>
+                                </button>
+
+
+                                <!--
                                 <button mat-menu-item  >
                                 <mat-icon>file_copy</mat-icon>
                                 <span>Duplicar</span>
@@ -105,8 +95,8 @@
 
                     <div class="content" fxLayout="column" fxLayoutAlign="center center" fxFlex="1 1 auto">
 
-                        
-                       
+
+
 
                         <img [src]="c.imgBlob" class="img-campaign">
 
@@ -116,12 +106,11 @@
                         -->
 
                     </div>
-                  
+
                     <div class="footer" fxLayout="row" fxLayoutAlign="center center">
-                        <button mat-button color="accent"
-                        (click)="sendCampaignDialog(c)" >
-                         Enviar
-                         <mat-icon>send</mat-icon>
+                        <button mat-button color="accent" (click)="sendCampaignDialog(c)">
+                            Enviar
+                            <mat-icon>send</mat-icon>
                         </button>
                     </div>
 
@@ -129,19 +118,23 @@
 
             </div>
 
-            <mat-spinner class="spinner-fab" *ngIf="_campaignService.loadingCampaigns"  diameter="50"></mat-spinner>
- 
+            <mat-spinner class="spinner-fab" *ngIf="_campaignService.loadingCampaigns" diameter="50"></mat-spinner>
+
 
 
             <div class="no-courses" *ngIf="!_campaignService.loadingCampaigns && filteredCourses.length === 0">
-               No se encontraron campañas
+                No se encontraron campañas
             </div>
 
-        </div>
 
+                                        
+
+        </div>
 
 
         <!-- / CONTENT CARD -->
     </div>
     <!-- / CENTER -->
+
+
 </div>

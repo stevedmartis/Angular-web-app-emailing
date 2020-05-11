@@ -1,8 +1,8 @@
 <div id="contact-list" class="page-layout-campaign carded fullwidth inner-scroll">
 
-    <div class="center" fusePerfectScrollbar>
+    <div class="center" >
     <!-- HEADER -->
-    <div class="header accent" fxLayout="column" fxLayoutAlign="start"
+    <div class="header accent" fxLayout="column"
          fxLayout.gt-xs="row" fxLayoutAlign.gt-xs="space-between center">
 
 
@@ -11,7 +11,7 @@
 
 
             <mat-icon class="logo-icon mr-24"
-            >group_add
+            >account_box
    </mat-icon>
        
 
@@ -59,7 +59,7 @@
  
  
 
-<div  class="content-card"
+<div 
 [ngClass]="{
     'table-hidden': _contactsService.contacts.length === 0,
     'table-contacts-visible': _contactsService.contacts.length > 0  }">
@@ -93,8 +93,8 @@
 
     <!-- Name Column -->
     <ng-container matColumnDef="name">
-        <mat-header-cell *matHeaderCellDef mat-sort-header>Nombre</mat-header-cell>
-        <mat-cell *matCellDef="let contact">
+        <mat-header-cell *matHeaderCellDef mat-sort-header fxHide fxShow.gt-xs>Nombre</mat-header-cell>
+        <mat-cell *matCellDef="let contact" fxHide fxShow.gt-xs>
             <p class="text-truncate font-weight-600">{{contact.name}}</p>
         </mat-cell>
     </ng-container>
@@ -153,10 +153,10 @@
 
 
     <!-- Buttons Column -->
-    <ng-container matColumnDef="buttons">
+    <ng-container matColumnDef="buttons" >
         <mat-header-cell *matHeaderCellDef></mat-header-cell>
         <mat-cell *matCellDef="let contact">
-            <div fxFlex="row" fxLayoutAlign="end center">
+            <div fxFlex="row"  fxFlex="50" fxLayoutAlign="end center">
 
                 <!--
 

@@ -7,6 +7,9 @@ import { AuthService } from 'app/services/authentication/auth.service';
 import { ContactsService } from 'app/main/apps/contacts/contacts.service';
 import { MatHorizontalStepper } from '@angular/material';
 import { catchError, last, tap, map } from 'rxjs/operators';
+import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
+import { UsersService } from './users/users.service';
+import { AcademyCoursesService } from '../../academy/courses.service';
 
 
 @Injectable()
@@ -32,6 +35,8 @@ export class EcommerceProductService implements Resolve<any>
         private _httpClient: HttpClient,
         private authServices: AuthService,
         private contactServices: ContactsService,
+        private _usersServices: UsersService,
+        private _academyCoursesService: AcademyCoursesService
 
     )
     {
@@ -53,10 +58,24 @@ export class EcommerceProductService implements Resolve<any>
 
         return new Promise((resolve, reject) => {
             Promise.all([
-                this.getProduct(),
+
+                this.contactServices.getContacts(this.routeParams.id),
+
+                this.getProduct()
+                .then((event) => {
+
+                    this._academyCoursesService.eventObj = event;
+
+                    console.log(event)
+
+                   
+                    this._academyCoursesService.getCategories(),
+                    this._academyCoursesService.getUsersData()
+                }),
     
-                console.log('herr'),
-                this.contactServices.getContacts(this.routeParams.id)
+
+         
+
             ]).then(
                 () => {
 
@@ -102,7 +121,7 @@ export class EcommerceProductService implements Resolve<any>
                         console.log('**  this.contactServices.idEventNow',  this.contactServices.idEventNow)
 
                         this.onProductChanged.next(this.product);
-                        resolve(response)
+                        resolve( this.product.event)
 
                        
                     }, reject);

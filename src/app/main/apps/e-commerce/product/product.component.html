@@ -160,21 +160,8 @@
 
                         </div>
 
-                        <button *ngIf="(isCreated && productForm.pristine) && (!removeTag && !uploadFile )" class="mr-8 w-30-p" mat-raised-button  type="button"
-                        (click)="nextStep()"
-                        color="accent">
-                        Siguiente
-                    </button>
+            
 
-                        <button *ngIf="pageType ==='new'" [disabled]="productForm.invalid"  (click)="addProduct(true)" class="mr-8 w-30-p" mat-raised-button type="button"
-                        color="accent">
-                        Crear
-                    </button>
-
-                        <button *ngIf="(pageType ==='edit' && !productForm.pristine) || (removeTag || uploadFile)" (click)="saveProduct(true)" class="mr-8 w-30-p" mat-raised-button  type="button"
-                            color="accent">
-                            Siguiente <mat-icon>save</mat-icon>
-                        </button>
                     </form>
 
                     </mat-tab>
@@ -185,13 +172,8 @@
                         <contacts></contacts>
 
                 
-                       <div class="p-24 mr-24">
-                        <button  class="mr-8 w-30-p" mat-raised-button  type="button"
-                        color="accent"
-                        (click)="nextStep()">
-                        Siguiente 
-                    </button>
-                       </div>
+            
+                     
     
                         </div>
     
@@ -199,45 +181,58 @@
                     </mat-tab>
                     <mat-tab label="Campañas" [disabled]='!isCreated'>
                         
-                        <div class="dialog-content-wrapper">
 
-
-                            <div fxLayout="row" class="ckeditor-content" fxLayoutAlign="start start">
-
-
-                                <div appearance="outline" floatLabel="always" class="w-100-p" fxFlex="100">
-
-
-                                    <div class="container">
+                        <div  fxLayout="column" fxLayoutAlign="start" fxFlex="1 0 auto">
 
                                         <products-campaigns></products-campaigns>
-                                     <!--
 
-                                     <email-editor class="email-editor"></email-editor>
-
-                                       --> 
-                                    </div>
-
-                                </div>
-
-                            </div>
-
- 
-
-                            <!--
-
-
-
-                        <button (click)="exportHtml()" class="mr-8 w-30-p btn-top" matStepperNext mat-raised-button
-                        type="button" color="accent">
-                        Siguiente
-                    </button>
-
--->
+    
                         </div>
+
+
                     </mat-tab>
+
+                    <mat-tab label="Usuarios" [disabled]='!isCreated'>
+
+
+                        <div  fxLayout="column" fxLayoutAlign="start" fxFlex="1 0 auto">
+
+                                      <academy-courses></academy-courses>
+                                        
+
+                        </div>
+                </mat-tab>
                   </mat-tab-group>
-                
+
+                  <div *ngIf="selectedIndex === 3">
+
+                    <button  (click)="previousStep()" class="mr-8 w-100-p" mat-raised-button type="button"
+                    color="default">
+                    Anterior
+                </button>
+
+                  </div>
+
+
+                  <div *ngIf="selectedIndex != 3">
+
+                  <button *ngIf="(isCreated && productForm.pristine) && (!removeTag && !uploadFile )" class="mr-8 w-100-p" mat-raised-button  type="button"
+                  (click)="nextStep()"
+                  color="accent">
+                  Siguiente
+              </button>
+
+                  <button *ngIf="pageType ==='new'" [disabled]="productForm.invalid"  (click)="addProduct(true)" class="mr-8 w-100-p" mat-raised-button type="button"
+                  color="accent">
+                  Crear
+              </button>
+
+                  <button *ngIf="(pageType ==='edit' && !productForm.pristine) || (removeTag || uploadFile)" (click)="saveProduct(true)" class="mr-8 w-100-p" mat-raised-button  type="button"
+                      color="accent">
+                      Siguiente <mat-icon>save</mat-icon>
+                  </button>
+               
+                </div>
 
             </div>
 

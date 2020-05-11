@@ -572,7 +572,7 @@ export class CampaignService {
         const obj = {
             _id: invitation._id,
             affair: invitation.affair,
-            eventName: this.eventObj.eventName,
+            eventName: this.eventObj.handle,
             nameSender: invitation.eventName,
             sender: invitation.sender,
             imgBlob: imagen,

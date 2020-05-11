@@ -2,12 +2,20 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot } from '@angular/router';
 import { BehaviorSubject, Observable } from 'rxjs';
+import { environment } from 'environments/environment';
+import { User } from 'app/models/user';
+import { map, tap, last, catchError } from "rxjs/operators";
 
 @Injectable()
 export class AcademyCoursesService implements Resolve<any>
 {
     onCategoriesChanged: BehaviorSubject<any>;
     onCoursesChanged: BehaviorSubject<any>;
+    eventObj: any;
+
+    arrayUserData: any[] = [] 
+    emailExist: boolean = false;
+usernameExist : boolean = false;
 
     /**
      * Constructor
@@ -55,15 +63,19 @@ export class AcademyCoursesService implements Resolve<any>
      *
      * @returns {Promise<any>}
      */
-    getCategories(): Promise<any>
+    getCategories()
     {
-        return new Promise((resolve, reject) => {
-            this._httpClient.get('api/academy-categories')
-                .subscribe((response: any) => {
-                    this.onCategoriesChanged.next(response);
-                    resolve(response);
-                }, reject);
-        });
+
+        let selectRol = [
+            {label: 'Creador', value: '1'},
+            {label: 'Staff', value: '2'},
+            {label: 'Cliente', value: '3'},
+          
+            ]
+
+            this.onCategoriesChanged.next(selectRol);
+          
+
     }
 
     /**
@@ -82,4 +94,211 @@ export class AcademyCoursesService implements Resolve<any>
         });
     }
 
+    addUser(obj) {
+
+
+      return new Promise((resolve, reject) => {
+        this._httpClient.post<User>(`${environment.apiUrl}/api/register`, obj)
+            .subscribe((response: any) => {
+       
+                resolve(response);
+            }, reject);
+        })
+
 }
+
+saveUserEvent(): Promise<any>
+{
+
+
+   
+
+    return new Promise((resolve, reject) => {
+        this._httpClient.post(environment.apiUrl + '/api/event/edit-users', 
+        {   eventId:  this.eventObj._id,
+            users:  this.eventObj.users
+        })
+            .subscribe((response: any) => {
+
+            
+            
+
+                
+                resolve(response);
+
+                
+           
+            }, reject);
+    });
+}
+
+getUsersData(){
+
+
+        let users = this.eventObj.users.map(user => user.userId)
+
+        console.log(users)
+
+        users.forEach(userId => {
+
+            this.getUser(userId)
+
+
+});
+
+this.onCoursesChanged.next(this.arrayUserData);
+ 
+
+
+}
+
+
+
+getUser(id): Promise<any> {
+    return new Promise((resolve, reject) => {
+        this._httpClient
+            .get(environment.apiUrl + "/api/user/" + id)
+            .subscribe((response: User) => {
+
+                let objUser = response.user;
+
+                let obj = {
+                    _id: objUser._id,
+                    name: objUser.name,
+                    lastName: objUser.lastName,
+                    username: objUser.username,
+                    email: objUser.email,
+                    rol: objUser.rol,
+                    updated: objUser.updated
+                }
+
+                this.arrayUserData.push(obj)
+
+                resolve(obj)
+            }, reject);
+    });
+}
+
+deleteUser(user) {
+
+
+
+                const userIndex = this.arrayUserData.indexOf(user);
+                this.arrayUserData.splice(userIndex, 1);
+
+
+                this.onCoursesChanged.next(this.arrayUserData);
+
+                this.eventObj.users.splice(userIndex, 1)
+
+
+               this.saveUserEvent()
+
+    
+           
+
+
+}
+
+getUserByUsername(username): Promise<any> {
+    return new Promise((resolve, reject) => {
+        this._httpClient
+            .post(environment.apiUrl + "/api/username/", {username: username})
+            .subscribe((response: User) => {
+                console.log(response);
+                resolve(response)
+            }, reject);
+    });
+}
+
+getUserByEmail(email): Promise<any> {
+    return new Promise((resolve, reject) => {
+        this._httpClient
+            .post(environment.apiUrl + "/api/forgot-password/", {email: email})
+            .subscribe((response: User) => {
+                console.log(response);
+                resolve(response)
+            }, reject);
+    });
+}
+
+
+editUser(user): Promise<any>
+{
+
+    return new Promise((resolve, reject) => {
+        this._httpClient.post(environment.apiUrl + '/api/edit-user', 
+        {   userId: user._id,
+            name: user.name,
+            username: user.username,
+            lastName: user.lastName,
+            email: user.email,
+            rol: user.rol
+        })
+            .subscribe((response: any) => {
+                console.log(response)
+
+                const userIndex = this.arrayUserData.findIndex(x => x._id === response.user._id);
+
+                
+                this.arrayUserData[userIndex].name = user.name
+
+                this.arrayUserData[userIndex].lastName = user.lastName;
+                this.arrayUserData[userIndex].email = user.email;
+                this.arrayUserData[userIndex].username = user.username;
+                this.arrayUserData[userIndex].rol = user.rol;
+
+                this.onCoursesChanged.next(this.arrayUserData);
+                resolve(response);
+
+                
+                
+            }, reject);
+    });
+}
+
+editUserExist(user): Promise<any>
+{
+
+    return new Promise((resolve, reject) => {
+        this._httpClient.post(environment.apiUrl + '/api/edit-user', 
+        {   userId: user._id,
+            name: user.name,
+            username: user.username,
+            lastName: user.lastName,
+            email: user.email,
+            rol: user.rol
+        })
+            .subscribe((response: any) => {
+                console.log(response)
+
+                this.arrayUserData.push(response.user)
+
+                this.onCoursesChanged.next(this.arrayUserData);
+                resolve(response);
+
+                
+                console.log(response)
+                
+            
+            }, reject);
+    });
+}
+
+sendMailJet(email, username, _id) {
+
+    return this._httpClient.post<any>(`${environment.apiUrl}/api/send-new-user-mail`, { email , username, _id})
+    .pipe(map(user => {
+        // store user details and jwt token in local storage to keep user logged in between page refreshes
+        //localStorage.setItem('currentUser', JSON.stringify(user));
+    
+        return user;
+    }));
+}
+
+
+}
+
+
+
+

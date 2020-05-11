@@ -19,6 +19,8 @@ import { ContactsComponent } from 'app/main/apps/contacts/contacts.component';
 import { ContactsService } from 'app/main/apps/contacts/contacts.service';
 
 import { CampaignService } from './campaigns/campaign.service';
+import { AcademyCoursesService } from '../../academy/courses.service';
+
 
 export class FileUploadModel {
     data: File;
@@ -53,7 +55,7 @@ export class EcommerceProductComponent implements OnInit, OnDestroy
     disabledBtnSave: boolean = true;
     removeTag: boolean = false;
     selectedIndex: number = 0;
-    maxNumberOfTabs: number = 2;
+    maxNumberOfTabs: number = 3;
     uploadFile: boolean = false;
 
     //@ViewChild(InvitationFormComponent, {static: false}) invitationComponent: InvitationFormComponent
@@ -72,11 +74,11 @@ export class EcommerceProductComponent implements OnInit, OnDestroy
     constructor(
         private _ecommerceProductService: EcommerceProductService,
         public _contactsService: ContactsService,
+       
         private _formBuilder: FormBuilder,
         private _location: Location,
         private _matSnackBar: MatSnackBar,
-        private router: Router,
-        private cdRef: ChangeDetectorRef,
+        private _academyCoursesService: AcademyCoursesService,
         public _campaignService: CampaignService,
 
         
@@ -120,6 +122,7 @@ export class EcommerceProductComponent implements OnInit, OnDestroy
                     this.isCreated = true;
                     this._campaignService.eventObj = product.event;
                     this._contactsService.idEventNow =  product.event._id;
+                  
                     this._contactsService.eventCreated = true;
                     this._campaignService.eventOpen = product.event.active;
                     this._campaignService.getCampaigns()
@@ -445,6 +448,10 @@ nextStep() {
 
     else if(event.index === 2){
         this.selectedIndex = 2;
+    }
+
+    else if(event.index === 3){
+        this.selectedIndex = 3;
     }
 
   }

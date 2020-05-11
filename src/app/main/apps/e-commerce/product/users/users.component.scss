@@ -1,10 +1,10 @@
 @import "src/@fuse/scss/fuse";
 
-contacts-contact-list {
+app-users {
     display: flex;
     flex: 1 1 auto;
     width: 100%;
-    #contact-list {
+    #users {
 
 
 
@@ -19,8 +19,6 @@ contacts-contact-list {
     height: 100% !important;
     min-height: 100px !important;
     max-height: 100px !important;
-
-
 
                 .search-wrapper {
                     width: 100%;
@@ -53,52 +51,14 @@ contacts-contact-list {
 
                 @include media-breakpoint('lt-md') {
                     padding: 8px 0;
-                    height: 100px !important;
-                    min-height: 100px !important;
-                    max-height: 100px !important;
-                }
-            }
-
-
-            .mat-table {
-                width: 100%;
-                background: transparent;
-                box-shadow: none;
-        
-                .mat-column-checkbox {
-                    flex: 0 1 64px;
-                    padding-left: 18px;
-                }
-        
-                .mat-column-avatar {
-                    flex: 0 1 64px;
-                }
-        
-                .mat-column-buttons {
-                    flex: 0 1 80px;
-                }
-        
-                .mat-row {
-                    position: relative;
-                    cursor: pointer;
-                    padding: 8px;
-        
-                    .mat-cell {
-                        min-width: 0;
-        
-                        &.mat-column-detail-button {
-                            flex: 0 1 auto;
-                            padding: 0 24px 0 0;
-        
-                            @include media-breakpoint('gt-md') {
-                                display: none;
-                            }
-                        }
-                    }
+                    height: 192px !important;
+                    min-height: 192px !important;
+                    max-height: 192px !important;
                 }
             }
         }
     }
+
 
 
     form {
@@ -197,7 +157,7 @@ contacts-contact-list {
 }
 
 
-contacts-contact-list {
+app-users {
 
     display: contents !important;
 

@@ -27,6 +27,8 @@ import { CampaignsComponent } from './product/campaigns/campaigns.component';
 import { CampaignService } from 'app/main/apps/e-commerce/product/campaigns/campaign.service';
 import { AddComponent } from './product/campaigns/dialog/add/add.component';
 import { SendComponent } from './product/campaigns/dialog/send/send.component';
+import { AcademyModule } from '../academy/academy.module';
+import { UsersComponent } from './product/users/users.component';
 
 const routes: Routes = [
     {
@@ -78,6 +80,7 @@ const routes: Routes = [
         CampaignsComponent,
         AddComponent,
         SendComponent,
+        UsersComponent
        
 
 
@@ -98,7 +101,7 @@ const routes: Routes = [
         FuseConfirmDialogModule,
         FuseSidebarModule,
         ContactsModule,
-        EmailEditorModule,
+        AcademyModule,
     ],
     providers   : [
         EcommerceProductsService,
@@ -112,6 +115,8 @@ const routes: Routes = [
     ],
     entryComponents: [
         AddComponent,
+        
+
         SendComponent
         
     ]

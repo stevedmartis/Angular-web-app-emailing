@@ -54,8 +54,6 @@ export class ContactsContactListComponent implements OnInit, OnDestroy
     @ViewChild(MatSort, {static: true})
     sort: MatSort;
 
-
-
     selectedContacts: any[];
     checkboxes: {};
     dialogRef: any;
@@ -175,8 +173,6 @@ export class ContactsContactListComponent implements OnInit, OnDestroy
             });
 
 
-
-
             this.searchInput.valueChanges
             .pipe(
                 takeUntil(this._unsubscribeAll),
@@ -185,8 +181,7 @@ export class ContactsContactListComponent implements OnInit, OnDestroy
             )
             .subscribe(searchText => {
 
-              
-
+            
                 this._contactsService.searchText = searchText;
 
                 this._contactsService.getContacts(this._contactsService.idEventNow)

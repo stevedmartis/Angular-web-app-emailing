@@ -7,21 +7,33 @@
 
     #academy-courses {
 
-        .header {
-            background: #1A237E;
-            background: linear-gradient(to right, #0E2A3B 0%, #34306B 100%);
+        $background: map-get($theme, background);
+        $foreground: map-get($theme, foreground);
+        $is-dark: map-get($theme, is-dark);
+    
 
-            .hero-text {
-
-                h1 {
-                    color: white;
-                }
-
-                h3 {
-                    color: rgba(255, 255, 255, 0.75);
+    
+            .header {
+    
+                .search-wrapper {
+                    background: map-get($background, card);
+    
+                    .search {
+    
+                        .mat-icon {
+                            color: map-get($foreground, icon);
+                        }
+    
+                        input {
+                            background: map-get($background, card);
+                            color: map-get($foreground, text);
+                        }
+                    }
                 }
             }
-        }
+    
+
+        
 
         .content {
 

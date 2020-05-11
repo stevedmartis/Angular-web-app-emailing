@@ -1,98 +1,152 @@
-<div id="academy-courses" class="page-layout simple">
+<div id="academy-courses"  class="page-layout-campaign carded fullwidth inner-scroll">
 
-    <!-- HEADER -->
-    <div class="header accent p-16 p-sm-24" fxLayout="column" fxLayoutAlign="center center">
+                <!-- HEADER -->
+                <div class="header accent"
+                fxLayout="column" fxLayoutAlign="center center"
+                fxLayout.gt-sm="row" fxLayoutAlign.gt-sm="space-between center">
+   
+                
+   
+                
+            <div class=" icon-lg ml-sm-32 " fxLayout="row" fxLayoutAlign="center center">
+   
+   
+               <mat-icon class="logo-icon mr-24"
+               >supervisor_account
+      </mat-icon>
+          
+   
+       </div>
+   
+   
+                <!-- SEARCH -->
+   
+                <div class="ml-sm-32 icon-xs" fxLayout="row" fxLayoutAlign="center center">
+   
+           </div>
+                <div  class="search-wrapper mx-32 mx-md-0">
+                   <div class="search" fxFlex fxLayout="row" fxLayoutAlign="start center">
+                       <mat-icon>search</mat-icon>
+                       <input matInput placeholder="Buscar usuario"
+                       [(ngModel)]="searchTerm"
+                       (input)="filterCoursesByTerm()">
+                   </div>
+               </div>
+               <!-- / SEARCH -->
+   
+               <!-- ADD BUTTON -->
+               <button mat-raised-button (click)="addCampaignDialog()" class="add-btn fuse-white mt-24 mt-md-0">
+                   <span>CREAR NUEVO</span>
+               </button>
+               <!-- / ADD BUTTON -->
+   
+           </div>
+           <!-- / HEADER -->
 
-        <div class="hero-text">
-            <mat-icon class="hero-icon">school</mat-icon>
-            <h1 [@animate]="{value:'*',params:{delay:'100ms', y:'25px'}}">
-                WELCOME TO ACADEMY
-            </h1>
-            <h3 [@animate]="{value:'*',params:{delay:'100ms', y:'25px'}}">
-                Our courses will step you through the process of building a small application, or adding a new feature
-                to an existing application.
-            </h3>
-        </div>
-
-    </div>
-    <!-- / HEADER -->
 
     <!-- CONTENT -->
-    <div class="content p-24">
+    <div class="content p-24" >
 
-        <div fxLayout="column" fxLayoutAlign="center">
+        <div fxLayout="column" class="content-card" fxLayoutAlign="center" fusePerfectScrollbar>
 
             <div class="filters" fxLayout="column" fxLayoutAlign="center center"
                  fxLayout.gt-xs="row" fxLayoutAlign.gt-xs="space-between center">
 
-                <mat-form-field appearance="outline" floatLabel="always" class="course-search">
-                    <mat-label>Search for a course</mat-label>
-                    <input matInput placeholder="Enter a keyword..."
-                           [(ngModel)]="searchTerm"
-                           (input)="filterCoursesByTerm()">
-                </mat-form-field>
 
                 <mat-form-field appearance="outline" class="category-selector">
-                    <mat-label>Category</mat-label>
+                    <mat-label>Tipo de rol</mat-label>
                     <mat-select [(ngModel)]="currentCategory"
                                 (selectionChange)="filterCoursesByCategory()">
                         <mat-option [value]="'all'">
-                            All
+                            Todos
                         </mat-option>
-                        <mat-option *ngFor="let category of categories" [value]="category.value">
-                            {{ category.label }}
+                        <mat-option *ngFor="let rol of selectRol" [value]="rol.label">
+                            {{ rol.label }}
                         </mat-option>
                     </mat-select>
                 </mat-form-field>
 
             </div>
 
-            <div class="courses" fxLayout="row wrap" fxLayoutAlign="center" [@animateStagger]="{value:'50'}">
+            <div class="courses" fxLayout="row wrap" fxLayoutAlign="center" [@animateStagger]="{value:'50'}" >
 
-                <div class="course" *ngFor="let course of filteredCourses" fxFlex="100" fxFlex.gt-xs="50"
-                     fxFlex.gt-sm="33" [ngClass]="course.category" [@animate]="{value:'*',params:{y:'100%'}}">
+                <div class="course" *ngFor="let user of filteredCourses" fxFlex="100" fxFlex.gt-xs="50"
+                     fxFlex.gt-sm="33" [ngClass]="user.rol" [@animate]="{value:'*',params:{y:'100%'}}" >
 
                     <div class="course-content" fxLayout="column" fxFlex="1 1 auto">
 
                         <div class="header" fxLayout="row" fxLayoutAlign="center center"
-                             [ngClass]="course.category + '-bg'">
+                             [ngClass]="user.rol + '-bg'">
 
                             <div class="category" fxFlex>
-                                {{course.category}}
+                                {{user.rol}}
                             </div>
 
-                            <div class="length" fxLayout="row" fxLayoutAlign="center center">
-                                <mat-icon class="length-icon s-20">access_time</mat-icon>
-                                <div class="min">{{course.length}} min</div>
+                            <div>
+                                <button mat-icon-button [matMenuTriggerFor]="card19Menu" aria-label="more">
+                                    <mat-icon>more_vert</mat-icon>
+                                </button>
+    
+                                <mat-menu #card19Menu="matMenu">
+                                
+                                <button mat-menu-item (click)="editUser(user)" >
+                                    <mat-icon>edit</mat-icon>
+                                    <span>Editar</span>
+                                </button>
+                            
+                                
+                                    <button mat-menu-item (click)="deleteUser(user)">
+                                        <mat-icon>delete</mat-icon>
+                                        <span>Eliminar</span>
+                                    </button>
+                                
+
+                                    <!--
+                                        
+                                  
+                                    <button   mat-menu-item  >
+                                    <mat-icon>file_copy</mat-icon>
+                                    <span>Duplicar</span>
+                                </button>
+
+                                  -->
+                                 
+                                </mat-menu>
                             </div>
+
 
                         </div>
 
                         <div class="content" fxLayout="column" fxLayoutAlign="center center" fxFlex="1 1 auto">
-                            <div class="h1">{{course.title}}</div>
-                            <div class="updated">Updated {{course.updated}}</div>
+                            <div class="h1">{{user.username}}</div>
+                            <div class="h1">{{user.name}}</div>
+                            <div class="h1">{{user.lastName}}</div>
+                            <div class="h1">{{user.email}}</div>
+                            <div class="updated">Actualizado: {{user.updated | date: 'EEEE dd/MM'}} </div>
                         </div>
 
-                        <div class="footer" fxLayout="row" fxLayoutAlign="center center">
-                            <button mat-button color="accent"
-                                    [routerLink]="'/academy/courses/' + course.id + '/' + course.slug">
-                                START
-                            </button>
-                        </div>
+
 
                     </div>
 
                 </div>
 
                 <div class="no-courses" *ngIf="filteredCourses.length === 0">
-                    No courses found!
+                   No se econtraron usuarios
                 </div>
+
+                
+
 
             </div>
 
+
         </div>
+
+
 
     </div>
     <!-- / CONTENT -->
+    
 
 </div>

@@ -1,4 +1,4 @@
-import { FuseUtils } from '@fuse/utils';
+
 
 export class Contact {
     id: string;

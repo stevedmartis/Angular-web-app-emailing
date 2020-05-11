@@ -1,5 +1,5 @@
 export interface Person{
-    id: String
+    _id: String
     name: String,
     company?: String,
     addres?: String,
