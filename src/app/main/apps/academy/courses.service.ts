@@ -134,17 +134,25 @@ saveUserEvent(): Promise<any>
 
 getUsersData(){
 
+  
 
-        let users = this.eventObj.users.map(user => user.userId)
+if( this.eventObj.users){
 
-        console.log(users)
+    let users = this.eventObj.users.map(user => user.userId)
 
-        users.forEach(userId => {
+    console.log(users)
 
-            this.getUser(userId)
+    users.forEach(userId => {
+
+        this.getUser(userId)
+
+    });
 
 
-});
+}
+
+
+
 
 this.onCoursesChanged.next(this.arrayUserData);
  
@@ -285,17 +293,26 @@ editUserExist(user): Promise<any>
     });
 }
 
-sendMailJet(email, username, _id) {
+sendMailJet(email, username, _id): Promise<any> {
 
-    return this._httpClient.post<any>(`${environment.apiUrl}/api/send-new-user-mail`, { email , username, _id})
-    .pipe(map(user => {
+    console.log('ok', email, username, _id)
+
+    return new Promise((resolve, reject) => { 
+        this._httpClient.post<any>(`${environment.apiUrl}/api/send-new-user-mail`, { email , username, _id})
+    .subscribe((user: any) => {
+
+        console.log(user)
         // store user details and jwt token in local storage to keep user logged in between page refreshes
         //localStorage.setItem('currentUser', JSON.stringify(user));
+
+        resolve(user)
     
         return user;
-    }));
-}
+    }, reject)
 
+    })
+
+}
 
 }
 

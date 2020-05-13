@@ -20,7 +20,7 @@ export class SpeedDialFabComponent implements OnInit {
 
   loadingContact: boolean = false;
 
-
+  emailPattern = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
 
   fabButtons = [
     {
@@ -88,41 +88,23 @@ export class SpeedDialFabComponent implements OnInit {
               this.loadingContact = true;
           
 
-              let res = response.getRawValue();
+              let data = response.getRawValue();
 
-             
-              let obj = {
-                  codeEvento: this._contactsService.idEventNow,
-                  name: res.name,
-                  title: res.title,
-                  lastname: res.lastname,
-                  email: res.email,
-                  address: res.address,
-                  jobtitle: res.jobtitle,
-                  company: res.company,
-                  phone: res.phone,
-                  asiste: 'null',
-                  contactado: res.contactado,
-                  street: res.street,
-                  city: res.city,
-                  country: res.country,
-                  phoneMobil: res.phoneMobil,
-                  notes: res.notes
+              
+              this._contactsService.validateEmail(data.email)
+              .then((res: any) => {
 
-              }
+                this.newInvitedObj(data, res.valid)
 
-              console.log('obj ',obj)
-
-
-              this._contactsService.createContact(obj)
-              .then(( ) => {
-                this.loadingContact = false;
+                console.log(res)
               })
-              .catch( () => {
-                this.loadingContact = false;
+              .catch(err => {
+                console.log(err)
 
-              });
 
+                this.newInvitedObj(data, err.error.valid)
+              })
+              
 
 
           });
@@ -130,47 +112,133 @@ export class SpeedDialFabComponent implements OnInit {
 
   exportContacts(){
     //this._contactsService.excelToJson()
-    this.onToggleFab()
-  
+   
+  this.onToggleFab()
   
   this._contactsService.xlsxToJson()
   .then((data) => {
 
     
     this.loadingContact = true;
-    
-    data.forEach(e => {
 
-      setTimeout(() => {
+     this.forEachImportDB(data)
 
-        this._contactsService.createContacts(e)
-        .then(() => {
-  
-          this._contactsService.contactsCount++;
-  
-          this.conditionCompleteCharge(data.length)
-        })
-        .catch((err) =>{
-
-          console.log('err', err)
-        
-  
-          this._contactsService.contactsCount++;
-  
-          this.conditionCompleteCharge(data.length);
-        })
-        
-      }, 1000);
-
-  });
   })
 
   }
 
-  conditionCompleteCharge(data){
-    if (this._contactsService.contactsCount === data) {
-      this._contactsService.getContacts(this._contactsService.idEventNow)
-      .then(x => {
+  forEachImportDB(data){
+
+
+ 
+
+    return new Promise((resolve, reject) => {
+    data.forEach(e => {
+
+      
+
+
+        if (e.email) {
+
+          if (this.emailPattern.test(e.email))
+
+          {
+
+         
+                  
+              this.newInvitedForDB(e, true)
+              .then((res) => {
+
+
+                
+
+    
+                this._contactsService.contactsCount++
+
+            
+    
+              this.conditionCompleteCharge(data.length)
+    
+            
+                
+              })
+              
+           
+
+
+               
+        
+
+          }
+
+          else {
+
+
+         
+          
+
+            this.newInvitedForDB(e, false)
+            .then((res) => {
+
+              console.log(e)
+  
+              console.log('notvalid', res)
+  
+              this._contactsService.contactsCount++
+
+            
+
+  
+            this.conditionCompleteCharge(data.length)
+  
+          
+              
+            })
+
+         
+          }
+
+          
+         
+      } else {
+         
+        this.newInvitedForDB(e, false)
+        .then((res) => {
+
+          console.log('null', res)
+
+          this._contactsService.contactsCount++
+
+         
+           this.conditionCompleteCharge(data.length)
+
+      
+          
+        })
+      }
+
+       
+
+
+
+
+
+   
+
+  });
+
+})
+
+
+
+
+  }
+
+  conditionCompleteCharge(arrayCount){
+    if (this._contactsService.contactsCount === arrayCount) {
+
+      console.log('news ',this._contactsService.contactsCount, "new total", this._contactsService.contacts.length )
+    
           this._contactsService.contactsCount = 0;
          
           this.loadingContact = false;
@@ -179,7 +247,7 @@ export class SpeedDialFabComponent implements OnInit {
         this._matSnackBar.open('Carga completada', 'OK', {
           verticalPosition: 'top',
           duration        : undefined
-      });
+    
       });
   }
   }
@@ -191,6 +259,91 @@ export class SpeedDialFabComponent implements OnInit {
 
   }
 
+  newInvitedObj(data, valid){
+
+    let obj = {
+      codeEvento: this._contactsService.idEventNow,
+      name: data.name,
+      title: data.title,
+      lastname: data.lastname,
+      email: data.email,
+      emailValid: valid,
+      address: data.address,
+      jobtitle: data.jobtitle,
+      company: data.company,
+      phone: data.phone,
+      asiste: 'null',
+      contactado: data.contactado,
+      street: data.street,
+      city: data.city,
+      country: data.country,
+      phoneMobil: data.phoneMobil,
+      notes: data.notes
+
+  }
+
+  
+  this._contactsService.createContact(obj)
+  .then(( ) => {
+
+    let newTotal = this._contactsService.contacts.length + 1;
+
+    this._contactsService.editCountInvited(newTotal)
+  
+    this.loadingContact = false;
+  })
+  .catch( () => {
+    this.loadingContact = false;
+
+  });
+  }
+
+  newInvitedForDB(data, valid): Promise<any>{
+
+    return new Promise((resolve, reject) => {
+
+
+
+    let obj = {
+      codeEvento: this._contactsService.idEventNow,
+      name: data.name,
+      title: data.title,
+      lastname: data.lastname,
+      emailValid: valid,
+      email: data.email,
+      address: data.address,
+      jobtitle: data.jobtitle,
+      company: data.company,
+      phone: data.phone,
+      asiste: 'null',
+      contactado: data.contactado,
+      street: data.street,
+      city: data.city,
+      country: data.country,
+      phoneMobil: data.phoneMobil,
+      notes: data.notes
+
+  }
+
+
+
+  this._contactsService.createContactValidatorEmail(obj)
+  .then((res) => {
+
+
+    resolve(res)
+  })
+  .catch(err => reject)
+
+
+
+  
+
+  })
+
+}
+
+  
 
 
   handleClick(method: string) {

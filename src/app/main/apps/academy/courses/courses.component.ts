@@ -121,10 +121,21 @@ export class AcademyCoursesComponent implements OnInit, OnDestroy
 
                 .then((x: any) => {
 
-                    this._academyCoursesService.sendMailJet(x.email, x.username, x._id)
-                   
+                    console.log('entro', x.user)
 
-                        this.addNewUser(x)
+                    this._academyCoursesService.sendMailJet(x.user.email, x.user.username, x.user._id)
+                    .then((res) => {
+
+                        console.log(res)
+                    })
+                    .catch((err) => {
+
+                        console.log(err)
+                    })
+
+                    
+
+                    this.addNewUser(x)
                 })
                 .catch((err) => {
 

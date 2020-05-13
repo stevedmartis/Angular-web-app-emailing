@@ -395,8 +395,25 @@ border-radius: 3%;
 
     @include media-breakpoint('xs') {
         padding: -2px !important;
+
+        padding-bottom: 15%;
 }
 
 
+
+
+}
+
+.btn-navigate-tabs {
+
+
+    @include media-breakpoint('xs') {
+        position: fixed;
+        bottom: 0px;
+        left: 0px;
+        right: 0px;
+        margin-bottom: 0px;
+        z-index: 1;
+}
 }
 

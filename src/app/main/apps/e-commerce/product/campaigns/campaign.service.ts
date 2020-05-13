@@ -131,31 +131,25 @@ export class CampaignService {
         this.loadingCampaigns = true;
         return new Promise((resolve, reject) => {
             // console.log('eventId', this.eventId)
-            console.log(
-                "this._authServices.currentUserValue",
-                this._authServices.currentUserValue
-            );
 
             this._httpClient
-                .get(environment.apiUrl + "/api/campaign-user/" + this.userId)
+                .get(environment.apiUrl + "/api/campaign-event/"  + this._productService.idNowEvent)
                 .subscribe((response: any) => {
-                    const allCampaigs = response.campaigns;
 
-                    const campByEvent = allCampaigs.filter(
-                        x => x.eventId === this._productService.idNowEvent
-                    );
+                    console.log('response', response)
+                    const campaigns = response.campaigns;
 
                     console.log(
                         "map by id:",
                         this._productService.idNowEvent,
-                        campByEvent
+                        campaigns
                     );
 
-                    this.campaigns = campByEvent;
+                    this.campaigns = campaigns;
                     this.onCampaignChanged.next(this.campaigns);
 
                     this.loadingCampaigns = false;
-                    resolve(response);
+                    resolve(campaigns);
                 }, reject);
         });
     }

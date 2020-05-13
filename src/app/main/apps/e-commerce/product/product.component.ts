@@ -456,5 +456,15 @@ nextStep() {
 
   }
 
+  btnNavigateStep(){
+
+   if(this.selectedIndex === 1 || this.selectedIndex === 2 || this.selectedIndex === 3 || this.selectedIndex === 4){
+
+    return true
+   }
+
+   else { return false}
+  }
+
 
 }

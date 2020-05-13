@@ -135,6 +135,19 @@ export class ContactsService {
         });
     }
 
+    
+    validateEmail(email): Promise<any> {
+        return new Promise((resolve, reject) => {
+            this._httpClient
+                .get(environment.apiUrl + "/api/validate-email/" + email)
+                .subscribe((response: any) => {
+                    console.log(response);
+
+                    resolve(response)
+                }, reject);
+        });
+    }
+
     /**
      * Get user data
      *
@@ -218,14 +231,18 @@ export class ContactsService {
      * @param contact
      * @returns {Promise<any>}
      */
-    createContacts(obj): Promise<any> {
+    createContactValidatorEmail(obj): Promise<any> {
         return new Promise((resolve, reject) => {
             
             this._httpClient
-                .post(environment.apiUrl + "/api/invited/add-new-invited/", obj)
-                .subscribe(response => {
+                .post(environment.apiUrl + "/api/invited/add-new-email-validator/", obj)
+                .subscribe((response: any) => {
                    
 
+                                    
+
+                   this.contacts.push(response.post);
+                   this.onContactsChanged.next(this.contacts);
                     resolve(response)
                   
                 }, reject);
@@ -239,13 +256,16 @@ export class ContactsService {
                 .post(environment.apiUrl + "/api/invited/add-new-invited/", obj)
 
                 .subscribe((response: any) => {
-                    resolve(response);
+                 
                     console.log(response);
 
-                    this.getContacts(this.idEventNow).then(x => {
-                        this.loadingContact = false;
-                        this.editCountInvited(this.contacts.length);
-                    });
+                
+
+                   this.contacts.push(response.post);
+                   this.onContactsChanged.next(this.contacts);
+
+                   resolve(response);
+
                 });
         });
     }
@@ -530,6 +550,8 @@ export class ContactsService {
             let jsonData = null;
             const reader = new FileReader();
             const file = xlsx;
+
+        
 
 
             if(xlsx.name.includes("xls") || xlsx.name.includes("xlsx")){

@@ -22,6 +22,7 @@ export class Contact {
     dateOnClick: Date;
     Status: string;
     StatusDateTime: Date;
+    emailValid: Boolean
 
 
 
@@ -53,6 +54,7 @@ export class Contact {
             this.dateOnClick = contact.dateOnClick || '';
             this.Status = contact.Status || '';
             this.StatusDateTime = contact.StatusDateTime || '';
+            this.emailValid = contact.emailValid || false;
 
             
         }
