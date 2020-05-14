@@ -404,13 +404,26 @@ border-radius: 3%;
 
 }
 
-.btn-navigate-tabs {
+.btn-navigate-tabs-next {
 
 
     @include media-breakpoint('xs') {
         position: fixed;
         bottom: 0px;
-        left: 0px;
+        left: 50%;
+        right: 0px;
+        margin-bottom: 0px;
+        z-index: 1;
+}
+}
+
+.btn-navigate-tabs-prev {
+
+
+    @include media-breakpoint('xs') {
+        position: fixed;
+        bottom: 0px;
+        left: 0%;
         right: 0px;
         margin-bottom: 0px;
         z-index: 1;
