@@ -94,9 +94,11 @@ export class SpeedDialFabComponent implements OnInit {
               this._contactsService.validateEmail(data.email)
               .then((res: any) => {
 
-                this.newInvitedObj(data, res.valid)
+                
+      
+                this.newInvitedObj(data, res)
 
-                console.log(res)
+               
               })
               .catch(err => {
                 console.log(err)

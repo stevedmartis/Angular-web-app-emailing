@@ -64,5 +64,6 @@ export class AcademyCourseService implements Resolve<any>
                 }, reject);
         });
     }
+    
 
 }

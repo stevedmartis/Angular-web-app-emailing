@@ -1,11 +1,13 @@
 import { Component, OnInit, Inject, Output, Input, EventEmitter,} from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, AbstractControl, ValidatorFn, Validator, ValidationErrors, AsyncValidator, NG_VALIDATORS, AsyncValidatorFn, FormControl } from '@angular/forms';
 
-import { Subscription, of } from 'rxjs';
+import { Subscription, of, Observable } from 'rxjs';
 
 import { AcademyCoursesService } from '../../courses.service';
 import { User } from 'app/models/user';
+import { take, debounceTime, distinctUntilChanged, map, switchMap, catchError } from 'rxjs/operators';
+import { UsernameValidator } from './emailValidator';
 
 export class FileUploadModel {
   data: File;
@@ -23,8 +25,13 @@ export class FileUploadModel {
 @Component({
   selector: 'app-add',
   templateUrl: './add.component.html',
-  styleUrls: ['./add.component.scss']
+  styleUrls: ['./add.component.scss'],
+  
 })
+
+
+
+
 export class AddUserComponent implements OnInit {
 
       
@@ -45,8 +52,9 @@ private files: Array<FileUploadModel> = [];
   action: string;
   userForm: FormGroup;
   userFound: User;
+ emailPattern = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
 
-
+ debouncer: any;
   rolTypes = [
   {label: 'Creador', value: '1'},
   {label: 'Staff', value: '2'},
@@ -62,7 +70,8 @@ private files: Array<FileUploadModel> = [];
     public matDialogRef: MatDialogRef<AddUserComponent>,
     @Inject(MAT_DIALOG_DATA) private _data: any,
     private _formBuilder: FormBuilder,
-    public _academyCoursesService: AcademyCoursesService
+    private _academyCoursesService: AcademyCoursesService,
+    public usernameValidator: UsernameValidator
     
     ) {
       // Set the defaults
@@ -115,6 +124,8 @@ private files: Array<FileUploadModel> = [];
 
   addUser(user){
 
+    console.log(this.f.email)
+
 
 
       let obj = {
@@ -150,7 +161,8 @@ private files: Array<FileUploadModel> = [];
          
           name: [this.user.name],
           lastName: [this.user.lastName],
-          email: [this.user.email],
+
+          email: [this.user.email, Validators.compose([Validators.maxLength(30), Validators.pattern(this.emailPattern), Validators.required]), this.usernameValidator.checkUsername.bind(this.usernameValidator)],
           rol: [this.user.rol, [Validators.required]],
           username: [this.user.username, [Validators.minLength(5)]],
           password: [this.randomPassword()]
@@ -166,10 +178,21 @@ private files: Array<FileUploadModel> = [];
     return this.f.username.getError('required')? 'Nombre de usuario es requerido' : this.f.username.getError('minlength')? 'Minimo 5 caracteres' : '';    
   }
 
+  getMesaggeErrorEmail(){
+
+    return this.f.email.getError('required')? 'Email es requerido' : this.f.email.getError('pattern')? 'Formato email Invalido' : this.f.email.getError('emailInvalid')? 'Email Invalido' : '';    
+
+
+  }
+
+
+
 
   fileUpload(){
 
     const type = 'camp'
+
+ 
     const fileUpload = document.getElementById('fileUpload') as HTMLInputElement;
     fileUpload.onchange = (event: any) => {
 
@@ -192,5 +215,5 @@ private files: Array<FileUploadModel> = [];
 }
 
 
-
 }
+

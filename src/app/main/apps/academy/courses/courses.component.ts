@@ -123,19 +123,37 @@ export class AcademyCoursesComponent implements OnInit, OnDestroy
 
                     console.log('entro', x.user)
 
-                    this._academyCoursesService.sendMailJet(x.user.email, x.user.username, x.user._id)
-                    .then((res) => {
-
-                        console.log(res)
-                    })
-                    .catch((err) => {
-
-                        console.log(err)
-                    })
-
+                        let  valid =  this._academyCoursesService.emailValid;
+                       
                     
+                        if(valid){
 
-                    this.addNewUser(x)
+
+                            this.addNewUser(x, valid)
+
+                            this._academyCoursesService.sendMailJet(x.user.email, x.user.username, x.user._id)
+                            .then((res) => {
+        
+                                console.log(res)
+                            })
+                            .catch((err) => {
+        
+                                console.log(err)
+                            })
+
+                        }
+
+                        else {
+
+                            
+                    this._matSnackBar.open('Email invalido', "OK", {
+                        verticalPosition: "top",
+                        duration: 3000
+                    });
+
+                        }
+
+                                
                 })
                 .catch((err) => {
 
@@ -160,7 +178,7 @@ export class AcademyCoursesComponent implements OnInit, OnDestroy
     }
 
 
-    addNewUser(x){
+    addNewUser(x, valid){
 
         this._academyCoursesService.eventObj.users.push({ userId: x.user._id})
 
@@ -170,21 +188,31 @@ export class AcademyCoursesComponent implements OnInit, OnDestroy
         .then(() => {
 
             
-        
+        const userUpdate = x.user.emailValid = valid;
+
+        console.log('userUpdate', userUpdate)
+
     this._academyCoursesService.arrayUserData.push(x.user)
     this._academyCoursesService.onCoursesChanged.next(this._academyCoursesService.arrayUserData);
 
-                                
+
+   
+                             
         setTimeout(() => {
 
-            this._matSnackBar.open("Usuario creado", "OK", {
+            this._matSnackBar.open("Usuario creado y correo enviado", "OK", {
                 verticalPosition: "top",
                 duration: 3000
             });
             
         }, 600);
 
+
+
+
         })
+
+        
     }
 
     editUser(user): void {

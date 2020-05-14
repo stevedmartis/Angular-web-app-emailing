@@ -57,6 +57,7 @@ export class EcommerceProductComponent implements OnInit, OnDestroy
     selectedIndex: number = 0;
     maxNumberOfTabs: number = 3;
     uploadFile: boolean = false;
+     
 
     //@ViewChild(InvitationFormComponent, {static: false}) invitationComponent: InvitationFormComponent
 

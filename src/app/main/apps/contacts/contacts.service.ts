@@ -141,9 +141,12 @@ export class ContactsService {
             this._httpClient
                 .get(environment.apiUrl + "/api/validate-email/" + email)
                 .subscribe((response: any) => {
-                    console.log(response);
 
-                    resolve(response)
+                    let result = response.result.data.debounce.result;
+                  
+                    let valid = result === "Invalid"? false : true;
+
+                    resolve(valid)
                 }, reject);
         });
     }

@@ -17,6 +17,8 @@ export class AcademyCoursesService implements Resolve<any>
     emailExist: boolean = false;
 usernameExist : boolean = false;
 
+emailValid: boolean = false;
+
     /**
      * Constructor
      *
@@ -292,6 +294,27 @@ editUserExist(user): Promise<any>
             }, reject);
     });
 }
+
+   
+validateEmail(email): Promise<any> {
+    return new Promise((resolve, reject) => {
+        this._httpClient
+            .get(environment.apiUrl + "/api/validate-email/" + email)
+            .subscribe((response: any) => {
+              
+
+                resolve(response.result.data.debounce.result)
+            }, reject);
+    });
+}
+
+emailValidator(email: string) : Observable<any> {
+    
+    return this._httpClient.get(environment.apiUrl + "/api/validate-email/" + email)
+
+
+}
+
 
 sendMailJet(email, username, _id): Promise<any> {
 
