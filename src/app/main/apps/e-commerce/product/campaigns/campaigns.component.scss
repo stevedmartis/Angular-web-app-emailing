@@ -119,6 +119,10 @@ products-campaigns {
             max-width: 1040px;
             margin: 0 auto;
 
+            @include media-breakpoint('xs') {
+                margin-bottom: 30% !important;
+            }
+
 
 
             .no-courses {
