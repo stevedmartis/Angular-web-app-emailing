@@ -467,5 +467,15 @@ nextStep() {
    else { return false}
   }
 
+  btnNavigateNextStep(){
+
+    if(this.selectedIndex === 0 || this.selectedIndex === 1 || this.selectedIndex === 2){
+ 
+     return true
+    }
+ 
+    else { return false}
+   }
+
 
 }

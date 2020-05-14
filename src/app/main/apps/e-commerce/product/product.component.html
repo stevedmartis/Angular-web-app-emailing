@@ -208,26 +208,42 @@
 
                   <div  class="btn-navigate-tabs">
 
+                    <button *ngIf="btnNavigateStep()" [disabled]="!btnNavigateStep"  (click)="previousStep()" class="mr-8 w-100-p " mat-raised-button type="button"
+                    color="default">
+                   
+                    Anterior
+                    <mat-icon>chevron_left</mat-icon>
+                </button>
+
+
+
+                    <div *ngIf="btnNavigateNextStep()">
+
+        
+                  
                   <button *ngIf="(isCreated && productForm.pristine) && (!removeTag && !uploadFile )" class="mr-8 w-100-p" mat-raised-button  type="button"
                   (click)="nextStep()"
                   color="accent">
                   Siguiente
+
+                  <mat-icon>chevron_right</mat-icon>
               </button>
 
                   <button *ngIf="pageType ==='new'" [disabled]="productForm.invalid"  (click)="addProduct(true)" class="mr-8 w-100-p" mat-raised-button type="button"
                   color="accent">
                   Crear
+                  <mat-icon>save</mat-icon>
               </button>
 
                   <button *ngIf="(pageType ==='edit' && !productForm.pristine) || (removeTag || uploadFile)" (click)="saveProduct(true)" class="mr-8 w-100-p" mat-raised-button  type="button"
                       color="accent">
-                      Siguiente <mat-icon>save</mat-icon>
+                      Siguiente 
+                      <mat-icon>save</mat-icon>
                   </button>
 
-                  <button *ngIf="btnNavigateStep()"  (click)="previousStep()" class="mr-8 w-100-p " mat-raised-button type="button"
-                  color="default">
-                  Anterior
-              </button>
+                </div>
+
+     
 
                
                 </div>
