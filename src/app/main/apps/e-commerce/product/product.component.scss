@@ -27,7 +27,6 @@
     }
 
 
-
     .mat-icon-form {
         color: rgba(114, 114, 114, 0.54);
     }
@@ -68,9 +67,6 @@
     overflow: hidden;
     width: 100%;
 }
-        
-
-
  
 }
 
@@ -137,7 +133,6 @@
 }
 
 
-
 /* Large devices (laptops/desktops, 992px and up) */
 @media only screen and (min-width: 992px) {
 
@@ -179,11 +174,6 @@
 
 }
 
-
-
-
-
-
 @import "src/@fuse/scss/fuse";
 
 .invitation-form-dialog {
@@ -210,24 +200,17 @@
         display: flex;
         flex-direction: column;
     }
-
-
-
-
-
 }
 
 
 .content-steper {
 
     display: block !important;
-
 }
 
 .email-editor {
     margin-left: -23px;
 }
-
 
 .btn-left {
     left: 23px;
@@ -398,10 +381,6 @@ border-radius: 3%;
 
         padding-bottom: 15%;
 }
-
-
-
-
 
 }
 
