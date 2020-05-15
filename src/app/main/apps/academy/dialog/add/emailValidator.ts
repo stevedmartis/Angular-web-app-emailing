@@ -5,7 +5,7 @@ import { AcademyCoursesService } from '../../courses.service';
 
 
 @Injectable()
-export class UsernameValidator {
+export class EmailValidator {
 
   debouncer: any;
 
@@ -14,7 +14,7 @@ export class UsernameValidator {
   }
   
     
-checkUsername(control: FormControl): any {
+validatorEmail(control: FormControl): any {
 
   clearTimeout(this.debouncer);
 

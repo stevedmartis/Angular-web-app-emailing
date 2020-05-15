@@ -206,6 +206,7 @@ contacts-contact-list {
 .empty-inv {
 
     max-width: 100%;
+    width: 30%;
 }
 
 .empty-card-inv {
@@ -356,4 +357,11 @@ contacts-contact-list {
     @include media-breakpoint('xs') {
         margin-bottom: 40%;
     }
+}
+
+
+.no-invited {
+    font-size: 24px;
+    margin: 24px 0;
+    text-align: center;
 }

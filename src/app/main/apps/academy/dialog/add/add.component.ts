@@ -7,7 +7,7 @@ import { Subscription, of, Observable } from 'rxjs';
 import { AcademyCoursesService } from '../../courses.service';
 import { User } from 'app/models/user';
 import { take, debounceTime, distinctUntilChanged, map, switchMap, catchError } from 'rxjs/operators';
-import { UsernameValidator } from './emailValidator';
+import { EmailValidator } from './emailValidator';
 
 export class FileUploadModel {
   data: File;
@@ -72,7 +72,7 @@ private files: Array<FileUploadModel> = [];
     @Inject(MAT_DIALOG_DATA) private _data: any,
     private _formBuilder: FormBuilder,
     private _academyCoursesService: AcademyCoursesService,
-    public usernameValidator: UsernameValidator
+    public _emailValidator: EmailValidator
     
     ) {
       // Set the defaults
@@ -125,9 +125,9 @@ private files: Array<FileUploadModel> = [];
 
   addUser(user){
 
-    console.log(this.f.email)
+    console.log(this.f)
 
-if(this.f.valid){
+if(this.userForm.valid){
   
 
       let obj = {
@@ -174,7 +174,8 @@ else {
           name: [this.user.name],
           lastName: [this.user.lastName],
 
-          email: [this.user.email, Validators.compose([Validators.maxLength(30), Validators.pattern(this.emailPattern), Validators.required]), this.usernameValidator.checkUsername.bind(this.usernameValidator)],
+          email: [this.user.email, Validators.compose([ Validators.required,  Validators.pattern(this.emailPattern)]), 
+          this._emailValidator.validatorEmail.bind(this._emailValidator)],
           rol: [this.user.rol, [Validators.required]],
           username: [this.user.username, [Validators.minLength(5)]],
           password: [this.randomPassword()]
@@ -187,7 +188,7 @@ else {
   get f() { return this.userForm.controls; }
 
   getMesaggeErrorUsername(){
-    return  this.f.username.getError('required')? 'Nombre de usuario es requerido' : this.f.username.getError('minlength')? 'Minimo 5 caracteres' : '';    
+    return  this.f.username.getError('required')? 'Nombre de usuario es requerido' : this.f.username.getError('minlength')? 'Minimo 5 caracteres' : 'Email Validado!';    
   }
 
   getMesaggeErrorEmail(){

@@ -372,6 +372,15 @@ border-radius: 3%;
 
 }
 
+.mat-tab-body-content {
+    height: 900px !important;
+    overflow: auto;
+
+    @include media-breakpoint('xs') {
+        height: -1px !important;
+}
+}
+
 .form-custom {
 
    padding: 24px;

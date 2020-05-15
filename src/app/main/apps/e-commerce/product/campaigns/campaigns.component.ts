@@ -200,7 +200,7 @@ export class CampaignsComponent implements OnInit, OnDestroy {
         this.dialogRef.afterClosed().subscribe(result => {
             if ( result )
             {
-                this._campaignService.deleteCampaign(campaign.id);
+                this._campaignService.deleteCampaign(campaign);
             }
             this.dialogRef = null;
         });

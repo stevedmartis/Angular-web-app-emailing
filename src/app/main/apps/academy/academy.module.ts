@@ -16,7 +16,7 @@ import { AcademyCourseService } from 'app/main/apps/academy/course.service';
 import { FuseSidebarModule } from '@fuse/components';
 import { AddUserComponent } from '../academy/dialog/add/add.component';
 import { MaterialModule } from 'app/main/angular-material-elements/material.module';
-import { UsernameValidator  } from '../academy/dialog/add/emailValidator';
+import { EmailValidator  } from '../academy/dialog/add/emailValidator';
 
 
 const routes = [
@@ -54,7 +54,7 @@ const routes = [
     providers   : [
         AcademyCoursesService,
         AcademyCourseService,
-        UsernameValidator
+        EmailValidator
         
     ],
     entryComponents: [
