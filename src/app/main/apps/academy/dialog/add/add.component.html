@@ -27,7 +27,7 @@
                     <input name="username" formControlName="username" matInput required >
                     <mat-icon matSuffix class="secondary-text">account_circle</mat-icon>
 
-                    <mat-error >
+                    <mat-error *ngIf="formInvalid" >
                         {{ getMesaggeErrorUsername() }}
                     </mat-error>
                 </mat-form-field>
@@ -115,7 +115,7 @@
             mat-button
             class="save-button"
             (click)="addUser(userForm.value)"
-            [disabled]="userForm.invalid"
+           
             aria-label="SAVE">
         AGREGAR
     </button>

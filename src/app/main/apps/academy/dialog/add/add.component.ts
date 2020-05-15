@@ -53,6 +53,7 @@ private files: Array<FileUploadModel> = [];
   userForm: FormGroup;
   userFound: User;
  emailPattern = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+ formInvalid: boolean = false;
 
  debouncer: any;
   rolTypes = [
@@ -126,7 +127,8 @@ private files: Array<FileUploadModel> = [];
 
     console.log(this.f.email)
 
-
+if(this.f.valid){
+  
 
       let obj = {
 
@@ -141,7 +143,17 @@ private files: Array<FileUploadModel> = [];
       
      this.matDialogRef.close(obj)
 
-    
+}
+
+else {
+
+  this.formInvalid = true;
+
+  this.f.username.markAsTouched()
+  this.f.email.markAsTouched();
+  this.f.rol.markAsTouched();
+  return;
+}
 
 
 
@@ -175,7 +187,7 @@ private files: Array<FileUploadModel> = [];
   get f() { return this.userForm.controls; }
 
   getMesaggeErrorUsername(){
-    return this.f.username.getError('required')? 'Nombre de usuario es requerido' : this.f.username.getError('minlength')? 'Minimo 5 caracteres' : '';    
+    return  this.f.username.getError('required')? 'Nombre de usuario es requerido' : this.f.username.getError('minlength')? 'Minimo 5 caracteres' : '';    
   }
 
   getMesaggeErrorEmail(){
