@@ -402,10 +402,17 @@ border-radius: 3%;
 
 
 
+
 }
 
 .btn-navigate-tabs-next {
 
+    position: relative;
+    bottom: 0px;
+    left: 50%;
+    right: 0px;
+    margin-bottom: 0px;
+    z-index: 1;
 
     @include media-breakpoint('xs') {
         position: fixed;
@@ -419,6 +426,12 @@ border-radius: 3%;
 
 .btn-navigate-tabs-prev {
 
+    position: inherit;
+    bottom: 0px;
+    left: 0%;
+    right: 36px;
+    margin-bottom: -36px;
+    z-index: 1;
 
     @include media-breakpoint('xs') {
         position: fixed;
@@ -429,4 +442,16 @@ border-radius: 3%;
         z-index: 1;
 }
 }
+
+.btn-size {
+
+    
+    width: 50% !important;
+    margin-right: 8px !important;
+    
+    @include media-breakpoint('xs') {
+        width: 100% !important;
+    }
+    
+    }
 

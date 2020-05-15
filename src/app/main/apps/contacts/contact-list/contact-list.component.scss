@@ -351,5 +351,9 @@ contacts-contact-list {
 
 .page-margin {
 
-    margin-bottom: 40%;
+  
+
+    @include media-breakpoint('xs') {
+        margin-bottom: 40%;
+    }
 }

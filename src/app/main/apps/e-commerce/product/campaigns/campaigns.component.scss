@@ -113,15 +113,21 @@ products-campaigns {
             }
         }
 
+        .carded{
+
+            @include media-breakpoint('xs') {
+                margin-bottom: 20% !important;
+            }
+
+        }
+
         .courses {
             width: 100%;
             height: 500px;
             max-width: 1040px;
             margin: 0 auto;
 
-            @include media-breakpoint('xs') {
-                margin-bottom: 30% !important;
-            }
+
 
 
 
