@@ -287,12 +287,13 @@ contacts-contact-list {
 }
 
 .table-invited {
-    height: 500px;
+    height: 710px;
+    
     overflow: auto;
-    display: table !important;
+    
 
     @include media-breakpoint('xs') {
-    height: 710px;
+       
     }
 }
 

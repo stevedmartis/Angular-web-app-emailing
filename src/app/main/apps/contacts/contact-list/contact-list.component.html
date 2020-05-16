@@ -110,7 +110,7 @@
     <ng-container matColumnDef="email">
         <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-sm mat-sort-header>Email</mat-header-cell>
         <mat-cell *matCellDef="let contact" fxHide fxShow.gt-sm>
-            <p class="email text-truncate">
+            <p class="email text-truncate"[ngClass]="contact.emailValid? 'green' : 'red'">
                 {{contact.email}}
             </p>
         </mat-cell>
@@ -122,6 +122,7 @@
             <p class="phone text-truncate">
                 {{contact.phone}}
             </p>
+    
         </mat-cell>
     </ng-container>
 
@@ -150,6 +151,9 @@
             
         </mat-cell>
     </ng-container>
+
+
+
 
 
     <!-- Buttons Column -->
