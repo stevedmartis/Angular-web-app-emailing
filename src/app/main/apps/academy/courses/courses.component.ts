@@ -124,7 +124,8 @@ export class AcademyCoursesComponent implements OnInit, OnDestroy
                     console.log('entro', x.user)
 
                         let  valid =  this._academyCoursesService.emailValid;
-                       
+
+                        console.log('valid', valid)
                     
                         if(valid){
 

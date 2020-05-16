@@ -290,6 +290,10 @@ contacts-contact-list {
     height: 500px;
     overflow: auto;
     display: table !important;
+
+    @include media-breakpoint('xs') {
+    height: 710px;
+    }
 }
 
 

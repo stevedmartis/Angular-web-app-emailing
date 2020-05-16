@@ -65,8 +65,6 @@ private files: Array<FileUploadModel> = [];
 
 
 
-  
-  
   constructor(
     public matDialogRef: MatDialogRef<AddUserComponent>,
     @Inject(MAT_DIALOG_DATA) private _data: any,
@@ -197,8 +195,6 @@ else {
 
 
   }
-
-
 
 
   fileUpload(){

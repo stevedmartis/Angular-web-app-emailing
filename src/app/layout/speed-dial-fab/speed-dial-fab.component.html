@@ -5,7 +5,7 @@
                 <mat-icon *ngIf="!loadingContact">add</mat-icon>
                 <mat-spinner class="spinner-fab-btn" *ngIf="loadingContact"  diameter="35"></mat-spinner>
         </button>
-        <div [@speedDialStagger]="buttons.length"  [@animateStagger]="{value:'50'}"> <!-- and here -->
+        <div [@speedDialStagger]="buttons.length" > <!-- and here -->
           <input hidden id="fileUpload" type="file" #fileInput/>
      
                         <button 
