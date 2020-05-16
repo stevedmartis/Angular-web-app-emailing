@@ -121,6 +121,7 @@ private files: Array<FileUploadModel> = [];
 
 
 
+
   addUser(user){
 
     console.log(this.f)
@@ -173,7 +174,7 @@ else {
           lastName: [this.user.lastName],
 
           email: [this.user.email, Validators.compose([ Validators.required,  Validators.pattern(this.emailPattern)]), 
-          this._emailValidator.validatorEmail.bind(this._emailValidator)],
+          [this._emailValidator.validatorEmail.bind(this._emailValidator)]],
           rol: [this.user.rol, [Validators.required]],
           username: [this.user.username, [Validators.minLength(5)]],
           password: [this.randomPassword()]

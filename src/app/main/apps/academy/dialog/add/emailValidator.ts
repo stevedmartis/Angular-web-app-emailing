@@ -29,9 +29,12 @@ validatorEmail(control: FormControl): any {
 
             let result = data.result.data.debounce.result;
 
-            console.log('result ', result)
+          
                   
-            let valid = result === "Invalid" ? false :  result === "Risky"? false : result === "Safe to Send" ? true : result === "Unknown"? true : null
+            let valid = result === "Invalid" ? false : 
+                        result === "Risky"? false : 
+                        result === "Safe to Send" ? true : 
+                        result === "Unknown"? true : null;
 
 
          
@@ -50,7 +53,7 @@ validatorEmail(control: FormControl): any {
                 console.log(valid)
 
                 this._academyCoursesService.emailValid = false;
-                resolve({ emailInvalid : true });
+                resolve( { emailInvalid : true })
 
             }
         
