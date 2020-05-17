@@ -185,10 +185,10 @@
         </div>
 
 
-        <div class="content-card empty-card" *ngIf="!eventExist">
+        <div class="content-card empty-card" *ngIf="_ecommerceProductsService.products.length === 0">
 
 
-            <img src="assets/images/emptyevent.png">
+            <img class="size-img" src="assets/images/emptyevent.png">
 
         </div>
 

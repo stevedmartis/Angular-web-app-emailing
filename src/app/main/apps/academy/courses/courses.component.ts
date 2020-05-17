@@ -132,7 +132,7 @@ export class AcademyCoursesComponent implements OnInit, OnDestroy
 
                             this.addNewUser(x, valid)
 
-                            this._academyCoursesService.sendMailJet(x.user.email, x.user.username, x.user._id)
+                            this._academyCoursesService.sendMailJet(x.user.email, x.user.username, x.user._id, response.password)
                             .then((res) => {
         
                                 console.log(res)
@@ -201,7 +201,7 @@ export class AcademyCoursesComponent implements OnInit, OnDestroy
                              
         setTimeout(() => {
 
-            this._matSnackBar.open("Usuario creado y correo enviado", "OK", {
+            this._matSnackBar.open("Usuario creado y correo de acceso enviado", "OK", {
                 verticalPosition: "top",
                 duration: 3000
             });
@@ -242,7 +242,8 @@ export class AcademyCoursesComponent implements OnInit, OnDestroy
                 name: formData.value.name,
                 lastName: formData.value.lastName,
                 email: formData.value.email,
-                rol: formData.value.rol
+                rol: formData.value.rol,
+                
               }
 
             switch (actionType) {
@@ -291,6 +292,27 @@ export class AcademyCoursesComponent implements OnInit, OnDestroy
             this.dialogRef = null;
         });
     }
+
+    removeUser(user): void
+    {
+
+        console.log(user)
+        this.dialogRef = this._matDialog.open(FuseConfirmDialogComponent, {
+            disableClose: false,
+            panelClass: 'custom-dialog-container'
+        });
+
+        this.dialogRef.componentInstance.confirmMessage = 'Esta seguro de borrar permanente este usuario?';
+
+        this.dialogRef.afterClosed().subscribe(result => {
+            if ( result )
+            {
+                this._academyCoursesService.removeUser(user);
+            }
+            this.dialogRef = null;
+        });
+    }
+
 
 
 

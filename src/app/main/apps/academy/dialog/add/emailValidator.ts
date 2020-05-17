@@ -29,10 +29,11 @@ validatorEmail(control: FormControl): any {
 
             let result = data.result.data.debounce.result;
 
+            console.log(result)
           
                   
             let valid = result === "Invalid" ? false : 
-                        result === "Risky"? false : 
+                        result === "Risky"? true : 
                         result === "Safe to Send" ? true : 
                         result === "Unknown"? true : null;
 

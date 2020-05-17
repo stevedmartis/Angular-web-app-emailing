@@ -47,7 +47,7 @@ export class EcommerceProductsComponent implements OnInit, OnDestroy
     
 
     constructor(
-        private _ecommerceProductsService: EcommerceProductsService,
+        public _ecommerceProductsService: EcommerceProductsService,
         private _matSnackBar: MatSnackBar,
         public _matDialog: MatDialog,
         

@@ -181,4 +181,13 @@ mat-cell:last-of-type {
     padding-right: 50px !important;
 }
 
+.size-img {
+
+    width: 50%;
+
+    @include media-breakpoint('xs') {
+        width: 100%;
+    }
+}
+
 

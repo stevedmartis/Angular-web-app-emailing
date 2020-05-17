@@ -98,6 +98,9 @@ emailValid: boolean = false;
 
     addUser(obj) {
 
+            obj.changePassword = true;
+
+            console.log(obj)
 
       return new Promise((resolve, reject) => {
         this._httpClient.post<User>(`${environment.apiUrl}/api/register`, obj)
@@ -146,6 +149,8 @@ if( this.eventObj.users){
 
     users.forEach(userId => {
 
+        console.log(userId)
+
         this.getUser(userId)
 
     });
@@ -172,6 +177,10 @@ getUser(id): Promise<any> {
 
                 let objUser = response.user;
 
+                console.log(objUser)
+
+                if(objUser){
+
                 let obj = {
                     _id: objUser._id,
                     name: objUser.name,
@@ -184,7 +193,12 @@ getUser(id): Promise<any> {
 
                 this.arrayUserData.push(obj)
 
+                
+
                 resolve(obj)
+
+            }
+                
             }, reject);
     });
 }
@@ -204,8 +218,33 @@ deleteUser(user) {
 
                this.saveUserEvent()
 
-    
-           
+}
+
+
+removeUser(user): Promise<any> {
+
+
+
+    return new Promise((resolve, reject) => {
+        this._httpClient
+            .delete(environment.apiUrl + "/api/delete-user/" + user._id)
+            .subscribe((res: any) => {
+               
+                
+    const userIndex = this.arrayUserData.indexOf(user);
+    this.arrayUserData.splice(userIndex, 1);
+
+
+    this.onCoursesChanged.next(this.arrayUserData);
+
+    this.eventObj.users.splice(userIndex, 1)
+
+    this.saveUserEvent()
+
+
+    resolve(res)
+            }, reject);
+    });
 
 
 }
@@ -258,6 +297,8 @@ editUser(user): Promise<any>
                 this.arrayUserData[userIndex].username = user.username;
                 this.arrayUserData[userIndex].rol = user.rol;
 
+                this.arrayUserData[userIndex].updated = response.user.updated;
+
                 this.onCoursesChanged.next(this.arrayUserData);
                 resolve(response);
 
@@ -289,6 +330,7 @@ editUserExist(user): Promise<any>
 
                 
                 console.log(response)
+
                 
             
             }, reject);
@@ -316,12 +358,13 @@ emailValidator(email: string) : Observable<any> {
 }
 
 
-sendMailJet(email, username, _id): Promise<any> {
+
+sendMailJet(email, username, _id, password): Promise<any> {
 
     console.log('ok', email, username, _id)
 
     return new Promise((resolve, reject) => { 
-        this._httpClient.post<any>(`${environment.apiUrl}/api/send-new-user-mail`, { email , username, _id})
+        this._httpClient.post<any>(`${environment.apiUrl}/api/send-new-user-mail`, { email , username, _id, password})
     .subscribe((user: any) => {
 
         console.log(user)
