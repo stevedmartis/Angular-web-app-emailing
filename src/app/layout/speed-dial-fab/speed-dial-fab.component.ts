@@ -101,7 +101,7 @@ export class SpeedDialFabComponent implements OnInit {
                
               })
               .catch(err => {
-                console.log(err)
+    
 
 
                 this.newInvitedObj(data, err.error.valid)
@@ -123,118 +123,44 @@ export class SpeedDialFabComponent implements OnInit {
     
     this.loadingContact = true;
 
-     this.forEachImportDB(data)
+    console.log('dataaaaaa', data)
 
+      
+      data.forEach((obj, i) => {
+
+        console.log('i', i, obj)
+
+        setTimeout(() => {
+          
+    
+          this.newInvitedForDB(obj)
+          .then((res) => {
+
+         
+
+            this._contactsService.contactsCount++
+
+            this.conditionCompleteCharge(data.length)
+          })
+          .catch((err) => {
+
+            this._contactsService.contactsCount++
+
+            this.conditionCompleteCharge(data.length)
+          })
+       
+  
+      }, i * 1000);
+
+      });
+
+
+
+  
   })
 
   }
 
-  forEachImportDB(data){
-
-
- 
-
-    return new Promise((resolve, reject) => {
-    data.forEach(e => {
-
-      
-
-
-        if (e.email) {
-
-          if (this.emailPattern.test(e.email))
-
-          {
-
-         
-                  
-              this.newInvitedForDB(e, true)
-              .then((res) => {
-
-
-                
-
-    
-                this._contactsService.contactsCount++
-
-            
-    
-              this.conditionCompleteCharge(data.length)
-    
-            
-                
-              })
-              
-           
-
-
-               
-        
-
-          }
-
-          else {
-
-
-         
-          
-
-            this.newInvitedForDB(e, false)
-            .then((res) => {
-
-              console.log(e)
-  
-              console.log('notvalid', res)
-  
-              this._contactsService.contactsCount++
-
-            
-
-  
-            this.conditionCompleteCharge(data.length)
-  
-          
-              
-            })
-
-         
-          }
-
-          
-         
-      } else {
-         
-        this.newInvitedForDB(e, false)
-        .then((res) => {
-
-          console.log('null', res)
-
-          this._contactsService.contactsCount++
-
-         
-           this.conditionCompleteCharge(data.length)
-
-      
-          
-        })
-      }
-
-       
-
-
-
-
-
-   
-
-  });
-
-})
-
-
-
-
-  }
 
   conditionCompleteCharge(arrayCount){
     if (this._contactsService.contactsCount === arrayCount) {
@@ -255,11 +181,53 @@ export class SpeedDialFabComponent implements OnInit {
   }
 
 
-  exportToXls(){
+  onFileChange(ev){
+    this._contactsService.onFileChange(ev)
+    .then((data) => {
 
-    this._contactsService.exportAsExcelFile('bd_turevento');
-
+    
+      this.loadingContact = true;
+  
+      console.log('dataaaaaa', data)
+  
+        
+        data.forEach((obj, i) => {
+  
+          console.log('i', i, obj)
+  
+          setTimeout(() => {
+            
+      
+            this.newInvitedForDB(obj)
+            .then((res) => {
+  
+           
+  
+              this._contactsService.contactsCount++
+  
+              this.conditionCompleteCharge(data.length)
+            })
+            .catch((err) => {
+  
+              this._contactsService.contactsCount++
+  
+              this.conditionCompleteCharge(data.length)
+            })
+         
+    
+        }, i * 1000);
+  
+        });
+  
+  
+  
+    
+    })
   }
+
+  
+
+  
 
   newInvitedObj(data, valid){
 
@@ -293,6 +261,8 @@ export class SpeedDialFabComponent implements OnInit {
     this._contactsService.editCountInvited(newTotal)
   
     this.loadingContact = false;
+
+    
   })
   .catch( () => {
     this.loadingContact = false;
@@ -300,10 +270,17 @@ export class SpeedDialFabComponent implements OnInit {
   });
   }
 
-  newInvitedForDB(data, valid): Promise<any>{
+  newInvitedForDB(data) {
+
+
+      
+  
 
     return new Promise((resolve, reject) => {
 
+
+  this._contactsService.validateEmail(data.email)
+  .then((res) => {
 
 
     let obj = {
@@ -311,7 +288,7 @@ export class SpeedDialFabComponent implements OnInit {
       name: data.name,
       title: data.title,
       lastname: data.lastname,
-      emailValid: valid,
+      emailValid: res,
       email: data.email,
       address: data.address,
       jobtitle: data.jobtitle,
@@ -328,20 +305,20 @@ export class SpeedDialFabComponent implements OnInit {
   }
 
 
-
-  this._contactsService.createContactValidatorEmail(obj)
+  this._contactsService.createContact(obj)
   .then((res) => {
-
 
     resolve(res)
   })
+
   .catch(err => reject)
 
+   
+  })
 
-
-  
 
   })
+
 
 }
 

@@ -6,7 +6,7 @@
                 <mat-spinner class="spinner-fab-btn" *ngIf="loadingContact"  diameter="35"></mat-spinner>
         </button>
         <div [@speedDialStagger]="buttons.length" > <!-- and here -->
-          <input hidden id="fileUpload" type="file" #fileInput/>
+          <input hidden id="fileUpload" type="file"  (change)="onFileChange($event)" #fileInput/>
      
                         <button 
                 

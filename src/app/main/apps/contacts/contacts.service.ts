@@ -42,6 +42,7 @@ export class ContactsService {
     selection = new SelectionModel<any>(true, []);
     idEventNow: any;
     eventCreated: boolean = false;
+    nameDataXlxs: any
 
     EXCEL_TYPE =
         "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8";
@@ -143,8 +144,17 @@ export class ContactsService {
                 .subscribe((response: any) => {
 
                     let result = response.result.data.debounce.result;
-                  
-                    let valid = result === "Invalid"? false : true;
+
+                    let valid =
+                    result === "Invalid"
+                        ? false
+                        : result === "Risky"
+                        ? false
+                        : result === "Safe to Send"
+                        ? true
+                        : result === "Unknown"
+                        ? true
+                        : null;
 
                     resolve(valid)
                 }, reject);
@@ -240,11 +250,9 @@ export class ContactsService {
             this._httpClient
                 .post(environment.apiUrl + "/api/invited/add-new-email-validator/", obj)
                 .subscribe((response: any) => {
-                   
+                           
 
-                                    
-
-                   this.contacts.push(response.post);
+                this.contacts.push(response.post);
                    this.onContactsChanged.next(this.contacts);
                     resolve(response)
                   
@@ -484,8 +492,8 @@ export class ContactsService {
     }
 
     public exportAsExcelFile(excelFileName: string): void {
-
         
+    
 
         this.contacts.forEach(c => {
 
@@ -517,7 +525,7 @@ export class ContactsService {
             this.contactsArrayXls
         );
         const workbook: XLSX.WorkBook = {
-            Sheets: { data: worksheet },
+            Sheets: { 'data': worksheet },
             SheetNames: ["data"]
         };
         const excelBuffer: any = XLSX.write(workbook, {
@@ -537,137 +545,150 @@ export class ContactsService {
         );
     }
 
-    xlsxToJson():Promise<any> {
+
+    onFileChange(ev): Promise<any> {
 
         return new Promise((resolve, reject) => {
+
+        
+        let workBook = null;
+        let jsonData = null;
+        const reader = new FileReader();
+        const file = ev.target.files[0];
+
+
+        const xlsx = file
+
+        if(xlsx.name.includes("xls") || xlsx.name.includes("xlsx")){
+
+
+        reader.onload = (event) => {
+          const data = reader.result;
+          workBook = XLSX.read(data, { type: 'binary' });
+          jsonData = workBook.SheetNames.reduce((initial, name) => {
+            const sheet = workBook.Sheets[name];
+            initial[name] = XLSX.utils.sheet_to_json(sheet);
+
+            this.nameDataXlxs = name;
+
+            
+            return initial;
+          }, {});
+          const dataString = jsonData;
+
+          console.log(dataString)
+          console.log(dataString.data)
+
+          let contactsArray = [];
+
+          let nameData = dataString.data? dataString.data : dataString.Hoja1? dataString.Hoja1 : '';
+                        
+          nameData.forEach(e => {
+
+          
+
+                let obj = {
+                    codeEvento: this.idEventNow,
+                    name:
+                        e.name ||
+                        e.NOMBRES ||
+                        e.NOMBRE ||
+                        e.nameEmployee ||
+                        e.nombres ||
+                        e.nombre,
+                    title: e.title || e.TITLE || e.titulo || e.TITULO,
+                    lastname:
+                        e.lastname ||
+                        e.APELLIDO_1 ||
+                        e.apellidos ||
+                        e.APELLIDOS,
+                    email: e.email || e.email_1 || e.EMAIL_1 || e.EMAIL,
+                    asiste: e.ASISTE,
+                    status: null,
+                    contactado: e.CONTACTADO,
+                    jobtitle: e.jobtitle || e.CARGO || e.cargo,
+                    company: e.company || e.EMPRESA || e.empresa,
+                    phone:
+                        e.number ||
+                        e.FONO ||
+                        e.FONO_1 ||
+                        e.TELEFONO ||
+                        e.TELEFONO_1 ||
+                        e.fono ||
+                        e.fono_1 ||
+                        e.telefono ||
+                        e.telefono_1,
+                    phoneMobil:
+                        e.CELULAR ||
+                        e.FONO_2 ||
+                        e.CELULAR_1 ||
+                        e.TELEFONO_2 ||
+                        e.celular ||
+                        e.celular_2 ||
+                        e.telefono_2 ||
+                        e.TELEFONO_2 ||
+                        e.FONO_2,
+                    asistio: false,
+                    update: e.MODIFICADO_FECHA,
+                    address: e.DIRECCION,
+                    street: e.COMUNA,
+                    city: e.CIUDAD,
+                    country: e.PAIS,
+                    notes: e.OBSERVACIONES
+                };
+
+                contactsArray.push(obj);
+
+
+ 
+
+
+            
+        });
+
+        console.log(contactsArray)
+
+        resolve(contactsArray);
+
+          
+        
+       
+        }
+
+    }
+    else {
+        this._matSnackBar.open('Archivo invalido', 'OK', {
+            verticalPosition: 'top',
+            duration        : 2000
+        });
+
+
+    }
+        reader.readAsBinaryString(file);
+      })
+
+    }
+
+
+    xlsxToJson() {
+
+     
 
         const fileUpload = document.getElementById(
             "fileUpload"
         ) as HTMLInputElement;
 
         fileUpload.onchange = () => {
-            const xlsx = fileUpload.files[0];
 
-
-            let workBook = null;
-            let jsonData = null;
-            const reader = new FileReader();
-            const file = xlsx;
-
+          
+            fileUpload.value = '';
         
-
-
-            if(xlsx.name.includes("xls") || xlsx.name.includes("xlsx")){
-            reader.onload = event => {
-                this.loadingContact = true;
-
-
-                const data = reader.result;
-                workBook = XLSX.read(data, { type: "binary" });
-
-               
-                jsonData = workBook.SheetNames.reduce((initial, name) => {
-                    const sheet = workBook.Sheets[name];
-                    initial[name] = XLSX.utils.sheet_to_json(sheet);
-
-                    let array = initial[name];
-
-                    let contactsArray = [];
-
-                
-                    array.forEach(e => {
-
-                        if(e.email || e.name){
-
-                            let obj = {
-                                codeEvento: this.idEventNow,
-                                name:
-                                    e.name ||
-                                    e.NOMBRES ||
-                                    e.NOMBRE ||
-                                    e.nameEmployee ||
-                                    e.nombres ||
-                                    e.nombre,
-                                title: e.title || e.TITLE || e.titulo || e.TITULO,
-                                lastname:
-                                    e.lastname ||
-                                    e.APELLIDO_1 ||
-                                    e.apellidos ||
-                                    e.APELLIDOS,
-                                email: e.email || e.email_1 || e.EMAIL_1 || e.EMAIL,
-                                asiste: e.ASISTE,
-                                status: null,
-                                contactado: e.CONTACTADO,
-                                jobtitle: e.jobtitle || e.CARGO || e.cargo,
-                                company: e.company || e.EMPRESA || e.empresa,
-                                phone:
-                                    e.number ||
-                                    e.FONO ||
-                                    e.FONO_1 ||
-                                    e.TELEFONO ||
-                                    e.TELEFONO_1 ||
-                                    e.fono ||
-                                    e.fono_1 ||
-                                    e.telefono ||
-                                    e.telefono_1,
-                                phoneMobil:
-                                    e.CELULAR ||
-                                    e.FONO_2 ||
-                                    e.CELULAR_1 ||
-                                    e.TELEFONO_2 ||
-                                    e.celular ||
-                                    e.celular_2 ||
-                                    e.telefono_2 ||
-                                    e.TELEFONO_2 ||
-                                    e.FONO_2,
-                                asistio: false,
-                                update: e.MODIFICADO_FECHA,
-                                address: e.DIRECCION,
-                                street: e.COMUNA,
-                                city: e.CIUDAD,
-                                country: e.PAIS,
-                                notes: e.OBSERVACIONES
-                            };
-    
-                            contactsArray.push(obj);
-    
-
-                        }
-                        else {
-                            return;
-                        }
-
-
-                        
-                    });
-
-                    console.log(contactsArray)
-
-                    resolve(contactsArray);
-
-
-                
-                }, {});
-                
-            };
-
-
-            reader.readAsBinaryString(file);
-        }
-        else {
-            this._matSnackBar.open('Archivo invalido', 'OK', {
-                verticalPosition: 'top',
-                duration        : 2000
-            });
-
-
-        }
         
         };
 
         fileUpload.click();
 
-    });
+   
         
     }
 

@@ -204,9 +204,18 @@ contacts-contact-list {
 }
 
 .empty-inv {
+    width: 40%;
 
     max-width: 100%;
     width: 30%;
+
+    @include media-breakpoint('xs') {
+
+        width: 100%;
+       
+    }
+
+   
 }
 
 .empty-card-inv {
@@ -369,4 +378,10 @@ contacts-contact-list {
     font-size: 24px;
     margin: 24px 0;
     text-align: center;
+}
+
+.mat-header-row{
+
+    background-color: white !important;
+
 }
