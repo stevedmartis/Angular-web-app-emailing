@@ -605,7 +605,7 @@ export class ContactsService {
                     email: e.email || e.email_1 || e.EMAIL_1 || e.EMAIL,
                     asiste: e.ASISTE || e.asiste,
                     status: null,
-                    contactado: e.CONTACTADO,
+                    contactado: e.CONTACTADO || e.contactado,
                     jobtitle: e.jobtitle || e.CARGO || e.cargo,
                     company: e.company || e.EMPRESA || e.empresa,
                     phone:
