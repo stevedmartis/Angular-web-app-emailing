@@ -268,7 +268,7 @@ export class ContactsService {
 
                 .subscribe((response: any) => {
                  
-                    console.log(response);
+                 
 
                 
 
@@ -602,7 +602,7 @@ export class ContactsService {
                         e.APELLIDO_1 ||
                         e.apellidos ||
                         e.APELLIDOS,
-                    email: e.email || e.email_1 || e.EMAIL_1 || e.EMAIL,
+                    email: e.email || e.email_1 || e.EMAIL_1 || e.EMAIL || e.CORREO || e.correo,
                     asiste: e.ASISTE || e.asiste,
                     status: null,
                     contactado: e.CONTACTADO || e.contactado,
@@ -670,9 +670,9 @@ export class ContactsService {
     }
 
 
-    xlsxToJson() {
+    xlsxToJson(): Promise<any> {
 
-     
+        return new Promise((resolve, reject) => {
 
         const fileUpload = document.getElementById(
             "fileUpload"
@@ -688,7 +688,7 @@ export class ContactsService {
 
         fileUpload.click();
 
-   
+    })
         
     }
 

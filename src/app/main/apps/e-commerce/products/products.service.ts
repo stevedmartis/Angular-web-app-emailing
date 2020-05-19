@@ -77,7 +77,7 @@ export class EcommerceProductsService implements Resolve<any>
             this._httpClient.get(environment.apiUrl + '/api/events/user/' + this.authServices.currentUserValue.user._id )
                 .subscribe((response: any) => {
                     
-                    console.log(response)
+                
                     let eventArray: any = []
                     let count = 0;
 
@@ -117,7 +117,7 @@ export class EcommerceProductsService implements Resolve<any>
             this._httpClient.get(environment.apiUrl + '/api/all-events')
                 .subscribe((response: any) => {
                     
-                    console.log(response)
+                    
                     let eventArray: any = []
                     let count = 0;
 
@@ -158,7 +158,7 @@ export class EcommerceProductsService implements Resolve<any>
 
                     this.onProductsChanged.next(this.products);
 
-                    console.log(response)
+               
                 }, reject);
         });
     }

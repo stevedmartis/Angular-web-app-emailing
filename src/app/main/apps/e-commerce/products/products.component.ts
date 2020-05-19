@@ -70,7 +70,6 @@ export class EcommerceProductsComponent implements OnInit, OnDestroy
         
         this.dataSource = new FilesDataSource(this._ecommerceProductsService, this.paginator, this.sort);
 
-        console.log('asd', this.dataSource)
         if(this._ecommerceProductsService.products.length > 0) {
 
 

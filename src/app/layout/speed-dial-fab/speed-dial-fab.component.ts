@@ -29,7 +29,7 @@ export class SpeedDialFabComponent implements OnInit {
     },
     {
       icon: 'import_contacts',
-      click: 'exportContacts'
+      click: 'importContacts'
     },
     {
       icon: 'person_add',
@@ -112,52 +112,13 @@ export class SpeedDialFabComponent implements OnInit {
           });
   }
 
-  exportContacts(){
+  importContacts(){
     //this._contactsService.excelToJson()
    
   this.onToggleFab()
   
   this._contactsService.xlsxToJson()
-  .then((data) => {
-
-    
-    this.loadingContact = true;
-
-    console.log('dataaaaaa', data)
-
-      
-      data.forEach((obj, i) => {
-
-        console.log('i', i, obj)
-
-        setTimeout(() => {
-          
-    
-          this.newInvitedForDB(obj)
-          .then((res) => {
-
-         
-
-            this._contactsService.contactsCount++
-
-            this.conditionCompleteCharge(data.length)
-          })
-          .catch((err) => {
-
-            this._contactsService.contactsCount++
-
-            this.conditionCompleteCharge(data.length)
-          })
-       
-  
-      }, i * 1000);
-
-      });
-
-
-
-  
-  })
+ 
 
   }
 
@@ -180,6 +141,12 @@ export class SpeedDialFabComponent implements OnInit {
   }
   }
 
+
+  exportToXls(){
+
+    this._contactsService.exportAsExcelFile('bd_turevento');
+
+  }
 
   onFileChange(ev){
     this._contactsService.onFileChange(ev)
@@ -225,6 +192,7 @@ export class SpeedDialFabComponent implements OnInit {
     })
   }
 
+  
   
 
   
@@ -278,6 +246,9 @@ export class SpeedDialFabComponent implements OnInit {
 
     return new Promise((resolve, reject) => {
 
+      if(data.email){
+
+
 
   this._contactsService.validateEmail(data.email)
   .then((res) => {
@@ -316,7 +287,42 @@ export class SpeedDialFabComponent implements OnInit {
    
   })
 
+}
 
+else {
+
+  let obj = {
+    codeEvento: this._contactsService.idEventNow,
+    name: data.name,
+    title: data.title,
+    lastname: data.lastname,
+    emailValid: false,
+    email: data.email,
+    address: data.address,
+    jobtitle: data.jobtitle,
+    company: data.company,
+    phone: data.phone,
+    asiste: 'null',
+    contactado: data.contactado,
+    street: data.street,
+    city: data.city,
+    country: data.country,
+    phoneMobil: data.phoneMobil,
+    notes: data.notes
+
+}
+
+
+  this._contactsService.createContact(obj)
+  .then((res) => {
+
+    resolve(res)
+  })
+
+  .catch(err => reject)
+
+
+}
   })
 
 
@@ -330,8 +336,8 @@ export class SpeedDialFabComponent implements OnInit {
       case 'newContact':
       this.newContact();
      break;
-      case 'exportContacts':
-      this.exportContacts()
+      case 'importContacts':
+      this.importContacts()
      break;
      case 'exportToXls':
      this.exportToXls()
