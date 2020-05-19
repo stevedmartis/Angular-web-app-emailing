@@ -603,7 +603,7 @@ export class ContactsService {
                         e.apellidos ||
                         e.APELLIDOS,
                     email: e.email || e.email_1 || e.EMAIL_1 || e.EMAIL,
-                    asiste: e.ASISTE,
+                    asiste: e.ASISTE || e.asiste,
                     status: null,
                     contactado: e.CONTACTADO,
                     jobtitle: e.jobtitle || e.CARGO || e.cargo,
