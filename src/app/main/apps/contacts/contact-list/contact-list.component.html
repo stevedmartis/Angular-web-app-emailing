@@ -76,7 +76,7 @@
     <ng-container matColumnDef="checkbox">
         <mat-header-cell *matHeaderCellDef>  <!-- <mat-spinner *ngIf="_contactsService.loadingContact"  diameter="35"></mat-spinner>  --> </mat-header-cell>
         <mat-cell *matCellDef="let contact">
-            <mat-checkbox [(ngModel)]="checkboxes[contact.id]" (ngModelChange)="onSelectedChange(contact._id)"
+            <mat-checkbox [(ngModel)]="checkboxes[contact.id]" (ngModelChange)="onSelectedChange(contact.id)"
                           (click)="$event.stopPropagation()">
             </mat-checkbox>
         </mat-cell>
