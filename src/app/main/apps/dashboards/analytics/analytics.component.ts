@@ -57,22 +57,7 @@ export class AnalyticsDashboardComponent implements OnInit, OnDestroy
      */
     ngOnInit(): void
     {
-        this._fuseConfigService.config = {
-            layout: {
-                navbar   : {
-                    hidden: true
-                },
-                toolbar  : {
-                    hidden: true
-                },
-                footer   : {
-                    hidden: true
-                },
-                sidepanel: {
-                    hidden: true
-                }
-            }
-        };
+
 
         
     }
