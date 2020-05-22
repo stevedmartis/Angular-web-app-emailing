@@ -98,9 +98,6 @@ export class AnalyticsDashboardService implements Resolve<any> {
 
     getWidgetsAnalyticEvents(arrayEvent){
 
- 
-
-
             if (arrayEvent.length === 0) {
                 this.loadingEvents = false;
             }
