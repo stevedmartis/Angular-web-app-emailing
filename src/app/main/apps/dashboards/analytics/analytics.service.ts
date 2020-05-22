@@ -121,11 +121,11 @@ export class AnalyticsDashboardService implements Resolve<any> {
 
                     let noAsiste: any[];
 
-                    noAsiste = allOk.filter(x => x.asiste === "no");
+                    noAsiste = data.filter(x => x.asiste === "no");
 
                     let pauseAsiste: any[];
 
-                    pauseAsiste = allOk.filter(x => x.asiste === "0");
+                    pauseAsiste = data.filter(x => x.asiste === "0");
 
                     let onClick : any[];
 
