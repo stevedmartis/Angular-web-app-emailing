@@ -7,6 +7,7 @@ import { EcommerceProductsService } from '../../e-commerce/products/products.ser
 import { DatePipe } from '@angular/common';
 import { Location } from '@angular/common';
 import { FuseConfigService } from '@fuse/services/config.service';
+import { AuthService } from 'app/services/authentication/auth.service';
 
 @Component({
     selector     : 'analytics-dashboard',
@@ -38,7 +39,8 @@ export class AnalyticsDashboardComponent implements OnInit, OnDestroy
         public _analyticsDashboardService: AnalyticsDashboardService,
         public datepipe: DatePipe,
         private _location: Location,
-        private _fuseConfigService: FuseConfigService
+        private _fuseConfigService: FuseConfigService,
+        public _authService: AuthService
         
     )
     {
@@ -61,6 +63,21 @@ export class AnalyticsDashboardComponent implements OnInit, OnDestroy
 
         
     }
+
+    exportToXls(eventId){
+
+        this._analyticsDashboardService.getContacts(eventId)
+        .then((data) => {
+
+            this._analyticsDashboardService.exportAsExcelFile('bd_turevento', data);
+
+
+        })
+
+    
+      }
+
+    
 
     // -----------------------------------------------------------------------------------------------------
     // @ Private methods

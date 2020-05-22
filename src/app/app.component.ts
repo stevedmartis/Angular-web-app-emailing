@@ -11,10 +11,11 @@ import { FuseSidebarService } from '@fuse/components/sidebar/sidebar.service';
 import { FuseSplashScreenService } from '@fuse/services/splash-screen.service';
 import { FuseTranslationLoaderService } from '@fuse/services/translation-loader.service';
 
-import { navigation } from 'app/navigation/navigation';
+import { navigation, navigationClient } from 'app/navigation/navigation';
 import { locale as navigationEnglish } from 'app/navigation/i18n/en';
 import { locale as navigationTurkish } from 'app/navigation/i18n/tr';
 import { WebsocketService } from './services/websocket.service';
+import { AuthService } from './services/authentication/auth.service';
 
 @Component({
     selector   : 'app',
@@ -25,6 +26,7 @@ export class AppComponent implements OnInit, OnDestroy
 {
     fuseConfig: any;
     navigation: any;
+    navigationClient: any
 
     // Private
     private _unsubscribeAll: Subject<any>;
@@ -50,28 +52,31 @@ export class AppComponent implements OnInit, OnDestroy
         private _fuseTranslationLoaderService: FuseTranslationLoaderService,
         private _translateService: TranslateService,
         private _platform: Platform,
+        private _authServices: AuthService
     )
     {
-        // Get default navigation
-        this.navigation = navigation;
 
-        // Register the navigation to the service
-        this._fuseNavigationService.register('main', this.navigation);
+        const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+ 
 
-        // Set the main navigation as our current navigation
-        this._fuseNavigationService.setCurrentNavigation('main');
 
-        // Add languages
-        this._translateService.addLangs(['en', 'tr']);
+        this._authServices.defineRolUser(currentUser.user.rol)
 
-        // Set the default language
-        this._translateService.setDefaultLang('en');
 
-        // Set the navigation translations
-        this._fuseTranslationLoaderService.loadTranslations(navigationEnglish, navigationTurkish);
+      
+        if(this._authServices.isClient){
 
-        // Use a language
-        this._translateService.use('en');
+        
+
+            this.navigationConfig(navigationClient)
+        }
+
+        else {
+
+            this.navigationConfig(navigation)
+
+        }
+
 
         /**
          * ----------------------------------------------------------------------------------------------------
@@ -123,6 +128,33 @@ export class AppComponent implements OnInit, OnDestroy
     /**
      * On init
      */
+
+
+    navigationConfig(navigationType){
+
+                // Get default navigation
+                this.navigation = navigationType;
+
+
+                // Register the navigation to the service
+                this._fuseNavigationService.register('main', this.navigation);
+        
+                // Set the main navigation as our current navigation
+                this._fuseNavigationService.setCurrentNavigation('main');
+        
+                // Add languages
+                this._translateService.addLangs(['en', 'tr']);
+        
+                // Set the default language
+                this._translateService.setDefaultLang('en');
+        
+                // Set the navigation translations
+                this._fuseTranslationLoaderService.loadTranslations(navigationEnglish, navigationTurkish);
+        
+                // Use a language
+                this._translateService.use('en');
+        
+    }
     ngOnInit(): void
     {
 

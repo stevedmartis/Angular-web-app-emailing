@@ -22,13 +22,22 @@
 
        </div>
 
-       <button
+       <button *ngIf="!_authService.isClient"
        mat-button
        class="mr-8"
        [routerLink]="'/apps/e-commerce/products/'+e.id+'/'+e.handle"
 
        matTooltip="Ir a evento">
       Ir al evento 
+</button>
+
+<button *ngIf="_authService.isClient"
+mat-button
+class="mr-8"
+(click)="exportToXls(e.id)"
+matTooltip="Ir a evento">
+Descargar invitados
+<mat-icon>arrow_downward</mat-icon>
 </button>
    </div>
 

@@ -14,6 +14,11 @@ import { environment } from "environments/environment";
 import { AuthService } from "app/services/authentication/auth.service";
 import { DatePipe } from "@angular/common";
 
+import { ContactForXls } from "app/main/apps/contacts/contact.model";
+import * as XLSX from "xlsx";
+import * as FileSaver from "file-saver";
+
+
 @Injectable()
 export class AnalyticsDashboardService implements Resolve<any> {
     widgets: any[];
@@ -35,6 +40,11 @@ export class AnalyticsDashboardService implements Resolve<any> {
     percentSent: any;
     percentOpen: any;
     percentClicked: any;
+    contactsArrayXls: ContactForXls[] = [];
+
+    EXCEL_TYPE =
+        "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8";
+    EXCEL_EXTENSION = ".xlsx";
 
     /**
      * Constructor
@@ -496,6 +506,60 @@ export class AnalyticsDashboardService implements Resolve<any> {
      
             });
         });
+    }
+
+    public exportAsExcelFile(excelFileName: string, array): void {
+        
+    
+
+        array.forEach(c => {
+
+            console.log('data: ', c);
+
+            let obj = {
+                EMPRESA: c.company,
+                NOMBRE: c.name,
+                APELLIDOS: c.lastname,
+                CARGO: c.jobtitle,
+                EMAIL: c.email,
+                TELEONO: c.phone,
+                TELEFONO_2: c.phoneMobil,
+                ASISTE: c.asiste,
+                CONTACTADO: c.contactado,
+                CLICK: c.onClick ? 'SI' : 'NO',
+                DIRECCION: c.address,
+                COMUNA: c.street,
+                CIUDAD: c.city,
+                PAIS: c.country,
+                OBSERVACION: c.notes,
+                ESTADO: c.Status,
+                FECHA_ESTADO: c.StatusDateTime
+            };
+
+            this.contactsArrayXls.push(obj);
+        });
+        const worksheet: XLSX.WorkSheet = XLSX.utils.json_to_sheet(
+            this.contactsArrayXls
+        );
+        const workbook: XLSX.WorkBook = {
+            Sheets: { 'data': worksheet },
+            SheetNames: ["data"]
+        };
+        const excelBuffer: any = XLSX.write(workbook, {
+            bookType: "xlsx",
+            type: "array"
+        });
+        this.saveAsExcelFile(excelBuffer, excelFileName);
+    }
+
+    private saveAsExcelFile(buffer: any, fileName: string): void {
+        const data: Blob = new Blob([buffer], {
+            type: this.EXCEL_TYPE
+        });
+        FileSaver.saveAs(
+            data,
+            fileName + "_export_" + new Date().getTime() + this.EXCEL_EXTENSION
+        );
     }
 
 

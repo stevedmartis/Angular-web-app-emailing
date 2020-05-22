@@ -3,6 +3,7 @@ import { merge, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
 import { FuseNavigationService } from '@fuse/components/navigation/navigation.service';
+import { AuthService } from 'app/services/authentication/auth.service';
 
 @Component({
     selector       : 'fuse-navigation',
@@ -19,6 +20,9 @@ export class FuseNavigationComponent implements OnInit
     @Input()
     navigation: any;
 
+    @Input()
+    navigationClient: any
+
     // Private
     private _unsubscribeAll: Subject<any>;
 
@@ -29,7 +33,8 @@ export class FuseNavigationComponent implements OnInit
      */
     constructor(
         private _changeDetectorRef: ChangeDetectorRef,
-        private _fuseNavigationService: FuseNavigationService
+        private _fuseNavigationService: FuseNavigationService,
+        public _authServices: AuthService
     )
     {
         // Set the private defaults
@@ -47,6 +52,11 @@ export class FuseNavigationComponent implements OnInit
     {
         // Load the navigation either from the input or from the service
         this.navigation = this.navigation || this._fuseNavigationService.getCurrentNavigation();
+
+        this.navigationClient = this.navigationClient || this._fuseNavigationService.getCurrentNavigation();
+
+
+        
 
         // Subscribe to the current navigation changes
         this._fuseNavigationService.onNavigationChanged
