@@ -13,22 +13,20 @@ export class AuthGuardService {
 
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
       const currentUser = JSON.parse(localStorage.getItem('currentUser'));
-      console.log('can acivate ')
-
       if (currentUser) {
 
           this.authenticationService.loginGuard(currentUser);
           this.authenticationService.isLogged = true;
 
-          console.log(currentUser)
+      
+          
+          this.authenticationService.defineRolUser(currentUser.user.rol)
     
 
           return true;
       }
 
       this.router.navigate(['/pages/auth/login'], { queryParams: { returnUrl: state.url } });
-
-      console.log(state.url);
 
       this.authenticationService.invitedPassStateUrl = state.url;
       this.authenticationService.isLogged = false;

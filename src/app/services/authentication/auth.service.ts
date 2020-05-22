@@ -32,6 +32,10 @@ export class AuthService {
 
   apiMailJet: boolean = false;
 
+  isClient: boolean = false;
+isStaff:  boolean = false;
+isCreator:  boolean = false;
+
   public get currentUserValue(): User {
     return this.currentUserSubject.value;
 }
@@ -39,6 +43,19 @@ export class AuthService {
     return this.currentPersonSubject.value;
 }
 
+defineRolUser(rol)
+{
+  
+  this.isClient = rol === 'Cliente'? true : false;
+
+  this.isStaff = rol === 'Staff'? true: false;
+
+  this.isCreator = rol === 'Creador'? true: false;
+
+
+ console.log(this.isClient,  this.isStaff , this.isCreator )
+
+}
 
   login(email, password) {
 
@@ -88,9 +105,9 @@ export class AuthService {
   }
 
 
-  register(email, username, password) {
+  register(email, username, password, rol) {
 
-    return this.http.post<User>(`${environment.apiUrl}/api/register`, { email, username, password, changePassword: false })
+    return this.http.post<User>(`${environment.apiUrl}/api/register`, { email, username, password, changePassword: false, rol: rol })
     .pipe(map(person => {
 
         // store user details and jwt token in local storage to keep user logged in between page refreshes

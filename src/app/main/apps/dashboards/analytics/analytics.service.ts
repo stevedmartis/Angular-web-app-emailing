@@ -1,4 +1,5 @@
-import { Injectable } from "@angular/core";
+
+    import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import {
     ActivatedRouteSnapshot,
@@ -61,25 +62,50 @@ export class AnalyticsDashboardService implements Resolve<any> {
         return new Promise((resolve, reject) => {
             Promise.all([
 
-                this.getWidgets(),
-                this.getEventForChart()]).then(() => {
+                this.callApiEventByRol()]).then(() => {
                 resolve();
             }, reject);
         });
     }
 
-    getEventForChart() {
-        this.loadingEvents = true;
 
-        this.getEventsByUser().then((data: any) => {
-            this.events = data.events;
+    callApiEventByRol(){
+
+                this.getEventClientUser().then((data: any) => {
+                    console.log('evtns user client', data.events)
+        
+                    this.events = data.events
+
+                    this.getEventsByUser().then((data: any) => {
+
+                        console.log('evtns user staff or creator', data.events)
+
+                        data.events.forEach(obj => {
+                            
+                            this.events.push(obj)
+                        });
+    
+                        this.getWidgetsAnalyticEvents(this.events)
+    
+                })
+
+            })
+
+    }
 
 
-            if (this.events.length === 0) {
+
+
+    getWidgetsAnalyticEvents(arrayEvent){
+
+ 
+
+
+            if (arrayEvent.length === 0) {
                 this.loadingEvents = false;
             }
 
-            this.events.forEach(obj => {
+            arrayEvent.forEach(obj => {
                 this.getContacts(obj._id)
                 .then(data => {
 
@@ -94,7 +120,7 @@ export class AnalyticsDashboardService implements Resolve<any> {
 
                     let siAsiste: any[]
 
-                    siAsiste = allOk.filter(x => x.asiste === "si");
+                    siAsiste = data.filter(x => x.asiste === "si");
 
                     let noAsiste: any[];
 
@@ -172,7 +198,6 @@ export class AnalyticsDashboardService implements Resolve<any> {
                         "dd/MM"
                     )
 
-                    
                      let dataStatusSent = this.dataStatus(statusSent, toDayShort);
 
                      let dataStatusOpen = this.dataStatus(statusOpen, toDayShort);
@@ -206,8 +231,6 @@ export class AnalyticsDashboardService implements Resolve<any> {
                     const arrayCounts = arrayInvitedForDate.map(
                         obj => obj.count
                     );
-
-
 
 
                     const eventObj = {
@@ -247,9 +270,6 @@ export class AnalyticsDashboardService implements Resolve<any> {
                                         fill : 'start'
                 
                                     },
-
-
-                                    
                                     {
                                         label: 'Sin respuesta',
                                         data : dataStatusSent,
@@ -463,6 +483,8 @@ export class AnalyticsDashboardService implements Resolve<any> {
 
                     this.eventsArray.push(eventObj);
 
+                    console.log( this.eventsArray)
+
                
                         this.loadingEvents = false;
                         
@@ -471,11 +493,26 @@ export class AnalyticsDashboardService implements Resolve<any> {
 
      
                 
-                   
-
-                   
-                });
+     
             });
+        });
+    }
+
+
+
+
+
+    getEventClientUser(): Promise<any> {
+        return new Promise((resolve, reject) => {
+            this._httpClient
+                .get(
+                    environment.apiUrl +
+                        "/api/events/user-client/" +
+                        this.authServices.currentUserValue.user._id
+                )
+                .subscribe((response: any) => {
+                    resolve(response);
+                }, reject);
         });
     }
 

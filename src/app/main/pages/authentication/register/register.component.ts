@@ -94,8 +94,9 @@ export class RegisterComponent implements OnInit, OnDestroy
         const email = this.registerForm.get('email')
         const username = this.registerForm.get('username')
         const password = this.registerForm.get('password')
+        const rol = 'Cliente'
 
-        this.authServices.register(email.value, username.value, password.value)
+        this.authServices.register(email.value, username.value, password.value, rol )
         .subscribe(user => {
             console.log('user register and person create:', user)
 

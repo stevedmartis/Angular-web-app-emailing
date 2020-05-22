@@ -127,7 +127,7 @@ export class NavbarVerticalStyle1Component implements OnInit, OnDestroy
         
             const currentUser = JSON.parse(localStorage.getItem('currentUser'));
 
-            console.log(currentUser)
+    
             if(currentUser){
 
                 this.username = currentUser.user.username;

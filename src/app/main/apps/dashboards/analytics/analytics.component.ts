@@ -6,6 +6,7 @@ import { AnalyticsDashboardService } from 'app/main/apps/dashboards/analytics/an
 import { EcommerceProductsService } from '../../e-commerce/products/products.service';
 import { DatePipe } from '@angular/common';
 import { Location } from '@angular/common';
+import { FuseConfigService } from '@fuse/services/config.service';
 
 @Component({
     selector     : 'analytics-dashboard',
@@ -36,12 +37,15 @@ export class AnalyticsDashboardComponent implements OnInit, OnDestroy
     constructor(
         public _analyticsDashboardService: AnalyticsDashboardService,
         public datepipe: DatePipe,
-        private _location: Location
+        private _location: Location,
+        private _fuseConfigService: FuseConfigService
         
     )
     {
         // Register the custom chart.js plugin
         this._registerCustomChartJSPlugin();
+
+        
     }
 
     // -----------------------------------------------------------------------------------------------------
@@ -53,13 +57,22 @@ export class AnalyticsDashboardComponent implements OnInit, OnDestroy
      */
     ngOnInit(): void
     {
-        // Get the widgets from the service
-        this.widgets = this._analyticsDashboardService.widgets;
-
-
-        console.log(this.widgets)
-
-
+        this._fuseConfigService.config = {
+            layout: {
+                navbar   : {
+                    hidden: true
+                },
+                toolbar  : {
+                    hidden: true
+                },
+                footer   : {
+                    hidden: true
+                },
+                sidepanel: {
+                    hidden: true
+                }
+            }
+        };
 
         
     }

@@ -80,12 +80,14 @@ export class LoginComponent implements OnInit {
             .pipe(first())
             .subscribe(
                 user => {
-                    console.log(user);
+                  
 
                     const urlStatePass = this.authServices.invitedPassStateUrl;
-                   
 
-                    console.log(urlStatePass)
+
+                    this.authServices.defineRolUser(user.user.rol)
+
+
 
                     if(!urlStatePass){
 
