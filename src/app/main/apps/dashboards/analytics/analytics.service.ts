@@ -71,6 +71,9 @@ export class AnalyticsDashboardService implements Resolve<any> {
 
     callApiEventByRol(){
 
+
+        this.loadingEvents = true;
+
                 this.getEventClientUser().then((data: any) => {
                     console.log('evtns user client', data.events)
         
