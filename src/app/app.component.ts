@@ -58,9 +58,11 @@ export class AppComponent implements OnInit, OnDestroy
 
         const currentUser = JSON.parse(localStorage.getItem('currentUser'));
  
+if(currentUser){
+    this._authServices.defineRolUser(currentUser.user.rol)
+}
 
-
-        this._authServices.defineRolUser(currentUser.user.rol)
+        
 
 
       
