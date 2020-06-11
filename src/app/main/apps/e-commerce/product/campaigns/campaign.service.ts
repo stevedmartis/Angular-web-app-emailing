@@ -567,12 +567,14 @@ export class CampaignService {
             _id: invitation._id,
             affair: invitation.affair,
             eventName: this.eventObj.handle,
-            nameSender: invitation.eventName,
+            nameSender: invitation.nameSender,
             sender: invitation.sender,
             imgBlob: imagen,
             _idInvited: person._id,
             emailInvited: person.email,
-            nameInvited: person.name + " " + person.lastname
+            nameInvited: person.name + " " + person.lastname,
+            webLink: invitation.webLink,
+            webLinkCharge: invitation.webLinkCharge
         };
 
         return new Promise((resolve, reject) => {
