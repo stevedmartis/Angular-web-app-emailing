@@ -54,6 +54,8 @@ export class ChatService implements Resolve<any>
                 ([contacts, chats, user]) => {
                     this.contacts = contacts;
                     this.chats = chats;
+
+                    console.log()
                     this.user = user;
                     resolve();
                 },
@@ -213,6 +215,26 @@ export class ChatService implements Resolve<any>
         });
     }
 
+
+    getAllData(){
+        return new Promise((resolve, reject) => {
+            Promise.all([
+                this.getContacts(),
+                this.getChats(),
+                this.getUser()
+            ]).then(
+                ([contacts, chats, user]) => {
+                    this.contacts = contacts;
+                    this.chats = chats;
+
+                    console.log()
+                    this.user = user;
+                    resolve();
+                },
+                reject
+            );
+        });
+    }
     /**
      * Get contacts
      *
@@ -224,6 +246,8 @@ export class ChatService implements Resolve<any>
             this._httpClient.get('api/chat-contacts')
                 .subscribe((response: any) => {
                     resolve(response);
+
+                    console.log(response)
                 }, reject);
         });
     }

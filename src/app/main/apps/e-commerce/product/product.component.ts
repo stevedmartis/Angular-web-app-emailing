@@ -20,6 +20,7 @@ import { ContactsService } from 'app/main/apps/contacts/contacts.service';
 
 import { CampaignService } from './campaigns/campaign.service';
 import { AcademyCoursesService } from '../../academy/courses.service';
+import { FormCustomComponent } from './form-custom/form-custom.component';
 
 
 export class FileUploadModel {
@@ -59,7 +60,6 @@ export class EcommerceProductComponent implements OnInit, OnDestroy
     uploadFile: boolean = false;
      
 
-    //@ViewChild(InvitationFormComponent, {static: false}) invitationComponent: InvitationFormComponent
 
     // Private 
     private _unsubscribeAll: Subject<any>;
@@ -73,7 +73,7 @@ export class EcommerceProductComponent implements OnInit, OnDestroy
      * @param {MatSnackBar} _matSnackBar
      */
     constructor(
-        private _ecommerceProductService: EcommerceProductService,
+        public _ecommerceProductService: EcommerceProductService,
         public _contactsService: ContactsService,
        
         private _formBuilder: FormBuilder,
@@ -333,6 +333,10 @@ export class EcommerceProductComponent implements OnInit, OnDestroy
 
                 }
 
+                else {
+
+           
+
                 this._ecommerceProductService.addTagsInProduct(data.tags)
                 .then( () => {
 
@@ -356,7 +360,11 @@ export class EcommerceProductComponent implements OnInit, OnDestroy
                     // Change the location with new one
                     this._location.go('apps/e-commerce/products/' + x.event._id + '/' + x.event.handle);
 
+                    
+
                 })
+
+            }
 
 
  

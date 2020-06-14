@@ -165,6 +165,19 @@
                     </form>
 
                     </mat-tab>
+
+                    
+                <mat-tab label="Formulario" [disabled]='!isCreated'>
+
+
+                    <div  fxLayout="column" fxLayoutAlign="start" fxFlex="1 0 auto">
+
+                                  <form-custom></form-custom>
+                                    
+
+                    </div>
+            </mat-tab>
+
                     <mat-tab label="Invitados" [disabled]='!isCreated'>
 
                         <div  fxLayout="column" fxLayoutAlign="start" fxFlex="1 0 auto">
@@ -202,6 +215,7 @@
 
                         </div>
                 </mat-tab>
+
                   </mat-tab-group>
 
 
@@ -224,7 +238,7 @@
 
         
                   
-                  <button *ngIf="(isCreated && productForm.pristine) && (!removeTag && !uploadFile )" [disabled]="!btnNavigateNextStep()"  class="btn-size" mat-raised-button  type="button"
+                  <button *ngIf="(isCreated && productForm.pristine) && (!removeTag && !uploadFile ) && ( !_ecommerceProductService.formCustomPristine )" [disabled]="!btnNavigateNextStep()"  class="btn-size" mat-raised-button  type="button"
                   (click)="nextStep()"
                   color="accent">
                   Siguiente
@@ -238,7 +252,7 @@
                   <mat-icon>save</mat-icon>
               </button>
 
-                  <button *ngIf="(pageType ==='edit' && !productForm.pristine) || (removeTag || uploadFile)" (click)="saveProduct(true)" class="btn-size" mat-raised-button  type="button"
+                  <button *ngIf="(pageType ==='edit' && !productForm.pristine) || (removeTag || uploadFile ) || ( _ecommerceProductService.formCustomPristine)" (click)="saveProduct(true)" class="btn-size" mat-raised-button  type="button"
                       color="accent">
                       Siguiente 
                       <mat-icon>save</mat-icon>

@@ -26,7 +26,7 @@ import { ChatContactSidenavComponent } from 'app/main/apps/chat/sidenavs/right/c
 
 const routes: Routes = [
     {
-        path: '**',
+        path: 'form',
         component: ChatComponent,
         children: [],
         resolve: {
@@ -37,6 +37,16 @@ const routes: Routes = [
 
 @NgModule({
     declarations: [
+        ChatComponent,
+        ChatViewComponent,
+        ChatStartComponent,
+        ChatChatsSidenavComponent,
+        ChatUserSidenavComponent,
+        ChatLeftSidenavComponent,
+        ChatRightSidenavComponent,
+        ChatContactSidenavComponent
+    ],
+    exports: [
         ChatComponent,
         ChatViewComponent,
         ChatStartComponent,

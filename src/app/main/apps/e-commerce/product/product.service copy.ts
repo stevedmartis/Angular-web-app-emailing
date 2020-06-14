@@ -11,7 +11,6 @@ import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 import { UsersService } from './users/users.service';
 import { AcademyCoursesService } from '../../academy/courses.service';
 
-
 @Injectable()
 export class EcommerceProductService implements Resolve<any>
 {       
@@ -35,6 +34,7 @@ export class EcommerceProductService implements Resolve<any>
         private _httpClient: HttpClient,
         private authServices: AuthService,
         private contactServices: ContactsService,
+      
         private _usersServices: UsersService,
         private _academyCoursesService: AcademyCoursesService
 
@@ -76,6 +76,8 @@ export class EcommerceProductService implements Resolve<any>
                     this._academyCoursesService.getCategories(),
                     this._academyCoursesService.getUsersData()
                 }),
+
+           
     
 
          

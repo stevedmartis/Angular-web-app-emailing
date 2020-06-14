@@ -1,0 +1,191 @@
+<div class="page-layout carded left-sidebar inner-scroll">
+
+    <!-- TOP BACKGROUND -->
+    <div class="top-bg accent"></div>
+    <!-- / TOP BACKGROUND -->
+
+    <!-- SIDEBAR -->
+    <fuse-sidebar class="sidebar" name="carded-left-sidebar-2" position="left" lockedOpen="gt-md">
+
+        <!-- SIDEBAR HEADER -->
+
+
+
+        <div class="header-custom-inputs accent">
+
+        <button mat-icon-button class="sidebar-toggle btn-close" fxHide.gt-md
+        (click)="toggleSidebar('carded-left-sidebar-2')">
+        <mat-icon>close</mat-icon>
+    </button>
+            
+            <h2 class="title-list">Campos disponibles</h2>
+        </div>
+        <!-- / SIDEBAR HEADER -->
+
+        <!-- SIDEBAR CONTENT -->
+        <div class="content-inputs" fusePerfectScrollbar>
+
+            <div class="demo-sidebar">
+                <mat-list>
+
+
+
+                    <form class="form-margin" fxLayout="column" fxLayoutAlign="start" fxFlex="1 0 auto"
+                        name="productForm" [formGroup]="inputsEnabledForm">
+
+                      
+
+                        <div class="list-fields" formArrayName="fieldsEnabled" cdkDropList #inputsEnabledList="cdkDropList"
+                            [cdkDropListData]="formDataFieldsInputs.controls" [cdkDropListConnectedTo]="[inputSelectionsList]"
+                            (cdkDropListDropped)="drop($event)">
+
+
+                            <div class="item-field" *ngFor="let f of formDataFieldsInputs.controls; index as i"  [formGroupName]="i" cdkDrag>
+
+                            <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+
+                            
+                              
+
+
+
+                                    <mat-form-field class="mat-form-custom" appearance="outline" fxFlex="75">
+                                        <mat-label *ngIf="f.value.required">{{ f.value.title }} *</mat-label>
+
+                                        <mat-label *ngIf="!f.value.required">{{ f.value.title }} </mat-label>
+                                        <input type="f.value.type" name="name" formControlName="title" matInput (change)="changeTitle(f.value)">
+
+                                        <mat-error>
+                                            {{ getMesaggeErrorTitle(i, f.value.title) }}
+                                    </mat-error>
+                                    </mat-form-field>
+
+
+                                   
+
+
+
+                            
+
+                                <div class="btn-action">
+
+                                    <mat-slide-toggle class="space" formControlName="required" (click)="changeRequiredSlide(f)" ></mat-slide-toggle>
+
+                                    <button mat-icon-button class="sidebar-toggle"
+                                    (click)="dropItemSideBarClose(i, f,'carded-left-sidebar-2')">
+                                    <mat-icon>swap_horiz</mat-icon>
+                                </button>
+
+                                </div>
+
+                                </div>
+
+            
+
+
+
+                            </div>
+
+                        </div>
+
+
+
+                    </form>
+
+
+
+                </mat-list>
+            </div>
+
+
+        </div>
+        <!-- / SIDEBAR CONTENT -->
+
+    </fuse-sidebar>
+    <!-- / SIDEBAR -->
+
+    <!-- CENTER -->
+    <div class="center">
+
+
+        <!-- CONTENT CARD -->
+        <div class="content-card">
+
+            <!-- CONTENT TOOLBAR -->
+            <div class="toolbar px-24 py-8">
+
+                <button mat-icon-button class="sidebar-toggle" fxHide.gt-md
+                    (click)="toggleSidebar('carded-left-sidebar-2')">
+                    <mat-icon>menu</mat-icon>
+                </button>
+
+                <span>Campos seleccionados</span>
+
+            </div>
+            <!-- / CONTENT TOOLBAR -->
+
+            <!-- CONTENT -->
+        <!-- SIDEBAR CONTENT -->
+        <div class="content-inputs" fusePerfectScrollbar>
+
+            <div class="demo-sidebar">
+                <mat-list>
+
+
+            <form
+            name="productForm" [formGroup]="inputsSelectionForm">
+
+            <div cdkDropList #inputSelectionsList="cdkDropList" formArrayName="fieldsSelection"  
+            [cdkDropListData]="formDataFieldsInputsSelection.controls"
+                [cdkDropListConnectedTo]="[inputsEnabledList]"  class="list-fields" (cdkDropListDropped)="drop($event)"
+                class="content p-24" fusePerfectScrollbar>
+
+
+           
+
+                <div class="item-field" *ngFor="let f of formDataFieldsInputsSelection.controls; index as i"  [formGroupName]="i" cdkDrag>
+
+                    <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+
+                            
+                              
+                        <mat-form-field class="mat-form-custom" appearance="outline" fxFlex="75">
+                            <mat-label>{{ f.value.title }}</mat-label>
+                            <input name="name" formControlName="value" matInput [required]="f.value.required"  >
+                        </mat-form-field>
+                
+                    <div class="btn-action">
+
+
+                        <button mat-icon-button class="sidebar-toggle"
+                        (click)="dropItemSideBarSelectionClose(i, f,'carded-left-sidebar-2')">
+                        <mat-icon>swap_horiz</mat-icon>
+                    </button>
+
+                    </div>
+
+                </div>
+
+
+
+                </div>
+
+
+            </div>
+
+            </form>
+
+            </mat-list>
+
+            </div>
+
+            </div>
+            <!-- / CONTENT -->
+
+        </div>
+        <!-- / CONTENT CARD -->
+
+    </div>
+    <!-- / CENTER -->
+
+</div>

@@ -17,7 +17,7 @@ import { EcommerceOrderComponent } from 'app/main/apps/e-commerce/order/order.co
 import { EcommerceOrderService } from 'app/main/apps/e-commerce/order/order.service';
 import { MaterialModule } from 'app/main/angular-material-elements/material.module';
 
-import { FuseConfirmDialogModule, FuseSidebarModule, FuseProgressBarModule } from '@fuse/components';
+import { FuseConfirmDialogModule, FuseSidebarModule, FuseProgressBarModule, FuseDemoModule } from '@fuse/components';
 import { ContactsService } from 'app/main/apps/contacts/contacts.service';
 
 import { EmailEditorModule } from 'angular-email-editor';
@@ -29,6 +29,8 @@ import { AddComponent } from './product/campaigns/dialog/add/add.component';
 import { SendComponent } from './product/campaigns/dialog/send/send.component';
 import { AcademyModule } from '../academy/academy.module';
 import { UsersComponent } from './product/users/users.component';
+import { FormCustomComponent } from './product/form-custom/form-custom.component';
+import { CardedLeftSidebar2Component } from 'app/main/ui/page-layouts/carded/left-sidebar-2/left-sidebar-2.component';
 
 const routes: Routes = [
     {
@@ -80,7 +82,9 @@ const routes: Routes = [
         CampaignsComponent,
         AddComponent,
         SendComponent,
-        UsersComponent
+        UsersComponent,
+        FormCustomComponent,
+        
        
 
 
@@ -102,6 +106,7 @@ const routes: Routes = [
         FuseSidebarModule,
         ContactsModule,
         AcademyModule,
+        FuseDemoModule
     ],
     providers   : [
         EcommerceProductsService,

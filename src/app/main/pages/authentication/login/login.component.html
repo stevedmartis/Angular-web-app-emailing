@@ -14,7 +14,7 @@
 
                 <mat-form-field appearance="outline">
                     <mat-label>Correo electrónico</mat-label>
-                    <input matInput formControlName="email">
+                    <input matInput type="email" formControlName="email">
                     <mat-icon matSuffix class="secondary-text">mail</mat-icon>
                     <mat-error *ngIf="loginForm.get('email').hasError('required')">
                         Correo electrónico es requerido

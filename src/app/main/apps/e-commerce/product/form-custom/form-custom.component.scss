@@ -1,0 +1,252 @@
+@import "src/@fuse/scss/fuse";
+
+.content-card-custom {
+
+    background: white;
+    border-radius: 8px 8px 0 0;
+    -webkit-box-flex: 1;
+    flex: 1 1 auto;
+    display: -webkit-box;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    flex-direction: column;
+    -webkit-box-flex: 1;
+    flex: 1 1 auto;
+    overflow: hidden;
+    box-shadow: 0px 2px 1px -1px rgba(0, 0, 0, 0.2), 0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 1px 3px 0px rgba(0, 0, 0, 0.12);
+    color: w;
+}
+
+.content-card {
+    padding: 0px !important;
+    height: 500px;
+}
+
+.header-custom {
+    display: -webkit-box;
+    display: flex;
+    height: 0px;
+    min-height: 0px;
+    max-height: 0px;
+    background-color: #039be5 !important;
+    color: white !important;
+}
+
+
+.header-custom-inputs {
+
+    display: -webkit-box;
+    display: flex;
+    height: 64px;
+    min-height: 90px;
+    max-height: 0px;
+    background-color: #039be5 !important;
+    color: white !important;
+
+    @include media-breakpoint('xs') {
+        min-height: 60px;
+    }
+}
+
+.top-bg {
+
+    height: 90px !important;
+}
+
+.title-list {
+
+    margin: 16px !important;
+}
+
+.btn-action{
+    margin-top: 0px;
+    margin-left: 0%;
+
+
+    @include media-breakpoint('m') {
+        margin-left: 0%;
+    }
+
+    @include media-breakpoint('xs') {
+        margin-left: -5%;
+    }
+
+    @include media-breakpoint('xs') {
+        margin-left: -12%;
+    }
+}
+
+.content-inputs {
+
+    background: transparent;
+    -webkit-box-flex: 1;
+    flex: 1 1 auto;
+    height: 0px;
+}
+
+.mat-list-custom {
+
+
+
+    
+    margin: 20px 0px 0px 0px;
+
+} 
+
+.mat-form-custom{
+    margin: 1.25em 50px 0px 0px;
+}
+
+.center-custom {
+    margin-left: 200px !important;
+
+}
+
+
+.button
+{
+  position: absolute;
+  left: -35px;
+
+    text-align: center;
+    opacity: 1;
+    z-index: 100;
+    top: -20px;
+
+    @include media-breakpoint('xs') {
+      top: -43px;
+  }
+}
+
+.checkbox-container{
+    margin: 
+    12px 12px 36px;
+}
+
+.mat-list-base .mat-list-item, .mat-list-base .mat-list-option {
+    height: 70px !important;
+}
+
+
+
+.page-layout.carded.left-sidebar > .sidebar, .page-layout.carded.right-sidebar > .sidebar {
+    width: 100% !important;
+
+    min-width: 279px;
+    max-width: 100% !important;
+
+
+  
+}
+
+.title-category {
+    color: #adadad;
+    font-size: 18px;
+    margin: 12px 12px 12px 12px;
+}
+
+.list-fields {
+   
+       
+    display: -webkit-box;
+    display: flex;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+    flex-direction: row;
+    -webkit-box-align: center;
+    align-items: center;
+    box-sizing: border-box;
+    padding: 16px 16px;
+    position: relative;
+    height: inherit;
+    min-height: 100%;
+    /* height: 100%; */
+    background: white;
+    border-radius: 4px;
+    overflow: hidden;
+    display: block;
+
+    
+    @include media-breakpoint('xs') {
+        min-height: 100%
+    }
+
+  
+
+
+    
+}
+
+.item-field {
+
+               
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    box-sizing: border-box;
+    padding: 0 16px;
+    position: relative;
+    height: inherit;
+    width: 100%;
+        min-height: 60px;
+        background: white;
+        border-radius: 4px;
+        overflow: hidden;
+        display: block;
+    box-sizing: border-box;
+    border-radius: 4px;
+    box-shadow: 0 2px 2px 0px rgba(0, 0, 0, 0.2),
+                0 4px 5px 1px rgba(0, 0, 0, 0.14),
+                0 3px 8px 1px rgba(0, 0, 0, 0.12);
+
+
+}
+
+.cdk-drag-preview {
+
+           
+               
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    box-sizing: border-box;
+    padding: 0 16px;
+    position: relative;
+    height: inherit;
+    width: 96%;
+        min-height: 60px;
+        background: white;
+        border-radius: 4px;
+        overflow: hidden;
+        display: block;
+    box-sizing: border-box;
+    border-radius: 4px;
+    box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.2),
+                0 8px 10px 1px rgba(0, 0, 0, 0.14),
+                0 3px 14px 2px rgba(0, 0, 0, 0.12);
+  }
+  
+  .cdk-drag-placeholder {
+    opacity: 0;
+  }
+  
+  .cdk-drag-animating {
+    transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+  }
+  
+  .item-field:last-child {
+    border: none;
+  }
+  
+  .list-fields.cdk-drop-list-dragging .item-field:not(.cdk-drag-placeholder) {
+    transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+  }
+
+  .space {
+    margin-right: 20px;
+  }
+
+  .btn-close {
+    margin: 9px -10px 0px 36px;
+  }

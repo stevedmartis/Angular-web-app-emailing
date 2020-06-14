@@ -153,10 +153,64 @@ export class EcommerceProductsService implements Resolve<any>
                 .subscribe((response: any) => {
                     resolve(response);
 
-                    const productIndex = this.products.indexOf(product);
-                    this.products.splice(productIndex, 1);
 
-                    this.onProductsChanged.next(this.products);
+                        this.deleteAllInputsByEvent(product)
+                        .then((res) => {
+
+                            console.log(res)
+                     
+
+                    this.deleteAllInvitedByEvent(product)
+                    .then((data) =>{
+
+
+                        console.log(data)
+
+
+
+                        const productIndex = this.products.indexOf(product);
+                        this.products.splice(productIndex, 1);
+    
+                        this.onProductsChanged.next(this.products);
+
+
+                    })
+
+                })
+
+
+
+               
+                }, reject);
+        });
+    }
+
+    deleteAllInvitedByEvent(product) {
+
+
+      
+        return new Promise((resolve, reject) => {
+            this._httpClient.delete(environment.apiUrl + '/api/delete-all-invited/event/' + product._id)
+                .subscribe((response: any) => {
+                    resolve(response);
+
+                    
+
+               
+                }, reject);
+        });
+    }
+
+    deleteAllInputsByEvent(product) {
+
+
+      
+        return new Promise((resolve, reject) => {
+            this._httpClient.delete(environment.apiUrl + '/api/delete-all-inputs/event/' + product._id)
+                .subscribe((response: any) => {
+                    resolve(response);
+
+                    
 
                
                 }, reject);

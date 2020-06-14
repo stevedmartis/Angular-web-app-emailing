@@ -21,6 +21,7 @@ export class EcommerceProductService implements Resolve<any>
     loadingFile: boolean = false;
     onProductChanged: BehaviorSubject<any>;
     idNowEvent: any;
+    formCustomPristine: boolean = false;
 
 
 
@@ -257,6 +258,7 @@ export class EcommerceProductService implements Resolve<any>
        });
    }
 
+ 
 
    deleteAllTags(array) {
 
@@ -285,6 +287,105 @@ export class EcommerceProductService implements Resolve<any>
 
                 resolve(response)
             });
+    });
+}
+
+
+addInputFormInEvent(input): Promise<any> {
+
+       
+    return new Promise((resolve, reject) => {
+        this._httpClient.post(environment.apiUrl + '/api/form/new-input', 
+        {   
+             codeEvento:  this.contactServices.idEventNow,
+             title: input.title,
+             type: input.type,
+             placeHolder: input.placeHolder,
+             value: input.value,
+             required: input.required,
+             initial: false
+
+        })
+            .subscribe((response: any) => {
+
+          
+                resolve(response);
+                
+            }, reject);
+    });
+}
+
+
+getInputsEvent(): Promise<any> {
+
+    
+    return new Promise((resolve, reject) => {
+        this._httpClient.get(environment.apiUrl + '/api/form/event/' + this.contactServices.idEventNow)
+            .subscribe((response: any) => {
+
+         
+                resolve(response);
+                
+            }, reject);
+    });
+}
+
+
+getInputsInitial(): Promise<any> {
+
+    
+    return new Promise((resolve, reject) => {
+        this._httpClient.get(environment.apiUrl + '/api/form/initial')
+            .subscribe((response: any) => {
+
+             console.log(response)
+                resolve(response);
+                
+            }, reject);
+    });
+}
+
+editInputFormRequired(input): Promise<any>
+{
+  
+    return new Promise((resolve, reject) => {
+        this._httpClient.post(environment.apiUrl + '/api/form/edit-input-required', 
+        {   
+
+            inputId: input.id,
+            required: input.required,
+
+
+        })
+            .subscribe((response: any) => {
+
+                
+                resolve(response);
+
+     
+            }, reject);
+    });
+}
+
+editInputFormtitle(input): Promise<any>
+{
+  
+    return new Promise((resolve, reject) => {
+        this._httpClient.post(environment.apiUrl + '/api/form/edit-input-title', 
+        {   
+
+            inputId: input.id,
+
+            title: input.title
+
+        })
+            .subscribe((response: any) => {
+
+                
+                resolve(response);
+
+  
+            }, reject);
     });
 }
 
