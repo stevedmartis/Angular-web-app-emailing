@@ -1,5 +1,7 @@
 @import "src/@fuse/scss/fuse";
 
+
+
 .content-card-custom {
 
     background: white;
@@ -24,13 +26,7 @@
 }
 
 .header-custom {
-    display: -webkit-box;
-    display: flex;
-    height: 0px;
-    min-height: 0px;
-    max-height: 0px;
-    background-color: #039be5 !important;
-    color: white !important;
+    height: 100px;
 }
 
 
@@ -61,20 +57,18 @@
 
 .btn-action{
     margin-top: 0px;
-    margin-left: 0%;
+    margin-left: 7%;
 
 
     @include media-breakpoint('m') {
-        margin-left: 0%;
+        margin-left: 7%;
     }
 
     @include media-breakpoint('xs') {
-        margin-left: -5%;
+        margin-left: 10%;
+
     }
 
-    @include media-breakpoint('xs') {
-        margin-left: -12%;
-    }
 }
 
 .content-inputs {
@@ -82,7 +76,7 @@
     background: transparent;
     -webkit-box-flex: 1;
     flex: 1 1 auto;
-    height: 0px;
+   
 }
 
 .mat-list-custom {
@@ -95,7 +89,23 @@
 } 
 
 .mat-form-custom{
-    margin: 1.25em 50px 0px 0px;
+    margin: 1.25em 27px 0px 0px;
+
+
+    flex: 1 1 100%;
+    box-sizing: border-box;
+    max-width: 75%;
+   
+
+    -webkit-box-flex: 1;
+
+
+
+
+
+
+
+
 }
 
 .center-custom {
@@ -125,7 +135,9 @@
 }
 
 .mat-list-base .mat-list-item, .mat-list-base .mat-list-option {
-    height: 70px !important;
+
+    
+    height: 140px !important;
 }
 
 
@@ -136,8 +148,22 @@
     min-width: 279px;
     max-width: 100% !important;
 
+    
+    @include media-breakpoint('xs') {
+        width: 85% !important;
+    }
 
   
+}
+
+.page-layout.carded.left-sidebar > .sidebar, .page-layout.carded.right-sidebar > .sidebar {
+
+  
+    @include media-breakpoint('xs') {
+        overflow: auto !important;
+    }
+    
+
 }
 
 .title-category {
@@ -157,7 +183,7 @@
     -webkit-box-align: center;
     align-items: center;
     box-sizing: border-box;
-    padding: 16px 16px;
+    padding: 3px 16px;
     position: relative;
     height: inherit;
     min-height: 100%;
@@ -168,14 +194,32 @@
     display: block;
 
     
-    @include media-breakpoint('xs') {
-        min-height: 100%
-    }
 
   
 
 
     
+}
+
+.mat-list-base {
+    padding-top: 0px !important;
+
+}
+
+.inputs-container {
+
+    padding: 0% 0% 0% 0%;
+
+
+    @include media-breakpoint('m') {
+        padding: 0% 65% 0% 3%;
+    }
+
+    @include media-breakpoint('xs') {
+      padding: 0% 25% 0% 9%;
+    }
+
+  
 }
 
 .item-field {
@@ -185,7 +229,7 @@
     flex-direction: row;
     align-items: center;
     box-sizing: border-box;
-    padding: 0 16px;
+    padding:   12px  12px 0px 12px;
     position: relative;
     height: inherit;
     width: 100%;
@@ -201,20 +245,26 @@
                 0 3px 8px 1px rgba(0, 0, 0, 0.12);
 
 
+                @include media-breakpoint('xs') {
+                    padding:   12px  12px 0px 12px
+                  }
+              
+              
+
+
 }
 
 .cdk-drag-preview {
 
            
-               
     display: flex;
     flex-direction: row;
     align-items: center;
     box-sizing: border-box;
-    padding: 0 16px;
+    padding:   12px  12px 0px 12px;
     position: relative;
     height: inherit;
-    width: 96%;
+    width: 100%;
         min-height: 60px;
         background: white;
         border-radius: 4px;
@@ -222,9 +272,14 @@
         display: block;
     box-sizing: border-box;
     border-radius: 4px;
-    box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.2),
-                0 8px 10px 1px rgba(0, 0, 0, 0.14),
-                0 3px 14px 2px rgba(0, 0, 0, 0.12);
+    box-shadow: 0 2px 2px 0px rgba(0, 0, 0, 0.2),
+                0 4px 5px 1px rgba(0, 0, 0, 0.14),
+                0 3px 8px 1px rgba(0, 0, 0, 0.12);
+
+
+                @include media-breakpoint('xs') {
+                    padding:   12px  12px 0px 12px
+                  }
   }
   
   .cdk-drag-placeholder {
@@ -249,4 +304,21 @@
 
   .btn-close {
     margin: 9px -10px 0px 36px;
+
+  
+    @include media-breakpoint('xs') {
+        margin: 0px 0px 0px 0px;
+
+    }
+
   }
+
+  .add-btn  {
+
+    margin-right: 2%;
+  }
+
+
+  .inputs-enabled {
+        margin: 0% !important;      
+}

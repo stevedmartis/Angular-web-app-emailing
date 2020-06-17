@@ -238,7 +238,7 @@
 
         
                   
-                  <button *ngIf="(isCreated && productForm.pristine) && (!removeTag && !uploadFile ) && ( !_ecommerceProductService.formCustomPristine )" [disabled]="!btnNavigateNextStep()"  class="btn-size" mat-raised-button  type="button"
+                  <button *ngIf="(isCreated && productForm.pristine) && (!removeTag && !uploadFile )" [disabled]="!btnNavigateNextStep()"  class="btn-size" mat-raised-button  type="button"
                   (click)="nextStep()"
                   color="accent">
                   Siguiente
@@ -252,7 +252,7 @@
                   <mat-icon>save</mat-icon>
               </button>
 
-                  <button *ngIf="(pageType ==='edit' && !productForm.pristine) || (removeTag || uploadFile ) || ( _ecommerceProductService.formCustomPristine)" (click)="saveProduct(true)" class="btn-size" mat-raised-button  type="button"
+                  <button *ngIf="(pageType ==='edit' && !productForm.pristine) || (removeTag || uploadFile )" (click)="saveProduct(true)" class="btn-size" mat-raised-button  type="button"
                       color="accent">
                       Siguiente 
                       <mat-icon>save</mat-icon>

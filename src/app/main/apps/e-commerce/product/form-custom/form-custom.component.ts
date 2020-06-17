@@ -3,7 +3,9 @@ import {
     OnDestroy,
     OnInit,
     ViewEncapsulation,
+    ViewChild,
     OnChanges,
+    ElementRef,
 } from "@angular/core";
 import { Subject } from "rxjs";
 import { takeUntil } from "rxjs/operators";
@@ -30,75 +32,9 @@ export class FormCustomComponent implements OnInit {
     selectedChat: any;
 
     arrayFieldsInitial = [
-        {
-          
-            title: "Nombre",
-            placeHolder: "Texto",
-            edit: false,
-            type: "text",
-            column: 1,
-            value: "",
-            nameControl: "name",
-            required: true,
-        },
-        {
-        
-            title: "Apellido",
-            placeHolder: "Texto",
-            edit: false,
-            type: "text",
-            column: 1,
-            value: "",
-            nameControl: "lastName",
-            required: false,
-        },
-        {
-  
-            title: "Titulo",
-            placeHolder: "Texto",
-            edit: false,
-            type: "text",
-            column: 1,
-            value: "",
-            nameControl: "title",
-            required: false,
-        },
-        {
-  
-            title: "Fecha nacimiento",
-            placeHolder: "Date",
-            edit: false,
-            type: "text",
-            column: 1,
-            value: "",
-            nameControl: "birthday",
-            required: false,
-        },
-
-        {
-  
-            title: "Correo electrónico",
-            placeHolder: "Texto",
-            edit: false,
-            type: "email",
-            column: 1,
-            value: "",
-            nameControl: "email",
-            required: false,
-        },
-
-        {
-
-            title: "Numero Telefónico",
-            placeHolder: "Texto",
-            edit: false,
-            type: "email",
-            column: 1,
-            value: "",
-            nameControl: "email",
-            required: false,
-        },
+ 
     ];
+    arrayFieldsAll: any[] = [];
 
     arrayFieldsEnabled: any[] = [];
 
@@ -106,6 +42,8 @@ export class FormCustomComponent implements OnInit {
 
     // Private
     private _unsubscribeAll: Subject<any>;
+
+    @ViewChild("title", {static : true}) titleField: ElementRef;
 
     /**
      * Constructor
@@ -153,13 +91,14 @@ export class FormCustomComponent implements OnInit {
                             this._ecommerceProductService
                                 .addInputFormInEvent(input)
                                 .then((res) => {
-                                    this.arrayFieldsEnabled.push(res.input);
-        
-                                    this.patchFieldsEnabled();
-        
-                                    this.patchFieldsSelection();
+                                    this.arrayFieldsAll.push(res.input);
+
                                 });
                         });
+
+                        console.log('array?', this.arrayFieldsAll)
+                        
+                        this.pushInputsAndPatchValues();
                     }
 
 
@@ -168,9 +107,13 @@ export class FormCustomComponent implements OnInit {
 
 
             } else {
-                console.log("mas inputs");
+           
 
-                this.pushEnabledInputsAndPatchValues(data.inputs);
+                this.arrayFieldsAll = data.inputs;
+
+                console.log("mas inputs",  this.arrayFieldsAll);
+
+                this.pushInputsAndPatchValues();
             }
         });
     }
@@ -184,12 +127,24 @@ export class FormCustomComponent implements OnInit {
        // return this.enabledF.fieldsEnabled.getError('required')? 'Titulo debe tener un nombre' : this.formDataFieldsInputs.getError('minlength')? 'Minimo 3 letras' : '';    
       }
 
-    pushEnabledInputsAndPatchValues(data) {
-        data.forEach((obj) => {
-            this.arrayFieldsEnabled.push(obj);
-        });
+    pushInputsAndPatchValues() {
 
-        console.log(this.arrayFieldsEnabled);
+
+        const enableds = this.arrayFieldsAll.filter(x => {
+            return x.column === 1
+        } )
+
+        console.log(enableds)
+
+        this.arrayFieldsEnabled = enableds;
+
+    
+        const selection =  this.arrayFieldsAll.filter(x => {
+           return  x.column == 2   
+        } )
+
+        this.arrayFieldSelection = selection;
+
 
         this.patchFieldsEnabled();
 
@@ -208,7 +163,52 @@ export class FormCustomComponent implements OnInit {
         });
     }
 
+    addNewInput(){
+        
+
+
+        const obj = {
+            
+  
+                title: "Texto",
+                placeHolder: "Texto",
+                edit: false,
+                type: "text",
+                column: 1,
+                value: "",
+                nameControl: "text",
+                required: false,
+            
+        }
+
+        if (this.inputsEnabledForm.invalid) {
+            return;
+        } else {
+
+
+            this._ecommerceProductService.addInputFormInEvent(obj)
+            .then((res) =>{
+
+                const fields = <FormArray>this.enabledF.fieldsEnabled;
+
+                fields.push(this.patchValuesEnables(res.input, 1));
+
+            })
+            
+
+    
+             
+  
+
+        }
+
+
+    }
+
     patchFieldsEnabled() {
+
+        console.log(  this.arrayFieldsEnabled)
+
         const fields = <FormArray>this.enabledF.fieldsEnabled;
 
         this.arrayFieldsEnabled.forEach((x) => {
@@ -217,6 +217,9 @@ export class FormCustomComponent implements OnInit {
     }
 
     patchFieldsSelection() {
+
+
+        console.log(  this.arrayFieldSelection)
         const fields = <FormArray>this.selectionF.fieldsSelection;
 
         this.arrayFieldSelection.forEach((x) => {
@@ -286,26 +289,49 @@ export class FormCustomComponent implements OnInit {
         } else {
             this.toggleSidebar(name);
 
-            this.formDataFieldsInputsSelection.controls.push(
-                this.patchValuesSelection(event.value, 2)
-            );
+            this._ecommerceProductService.editInputFormColumnSelect(event.value.id)
+            .then((res) => {
 
-            this.formDataFieldsInputs.removeAt(i);
+                this.formDataFieldsInputsSelection.controls.push(
+                    this.patchValuesSelection(event.value, 2)
+                );
+    
+                
+    
+                this.formDataFieldsInputs.removeAt(i);
 
-            this.saveFormAction();
+            })
+
+  
+
+        
         }
+    }
+
+    deleteInputEvent(i, obj){
+
+        this.formDataFieldsInputs.removeAt(i);
+
     }
 
     dropItemSideBarSelectionClose(i, event, name): void {
         this.toggleSidebar(name);
 
-        this.formDataFieldsInputsSelection.removeAt(i);
+        this._ecommerceProductService.editInputFormColumnEnabled(event.value.id)
+        .then((res) => {
+
+            this.formDataFieldsInputsSelection.removeAt(i);
 
         this.formDataFieldsInputs.controls.push(
             this.patchValuesEnables(event.value, 1)
-        );
 
-        this.saveFormAction();
+        )
+
+        })
+
+
+
+     
     }
 
     drop(event: CdkDragDrop<string[]>) {
@@ -315,7 +341,7 @@ export class FormCustomComponent implements OnInit {
                 event.previousIndex,
                 event.currentIndex
             );
-            this.saveFormAction();
+          
         } else {
             transferArrayItem(
                 event.previousContainer.data,
@@ -324,9 +350,10 @@ export class FormCustomComponent implements OnInit {
                 event.currentIndex
             );
 
-            this.saveFormAction();
+           
         }
     }
+
 
     saveFormAction() {
         this._ecommerceProductService.formCustomPristine = true;
@@ -386,6 +413,24 @@ export class FormCustomComponent implements OnInit {
         console.log(newObj);
 
         this._ecommerceProductService.editInputFormRequired(newObj)
+        .then((res) => {
+
+            console.log(res)
+        })
+        .catch((err) => {console.log(err)})
+
+    
+
+    }
+
+    changeClomun(f) {
+        const newObj = f.value;
+
+        newObj.required = !f.value.required;
+
+        console.log(newObj);
+
+        this._ecommerceProductService.editInputFormColumnSelect(f.id)
         .then((res) => {
 
             console.log(res)

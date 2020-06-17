@@ -389,4 +389,44 @@ editInputFormtitle(input): Promise<any>
     });
 }
 
+editInputFormColumnSelect(inputId): Promise<any>
+{
+  
+    return new Promise((resolve, reject) => {
+        this._httpClient.post(environment.apiUrl + '/api/form/edit-input-column-select', 
+        {   
+
+            inputId: inputId,
+        })
+            .subscribe((response: any) => {
+
+                
+                resolve(response);
+
+  
+            }, reject);
+    });
+}
+
+
+editInputFormColumnEnabled(inputId): Promise<any>
+{
+  
+    return new Promise((resolve, reject) => {
+        this._httpClient.post(environment.apiUrl + '/api/form/edit-input-column-enabled', 
+        {   
+
+            inputId: inputId,
+        })
+            .subscribe((response: any) => {
+
+                
+                resolve(response);
+
+  
+            }, reject);
+    });
+}
+
+
 }
