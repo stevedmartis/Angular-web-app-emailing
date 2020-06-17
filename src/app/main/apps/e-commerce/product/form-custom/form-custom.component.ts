@@ -28,7 +28,7 @@ import { EcommerceProductService } from "../product.service";
 
     animations: fuseAnimations,
 })
-export class FormCustomComponent implements OnInit {
+export class FormCustomComponent implements OnInit, OnDestroy {
     selectedChat: any;
 
     arrayFieldsInitial = [
@@ -78,27 +78,44 @@ export class FormCustomComponent implements OnInit {
             if (data.inputs.length === 0) {
 
                 this._ecommerceProductService.getInputsInitial()
-                .then((data) => {
+                .then((init) => {
 
-                    if(data.inputs.length === 0){
+                    if(init.inputs.length === 0){
                         return;
                     }
 
                     else {
 
-                        data.inputs.forEach((input) => {
+                        init.inputs.forEach((input) => {
+
+                            console.log('input', input)
 
                             this._ecommerceProductService
                                 .addInputFormInEvent(input)
                                 .then((res) => {
                                     this.arrayFieldsAll.push(res.input);
 
+                                    console.log(' this.arrayFieldsAll',  this.arrayFieldsAll)
+
+                                    if(res.input.column === 1){
+
+                                        this.arrayFieldsEnabled.push(res.input);
+
+                                        this.patchFieldsEnabled();
+
+                                     
+                                    }
+
+                                    else if (res.input.column === 2) {
+                                        this.arrayFieldSelection.push(res.input);
+
+                                        this.patchFieldsSelection();
+                                    }
+
                                 });
                         });
 
-                        console.log('array?', this.arrayFieldsAll)
-                        
-                        this.pushInputsAndPatchValues();
+
                     }
 
 
@@ -439,5 +456,14 @@ export class FormCustomComponent implements OnInit {
 
     
 
+    }
+
+    ngOnDestroy(){
+
+        console.log('desrouu')
+
+        this.arrayFieldSelection = [];
+        this.arrayFieldsEnabled = [];
+        this.arrayFieldsAll = [];
     }
 }

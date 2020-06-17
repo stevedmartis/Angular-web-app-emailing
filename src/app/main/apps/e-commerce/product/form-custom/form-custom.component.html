@@ -13,14 +13,37 @@
 
         <div class="header-custom accent inputs-container" fxLayout="row" fxLayoutAlign="space-between center">
 
-        <button mat-icon-button class="sidebar-toggle btn-close" fxHide.gt-md
-        (click)="toggleSidebar('carded-left-sidebar-2')">
-        <mat-icon>close</mat-icon>
-    </button>
-            
-            <h2 class="title-list">Campos disponibles</h2>
+
+                   
+        <div fxLayout="row" fxLayoutAlign="start center">
+ <!--
+            <button mat-icon-button class="mr-0 mr-sm-16" [routerLink]="'/apps/e-commerce/products'">
+                <mat-icon>arrow_back</mat-icon>
+            </button>
+
+            <div class="product-image-icon mr-8 mr-sm-16" >
+                <img *ngIf="product.images[0]" [src]="product.images[0].url">
+                <img *ngIf="!product.images[0]" [src]="'assets/images/add_event_white.png'">
+            </div>
+
+             -->
+
+            <div fxLayoutAlign="start start" >
+   
+               <button mat-icon-button class="sidebar-toggle btn-close" fxHide.gt-md
+               (click)="toggleSidebar('carded-left-sidebar-2')">
+               <mat-icon>close</mat-icon>
+           </button>
+                   
+                   <h2 class="title-list">Campos disponibles</h2>
+               </div>
+               <!-- / SIDEBAR HEADER -->
+
+            </div>
         </div>
-        <!-- / SIDEBAR HEADER -->
+        <!-- / APP TITLE -->
+
+ 
 
         <!-- SIDEBAR CONTENT -->
         <div class="content-inputs" fusePerfectScrollbar>

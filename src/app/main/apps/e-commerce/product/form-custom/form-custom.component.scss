@@ -228,6 +228,10 @@
         padding: 0% 0% 0% 0%;
     }
 
+    @include media-breakpoint('gt-xs') {
+        padding: 0% 46% 0% 3%;
+      }
+
     @include media-breakpoint('xs') {
       padding: 0% 16% 0% 0%;
     }
@@ -316,13 +320,12 @@
   }
 
   .btn-close {
-    margin: 9px -10px 0px 36px;
+   
+
+    margin-top: 10px;
 
   
-    @include media-breakpoint('xs') {
-        margin: 0px 0px 0px 0px;
 
-    }
 
   }
 
@@ -356,3 +359,4 @@
     
         }
 }
+
