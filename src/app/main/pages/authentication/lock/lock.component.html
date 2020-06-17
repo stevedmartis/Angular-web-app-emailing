@@ -1,4 +1,4 @@
-<div *ngIf="_formInvitationService.loadingPage"  id="lock" fxLayout="column">
+<div *ngIf="_formInvitationService.loadingPage" id="lock" fxLayout="column">
 
     <div id="lock-form-wrapper" fxLayout="column" fxLayoutAlign="center center">
 
@@ -31,7 +31,7 @@
 
 
 
-            <div class="form-card"  >
+            <div class="form-card">
 
 
                 <div class="lock-form-header" fxLayout="column" fxLayoutAlign="center center" fxLayout.gt-xs="row"
@@ -40,7 +40,7 @@
                     <div>
                         <div class="title">{{ _formInvitationService.campaignName }}</div>
                         <div class="date">{{ _formInvitationService.event.dateEvent | date:"fullDate" }}</div>
-                      
+
                         <div class="subtitle">
                             {{ _formInvitationService.event.company }}
                         </div>
@@ -50,71 +50,65 @@
 
                 <form class="form-invitation " name="lockForm" [formGroup]="invitationForm" novalidate>
 
-                    
-
                     <div formArrayName="inputSelection">
 
-            <div *ngFor="let f of formDataInputs.controls; index as i"
-            [formGroupName]="i">
+                        <div *ngFor="let f of formDataInputs.controls; index as i" [formGroupName]="i">
 
-         
-                
-           
 
-                    <mat-form-field appearance="outline">
-                        <mat-label *ngIf="f.value.required">{{ f.value.title }} *</mat-label>
+                            <mat-form-field appearance="outline">
+                                <mat-label *ngIf="f.value.required">{{ f.value.title }} *</mat-label>
 
-                        <mat-label *ngIf="!f.value.required">{{ f.value.title }} </mat-label>
-                        <input   matInput formControlName="value"  [type]="f.value.type" (change)="getDataInvited()">
-                      
-                        <mat-error>
-                            {{ getMesaggeErrorTitle(i, f.value.title, f.value.value) }}
-                    </mat-error>
-                    </mat-form-field>
+                                <mat-label *ngIf="!f.value.required">{{ f.value.title }} </mat-label>
+                                <input matInput formControlName="value" [type]="f.value.type"
+                                    (change)="getDataInvited()">
 
- 
+                                <mat-error>
+                                    {{ getMesaggeErrorTitle(i, f.value.title, f.value.value) }}
+                                </mat-error>
+                            </mat-form-field>
 
 
 
-
-                    
-
-                    <div *ngIf="!_formInvitationService.invitedExist">
-
-                    <button mat-raised-button (click)="confirmInvitation()" class="submit-button  mt-24 mt-md-0" color="accent">
-                        <mat-icon matSuffix>done</mat-icon>
-                        ¡REGISTARME!
-                    </button>
-
-                </div>
-
-                <div *ngIf="_formInvitationService.invitedExist">
+   
 
 
-                    <button mat-raised-button (click)="confirmInvitation()" class="submit-button  mt-24 mt-md-0" color="accent">
-                        <mat-icon matSuffix>done</mat-icon>
-                        CONFIRMAR MI ASISTENCIA
-                    </button>
+                        </div>
+
+                        <div *ngIf="!_formInvitationService.invitedExist">
+
+                            <button mat-raised-button (click)="confirmInvitation()"
+                                class="submit-button  mt-24 mt-md-0" color="accent">
+                                <mat-icon matSuffix>done</mat-icon>
+                                ¡REGISTARME!
+                            </button>
+
+                        </div>
+
+                        <div *ngIf="_formInvitationService.invitedExist">
 
 
-                    <button mat-button (click)="cancelInvitation()" class="cancel-button">
-                        <mat-icon matSuffix>cancel</mat-icon>
-                        CANCELAR
-                    </button>
+                            <button mat-raised-button (click)="confirmInvitation()"
+                                class="submit-button  mt-24 mt-md-0" color="accent">
+                                <mat-icon matSuffix>done</mat-icon>
+                                CONFIRMAR MI ASISTENCIA
+                            </button>
 
 
-                </div>
+                            <button mat-button (click)="cancelInvitation()" class="cancel-button">
+                                <mat-icon matSuffix>cancel</mat-icon>
+                                CANCELAR
+                            </button>
 
 
-            </div> 
-            </div>
+                        </div>
+                    </div>
                 </form>
 
-              
+
 
 
             </div>
-  
+
             <!--
 
 
@@ -125,7 +119,7 @@
   -->
         </div>
 
-        
+
 
     </div>
 
