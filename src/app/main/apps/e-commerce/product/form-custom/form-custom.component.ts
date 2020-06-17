@@ -246,7 +246,7 @@ export class FormCustomComponent implements OnInit {
             id: obj._id,
             title: [obj.title, [Validators.required]],
             value: obj.required
-                ? [obj.value, [Validators.required]]
+                ? [obj.value]
                 : obj.value,
             placeHolder: obj.placeHolder,
             edit: obj.edit,

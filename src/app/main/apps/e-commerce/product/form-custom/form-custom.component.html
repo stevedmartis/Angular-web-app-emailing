@@ -33,8 +33,7 @@
                     <form class="form-margin" fxLayout="column" fxLayoutAlign="start" fxFlex="1 0 auto"
                         name="productForm" [formGroup]="inputsEnabledForm">
 
-                        <span class="title-category">Editar y seleccionar</span>
-
+                     
                         <div class="list-fields" formArrayName="fieldsEnabled" cdkDropList #todoList="cdkDropList"
                             [cdkDropListData]="formDataFieldsInputs.controls" [cdkDropListConnectedTo]="[doneList]"
                             (cdkDropListDropped)="drop($event)">
@@ -105,21 +104,21 @@
     <!-- / SIDEBAR -->
 
     <!-- CENTER -->
-    <div class="center">
+    <div class="center center-custom">
 
 
         <!-- CONTENT CARD -->
         <div class="content-card">
 
             <!-- CONTENT TOOLBAR -->
-            <div class="toolbar px-24 py-8">
+            <div class="toolbar">
 
                 <button mat-icon-button class="sidebar-toggle" fxHide.gt-md
                     (click)="toggleSidebar('carded-left-sidebar-2')">
                     <mat-icon>menu</mat-icon>
                 </button>
 
-                <span>Campos seleccionados</span>
+                <span class="title-select">Campos seleccionados</span>
             </div>
             <!-- / CONTENT TOOLBAR -->
 
@@ -131,7 +130,9 @@
                 <mat-list>
 
 
-            <form
+     
+            
+            <form class="form-margin" fxLayout="column" fxLayoutAlign="start" fxFlex="1 0 auto"
             name="productForm" [formGroup]="inputsSelectionForm">
 
             <div cdkDropList class="list-fields"  #doneList="cdkDropList" formArrayName="fieldsSelection"  [cdkDropListData]="formDataFieldsInputsSelection.controls"
@@ -150,10 +151,8 @@
                             
                               
                         <mat-form-field  appearance="outline" fxFlex="75">
-                            <mat-label *ngIf="f.value.required">{{ f.value.title }} *</mat-label>
-
-                            <mat-label *ngIf="!f.value.required">{{ f.value.title }} </mat-label>
-                            <input name="name" [type]="f.value.type"  formControlName="value" matInput  >
+                            <mat-label >{{ f.value.title }}</mat-label>
+                            <input name="name" [type]="f.value.type"  formControlName="value" matInput [required]="f.value.required"  >
                         </mat-form-field>
 
 

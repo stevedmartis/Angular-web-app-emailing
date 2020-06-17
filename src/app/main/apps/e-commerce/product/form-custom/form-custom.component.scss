@@ -27,7 +27,13 @@
 
 .header-custom {
     height: 100px;
-}
+
+    @include media-breakpoint('xs') {
+        height: 75px;
+    }
+    }
+
+  
 
 
 .header-custom-inputs {
@@ -76,6 +82,14 @@
     background: transparent;
     -webkit-box-flex: 1;
     flex: 1 1 auto;
+
+
+    @include media-breakpoint('xs') {
+        overflow: auto;
+
+    }
+
+  
    
 }
 
@@ -108,10 +122,6 @@
 
 }
 
-.center-custom {
-    margin-left: 200px !important;
-
-}
 
 
 .button
@@ -194,7 +204,10 @@
     display: block;
 
     
-
+    @include media-breakpoint('xs') {
+        padding: 0px 0px;
+      }
+  
   
 
 
@@ -208,15 +221,15 @@
 
 .inputs-container {
 
-    padding: 0% 0% 0% 0%;
+  
 
 
     @include media-breakpoint('m') {
-        padding: 0% 65% 0% 3%;
+        padding: 0% 0% 0% 0%;
     }
 
     @include media-breakpoint('xs') {
-      padding: 0% 25% 0% 9%;
+      padding: 0% 16% 0% 0%;
     }
 
   
@@ -321,4 +334,25 @@
 
   .inputs-enabled {
         margin: 0% !important;      
+}
+
+.center-custom {
+
+
+    @include media-breakpoint('xs') {
+      
+    margin: 0 0px !important;
+
+    }
+}
+
+.title-select {
+
+    padding-left: 12px;
+
+    @include media-breakpoint('xs') {
+      
+        padding-left: 0px;
+    
+        }
 }
