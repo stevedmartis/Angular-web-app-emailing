@@ -15,7 +15,7 @@
     flex-direction: column;
     -webkit-box-flex: 1;
     flex: 1 1 auto;
-    overflow: hidden;
+    overflow: auto;
     box-shadow: 0px 2px 1px -1px rgba(0, 0, 0, 0.2), 0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 1px 3px 0px rgba(0, 0, 0, 0.12);
     color: w;
 }
@@ -84,10 +84,10 @@
     flex: 1 1 auto;
 
 
-    @include media-breakpoint('xs') {
+    
         overflow: auto;
 
-    }
+    
 
   
    
@@ -168,7 +168,7 @@
 
 .page-layout.carded.left-sidebar > .sidebar, .page-layout.carded.right-sidebar > .sidebar {
 
-  
+    overflow: auto !important;
     @include media-breakpoint('xs') {
         overflow: auto !important;
     }
