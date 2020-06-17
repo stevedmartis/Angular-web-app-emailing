@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewEncapsulation, OnDestroy } from "@angular/core";
-import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { FormBuilder, FormGroup, Validators, FormArray } from "@angular/forms";
 
 import { FuseConfigService } from "@fuse/services/config.service";
 import { fuseAnimations } from "@fuse/animations";
@@ -10,6 +10,7 @@ import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { Router } from '@angular/router';
 import { PolarChartComponent } from '@swimlane/ngx-charts';
+import { Title } from '@angular/platform-browser';
 
 @Component({
     selector: "lock",
@@ -19,7 +20,7 @@ import { PolarChartComponent } from '@swimlane/ngx-charts';
     animations: fuseAnimations
 })
 export class LockComponent implements OnInit, OnDestroy {
-    invitationForm: FormGroup;
+    invitationForm = this.createInputsForm();;
 
     invited: Invited;
   
@@ -71,8 +72,11 @@ export class LockComponent implements OnInit, OnDestroy {
      * On init
      */
     ngOnInit(): void {
-        
 
+       
+       
+       
+        
    
         // Subscribe to update product on changes
         this._formInvitationService.onInvitedChanged
@@ -80,6 +84,9 @@ export class LockComponent implements OnInit, OnDestroy {
             .subscribe(invited => {
 
 
+                console.log( 'array in onInit ',this._formInvitationService.arrayInputsSelect)
+
+                this.patchFieldInputs()
 
 
                 console.log('invited', invited)
@@ -105,11 +112,13 @@ export class LockComponent implements OnInit, OnDestroy {
                    
                 }
 
-                this.invitationForm = this.createInvitedForm();
+              //  this.invitationForm = this.createInvitedForm();
 
             });
 
     }
+
+    
 
     ngOnDestroy(): void
     {
@@ -119,27 +128,88 @@ export class LockComponent implements OnInit, OnDestroy {
     }
 
 
-        createInvitedForm(): FormGroup
+    createInputsForm(): FormGroup
     {
 
         return this._formBuilder.group({
-            rut: [this.invited.rut, [Validators.required]],
-            invitedId: [this.invited._id],
-            name:  [this.invited.name, [Validators.required]], 
-            lastname:  [this.invited.lastname, [Validators.required]], 
-            email: [this.invited.email, [Validators.required, Validators.email]], 
-            company:  [this.invited.company, [Validators.required]], 
-            asiste: [],
+            //rut: [this.invited.rut, [Validators.required]],
+            //invitedId: [this.invited._id],
+            //name:  [this.invited.name, [Validators.required]], 
+            //lastname:  [this.invited.lastname, [Validators.required]], 
+            //email: [this.invited.email, [Validators.required, Validators.email]], 
+            //company:  [this.invited.company, [Validators.required]], 
+           asiste: [],
            // jobtitle: [this.invited.jobtitle, [Validators.required]], 
-            phone: [this.invited.phone], 
-            contactado: ['email']
+            //phone: [this.invited.phone], 
+            //contactado: ['email']
+            inputSelection: this._formBuilder.array([])
         });
     }
 
     get f() { return this.invitationForm.controls; }
 
+    get formDataInputs(){
+        return <FormArray>this.f.inputSelection;
+    }
+
+
+    getMesaggeErrorTitle(i, title, value){
+
+
+        return (<FormArray>this.invitationForm.get('inputSelection'))
+        .controls[i].invalid && value.length === 0? 
+        title + ' es obligatorio' : ''
+        
+       // return this.enabledF.fieldsEnabled.getError('required')? 'Titulo debe tener un nombre' : this.formDataFieldsInputs.getError('minlength')? 'Minimo 3 letras' : '';    
+      }
+
+    patchFieldInputs() {
+        const inputs = <FormArray>this.f.inputSelection;
+
+        this._formInvitationService.arrayInputsSelect.forEach((x) =>  {
+            inputs.push(this.patchValiesSelection(x))
+
+            console.log(inputs)
+        })
+
+     
+    }
+
+    patchValiesSelection(obj){
+        return this._formBuilder.group({
+            id: obj._id,
+            title: [obj.title],
+            value: obj.required
+                ?  [obj.value, [Validators.required]]
+                : obj.value,
+            placeHolder: obj.placeHolder,
+            edit: obj.edit,
+            type: obj.type,
+            coulmn: obj.column,
+            nameControl: obj.nameControl,
+            required: obj.required,
+        })
+    }
+
   
     getDataInvited(){
+
+        
+
+        const findEmail = this._formInvitationService.arrayInputsSelect.filter(x => {
+            return x.type === 'email'? true: false;
+        })
+
+    console.log(findEmail)
+
+        if(findEmail.length === 0){
+
+            return
+        }
+
+        else {
+
+     
 
         if(this.f.email.valid){
 
@@ -157,7 +227,7 @@ export class LockComponent implements OnInit, OnDestroy {
 
                     this._formInvitationService.invitedExist = true;
 
-                    this.invitationForm = this.createInvitedForm();
+                 //   this.invitationForm = this.createInvitedForm();
 
                 }
 
@@ -181,6 +251,8 @@ export class LockComponent implements OnInit, OnDestroy {
         
 
     }
+
+}
 
     }
 

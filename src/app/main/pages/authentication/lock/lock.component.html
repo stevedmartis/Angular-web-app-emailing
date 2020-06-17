@@ -31,7 +31,7 @@
 
 
 
-            <div class="form-card">
+            <div class="form-card"  >
 
 
                 <div class="lock-form-header" fxLayout="column" fxLayoutAlign="center center" fxLayout.gt-xs="row"
@@ -50,58 +50,31 @@
 
                 <form class="form-invitation " name="lockForm" [formGroup]="invitationForm" novalidate>
 
-                    <mat-form-field appearance="outline">
-                        <mat-label>Correo Electrónico</mat-label>
-                        <input matInput formControlName="email" (change)="getDataInvited()">
-                        <mat-icon matSuffix>email</mat-icon>
-
-                    </mat-form-field>
-
-                    <mat-form-field appearance="outline">
-                        <mat-label>Rut</mat-label>
-                        <input matInput formControlName="rut">
-                        <mat-icon matSuffix>perm_identity</mat-icon>
-                    </mat-form-field>
-
-                    <mat-form-field appearance="outline">
-                        <mat-label>Nombres</mat-label>
-                        <input matInput formControlName="name">
-                        <mat-icon matSuffix>account_circle</mat-icon>
-
-                    </mat-form-field>
-
-                    <mat-form-field appearance="outline">
-                        <mat-label>Apellidos</mat-label>
-                        <input matInput formControlName="lastname">
-                        <mat-icon matSuffix>account_circle</mat-icon>
-
-                    </mat-form-field>
-
-                    <mat-form-field appearance="outline">
-                        <mat-label>Empresa / Institución</mat-label>
-                        <input matInput formControlName="company">
-                        <mat-icon matSuffix>domain</mat-icon>
-
-                    </mat-form-field>
-
-
-                    <!--
-
                     
+
+                    <div formArrayName="inputSelection">
+
+            <div *ngFor="let f of formDataInputs.controls; index as i"
+            [formGroupName]="i">
+
+         
+                
+           
+
                     <mat-form-field appearance="outline">
-                        <mat-label>Cargo</mat-label>
-                        <input matInput formControlName="jobtitle">
-                        <mat-icon matSuffix>work</mat-icon>
+                        <mat-label *ngIf="f.value.required">{{ f.value.title }} *</mat-label>
 
+                        <mat-label *ngIf="!f.value.required">{{ f.value.title }} </mat-label>
+                        <input   matInput formControlName="value"  [type]="f.value.type" (change)="getDataInvited()">
+                      
+                        <mat-error>
+                            {{ getMesaggeErrorTitle(i, f.value.title, f.value.value) }}
+                    </mat-error>
                     </mat-form-field>
--->
 
-                    <mat-form-field appearance="outline">
-                        <mat-label>Teléfono de Contacto</mat-label>
-                        <input matInput formControlName="phone">
-                        <mat-icon matSuffix>smartphone</mat-icon>
+ 
 
-                    </mat-form-field>
+
 
 
                     
@@ -132,7 +105,12 @@
 
                 </div>
 
+
+            </div> 
+            </div>
                 </form>
+
+              
 
 
             </div>
