@@ -59,7 +59,7 @@ export class FormCustomComponent implements OnInit, OnDestroy {
     constructor(
         private _fuseSidebarService: FuseSidebarService,
         private _formBuilder: FormBuilder,
-        private _formCustomService: FormCustomService,
+        public _formCustomService: FormCustomService,
 
     ) {
         // Set the private defaults
