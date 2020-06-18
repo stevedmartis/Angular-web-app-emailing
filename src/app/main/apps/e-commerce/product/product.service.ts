@@ -10,6 +10,7 @@ import { catchError, last, tap, map } from 'rxjs/operators';
 import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 import { UsersService } from './users/users.service';
 import { AcademyCoursesService } from '../../academy/courses.service';
+import { FormCustomService } from './form-custom/services/form-custom.service';
 
 
 @Injectable()
@@ -22,6 +23,7 @@ export class EcommerceProductService implements Resolve<any>
     onProductChanged: BehaviorSubject<any>;
     idNowEvent: any;
     formCustomPristine: boolean = false;
+    isNew: boolean = false
 
 
 
@@ -37,7 +39,7 @@ export class EcommerceProductService implements Resolve<any>
         private authServices: AuthService,
         private contactServices: ContactsService,
         private _usersServices: UsersService,
-        private _academyCoursesService: AcademyCoursesService
+        private _academyCoursesService: AcademyCoursesService,
 
     )
     {
@@ -63,8 +65,9 @@ export class EcommerceProductService implements Resolve<any>
             Promise.all([
 
                 
-
+              
                 this.contactServices.getContacts(this.routeParams.id),
+    
 
                 this.getProduct()
                 .then((event) => {

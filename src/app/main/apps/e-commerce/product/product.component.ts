@@ -21,7 +21,7 @@ import { ContactsService } from 'app/main/apps/contacts/contacts.service';
 import { CampaignService } from './campaigns/campaign.service';
 import { AcademyCoursesService } from '../../academy/courses.service';
 import { FormCustomComponent } from './form-custom/form-custom.component';
-
+import { FormCustomService } from './form-custom/services/form-custom.service';
 
 export class FileUploadModel {
     data: File;
@@ -81,6 +81,7 @@ export class EcommerceProductComponent implements OnInit, OnDestroy
         private _matSnackBar: MatSnackBar,
         private _academyCoursesService: AcademyCoursesService,
         public _campaignService: CampaignService,
+        private _formCustomService:FormCustomService,
 
         
         public _matDialog: MatDialog,
@@ -126,9 +127,16 @@ export class EcommerceProductComponent implements OnInit, OnDestroy
                   
                     this._contactsService.eventCreated = true;
                     this._campaignService.eventOpen = product.event.active;
-                    this._campaignService.getCampaigns()
 
+                    this._formCustomService.eventExist = true;
+                    this._formCustomService.idEventNow = product.event._id;
+                   this._formCustomService.getInputsEventOrInitial()
+
+                   console.log('PRODUCT')
+                    this._campaignService.getCampaigns();
                   
+
+                    this._ecommerceProductService.isNew = false
 
                     this._ecommerceProductService.getTagsByEvent()
                     .then( (data: any)=> {
@@ -154,6 +162,7 @@ export class EcommerceProductComponent implements OnInit, OnDestroy
                 {
                     this.pageType = 'new';
                     this.product = new Product();
+                    this._formCustomService.eventExist = false
 
                     this._campaignService.imgProductLoad = false;
                 }
@@ -324,6 +333,8 @@ export class EcommerceProductComponent implements OnInit, OnDestroy
                         this.nextStep()
     
                     }
+
+            
     
                     // Change the location with new one
                     this._location.go('apps/e-commerce/products/' + x.event._id + '/' + x.event.handle);

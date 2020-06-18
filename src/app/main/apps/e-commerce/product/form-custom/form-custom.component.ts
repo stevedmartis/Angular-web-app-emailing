@@ -8,7 +8,7 @@ import {
     ElementRef,
 } from "@angular/core";
 import { Subject } from "rxjs";
-import { takeUntil } from "rxjs/operators";
+import { takeUntil, timeoutWith } from "rxjs/operators";
 
 import { fuseAnimations } from "@fuse/animations";
 import { FuseSidebarService } from "@fuse/components/sidebar/sidebar.service";
@@ -18,15 +18,15 @@ import {
     moveItemInArray,
     transferArrayItem,
 } from "@angular/cdk/drag-drop";
-import { controllers } from "chart.js";
-import { EcommerceProductService } from "../product.service";
+
+import { FormCustomService } from './services/form-custom.service';
 
 @Component({
     selector: "form-custom",
     templateUrl: "./form-custom.component.html",
     styleUrls: ["./form-custom.component.scss"],
-
     animations: fuseAnimations,
+    encapsulation: ViewEncapsulation.None,
 })
 export class FormCustomComponent implements OnInit, OnDestroy {
     selectedChat: any;
@@ -54,14 +54,18 @@ export class FormCustomComponent implements OnInit, OnDestroy {
     inputsEnabledForm: FormGroup;
     inputsSelectionForm: FormGroup;
 
+
+
     constructor(
         private _fuseSidebarService: FuseSidebarService,
         private _formBuilder: FormBuilder,
-        private _ecommerceProductService: EcommerceProductService
+        private _formCustomService: FormCustomService,
+
     ) {
         // Set the private defaults
         this.inputsEnabledForm = this.createInputsEnabledForm();
         this.inputsSelectionForm = this.createInputSelectionForm();
+        this._unsubscribeAll = new Subject();
     }
 
     // -----------------------------------------------------------------------------------------------------
@@ -72,101 +76,10 @@ export class FormCustomComponent implements OnInit, OnDestroy {
      * On init
      */
     ngOnInit(): void {
-        this._ecommerceProductService.getInputsEvent().then((data) => {
-            console.log(data);
 
-            if (data.inputs.length === 0) {
-
-                this._ecommerceProductService.getInputsInitial()
-                .then((init) => {
-
-                    if(init.inputs.length === 0){
-                        return;
-                    }
-
-                    else {
-
-                        init.inputs.forEach((input) => {
-
-                            console.log('input', input)
-
-                            this._ecommerceProductService
-                                .addInputFormInEvent(input)
-                                .then((res) => {
-                                    this.arrayFieldsAll.push(res.input);
-
-                                    console.log(' this.arrayFieldsAll',  this.arrayFieldsAll)
-
-                                    if(res.input.column === 1){
-
-                                        this.arrayFieldsEnabled.push(res.input);
-
-                                        this.patchFieldsEnabled();
-
-                                     
-                                    }
-
-                                    else if (res.input.column === 2) {
-                                        this.arrayFieldSelection.push(res.input);
-
-                                        this.patchFieldsSelection();
-                                    }
-
-                                });
-                        });
-
-
-                    }
-
-
-
-                })
-
-
-            } else {
-           
-
-                this.arrayFieldsAll = data.inputs;
-
-                console.log("mas inputs",  this.arrayFieldsAll);
-
-                this.pushInputsAndPatchValues();
-            }
-        });
     }
 
-        
-    getMesaggeErrorTitle(i, title){
 
-
-        return (<FormArray>this.inputsEnabledForm.get('fieldsEnabled')).controls[i].invalid && title.length === 0? 'Nombre del campo obligatorio' :  (<FormArray>this.inputsEnabledForm.get('fieldsEnabled')).controls[i].invalid && title.length < 3? 'Minimo 3 letras' : '';
-        
-       // return this.enabledF.fieldsEnabled.getError('required')? 'Titulo debe tener un nombre' : this.formDataFieldsInputs.getError('minlength')? 'Minimo 3 letras' : '';    
-      }
-
-    pushInputsAndPatchValues() {
-
-
-        const enableds = this.arrayFieldsAll.filter(x => {
-            return x.column === 1
-        } )
-
-        console.log(enableds)
-
-        this.arrayFieldsEnabled = enableds;
-
-    
-        const selection =  this.arrayFieldsAll.filter(x => {
-           return  x.column == 2   
-        } )
-
-        this.arrayFieldSelection = selection;
-
-
-        this.patchFieldsEnabled();
-
-        this.patchFieldsSelection();
-    }
 
     createInputsEnabledForm(): FormGroup {
         return this._formBuilder.group({
@@ -182,7 +95,6 @@ export class FormCustomComponent implements OnInit, OnDestroy {
 
     addNewInput(){
         
-
 
         const obj = {
             
@@ -203,45 +115,41 @@ export class FormCustomComponent implements OnInit, OnDestroy {
         } else {
 
 
-            this._ecommerceProductService.addInputFormInEvent(obj)
+            this._formCustomService.addInputFormInEvent(obj)
             .then((res) =>{
 
-                const fields = <FormArray>this.enabledF.fieldsEnabled;
+                const fields = <FormArray>this._formCustomService.enabledF.fieldsEnabled;
 
                 fields.push(this.patchValuesEnables(res.input, 1));
 
             })
-            
-
-    
-             
-  
+        
 
         }
 
 
     }
 
-    patchFieldsEnabled() {
+    patchFieldsEnabled(obj) {
 
-        console.log(  this.arrayFieldsEnabled)
+    
 
-        const fields = <FormArray>this.enabledF.fieldsEnabled;
+        const fields = <FormArray>this._formCustomService.enabledF.fieldsEnabled;
 
-        this.arrayFieldsEnabled.forEach((x) => {
-            var obj = fields.push(this.patchValuesEnables(x, 1));
-        });
+  
+           fields.push(this.patchValuesEnables(obj, 1));
+       
     }
 
-    patchFieldsSelection() {
+    patchFieldsSelection(obj) {
 
 
-        console.log(  this.arrayFieldSelection)
-        const fields = <FormArray>this.selectionF.fieldsSelection;
+      
+        const fields = <FormArray>this._formCustomService.selectionF.fieldsSelection;
 
-        this.arrayFieldSelection.forEach((x) => {
-            var obj = fields.push(this.patchValuesSelection(x, 2));
-        });
+       
+        fields.push(this.patchValuesSelection(obj, 2));
+    
     }
 
     patchValuesEnables(obj, Ncolumn) {
@@ -274,21 +182,7 @@ export class FormCustomComponent implements OnInit, OnDestroy {
         });
     }
 
-    get enabledF() {
-        return this.inputsEnabledForm.controls;
-    }
-
-    get selectionF() {
-        return this.inputsSelectionForm.controls;
-    }
-
-    get formDataFieldsInputs() {
-        return <FormArray>this.enabledF.fieldsEnabled;
-    }
-
-    get formDataFieldsInputsSelection() {
-        return <FormArray>this.selectionF.fieldsSelection;
-    }
+ 
 
     toggleSidebar(name): void {
         this._fuseSidebarService.getSidebar(name).toggleOpen();
@@ -306,16 +200,16 @@ export class FormCustomComponent implements OnInit, OnDestroy {
         } else {
             this.toggleSidebar(name);
 
-            this._ecommerceProductService.editInputFormColumnSelect(event.value.id)
+            this._formCustomService.editInputFormColumnSelect(event.value.id)
             .then((res) => {
 
-                this.formDataFieldsInputsSelection.controls.push(
+                this._formCustomService.formDataFieldsInputsSelection.controls.push(
                     this.patchValuesSelection(event.value, 2)
                 );
     
                 
     
-                this.formDataFieldsInputs.removeAt(i);
+                this._formCustomService.formDataFieldsInputs.removeAt(i);
 
             })
 
@@ -327,19 +221,19 @@ export class FormCustomComponent implements OnInit, OnDestroy {
 
     deleteInputEvent(i, obj){
 
-        this.formDataFieldsInputs.removeAt(i);
+        this._formCustomService.formDataFieldsInputs.removeAt(i);
 
     }
 
     dropItemSideBarSelectionClose(i, event, name): void {
         this.toggleSidebar(name);
 
-        this._ecommerceProductService.editInputFormColumnEnabled(event.value.id)
+        this._formCustomService.editInputFormColumnEnabled(event.value.id)
         .then((res) => {
 
-            this.formDataFieldsInputsSelection.removeAt(i);
+            this._formCustomService.formDataFieldsInputsSelection.removeAt(i);
 
-        this.formDataFieldsInputs.controls.push(
+        this._formCustomService.formDataFieldsInputs.controls.push(
             this.patchValuesEnables(event.value, 1)
 
         )
@@ -372,15 +266,6 @@ export class FormCustomComponent implements OnInit, OnDestroy {
     }
 
 
-    saveFormAction() {
-        this._ecommerceProductService.formCustomPristine = true;
-
-        console.log(
-            "change form selection",
-            this._ecommerceProductService.formCustomPristine
-        );
-    }
-
     dropInSelection(event: CdkDragDrop<string[]>) {
         if (event.previousContainer === event.container) {
             moveItemInArray(
@@ -410,7 +295,7 @@ export class FormCustomComponent implements OnInit, OnDestroy {
 
         if (f.title.length >= 3) {
 
-            this._ecommerceProductService.editInputFormtitle(f)
+            this._formCustomService.editInputFormtitle(f)
             .then((res) => {
     
                 console.log(res)
@@ -429,7 +314,7 @@ export class FormCustomComponent implements OnInit, OnDestroy {
 
         console.log(newObj);
 
-        this._ecommerceProductService.editInputFormRequired(newObj)
+        this._formCustomService.editInputFormRequired(newObj)
         .then((res) => {
 
             console.log(res)
@@ -447,7 +332,7 @@ export class FormCustomComponent implements OnInit, OnDestroy {
 
         console.log(newObj);
 
-        this._ecommerceProductService.editInputFormColumnSelect(f.id)
+        this._formCustomService.editInputFormColumnSelect(f.id)
         .then((res) => {
 
             console.log(res)
@@ -462,8 +347,20 @@ export class FormCustomComponent implements OnInit, OnDestroy {
 
         console.log('desrouu')
 
-        this.arrayFieldSelection = [];
-        this.arrayFieldsEnabled = [];
-        this.arrayFieldsAll = [];
+        this._formCustomService.idEventNow = ''
+
+        this._formCustomService.onInputsArrayChange.next([])
+
+
+        console.log('destoy')
+
+
+       
+
+        this._formCustomService.removeInputs()
+
+  
+
+        
     }
 }

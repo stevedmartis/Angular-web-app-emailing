@@ -130,7 +130,7 @@ export class CampaignService {
     getCampaigns(): Promise<any> {
         this.loadingCampaigns = true;
         return new Promise((resolve, reject) => {
-            // console.log('eventId', this.eventId)
+           
 
             this._httpClient
                 .get(environment.apiUrl + "/api/campaign-event/"  + this._productService.idNowEvent)
@@ -138,12 +138,6 @@ export class CampaignService {
 
                     console.log('response', response)
                     const campaigns = response.campaigns;
-
-                    console.log(
-                        "map by id:",
-                        this._productService.idNowEvent,
-                        campaigns
-                    );
 
                     this.campaigns = campaigns;
                     this.onCampaignChanged.next(this.campaigns);

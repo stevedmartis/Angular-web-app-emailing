@@ -80,6 +80,8 @@ export class CampaignsComponent implements OnInit, OnDestroy {
             .subscribe((courses) => {
                 this.filteredCourses = this._campaignService.campaigns;
 
+                console.log('camp entro')
+
                 console.log(this.filteredCourses);
             });
     }

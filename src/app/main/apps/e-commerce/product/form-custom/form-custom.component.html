@@ -34,6 +34,7 @@
                (click)="toggleSidebar('carded-left-sidebar-2')">
                <mat-icon>close</mat-icon>
            </button>
+
                    
 
 
@@ -57,16 +58,16 @@
 
 
                     <form class="form-margin" fxLayout="column" fxLayoutAlign="start" fxFlex="1 0 auto"
-                        name="productForm" [formGroup]="inputsEnabledForm">
+                        name="productForm" [formGroup]="_formCustomService.inputsEnabledForm">
 
                         <span class="title-category">Editar y seleccionar</span>
 
                         <div class="list-fields" formArrayName="fieldsEnabled" cdkDropList #todoList="cdkDropList"
-                            [cdkDropListData]="formDataFieldsInputs.controls" [cdkDropListConnectedTo]="[doneList]"
+                            [cdkDropListData]="_formCustomService.formDataFieldsInputs.controls" [cdkDropListConnectedTo]="[doneList]"
                             (cdkDropListDropped)="drop($event)">
 
 
-                            <div class="item-field" *ngFor="let f of formDataFieldsInputs.controls; index as i" 
+                            <div class="item-field" *ngFor="let f of _formCustomService.formDataFieldsInputs.controls; index as i" 
                             [formGroupName]="i"
                             [@animate]="{value:'*',params:{x:'100%'}}"
                             cdkDrag>
@@ -81,7 +82,7 @@
                                         <input name="name" formControlName="title" matInput (change)="changeTitle(f.value)">
 
                                         <mat-error>
-                                            {{ getMesaggeErrorTitle(i, f.value.title) }}
+                                            {{ _formCustomService.getMesaggeErrorTitle(i, f.value.title) }}
                                     </mat-error>
                                         
                                     </mat-form-field>
@@ -100,7 +101,10 @@
 
                                 </div>
 
-            
+    
+
+
+
 
 
 
@@ -148,42 +152,31 @@
         <div class="content-inputs" fusePerfectScrollbar>
 
             <div class="demo-sidebar">
-                <mat-list>
-
-
-     
+                <mat-list>     
             
             <form class="form-margin" fxLayout="column" fxLayoutAlign="start" fxFlex="1 0 auto"
-            name="productForm" [formGroup]="inputsSelectionForm">
+            name="productForm" [formGroup]="_formCustomService.inputsSelectionForm">
 
-            <div cdkDropList class="list-fields"  #doneList="cdkDropList" formArrayName="fieldsSelection"  [cdkDropListData]="formDataFieldsInputsSelection.controls"
+            <div cdkDropList class="list-fields"  #doneList="cdkDropList" formArrayName="fieldsSelection"  [cdkDropListData]="_formCustomService.formDataFieldsInputsSelection.controls"
                 [cdkDropListConnectedTo]="[todoList]"  class="list-fields" (cdkDropListDropped)="drop($event)"
-                class="content p-24" fusePerfectScrollbar>
+                fusePerfectScrollbar>
 
 
-           
-
-                <div class="item-field" *ngFor="let f of formDataFieldsInputsSelection.controls; index as i"  [formGroupName]="i"
+                <div class="item-field" *ngFor="let f of _formCustomService.formDataFieldsInputsSelection.controls; index as i"  [formGroupName]="i"
                 [@animate]="{value:'*',params:{x:'-100%'}}"
                  cdkDrag>
 
                     <div fxLayout="row" fxLayoutAlign="start center">
-
-                            
                               
                         <mat-form-field  appearance="outline" fxFlex="75">
                             <mat-label *ngIf="f.value.required">{{ f.value.title }} *</mat-label>
 
                             <mat-label *ngIf="!f.value.required">{{ f.value.title }} </mat-label>
                             <input name="name" [type]="f.value.type"  formControlName="value" matInput  >
-                        </mat-form-field>
-
-
-                    
+                        </mat-form-field>                    
                     <div class="btn-action">
 
-                    
-
+                
                         <button mat-icon-button matTooltip="Seleccionar" class="sidebar-toggle"
                         (click)="dropItemSideBarSelectionClose(i, f,'carded-left-sidebar-2')">
                         <mat-icon>swap_horiz</mat-icon>

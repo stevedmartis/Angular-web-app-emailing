@@ -31,6 +31,7 @@ import { AcademyModule } from '../academy/academy.module';
 import { UsersComponent } from './product/users/users.component';
 import { FormCustomComponent } from './product/form-custom/form-custom.component';
 import { CardedLeftSidebar2Component } from 'app/main/ui/page-layouts/carded/left-sidebar-2/left-sidebar-2.component';
+import { FormCustomService } from './product/form-custom/services/form-custom.service';
 
 const routes: Routes = [
     {
@@ -115,6 +116,7 @@ const routes: Routes = [
         EcommerceOrderService,
         ContactsService,
         CampaignService,
+        FormCustomService
 
 
     ],
