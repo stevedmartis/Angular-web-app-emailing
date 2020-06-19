@@ -78,13 +78,35 @@ export class LockComponent implements OnInit, OnDestroy {
                     this._formInvitationService.arrayInputsSelect
                 );
 
-                this.patchFieldInputs();
+              
 
                 console.log("invited", invited);
                 if (!invited.invited) {
                     this.invited = new Invited();
 
                     console.log(this.invited);
+
+                    this._formInvitationService.getInputsEvent(this._formInvitationService.campaignInvitation.eventId)
+                    .then((data) => {
+
+
+                        this._formInvitationService.arrayInputsSelect = data.inputs.filter(x => {
+                            return x.column === 2;
+                        })
+
+                        console.log('inputs select',this._formInvitationService.arrayInputsSelect)
+
+                        if(this._formInvitationService.arrayInputsSelect.length === 0){
+
+                            return;
+                        }
+
+                        else {
+
+                            this.patchFieldInputs();
+                        }
+
+                    })
                   
 
 
@@ -92,6 +114,10 @@ export class LockComponent implements OnInit, OnDestroy {
                     console.log("invited", invited);
                     this.invited = new Invited(invited.invited);
                     console.log("this.producte.evnd.id", invited.invited._id);
+
+                    this.patchFieldInputs();
+
+                   
                 }
 
                

@@ -74,22 +74,6 @@ export class FormInvitedService implements Resolve<any> {
 
                             this.eventLoad = true;
 
-                            this.getInputsEvent(this.campaignInvitation.eventId)
-                            .then((data) => {
-
-
-                                this.arrayInputsSelect = data.inputs.filter(x => {
-                                    return x.column === 2;
-                                })
-
-                                console.log('inputs select',this.arrayInputsSelect)
-
-                                if(this.arrayInputsSelect.length === 0){
-
-                                    return;
-                                }
-
-                            })
 
                             if (this.invitedId !== "new") {
                                 console.log("invitedId", this.invitedId);
