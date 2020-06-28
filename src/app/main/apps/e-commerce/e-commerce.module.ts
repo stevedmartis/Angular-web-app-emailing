@@ -32,6 +32,7 @@ import { UsersComponent } from './product/users/users.component';
 import { FormCustomComponent } from './product/form-custom/form-custom.component';
 import { CardedLeftSidebar2Component } from 'app/main/ui/page-layouts/carded/left-sidebar-2/left-sidebar-2.component';
 import { FormCustomService } from './product/form-custom/services/form-custom.service';
+import { SelectFieldsComponent } from '../contacts/contact-list/dialog/select-fields/select-fields.component';
 
 const routes: Routes = [
     {
@@ -85,6 +86,7 @@ const routes: Routes = [
         SendComponent,
         UsersComponent,
         FormCustomComponent,
+
         
        
 
@@ -123,7 +125,7 @@ const routes: Routes = [
     entryComponents: [
         AddComponent,
         
-
+        SelectFieldsComponent,
         SendComponent
         
     ]

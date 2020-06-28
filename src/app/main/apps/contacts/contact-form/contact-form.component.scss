@@ -56,3 +56,15 @@
     }
 
 }
+
+.mat-form-field-infix {
+
+    width: 350px !important;
+
+
+    @include media-breakpoint('xs') {
+        width: 118px !important;
+    }
+
+ 
+}

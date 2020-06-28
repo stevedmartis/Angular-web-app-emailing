@@ -185,6 +185,11 @@ mat-cell:last-of-type {
 
     width: 50%;
 
+
+    @include media-breakpoint('lt-md') {
+        width: 100%;
+    }
+
     @include media-breakpoint('xs') {
         width: 100%;
     }

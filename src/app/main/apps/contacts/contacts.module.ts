@@ -25,6 +25,7 @@ import {  SpeedDialFabComponent } from 'app/layout/speed-dial-fab/speed-dial-fab
 
 import { MatPaginatorModule } from '@angular/material';
 import { MaterialModule } from 'app/main/angular-material-elements/material.module';
+import { SelectFieldsComponent } from './contact-list/dialog/select-fields/select-fields.component';
 
 const routes: Routes = [
     {
@@ -44,7 +45,8 @@ declarations: [
     ContactsSelectedBarComponent,
     ContactsMainSidebarComponent,
     ContactsContactFormDialogComponent,
-    SpeedDialFabComponent
+    SpeedDialFabComponent,
+    SelectFieldsComponent
 ],
 
     exports: [
@@ -53,7 +55,8 @@ declarations: [
         ContactsSelectedBarComponent,
         ContactsMainSidebarComponent,
         ContactsContactFormDialogComponent,
-        SpeedDialFabComponent
+        SpeedDialFabComponent,
+        SelectFieldsComponent
     ],
     imports        : [
         RouterModule.forChild(routes),

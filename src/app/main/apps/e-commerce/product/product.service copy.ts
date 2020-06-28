@@ -63,7 +63,7 @@ export class EcommerceProductService implements Resolve<any>
 
                 
 
-                this.contactServices.getContacts(this.routeParams.id),
+          
 
                 this.getProduct()
                 .then((event) => {

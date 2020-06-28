@@ -31,19 +31,44 @@ export class ContactsContactListComponent implements OnInit, OnDestroy
     contacts: any;
     user: any;
     dataSource: FilesDataSource | null;
-    displayedColumns = [
+
+    
+    initColumns: any[] = [
+
+
+
+        { name:'checkbox', initial: true, checkbox: true, title: '',  },
+
+        //data DB xls
+        { name:'company', initial: false, title: 'Empresa' ,   export: true },
+
+        { name:'name', initial: false,  title: 'Name' ,  export: true,  },
+
+        //teleMarketing
+        { name:'contactado', initial: true, title: 'Contacto', contact: true,  },
         
-    'checkbox',
-    'company',
-    'name',
-    'lastname',
-    'email',
-    'phone',
-    'contact',
-    'asiste',
-    'buttons'
-   
-    ];
+        { name:'asiste', initial: true, title: 'Asiste' ,  asiste: true,    },
+
+        //buttons action
+        { name:'buttons', initial: true, title: '',  buttons: true  },
+
+      
+                
+                    ];
+    displayedColumns: any[] = this.initColumns.map(col => col.name);
+        
+
+
+
+
+
+    
+    
+
+    displayedColumnsSelection : string[] 
+
+
+  
 
     @ViewChild('dialogContent', {static: false})
     dialogContent: TemplateRef<any>;
@@ -77,6 +102,8 @@ export class ContactsContactListComponent implements OnInit, OnDestroy
     )
     
     {
+
+     
 
         this.searchInput = new FormControl('');
 
@@ -135,10 +162,29 @@ export class ContactsContactListComponent implements OnInit, OnDestroy
                this.contacts = contacts;
                this.checkboxes = {};
                contacts.map(contact => {
-                   this.checkboxes[contact.id] = false;
+                   this.checkboxes[contact._id] = false;
 
                    if(contacts.length > 0){
 
+                
+
+                    if(this._contactsService.inputsArray.length > 0 ){
+
+                        this.initColumns = [];
+                        console.log('initColumns',this.initColumns)
+                        this.initColumns = this._contactsService.inputsArray;
+                        console.log('.inputsArray',this._contactsService.inputsArray,  this.initColumns)
+
+                        this.displayedColumns = this.initColumns.map(col => col.name);
+
+
+
+                    console.log('displayedColumns', this.displayedColumns)
+                        
+
+                     }
+      
+            
 
                     this._contactsService.contactsExist = true;
                     this._contactsService.loadingContact = false;
@@ -280,7 +326,7 @@ export class ContactsContactListComponent implements OnInit, OnDestroy
         this.confirmDialogRef.afterClosed().subscribe(result => {
             if ( result )
             {
-                this._contactsService.deleteContact(contact.id);
+                this._contactsService.deleteContact(contact._id);
             }
             this.confirmDialogRef = null;
         });
@@ -425,7 +471,7 @@ export class FilesDataSource extends DataSource<any>
             switch ( this._matSort.active )
             {
                 case 'id':
-                    [propertyA, propertyB] = [a.id, b.id];
+                    [propertyA, propertyB] = [a._id, b._id];
                     break;
                 case 'name':
                     [propertyA, propertyB] = [a.name, b.name];

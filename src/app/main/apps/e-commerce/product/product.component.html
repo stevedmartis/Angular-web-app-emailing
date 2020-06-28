@@ -1,5 +1,3 @@
-
-
 <div id="product" class="page-layout simple fullwidth" fxLayout="column">
 
     <!-- HEADER -->
@@ -12,13 +10,12 @@
                 <mat-icon>arrow_back</mat-icon>
             </button>
 
-            <div class="product-image-icon mr-8 mr-sm-16" >
+            <div class="product-image-icon mr-8 mr-sm-16">
                 <img *ngIf="product.images[0]" [src]="product.images[0].url">
                 <img *ngIf="!product.images[0]" [src]="'assets/images/add_event_white.png'">
             </div>
 
-            <div fxLayout="column" fxLayoutAlign="start start"
-               >
+            <div fxLayout="column" fxLayoutAlign="start start">
                 <div class="h2" *ngIf="pageType ==='edit'">
                     {{product.eventName}}
                 </div>
@@ -37,7 +34,8 @@
             <span>CREAR</span>
         </button>
 
-        <button mat-raised-button class="save-product-button" [disabled]="(productForm.invalid || productForm.pristine ) && (!removeTag  && !uploadFile)"
+        <button mat-raised-button class="save-product-button"
+            [disabled]="(productForm.invalid || productForm.pristine ) && (!removeTag  && !uploadFile)"
             *ngIf="pageType ==='edit'" (click)="saveProduct(true)">
             <span>GUARDAR</span>
         </button>
@@ -49,7 +47,8 @@
     <div class="content p-24">
 
 
-        <div class="mb-24" class="content-steper mat-card mat-elevation-z4" fxLayout="column" fxLayoutAlign="start" fxLayout.gt-md="row">
+        <div class="mb-24" class="content-steper mat-card mat-elevation-z4" fxLayout="column" fxLayoutAlign="start"
+            fxLayout.gt-md="row">
 
             <!-- REACTIVE FORM EXAMPLE -->
 
@@ -58,148 +57,150 @@
 
                 <!-- HORIZONTAL STEPPER EXAMPLE -->
 
-                
-                <mat-tab-group mat-align-tabs="start" (selectedTabChange)="onClickTab($event)" [selectedIndex]="selectedIndex">
+
+                <mat-tab-group mat-align-tabs="start" (selectedTabChange)="onClickTab($event)"
+                    [selectedIndex]="selectedIndex">
                     <mat-tab label="General">
 
-                       
 
-                        <form class="form-custom mr-24 form-margin" fxLayout="column" fxLayoutAlign="start" fxFlex="1 0 auto"
-                        name="productForm" [formGroup]="productForm">
 
-                        <div class="h2 mb-16">Ingrese información general</div>
+                        <form class="form-custom mr-24 form-margin" fxLayout="column" fxLayoutAlign="start"
+                            fxFlex="1 0 auto" name="productForm" [formGroup]="productForm">
 
-                        <mat-form-field appearance="outline" fxFlex  fxFlex="100" class="pl-4" class="container">
-                            <mat-label>Imagen</mat-label>
-                            <input name="imgTitle" formControlName="imgTitle" matInput>
-                            <mat-icon matSuffix class="secondary-text">
-                            
-                                    <input hidden  id="fileUpload" type="file"  #fileInput   />
-                    
-                                    <button mat-fab  (click)="fileUpload()"  class="button fuse-white mt-24 mt-md-0">
+                            <div class="h2 mb-16">Ingrese información general</div>
+
+                            <mat-form-field appearance="outline" fxFlex fxFlex="100" class="pl-4" class="container">
+                                <mat-label>Imagen</mat-label>
+                                <input name="imgTitle" formControlName="imgTitle" matInput>
+                                <mat-icon matSuffix class="secondary-text">
+
+                                    <input hidden id="fileUpload" type="file" #fileInput />
+
+                                    <button mat-fab (click)="fileUpload()" class="button fuse-white mt-24 mt-md-0">
                                         <mat-icon>add_photo_alternate</mat-icon>
                                     </button>
-                            
-                            </mat-icon>
-                        </mat-form-field>
 
-
-                        <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-
-                            <mat-form-field appearance="outline" fxFlex="100">
-                                <mat-label>Nombre evento</mat-label>
-                                <input matInput placeholder="Convocatoria nombre" name="name" formControlName="name"
-                                    required>
-                            </mat-form-field>
-
-                        </div>
-                        <div fxLayout="row wrap" fxLayoutAlign="start center" fxFlex="1 0 auto">
-
-                            <mat-form-field appearance="outline" floatLabel="always" class="w-100-p" fxFlex="100">
-                                <mat-label>Empresa</mat-label>
-                                <input matInput formControlName="company">
-                                <mat-icon class="mat-icon-company" matSuffix>domain</mat-icon>
+                                </mat-icon>
                             </mat-form-field>
 
 
-                            <mat-form-field appearance="outline" floatLabel="always" class="w-100-p" fxFlex="100">
-                                <mat-label>Descripción</mat-label>
-                                <textarea matInput placeholder="descripción del evento" name="description"
-                                    formControlName="description" rows="5">
+                            <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+
+                                <mat-form-field appearance="outline" fxFlex="100">
+                                    <mat-label>Nombre evento</mat-label>
+                                    <input matInput placeholder="Convocatoria nombre" name="name" formControlName="name"
+                                        required>
+                                </mat-form-field>
+
+                            </div>
+                            <div fxLayout="row wrap" fxLayoutAlign="start center" fxFlex="1 0 auto">
+
+                                <mat-form-field appearance="outline" floatLabel="always" class="w-100-p" fxFlex="100">
+                                    <mat-label>Empresa</mat-label>
+                                    <input matInput formControlName="company">
+                                    <mat-icon class="mat-icon-company" matSuffix>domain</mat-icon>
+                                </mat-form-field>
+
+
+                                <mat-form-field appearance="outline" floatLabel="always" class="w-100-p" fxFlex="100">
+                                    <mat-label>Descripción</mat-label>
+                                    <textarea matInput placeholder="descripción del evento" name="description"
+                                        formControlName="description" rows="5">
                                                   </textarea>
-                            </mat-form-field>
+                                </mat-form-field>
 
-                        </div>
+                            </div>
 
-                        <div fxLayout="row wrap" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                            <div fxLayout="row wrap" fxLayoutAlign="start center" fxFlex="1 0 auto">
 
-                  
 
-                            <mat-form-field appearance="outline" fxFlex="100">
-                                <mat-label>Dirección</mat-label>
-                                <input matInput placeholder="Dirección" name="address" formControlName="address">
+
+                                <mat-form-field appearance="outline" fxFlex="100">
+                                    <mat-label>Dirección</mat-label>
+                                    <input matInput placeholder="Dirección" name="address" formControlName="address">
                                     <mat-icon matSuffix class="secondary-text">home</mat-icon>
-                            </mat-form-field>
-
-            
-                            <mat-form-field appearance="outline" floatLabel="always" fxFlex="100" class="w-100-p">
-
-                                <mat-label>Fecha evento</mat-label>
-                                <input matInput [matDatepicker]="picker" formControlName="date">
-                                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                                <mat-datepicker #picker></mat-datepicker>
-
-                            </mat-form-field>
+                                </mat-form-field>
 
 
-                            <mat-form-field appearance="outline" floatLabel="always" class="w-100-p">
+                                <mat-form-field appearance="outline" floatLabel="always" fxFlex="100" class="w-100-p">
 
-                                <mat-label>Tags</mat-label>
+                                    <mat-label>Fecha evento</mat-label>
+                                    <input matInput [matDatepicker]="picker" formControlName="date">
+                                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                    <mat-datepicker #picker></mat-datepicker>
 
-                                <mat-chip-list #tagList >
-
-                                    <mat-chip *ngFor="let tag of product.tags" [removable]="true"
-                                        (removed)="removeDetected(tag)" >
-                                        {{tag}}
-                                        <mat-icon matChipRemove>cancel</mat-icon>
-                                    </mat-chip>
-
-                                    <input name="tags"  formControlName="tags"
-                                    [matChipInputFor]="tagList" [matChipInputAddOnBlur]="true"
-                                        (matChipInputTokenEnd)="product.addTag($event)" />
-
-                                </mat-chip-list>
-
-                            </mat-form-field>
-
-                     <div class="slide-bottom w-100-p">
-                        <mat-slide-toggle [checked]="true" formControlName="active">Evento abierto</mat-slide-toggle>
-                     </div>
+                                </mat-form-field>
 
 
+                                <mat-form-field appearance="outline" floatLabel="always" class="w-100-p">
 
-                        </div>
+                                    <mat-label>Tags</mat-label>
 
-            
+                                    <mat-chip-list #tagList>
 
-                    </form>
+                                        <mat-chip *ngFor="let tag of product.tags" [removable]="true"
+                                            (removed)="removeDetected(tag)">
+                                            {{tag}}
+                                            <mat-icon matChipRemove>cancel</mat-icon>
+                                        </mat-chip>
+
+                                        <input name="tags" formControlName="tags" [matChipInputFor]="tagList"
+                                            [matChipInputAddOnBlur]="true"
+                                            (matChipInputTokenEnd)="product.addTag($event)" />
+
+                                    </mat-chip-list>
+
+                                </mat-form-field>
+
+                                <div class="slide-bottom w-100-p">
+                                    <mat-slide-toggle [checked]="true" formControlName="active">Evento abierto
+                                    </mat-slide-toggle>
+                                </div>
+
+
+
+                            </div>
+
+
+
+                        </form>
 
                     </mat-tab>
-
-                    
-                <mat-tab label="Formulario" [disabled]='!isCreated'>
-
-
-                    <div  fxLayout="column" fxLayoutAlign="start" fxFlex="1 0 auto">
-
-                                  <form-custom></form-custom>
-                                    
-
-                    </div>
-            </mat-tab>
 
                     <mat-tab label="Invitados" [disabled]='!isCreated'>
 
-                        <div  fxLayout="column" fxLayoutAlign="start" fxFlex="1 0 auto">
-                      
-                        <contacts></contacts>
+                        <div fxLayout="column" fxLayoutAlign="start" fxFlex="1 0 auto">
 
-                
-            
-                     
-    
+                            <contacts></contacts>
+
+
+
+
+
                         </div>
-    
-                        
+
+
                     </mat-tab>
+
+                    <mat-tab label="Formulario" [disabled]='!isCreated'>
+
+
+                        <div fxLayout="column" fxLayoutAlign="start" fxFlex="1 0 auto">
+
+                            <form-custom></form-custom>
+
+
+                        </div>
+                    </mat-tab>
+
                     <mat-tab label="Campañas" [disabled]='!isCreated'>
-                        
 
-                        <div  fxLayout="column" fxLayoutAlign="start" fxFlex="1 0 auto">
 
-                                        <products-campaigns></products-campaigns>
+                        <div fxLayout="column" fxLayoutAlign="start" fxFlex="1 0 auto">
 
-    
+                            <products-campaigns></products-campaigns>
+
+
                         </div>
 
 
@@ -208,73 +209,74 @@
                     <mat-tab label="Usuarios" [disabled]='!isCreated'>
 
 
-                        <div  fxLayout="column" fxLayoutAlign="start" fxFlex="1 0 auto">
+                        <div fxLayout="column" fxLayoutAlign="start" fxFlex="1 0 auto">
 
-                                      <academy-courses></academy-courses>
-                                        
+                            <academy-courses></academy-courses>
+
 
                         </div>
-                </mat-tab>
+                    </mat-tab>
 
-                  </mat-tab-group>
+                </mat-tab-group>
 
 
-                  
-                  <div  class="btn-navigate-tabs-prev">
 
-                    <button [disabled]="!btnNavigateStep()"  (click)="previousStep()" class="mr-8 w-50-p " mat-raised-button type="button"
-                    color="default">
-                    <mat-icon>chevron_left</mat-icon>
-                    Anterior
-                   
-                </button>
+                <div class="btn-navigate-tabs-prev">
 
-                
+                    <button [disabled]="!btnNavigateStep()" (click)="previousStep()" class="mr-8 w-50-p "
+                        mat-raised-button type="button" color="default">
+                        <mat-icon>chevron_left</mat-icon>
+                        Anterior
+
+                    </button>
+
+
+                </div>
+
+                <div class="btn-navigate-tabs-next">
+
+                    <div>
+
+
+
+                        <button *ngIf="(isCreated && productForm.pristine) && (!removeTag && !uploadFile )"
+                            [disabled]="!btnNavigateNextStep()" class="btn-size" mat-raised-button type="button"
+                            (click)="nextStep()" color="accent">
+                            Siguiente
+
+                            <mat-icon>chevron_right</mat-icon>
+                        </button>
+
+                        <button *ngIf="pageType ==='new'" [disabled]="productForm.invalid"
+                            [disabled]="btnNavigateNextStep()" (click)="addProduct(true)" class="btn-size"
+                            mat-raised-button type="button" color="accent">
+                            Crear
+                            <mat-icon>save</mat-icon>
+                        </button>
+
+                        <button *ngIf="(pageType ==='edit' && !productForm.pristine) || (removeTag || uploadFile )"
+                            (click)="saveProduct(true)" class="btn-size" mat-raised-button type="button" color="accent">
+                            Siguiente
+                            <mat-icon>save</mat-icon>
+                        </button>
+
+                    </div>
+
+
+                </div>
+
+
+
+                <!-- / REACTIVE FORM EXAMPLE -->
+
+
             </div>
 
-                  <div  class="btn-navigate-tabs-next">
-
-                    <div >
-
-        
-                  
-                  <button *ngIf="(isCreated && productForm.pristine) && (!removeTag && !uploadFile )" [disabled]="!btnNavigateNextStep()"  class="btn-size" mat-raised-button  type="button"
-                  (click)="nextStep()"
-                  color="accent">
-                  Siguiente
-
-                  <mat-icon>chevron_right</mat-icon>
-              </button>
-
-                  <button *ngIf="pageType ==='new'" [disabled]="productForm.invalid" [disabled]="btnNavigateNextStep()"   (click)="addProduct(true)" class="btn-size" mat-raised-button type="button"
-                  color="accent">
-                  Crear
-                  <mat-icon>save</mat-icon>
-              </button>
-
-                  <button *ngIf="(pageType ==='edit' && !productForm.pristine) || (removeTag || uploadFile )" (click)="saveProduct(true)" class="btn-size" mat-raised-button  type="button"
-                      color="accent">
-                      Siguiente 
-                      <mat-icon>save</mat-icon>
-                  </button>
-
-                </div>
-
- 
-                </div>
-
-
-
-            <!-- / REACTIVE FORM EXAMPLE -->
 
 
         </div>
 
-
-
-    </div>
-
-    <!--
+        <!--
     <div class="mb-24" fxLayout="column" fxLayoutAlign="start" *ngIf="isCreated">
 
         <button mat-button (click)="eventDelete()" color="warn">Eliminar evento
@@ -284,7 +286,6 @@
     </div>
 
 -->
-    <!-- / CONTENT -->
+        <!-- / CONTENT -->
 
-</div>
-
+    </div>

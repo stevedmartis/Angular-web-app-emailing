@@ -54,6 +54,7 @@ export class CampaignService {
     statusSendInvitation = "";
     invitedFails: any[] = [];
 
+
     selectedIndex: number = 0;
     maxNumberOfTabs: number = 3;
 

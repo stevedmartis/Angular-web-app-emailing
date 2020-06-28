@@ -7,8 +7,47 @@
     flex-direction: column-reverse;
     align-items: center;
     position: fixed;
-    bottom: 160px;
-    left: 95%;
+   
+
+   
+
+    @include media-breakpoint('sm') {
+
+
+      bottom: 150px;
+    
+     
+    
+    }
+
+    @include media-breakpoint('m') {
+
+
+      bottom: 160px;
+    
+     
+    
+    }
+
+    
+  @include media-breakpoint('xs') {
+
+
+    bottom: 50px;
+    left: 90%;
+   
+
+}
+
+@include media-breakpoint('xl') {
+
+
+  bottom: 400;
+
+ 
+
+}
+    
   
     > div {
       display: flex;
@@ -22,18 +61,6 @@
     }
   }
 
-  @include media-breakpoint('xs') {
-
-
-    .fab-container {
-
-      bottom: 50px;
-      left: 90%;
-     
-
-}
-
-  }
   
   .fab-toggler {
     float: right;

@@ -45,9 +45,12 @@
         <!-- / HEADER -->
 
         <!-- CONTENT CARD -->
-        <div [ngClass]="{
-            'table-hidden': !eventExist,
-            'table-visible': eventExist }"
+        
+        <div  
+        [ngClass]="{
+
+            'table-hidden': _ecommerceProductsService.products.length  === 0,
+            'table-visible': _ecommerceProductsService.products.length > 0 }"
                 class="content-card">
 
             <mat-table  class="products-table"

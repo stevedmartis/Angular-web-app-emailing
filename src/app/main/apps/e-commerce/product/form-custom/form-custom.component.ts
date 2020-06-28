@@ -62,10 +62,7 @@ export class FormCustomComponent implements OnInit, OnDestroy {
         public _formCustomService: FormCustomService,
 
     ) {
-        // Set the private defaults
-        this.inputsEnabledForm = this.createInputsEnabledForm();
-        this.inputsSelectionForm = this.createInputSelectionForm();
-        this._unsubscribeAll = new Subject();
+
     }
 
     // -----------------------------------------------------------------------------------------------------
@@ -81,17 +78,6 @@ export class FormCustomComponent implements OnInit, OnDestroy {
 
 
 
-    createInputsEnabledForm(): FormGroup {
-        return this._formBuilder.group({
-            fieldsEnabled: this._formBuilder.array([]),
-        });
-    }
-
-    createInputSelectionForm(): FormGroup {
-        return this._formBuilder.group({
-            fieldsSelection: this._formBuilder.array([]),
-        });
-    }
 
     addNewInput(){
         
@@ -120,67 +106,15 @@ export class FormCustomComponent implements OnInit, OnDestroy {
 
                 const fields = <FormArray>this._formCustomService.enabledF.fieldsEnabled;
 
-                fields.push(this.patchValuesEnables(res.input, 1));
+                fields.push(this._formCustomService.patchValuesEnables(res.input, 1));
 
             })
         
-
         }
 
 
     }
 
-    patchFieldsEnabled(obj) {
-
-    
-
-        const fields = <FormArray>this._formCustomService.enabledF.fieldsEnabled;
-
-  
-           fields.push(this.patchValuesEnables(obj, 1));
-       
-    }
-
-    patchFieldsSelection(obj) {
-
-
-      
-        const fields = <FormArray>this._formCustomService.selectionF.fieldsSelection;
-
-       
-        fields.push(this.patchValuesSelection(obj, 2));
-    
-    }
-
-    patchValuesEnables(obj, Ncolumn) {
-        return this._formBuilder.group({
-            id: obj._id,
-            title: [obj.title, [Validators.required, Validators.minLength(3)]],
-            value: obj.value,
-            placeHolder: obj.placeHolder,
-            edit: obj.edit,
-            type: obj.type,
-            coulmn: Ncolumn,
-            nameControl: obj.nameControl,
-            required: obj.required,
-        });
-    }
-
-    patchValuesSelection(obj, Ncolumn) {
-        return this._formBuilder.group({
-            id: obj._id,
-            title: [obj.title, [Validators.required]],
-            value: obj.required
-                ? [obj.value]
-                : obj.value,
-            placeHolder: obj.placeHolder,
-            edit: obj.edit,
-            type: obj.type,
-            coulmn: Ncolumn,
-            nameControl: obj.nameControl,
-            required: obj.required,
-        });
-    }
 
  
 
@@ -204,10 +138,9 @@ export class FormCustomComponent implements OnInit, OnDestroy {
             .then((res) => {
 
                 this._formCustomService.formDataFieldsInputsSelection.controls.push(
-                    this.patchValuesSelection(event.value, 2)
+                    this._formCustomService.patchValuesSelection(event.value, 2)
                 );
-    
-                
+
     
                 this._formCustomService.formDataFieldsInputs.removeAt(i);
 
@@ -234,7 +167,7 @@ export class FormCustomComponent implements OnInit, OnDestroy {
             this._formCustomService.formDataFieldsInputsSelection.removeAt(i);
 
         this._formCustomService.formDataFieldsInputs.controls.push(
-            this.patchValuesEnables(event.value, 1)
+            this._formCustomService.patchValuesEnables(event.value, 1)
 
         )
 

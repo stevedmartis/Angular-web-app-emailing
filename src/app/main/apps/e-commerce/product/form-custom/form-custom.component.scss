@@ -1,7 +1,13 @@
 @import "src/@fuse/scss/fuse";
 
 
+form-custom {
+    min-height: 845px;
 
+    @include media-breakpoint('xl') {
+        height: 867px;
+    }
+}
 .content-card-custom {
 
     background: white;
@@ -28,13 +34,20 @@
 .header-custom {
     height: 100px;
 
+
+    
+
     @include media-breakpoint('xs') {
         height: 75px;
     }
     }
 
   
+.carded {
 
+    height: 840px;
+
+}
 
 .header-custom-inputs {
 
@@ -51,7 +64,7 @@
     }
 }
 
-.top-bg {
+.top-bg-form {
 
     height: 90px !important;
 }

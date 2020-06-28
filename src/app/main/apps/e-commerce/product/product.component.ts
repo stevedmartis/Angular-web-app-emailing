@@ -132,7 +132,8 @@ export class EcommerceProductComponent implements OnInit, OnDestroy
                     this._formCustomService.idEventNow = product.event._id;
                    this._formCustomService.getInputsEventOrInitial()
 
-                   console.log('PRODUCT')
+                  
+                   this._contactsService.getContacts(product.event._id)
                     this._campaignService.getCampaigns();
                   
 

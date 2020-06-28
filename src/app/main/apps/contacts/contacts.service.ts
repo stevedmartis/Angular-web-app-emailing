@@ -13,7 +13,9 @@ import { Contact, ContactForXls } from "app/main/apps/contacts/contact.model";
 import * as XLSX from "xlsx";
 import * as FileSaver from "file-saver";
 import { AuthService } from "app/services/authentication/auth.service";
-import { MatSnackBar } from '@angular/material';
+import { MatSnackBar, MatDialog } from '@angular/material';
+import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
+import { SelectFieldsComponent } from './contact-list/dialog/select-fields/select-fields.component';
 
 @Injectable()
 export class ContactsService {
@@ -25,12 +27,15 @@ export class ContactsService {
 
     contactsExist: boolean = false;
     contactInitial: boolean = false;
+    arrayFieldSelection: string[];
 
-    contacts: Contact[];
+    contacts: any[];
     user: any;
     selectedContacts: string[] = [];
     contactsArray: any[] = [];
     public loadingContact: boolean = false;
+
+    inputsArray:any[] = [];
 
     searchText: string;
     filterBy: string;
@@ -43,12 +48,16 @@ export class ContactsService {
     idEventNow: any;
     eventCreated: boolean = false;
     nameDataXlxs: any
+    columnHeaders: any[] = [];
+    dialogRef: any;
 
     EXCEL_TYPE =
         "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8";
     EXCEL_EXTENSION = ".xlsx";
 
     contactsArrayXls: ContactForXls[] = [];
+
+ 
 
     /**
      * Constructor
@@ -57,8 +66,9 @@ export class ContactsService {
      */
     constructor(
         private _httpClient: HttpClient,
-        private authServices: AuthService,
         private _matSnackBar: MatSnackBar,
+
+        public _matDialog: MatDialog,
     ) {
         // Set the defaults
         this.onContactsChanged = new BehaviorSubject([]);
@@ -66,12 +76,13 @@ export class ContactsService {
         this.onUserDataChanged = new BehaviorSubject([]);
         this.onSearchTextChanged = new Subject();
         this.onFilterChanged = new Subject();
+
+      
     }
 
     // -----------------------------------------------------------------------------------------------------
     // @ Public methods
     // -----------------------------------------------------------------------------------------------------
-
 
     /**
      * Get contacts
@@ -87,23 +98,6 @@ export class ContactsService {
 
                     this.contacts = response.invited;
 
-                    /*
-                    if ( this.filterBy === 'starred' )
-                    {
-                        this.contacts = this.contacts.filter(_contact => {
-                            return this.user.starred.includes(_contact.id);
-                        });
-                    }
-
-                    if ( this.filterBy === 'frequent' )
-                    {
-                        this.contacts = this.contacts.filter(_contact => {
-                            return this.user.frequentContacts.includes(_contact.id);
-                        });
-                    }
-
-*/
-
 
                     if (this.searchText && this.searchText !== "") {
                        
@@ -115,9 +109,8 @@ export class ContactsService {
                     }
 
                     this.contacts = this.contacts.map(contact => {
-                        return new Contact(contact);
-                    });
-
+                        return contact;
+                    })
                  
 
                     this.onContactsChanged.next(this.contacts);
@@ -135,6 +128,61 @@ export class ContactsService {
                 }, reject);
         });
     }
+
+
+
+  addInputFormToInvited(body): Promise<any> {
+
+       
+    return new Promise((resolve, reject) => {
+        this._httpClient.post(environment.apiUrl + '/api/add-inputs-invited', body)
+            .subscribe((response: any) => {
+
+          
+                resolve(response);
+                
+            }, reject);
+    });
+}
+  
+
+
+
+  getInputsInvited(idInvited): Promise<any> {
+
+    
+    return new Promise((resolve, reject) => {
+        this._httpClient.get(environment.apiUrl + '/api/inputs-invited/' + idInvited)
+            .subscribe((response: any) => {
+
+         console.log('resp',response)
+
+        
+         resolve( response.inputs)
+
+            }, reject);
+    });
+}
+  
+
+    getInputsEvent(): Promise<any> {
+
+    
+        return new Promise((resolve, reject) => {
+            this._httpClient.get(environment.apiUrl + '/api/form/event/' + this.idEventNow)
+                .subscribe((response: any) => {
+    
+             console.log('resp',response)
+
+            
+             resolve( response.inputs)
+    
+                }, reject);
+        });
+    }
+
+    
+
 
     
     validateEmail(email): Promise<any> {
@@ -178,6 +226,18 @@ export class ContactsService {
         });
     }
 
+   getInputsForm(): Promise<any> {
+        return new Promise((resolve, reject) => {
+            this._httpClient
+                .get("api/contacts-user/5725a6802d10e277a0f35724")
+                .subscribe((response: any) => {
+                    this.user = response;
+                    this.onUserDataChanged.next(this.user);
+                    resolve(this.user);
+                }, reject);
+        });
+    }
+
     /**
      * Toggle selected contact by id
      *
@@ -187,6 +247,8 @@ export class ContactsService {
         // First, check if we already have that contact as selected...
         if (this.selectedContacts.length > 0) {
             const index = this.selectedContacts.indexOf(id);
+
+       
 
             if (index !== -1) {
                 this.selectedContacts.splice(index, 1);
@@ -230,7 +292,7 @@ export class ContactsService {
         if (filterParameter === undefined || filterValue === undefined) {
             this.selectedContacts = [];
             this.contacts.map(contact => {
-                this.selectedContacts.push(contact.id);
+                this.selectedContacts.push(contact._id);
             });
         }
 
@@ -268,12 +330,29 @@ export class ContactsService {
 
                 .subscribe((response: any) => {
                  
-                 
-
                 
 
                    this.contacts.push(response.post);
                    this.onContactsChanged.next(this.contacts);
+
+                   resolve(response);
+
+                });
+        });
+    }
+
+    insertDbExcelInvited(db): Promise<any> {
+        return new Promise((resolve, reject) => {
+          
+            this._httpClient
+                .post(environment.apiUrl + "/api/invited/add-multi-invited/", db)
+
+                .subscribe((response: any) => {
+                 
+                 
+                    console.log(response)
+                
+
 
                    resolve(response);
 
@@ -500,21 +579,10 @@ export class ContactsService {
             console.log('data: ', c);
 
             let obj = {
-                EMPRESA: c.company,
-                NOMBRE: c.name,
-                APELLIDOS: c.lastname,
-                CARGO: c.jobtitle,
-                EMAIL: c.email,
-                TELEONO: c.phone,
-                TELEFONO_2: c.phoneMobil,
+                
                 ASISTE: c.asiste,
                 CONTACTADO: c.contactado,
                 CLICK: c.onClick ? 'SI' : 'NO',
-                DIRECCION: c.address,
-                COMUNA: c.street,
-                CIUDAD: c.city,
-                PAIS: c.country,
-                OBSERVACION: c.notes,
                 ESTADO: c.Status,
                 FECHA_ESTADO: c.StatusDateTime
             };
@@ -546,114 +614,86 @@ export class ContactsService {
     }
 
 
+    capitalize(word){
+        return word[0].toUpperCase()+word.slice(1).toLowerCase();
+    }
+
+
+ 
+
+
     onFileChange(ev): Promise<any> {
 
         return new Promise((resolve, reject) => {
 
+    
+
         
         let workBook = null;
-        let jsonData = null;
+       
         const reader = new FileReader();
         const file = ev.target.files[0];
 
 
-        const xlsx = file
+        const xlsx = file;
 
         if(xlsx.name.includes("xls") || xlsx.name.includes("xlsx")){
 
 
         reader.onload = (event) => {
           const data = reader.result;
-          workBook = XLSX.read(data, { type: 'binary' });
-          jsonData = workBook.SheetNames.reduce((initial, name) => {
-            const sheet = workBook.Sheets[name];
-            initial[name] = XLSX.utils.sheet_to_json(sheet);
 
-            this.nameDataXlxs = name;
-
-            
-            return initial;
-          }, {});
-          const dataString = jsonData;
-
-          console.log(dataString)
-          console.log(dataString.data)
-
-          let contactsArray = [];
-
-          let nameData = dataString.data? dataString.data : dataString.Hoja1? dataString.Hoja1 : '';
-                        
-          nameData.forEach(e => {
-
-          
-
-                let obj = {
-                    codeEvento: this.idEventNow,
-                    name:
-                        e.name ||
-                        e.NOMBRES ||
-                        e.NOMBRE ||
-                        e.nameEmployee ||
-                        e.nombres ||
-                        e.nombre,
-                    title: e.title || e.TITLE || e.titulo || e.TITULO,
-                    lastname:
-                        e.lastname ||
-                        e.APELLIDO_1 ||
-                        e.apellidos ||
-                        e.APELLIDOS,
-                    email: e.email || e.email_1 || e.EMAIL_1 || e.EMAIL || e.CORREO || e.correo,
-                    asiste: e.ASISTE || e.asiste,
-                    status: null,
-                    contactado: e.CONTACTADO || e.contactado,
-                    jobtitle: e.jobtitle || e.CARGO || e.cargo,
-                    company: e.company || e.EMPRESA || e.empresa,
-                    phone:
-                        e.number ||
-                        e.FONO ||
-                        e.FONO_1 ||
-                        e.TELEFONO ||
-                        e.TELEFONO_1 ||
-                        e.fono ||
-                        e.fono_1 ||
-                        e.telefono ||
-                        e.telefono_1,
-                    phoneMobil:
-                        e.CELULAR ||
-                        e.FONO_2 ||
-                        e.CELULAR_1 ||
-                        e.TELEFONO_2 ||
-                        e.celular ||
-                        e.celular_2 ||
-                        e.telefono_2 ||
-                        e.TELEFONO_2 ||
-                        e.FONO_2,
-                    asistio: false,
-                    update: e.MODIFICADO_FECHA,
-                    address: e.DIRECCION,
-                    street: e.COMUNA,
-                    city: e.CIUDAD,
-                    country: e.PAIS,
-                    notes: e.OBSERVACIONES
-                };
-
-                contactsArray.push(obj);
-
-
- 
-
-
-            
-        });
-
-        console.log(contactsArray)
-
-        resolve(contactsArray);
-
-          
         
+          workBook = XLSX.read(data, { type: 'binary' });
+
+          const sheet_name_list  = workBook.SheetNames;
+
+
+
+          let columnHeaders = [];
+          for (var sheetIndex = 0; sheetIndex < sheet_name_list.length; sheetIndex++) {
+              var worksheet = workBook.Sheets[sheet_name_list[sheetIndex]];
+              for (let key in worksheet) {
+                  let regEx = new RegExp("^\(\\w\)\(1\){1}$");
+                  if (regEx.test(key) == true) {
+                    console.log ('key',key);
+
+                    
+                      columnHeaders.push(worksheet[key].v);
+
+
+                  }
+              }
+          }
+
+
+          console.log(columnHeaders)  
+
+          
+          this.columnHeaders = columnHeaders;
+
+          let jsonData = workBook.SheetNames.reduce((initial, name) => {
+
+
+
+            const sheet = workBook.Sheets[name];
+            initial[name] = XLSX.utils.sheet_to_json(sheet)
+
+            this.nameDataXlxs = name;   
+
+            return initial
+           
+          }, {});
+
+
+          resolve(jsonData);
+
+
        
+
         }
+
+
 
     }
     else {
@@ -667,6 +707,168 @@ export class ContactsService {
         reader.readAsBinaryString(file);
       })
 
+    }
+
+
+    selectFieldsAddInvited(jsonData) : Promise<any>{
+
+
+        
+        return new Promise((resolve, reject) => {
+
+
+        const dataString = jsonData;
+
+        let contactsArray = [];
+
+        
+        let inputsArray = [];
+
+        let nameData = dataString.data? dataString.data : dataString.Hoja1? dataString.Hoja1 : '';
+        console.log(nameData)
+
+
+        
+        this.selectFieldsDialog(this.columnHeaders)
+        .then((arraySelect)=> {
+
+      
+          inputsArray.push( { name:'checkbox', initial: true, checkbox: true, title: '',  } )
+
+          const arrayFields = arraySelect.map(obj => obj.name);
+
+
+          arrayFields.forEach(e => {
+          
+
+              const cap = this.capitalize(e)
+
+              const obj = {
+
+                  name: e, 
+                  export: true, 
+                  title: cap
+              }
+
+              inputsArray.push(obj)
+          });
+
+          
+          inputsArray.push
+          ({ name:'contactado', initial: true, title: 'Contacto', contact: true,  },
+  
+          { name:'asiste', initial: true, title: 'Asiste' ,  asiste: true,    },
+          { name:'buttons', initial: true, title: '',  buttons: true  })
+
+          this.inputsArray = inputsArray;
+
+
+
+                         
+        nameData.forEach((e, index ) => {
+
+          
+          let objInvited = {
+
+              codeEvento: this.idEventNow,
+              contactado: e.CONTACTADO || e.contactado,
+              asiste: e.ASISTE || e.asiste,
+              asistio: false,
+              notes: e.OBSERVACIONES,
+
+          };
+
+         
+
+
+          arraySelect.forEach(i => {
+
+  
+                  objInvited[i.name]  = e[i.name]
+
+        
+          });
+
+     
+
+          contactsArray.push(objInvited)
+    
+          resolve(contactsArray);
+
+
+        });
+
+
+
+        })
+
+
+           
+    });
+    }
+
+
+    addMultipleInvited(contactsArray)  : Promise<any>{
+
+
+        return new Promise((resolve, reject) => {
+
+        this.insertDbExcelInvited(contactsArray)
+        .then((res) => {
+      
+           
+            this.getContacts(this.idEventNow)
+            .then(() => {
+    
+      
+                resolve(res.post);
+            } )
+         
+      
+        
+      
+      
+        })
+    
+         
+});
+
+    }
+
+    selectFieldsDialog(fields):Promise<any> 
+
+    {
+
+        
+        return new Promise((resolve, reject) => {
+        this.dialogRef = this._matDialog.open(SelectFieldsComponent, {
+            disableClose: true,
+            panelClass: 'my-class',
+            data      : {
+                fields: fields,
+
+            }
+        });
+
+        this.dialogRef.afterClosed()
+            .subscribe(response => {
+                if ( !response )
+                {
+                    return;
+                }
+
+                else {
+
+                    console.log(response)
+                    resolve(response)
+                }
+
+
+            });
+
+        })
+        
+    
     }
 
 

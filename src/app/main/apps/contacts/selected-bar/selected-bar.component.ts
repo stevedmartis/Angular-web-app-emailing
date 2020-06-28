@@ -148,7 +148,7 @@ export class ContactsSelectedBarComponent implements OnInit, OnDestroy
 
                             this._contactsService.deselectContacts();
 
-                            this._contactsService.getContacts(this._contactsService.idEventNow);
+                           // this._contactsService.getContacts(this._contactsService.idEventNow);
 
                             this._contactsService.loadingContact = false;
 

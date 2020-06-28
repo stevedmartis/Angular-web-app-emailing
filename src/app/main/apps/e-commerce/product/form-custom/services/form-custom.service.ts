@@ -47,7 +47,7 @@ createInputSelectionForm(): FormGroup {
     return this._formBuilder.group({
         fieldsSelection: this._formBuilder.array([]),
     });
-
+//lo
     
 }
 
@@ -76,18 +76,26 @@ getMesaggeErrorTitle(i, title){
 
 getInputsEventOrInitial(){
 
+
+
+
+              
+  
+
   this.getInputsEvent()
-  .then((init) => {
+  .then((inputs) => {
 
-    console.log(init)
+    console.log(inputs)
 
-    if(init.length > 0 ){
+    if(inputs.length > 0 ){
 
-      init.forEach(obj => {
+      inputs.forEach(obj => {
 
         
         this.pushDataInArrays(obj)
       });
+
+    return inputs;
 
 
     }
@@ -113,6 +121,8 @@ getInputsEventOrInitial(){
 
             this.pushDataInArrays(data.input)
 
+            return array;
+
 
 
           })
@@ -120,8 +130,14 @@ getInputsEventOrInitial(){
         });
       })
 
+    
+      
+
 
     }
+
+
+
 
     
   })

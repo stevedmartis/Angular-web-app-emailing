@@ -204,16 +204,38 @@ contacts-contact-list {
 }
 
 .empty-inv {
-    width: 40%;
+    width: 100%;
 
     max-width: 100%;
-    width: 30%;
+  
+
+    @include media-breakpoint('gt-md') {
+        width: 35%;
+
+        max-width: 35%;
+    }
+
+    @include media-breakpoint('xl') {
+
+        width: 40%;
+       
+    }
 
     @include media-breakpoint('xs') {
 
         width: 100%;
        
     }
+
+
+    @include media-breakpoint('sm') {
+
+
+        bottom: 150px;
+      
+       
+      
+      }
 
    
 }
@@ -378,6 +400,15 @@ contacts-contact-list {
     font-size: 24px;
     margin: 24px 0;
     text-align: center;
+    min-height: 695px;
+
+
+    @include media-breakpoint('xl') {
+        height: 707px;
+    }
+
+
+
 }
 
 .mat-header-row{
