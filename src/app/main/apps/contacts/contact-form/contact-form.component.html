@@ -27,7 +27,7 @@
 
                   <div fxLayout="row" fxLayoutAlign="start" fxFlex="0 0 auto">
 
-                  <section formArrayName="inputsFormContact">
+                  <section class="array-inputs" formArrayName="inputsFormContact">
 
                   <span *ngFor="let f of formDataInputs.controls; index as i" [formGroupName]="i">
             
@@ -44,7 +44,7 @@
 
 
            
-            <section formArrayName="inputsFormContact2">
+            <section  class="array-inputs" formArrayName="inputsFormContact2">
 
                 <span *ngFor="let f of formDataInputs2.controls; index as i" [formGroupName]="i">
                     

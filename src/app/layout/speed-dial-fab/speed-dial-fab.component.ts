@@ -87,10 +87,51 @@ export class SpeedDialFabComponent implements OnInit {
 
               this.loadingContact = true;
           
+              let dataForm = response.getRawValue();
 
-              let data = response.getRawValue();
+              console.log(dataForm)
 
-              
+              let objInvited = {
+
+                codeEvento: this._contactsService.idEventNow,      
+                asiste: dataForm.asiste,
+                contactado: dataForm.asiste,
+                notes: dataForm.notes
+            }
+
+
+           
+
+            dataForm.inputsFormContact.forEach(a1 => {
+
+                    objInvited[a1.title]  = a1.value;
+                    
+                });
+
+                dataForm.inputsFormContact2.forEach(a1 => {
+
+                    objInvited[a1.title]  = a1.value;
+
+                })
+
+                  
+  this._contactsService.createContact(objInvited)
+  .then(( ) => {
+
+    let newTotal = this._contactsService.contacts.length + 1;
+
+    this._contactsService.editCountInvited(newTotal)
+  
+    this.loadingContact = false;
+
+    
+  })
+  .catch( () => {
+    this.loadingContact = false;
+
+  });
+
+/*               
               this._contactsService.validateEmail(data.email)
               .then((res: any) => {
 
@@ -106,7 +147,7 @@ export class SpeedDialFabComponent implements OnInit {
 
                 this.newInvitedObj(data, err.error.valid)
               })
-              
+               */
 
 
           });
@@ -135,7 +176,7 @@ export class SpeedDialFabComponent implements OnInit {
           
         this._matSnackBar.open('Carga completada', 'OK', {
           verticalPosition: 'top',
-          duration        : undefined
+          duration        : 6000
     
       });
   }

@@ -277,14 +277,48 @@ export class ContactsContactListComponent implements OnInit, OnDestroy
                 }
                 const actionType: string = response[0];
                 const formData: FormGroup = response[1];
+
+                console.log('array',   formData.getRawValue())
+                      
+
+                const dataForm =  formData.getRawValue()
+
                 switch ( actionType )
                 {
+
                     /**
                      * Save
                      */
                     case 'save':
+                  
 
-                        this._contactsService.editContact(formData.getRawValue());
+                        let objInvited = {
+                            
+                            asiste: dataForm.asiste,
+                            contactado: dataForm.asiste,
+                            notes: dataForm.notes
+                        }
+
+
+                       
+
+                        dataForm.inputsFormContact.forEach(a1 => {
+
+                                objInvited[a1.title]  = a1.value;
+                                
+                            });
+
+                            dataForm.inputsFormContact2.forEach(a1 => {
+
+                                objInvited[a1.title]  = a1.value;
+
+                            })
+                                
+      
+
+               
+
+                    this._contactsService.editContact(dataForm.id,objInvited);
 
                         break;
                     /**

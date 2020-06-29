@@ -23,7 +23,7 @@ export class ContactsContactFormDialogComponent implements OnInit {
  
     private _unsubscribeAll: Subject<any>;
 
-    contactForm   = this.createContactForm()
+    contactForm: FormGroup
     loadInputs: boolean = false;
 
 
@@ -65,18 +65,16 @@ export class ContactsContactFormDialogComponent implements OnInit {
        
 
         
-        const inputsForm = <FormArray>this.f.inputsFormContact;
-
-        const inputsForm2 = <FormArray>this.f.inputsFormContact2;
-        
 
         if (this.action === 'edit') {
             this.dialogTitle = 'Editar invitado';
             this.contact = _data.contact;
 
-            this.getInputsFormInvited(inputsForm, inputsForm2)
+         
 
         
+
+            console.log( this.contact)
 
         
         }
@@ -86,15 +84,13 @@ export class ContactsContactFormDialogComponent implements OnInit {
 
 
 
-            this.addInputsForm(inputsForm, inputsForm2)
-
-        
-            
 
            
         }
 
    
+
+     
 
         this._unsubscribeAll = new Subject();
     }
@@ -110,15 +106,29 @@ export class ContactsContactFormDialogComponent implements OnInit {
      */
 
 
-     ngOnInit(){}
+     ngOnInit(){
+
+
+        
+        this.contactForm = this.createContactForm()
+        
+        const inputsForm = <FormArray>this.f.inputsFormContact;
+
+        const inputsForm2 = <FormArray>this.f.inputsFormContact2;
+
+        this.getInputsFormInvited(inputsForm, inputsForm2)
+
+  
+
+     }
 
 
      createContactForm():FormGroup {
         return this._formBuilder.group({
-
-            contactado: [],
-            asiste: [],
-            notes: [],
+            id: [this.contact._id],
+            contactado: [this.contact.contactado],
+            asiste: [this.contact.asiste],
+            notes: [this.contact.notes],
             inputsFormContact: this._formBuilder.array([]),
             inputsFormContact2: this._formBuilder.array([]),
         });
@@ -170,13 +180,34 @@ export class ContactsContactFormDialogComponent implements OnInit {
          
 getInputsFormInvited(inputsForm, inputsForm2){
 
-    this._contactServices.getInputsInvited(this.contact.id)
-    .then((inputs) => {
- 
-  
-      if(inputs.length > 0 ){
+  const inputs =  this._contactServices.arraySelect;
 
-        this.dividerArrayInputs(inputs)
+  console.log(inputs, this.contact)
+
+  const objField = [];
+
+
+  
+  if(inputs.length > 0 ){
+
+  inputs.forEach(f => {
+
+
+    const obj = {
+
+        title:  f.name,
+        value:  this.contact[f.name],
+        placeHolder: 'Ej: ' +  this.contact[f.name]
+    }
+
+    objField.push(obj)
+      
+  });
+
+  console.log(objField)
+ 
+
+        this.dividerArrayInputs(objField)
         .then((array) => {
 
             console.log('them array:', inputs)
@@ -186,13 +217,11 @@ getInputsFormInvited(inputsForm, inputsForm2){
             this.arrayDividerArrayPatch(array.arraySecondHalf, inputsForm2)
 
         })
-  
-
 
   
       }
 
-    })
+
   }
 
 
@@ -240,20 +269,14 @@ getInputsFormInvited(inputsForm, inputsForm2){
 
     
     return this._formBuilder.group({
-        id: obj._id,
-        title: [obj.title],
-        value: obj.required
-            ? [obj.value, [Validators.required]]
-            : obj.value,
-        placeHolder: obj.placeHolder,
-        edit: obj.edit,
-        type: obj.type,
 
-        nameControl: obj.nameControl,
-        required: obj.required,
+        title: obj.title,
+        value: obj.value,
+        placeHolder: obj.placeHolder,
     });
   }
 
+  
 
 
 }

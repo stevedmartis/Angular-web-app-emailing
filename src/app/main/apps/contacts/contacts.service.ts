@@ -34,6 +34,7 @@ export class ContactsService {
     selectedContacts: string[] = [];
     contactsArray: any[] = [];
     public loadingContact: boolean = false;
+    arraySelect= [];
 
     inputsArray:any[] = [];
 
@@ -124,7 +125,7 @@ export class ContactsService {
             this._httpClient
                 .get(environment.apiUrl + "/api/invited/" + idInvited)
                 .subscribe((response: any) => {
-                    console.log(response);
+                 
                 }, reject);
         });
     }
@@ -155,7 +156,7 @@ export class ContactsService {
         this._httpClient.get(environment.apiUrl + '/api/inputs-invited/' + idInvited)
             .subscribe((response: any) => {
 
-         console.log('resp',response)
+      
 
         
          resolve( response.inputs)
@@ -172,7 +173,6 @@ export class ContactsService {
             this._httpClient.get(environment.apiUrl + '/api/form/event/' + this.idEventNow)
                 .subscribe((response: any) => {
     
-             console.log('resp',response)
 
             
              resolve( response.inputs)
@@ -390,36 +390,19 @@ export class ContactsService {
         });
     }
 
-    editContact(obj): Promise<any> {
+    editContact(id, obj): Promise<any> {
         return new Promise((resolve, reject) => {
             //obj.send_email ? true : false;
            
             this._httpClient
-                .post(environment.apiUrl + "/api/invited/edit-invited/", {
-                    invitedId: obj.id,
-                    codeEvento: this.idEventNow,
-                    name: obj.name,
-                    title: obj.title,
-                    lastname: obj.lastname,
-                    email: obj.email,
-                    jobtitle: obj.jobtitle,
-                    company: obj.company,
-                    phone: obj.phone,
-                    asiste: obj.asiste,
-                    contactado: obj.contactado,
-                    address: obj.address,
-                    street: obj.street,
-                    city: obj.city,
-                    country: obj.country,
-                    phoneMobil: obj.phoneMobil,
-                    notes: obj.notes
-                })
+                .post(environment.apiUrl + "/api/invited/edit-invited/",  {  invitedId: id, dataInvited: obj } )
                 .subscribe((response: any) => {
                     //this.getContacts(this.idEventNow)
                     resolve(response);
                   
 
-                    this.getContacts(this.idEventNow).then(x => {
+                    this.getContacts(this.idEventNow)
+                    .then(x => {
                        
 
                         this.editCountInvited(this.contacts.length);
@@ -732,7 +715,9 @@ export class ContactsService {
         this.selectFieldsDialog(this.columnHeaders)
         .then((arraySelect)=> {
 
-      
+        this.arraySelect  = arraySelect;
+
+
           inputsArray.push( { name:'checkbox', initial: true, checkbox: true, title: '',  } )
 
           const arrayFields = arraySelect.map(obj => obj.name);
@@ -843,7 +828,7 @@ export class ContactsService {
         return new Promise((resolve, reject) => {
         this.dialogRef = this._matDialog.open(SelectFieldsComponent, {
             disableClose: true,
-            panelClass: 'my-class',
+            panelClass: 'my-class-send',
             data      : {
                 fields: fields,
 

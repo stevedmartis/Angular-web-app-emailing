@@ -1,15 +1,16 @@
 
 
 export class Contact {
-    id: string;
+    _id: string;
     asiste: string;
     contactado: string;
     onClick: boolean;
     dateOnClick: Date;
     Status: string;
     StatusDateTime: Date;
-    emailValid: Boolean
-    inputs: []
+    emailValid: Boolean;
+    notes: String
+
 
 
 
@@ -20,7 +21,7 @@ export class Contact {
      */
     constructor(contact) {
         {
-            this.id = contact._id || '';
+            this._id = contact._id || '';
             this.asiste = contact.asiste || 'null';
             this.contactado = contact.contactado || 'null';
 
@@ -29,7 +30,7 @@ export class Contact {
             this.Status = contact.Status || '';
             this.StatusDateTime = contact.StatusDateTime || '';
             this.emailValid = contact.emailValid || false;
-            this.inputs = contact.inputs || [];
+            this.notes = contact.notes ||  '';
 
             
         }

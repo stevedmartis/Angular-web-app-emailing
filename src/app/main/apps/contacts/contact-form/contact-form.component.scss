@@ -59,7 +59,7 @@
 
 .mat-form-field-infix {
 
-    width: 350px !important;
+    width: auto;
 
 
     @include media-breakpoint('xs') {
@@ -67,4 +67,9 @@
     }
 
  
+}
+
+.array-inputs {
+
+    width: 50%;
 }
