@@ -33,6 +33,7 @@ export class Product
     active: boolean;
     imgBanner: string;
     imgTitle: string;
+    inputs: [];
 
 
     /**
@@ -66,6 +67,7 @@ export class Product
         this.extraShippingFee = product.extraShippingFee || 0;
         this.active = product.active || product.active;
         this.imgTitle = product.imgTitle || '';
+        this.inputs = product.inputs || [];
         this.imgBanner = product.imgBanner || 'assets/images/banner.jpg';
 
     }

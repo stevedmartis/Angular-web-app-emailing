@@ -70,7 +70,6 @@ export class FormInvitedService implements Resolve<any> {
 
                             this.event = data.event;
 
-                            console.log("this.event", this.event);
 
                             this.eventLoad = true;
 

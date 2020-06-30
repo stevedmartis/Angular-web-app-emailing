@@ -16,6 +16,7 @@ import { AuthService } from "app/services/authentication/auth.service";
 import { MatSnackBar, MatDialog } from '@angular/material';
 import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
 import { SelectFieldsComponent } from './contact-list/dialog/select-fields/select-fields.component';
+import { FormCustomService } from '../e-commerce/product/form-custom/services/form-custom.service';
 
 @Injectable()
 export class ContactsService {
@@ -28,6 +29,12 @@ export class ContactsService {
     contactsExist: boolean = false;
     contactInitial: boolean = false;
     arrayFieldSelection: string[];
+
+        
+    initColumns: any[] = [
+
+                
+    ];
 
     contacts: any[];
     user: any;
@@ -68,7 +75,7 @@ export class ContactsService {
     constructor(
         private _httpClient: HttpClient,
         private _matSnackBar: MatSnackBar,
-
+        private _formCustomService: FormCustomService,
         public _matDialog: MatDialog,
     ) {
         // Set the defaults
@@ -375,6 +382,23 @@ export class ContactsService {
         });
     }
 
+    editEventInputs(arrayInputs): Promise<any> {
+
+
+        return new Promise((resolve, reject) => {
+            this._httpClient
+                .post(environment.apiUrl + "/api/event/edit-inputs/", {
+                    eventId: this.idEventNow,
+                    arrayInputs: arrayInputs
+                })
+                .subscribe((response: any) => {
+                    //this.getContacts(this.idEventNow)
+                    resolve(response);
+                    console.log(response);
+                });
+        });
+    }
+
     editMessageId(invitedId, messageId): Promise<any> {
         return new Promise((resolve, reject) => {
             this._httpClient
@@ -390,12 +414,12 @@ export class ContactsService {
         });
     }
 
-    editContact(id, obj): Promise<any> {
+    editContact(id, init, obj): Promise<any> {
         return new Promise((resolve, reject) => {
             //obj.send_email ? true : false;
            
             this._httpClient
-                .post(environment.apiUrl + "/api/invited/edit-invited/",  {  invitedId: id, dataInvited: obj } )
+                .post(environment.apiUrl + "/api/invited/edit-invited/",  {  invitedId: id, init: init, dataInvited: obj,  } )
                 .subscribe((response: any) => {
                     //this.getContacts(this.idEventNow)
                     resolve(response);
@@ -715,12 +739,14 @@ export class ContactsService {
         this.selectFieldsDialog(this.columnHeaders)
         .then((arraySelect)=> {
 
-        this.arraySelect  = arraySelect;
+       
 
 
           inputsArray.push( { name:'checkbox', initial: true, checkbox: true, title: '',  } )
 
           const arrayFields = arraySelect.map(obj => obj.name);
+
+          console.log(arrayFields)
 
 
           arrayFields.forEach(e => {
@@ -746,6 +772,60 @@ export class ContactsService {
           { name:'buttons', initial: true, title: '',  buttons: true  })
 
           this.inputsArray = inputsArray;
+          this.initColumns =   this.inputsArray;
+
+          const onlyExport = inputsArray.filter(obj => obj.export)
+          this.arraySelect  = onlyExport;
+
+
+          this.editEventInputs(inputsArray).
+          then((res) =>{
+            
+
+
+
+            res.event.inputs.forEach(input => {
+
+                if(input.export){
+
+                    const obj = {
+
+                        title: input.title,
+                        type: input.type,
+                        name: input.name,
+                        placeHolder: input.placeHolder,
+                        value: input.value,
+                        required: true,
+                        export: input.export
+                    }
+
+                    this.addInputFormInEvent(obj)
+                    .then((res) => {
+        
+                  
+        
+                
+                            this._formCustomService.getInputsEventOrInitial(res.input)
+                        
+                
+        
+                    })
+                }
+
+
+
+
+                
+            });
+
+    
+
+           
+
+           
+
+            
+          })
 
 
 
@@ -760,29 +840,32 @@ export class ContactsService {
               asiste: e.ASISTE || e.asiste,
               asistio: false,
               notes: e.OBSERVACIONES,
+              dataImport : []
 
           };
 
          
-
+const dataImport = {}
 
           arraySelect.forEach(i => {
 
   
-                  objInvited[i.name]  = e[i.name]
+                  dataImport[i.name]  = e[i.name]
 
         
           });
 
-     
+          console.log(dataImport)
+
+          objInvited.dataImport.push(dataImport)
 
           contactsArray.push(objInvited)
+
+        
     
           resolve(contactsArray);
 
-
         });
-
 
 
         })
@@ -877,6 +960,31 @@ export class ContactsService {
 
     })
         
+    }
+
+    addInputFormInEvent(input): Promise<any> {
+
+       
+        return new Promise((resolve, reject) => {
+            this._httpClient.post(environment.apiUrl + '/api/form/new-input', 
+            {   
+                 codeEvento:  this.idEventNow,
+                 title: input.title,
+                 type: input.type,
+                 name: input.name,
+                 placeHolder: input.placeHolder,
+                 value: input.value,
+                 required: input.required,
+                 initial: false
+    
+            })
+                .subscribe((response: any) => {
+    
+              
+                    resolve(response);
+                    
+                }, reject);
+        });
     }
 
 

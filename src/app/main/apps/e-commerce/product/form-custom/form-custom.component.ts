@@ -51,8 +51,7 @@ export class FormCustomComponent implements OnInit, OnDestroy {
      * @param {ChatService} _chatService
      */
 
-    inputsEnabledForm: FormGroup;
-    inputsSelectionForm: FormGroup;
+ 
 
 
 
@@ -96,7 +95,7 @@ export class FormCustomComponent implements OnInit, OnDestroy {
             
         }
 
-        if (this.inputsEnabledForm.invalid) {
+        if (this._formCustomService.inputsEnabledForm.invalid) {
             return;
         } else {
 
@@ -106,7 +105,7 @@ export class FormCustomComponent implements OnInit, OnDestroy {
 
                 const fields = <FormArray>this._formCustomService.enabledF.fieldsEnabled;
 
-                fields.push(this._formCustomService.patchValuesEnables(res.input, 1));
+                fields.push(this._formCustomService.patchValuesEnables(res.input._id, res.input, 1));
 
             })
         
@@ -127,9 +126,9 @@ export class FormCustomComponent implements OnInit, OnDestroy {
     }
 
     dropItemSideBarClose(i, event, name): void {
-        console.log(this.inputsEnabledForm);
+        console.log(this._formCustomService.inputsEnabledForm);
 
-        if (this.inputsEnabledForm.invalid) {
+        if (this._formCustomService.inputsEnabledForm.invalid) {
             return;
         } else {
             this.toggleSidebar(name);
@@ -137,12 +136,15 @@ export class FormCustomComponent implements OnInit, OnDestroy {
             this._formCustomService.editInputFormColumnSelect(event.value.id)
             .then((res) => {
 
+                console.log(event.event)
+
                 this._formCustomService.formDataFieldsInputsSelection.controls.push(
-                    this._formCustomService.patchValuesSelection(event.value, 2)
+                    this._formCustomService.patchValuesSelection(event.value.id, event.value, 2)
                 );
 
     
                 this._formCustomService.formDataFieldsInputs.removeAt(i);
+
 
             })
 
@@ -161,15 +163,17 @@ export class FormCustomComponent implements OnInit, OnDestroy {
     dropItemSideBarSelectionClose(i, event, name): void {
         this.toggleSidebar(name);
 
+
         this._formCustomService.editInputFormColumnEnabled(event.value.id)
         .then((res) => {
 
-            this._formCustomService.formDataFieldsInputsSelection.removeAt(i);
 
         this._formCustomService.formDataFieldsInputs.controls.push(
-            this._formCustomService.patchValuesEnables(event.value, 1)
+            this._formCustomService.patchValuesEnables(event.value.id, event.value, 1)
 
         )
+
+        this._formCustomService.formDataFieldsInputsSelection.removeAt(i);
 
         })
 
@@ -245,7 +249,7 @@ export class FormCustomComponent implements OnInit, OnDestroy {
 
         newObj.required = !f.value.required;
 
-        console.log(newObj);
+
 
         this._formCustomService.editInputFormRequired(newObj)
         .then((res) => {
@@ -261,11 +265,9 @@ export class FormCustomComponent implements OnInit, OnDestroy {
     changeClomun(f) {
         const newObj = f.value;
 
-        newObj.required = !f.value.required;
 
-        console.log(newObj);
 
-        this._formCustomService.editInputFormColumnSelect(f.id)
+        this._formCustomService.editInputFormColumnSelect(newObj.id)
         .then((res) => {
 
             console.log(res)
@@ -285,7 +287,7 @@ export class FormCustomComponent implements OnInit, OnDestroy {
         this._formCustomService.onInputsArrayChange.next([])
 
 
-        console.log('destoy')
+
 
 
        

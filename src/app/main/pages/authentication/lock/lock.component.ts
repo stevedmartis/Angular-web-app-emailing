@@ -84,7 +84,7 @@ export class LockComponent implements OnInit, OnDestroy {
                 if (!invited.invited) {
                     this.invited = new Invited();
 
-                    console.log(this.invited);
+                
 
                     this._formInvitationService.getInputsEvent(this._formInvitationService.campaignInvitation.eventId)
                     .then((data) => {
@@ -115,7 +115,7 @@ export class LockComponent implements OnInit, OnDestroy {
                     this.invited = new Invited(invited.invited);
                     console.log("this.producte.evnd.id", invited.invited._id);
 
-                    this.patchFieldInputs();
+                   // this.patchFieldInputs();
 
                    
                 }

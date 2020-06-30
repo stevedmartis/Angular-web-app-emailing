@@ -119,6 +119,13 @@ export class EcommerceProductComponent implements OnInit, OnDestroy
 
                     this.product = new Product(product.event);
 
+                    this._contactsService.inputsArray =  this.product.inputs;
+
+                    this._contactsService.initColumns = this.product.inputs;
+
+
+                    console.log( this._contactsService.inputsArray)
+
                     this._ecommerceProductService.idNowEvent = product.event._id
                     this.pageType = 'edit';
                     this.isCreated = true;
@@ -130,7 +137,25 @@ export class EcommerceProductComponent implements OnInit, OnDestroy
 
                     this._formCustomService.eventExist = true;
                     this._formCustomService.idEventNow = product.event._id;
-                   this._formCustomService.getInputsEventOrInitial()
+
+                   this._formCustomService.getInputsEvent()
+                   .then(( inputs) => {
+                    console.log(inputs)
+
+                   
+
+                    inputs.forEach(obj => {
+                        
+
+                        this._formCustomService.getInputsEventOrInitial(obj)
+
+                        
+
+                     
+                    });
+                  
+                   })
+                
 
                   
                    this._contactsService.getContacts(product.event._id)
