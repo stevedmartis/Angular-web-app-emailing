@@ -76,12 +76,11 @@ export class EcommerceProductsComponent implements OnInit, OnDestroy
 
             this.eventExist = true
 
-            console.log(this.eventExist)
         }
         else {
             this.eventExist = false
 
-            console.log(this.eventExist)
+         
             
 
         }
@@ -94,7 +93,7 @@ export class EcommerceProductsComponent implements OnInit, OnDestroy
         )
         .subscribe(() => {
 
-            console.log(this.dataSource)
+         
             if ( !this.dataSource )
             {
                 return;
@@ -122,7 +121,7 @@ export class EcommerceProductsComponent implements OnInit, OnDestroy
             if ( result )
             {
 
-                console.log('product post delete', )
+        
 
                 this._ecommerceProductsService.deleteEvent(product)
 

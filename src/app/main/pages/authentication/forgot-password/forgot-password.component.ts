@@ -75,10 +75,9 @@ export class ForgotPasswordComponent implements OnInit
 
         let email = this.f.email.value;
 
-        console.log(email)
        this._forgotService.forgotPassword(email)
        .subscribe(data => {
-           console.log(data)
+         
 
            if(data.user.length === 0){
             this._matSnackBar.open('Email no existe', 'OK', {
@@ -89,12 +88,12 @@ export class ForgotPasswordComponent implements OnInit
             this.loading = false;
            }
            else {
-               console.log('ok', data.user[0])
+             
 
 
                this._forgotService.sendMailJet(data.user[0].email, data.user[0].username, data.user[0]._id)
                .subscribe(res => {
-                    console.log(res)
+                 
 
                     this.email = data.user[0].email;
                     this.emailSend = true;

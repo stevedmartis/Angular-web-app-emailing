@@ -79,7 +79,6 @@ export class AcademyCoursesComponent implements OnInit, OnDestroy
             .pipe(takeUntil(this._unsubscribeAll))
             .subscribe(courses => {
 
-                console.log(courses)
                 this.filteredCourses = this.coursesFilteredByCategory = this.courses = courses;
             });
     }
@@ -112,8 +111,7 @@ export class AcademyCoursesComponent implements OnInit, OnDestroy
                 return;
             }
 
-            console.log('res', response)
-
+           
 
 
                 this._academyCoursesService
@@ -121,11 +119,11 @@ export class AcademyCoursesComponent implements OnInit, OnDestroy
 
                 .then((x: any) => {
 
-                    console.log('entro', x.user)
+            
 
                         let  valid =  this._academyCoursesService.emailValid;
 
-                        console.log('valid', valid)
+                   
                     
                         if(valid){
 
@@ -135,11 +133,11 @@ export class AcademyCoursesComponent implements OnInit, OnDestroy
                             this._academyCoursesService.sendMailJet(x.user.email, x.user.username, x.user._id, response.password)
                             .then((res) => {
         
-                                console.log(res)
+                                
                             })
                             .catch((err) => {
         
-                                console.log(err)
+                          
                             })
 
                         }
@@ -191,7 +189,7 @@ export class AcademyCoursesComponent implements OnInit, OnDestroy
             
         const userUpdate = x.user.emailValid = valid;
 
-        console.log('userUpdate', userUpdate)
+  
 
     this._academyCoursesService.arrayUserData.push(x.user)
     this._academyCoursesService.onCoursesChanged.next(this._academyCoursesService.arrayUserData);
@@ -233,7 +231,7 @@ export class AcademyCoursesComponent implements OnInit, OnDestroy
             const actionType: string = response[0];
             const formData: FormGroup = response[1];
 
-            console.log('formData', formData)
+        
 
             let obj = {
 
@@ -252,13 +250,12 @@ export class AcademyCoursesComponent implements OnInit, OnDestroy
                  */
                 case "save":
 
-                console.log('save')
                 this._academyCoursesService.editUser(obj)
                 .then((data) => {
-                    console.log(data)
+                    
                 })
                 .catch((err) => {
-                    console.log(err)
+                 
                 })
 
                     break;
@@ -276,7 +273,7 @@ export class AcademyCoursesComponent implements OnInit, OnDestroy
     deleteUser(user): void
     {
 
-        console.log(user)
+   
         this.dialogRef = this._matDialog.open(FuseConfirmDialogComponent, {
             disableClose: false,
             panelClass: 'custom-dialog-container'
@@ -296,7 +293,7 @@ export class AcademyCoursesComponent implements OnInit, OnDestroy
     removeUser(user): void
     {
 
-        console.log(user)
+
         this.dialogRef = this._matDialog.open(FuseConfirmDialogComponent, {
             disableClose: false,
             panelClass: 'custom-dialog-container'

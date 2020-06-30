@@ -126,7 +126,7 @@ export class FormCustomComponent implements OnInit, OnDestroy {
     }
 
     dropItemSideBarClose(i, event, name): void {
-        console.log(this._formCustomService.inputsEnabledForm);
+      
 
         if (this._formCustomService.inputsEnabledForm.invalid) {
             return;
@@ -136,7 +136,7 @@ export class FormCustomComponent implements OnInit, OnDestroy {
             this._formCustomService.editInputFormColumnSelect(event.value.id)
             .then((res) => {
 
-                console.log(event.event)
+      
 
                 this._formCustomService.formDataFieldsInputsSelection.controls.push(
                     this._formCustomService.patchValuesSelection(event.value.id, event.value, 2)
@@ -279,8 +279,6 @@ export class FormCustomComponent implements OnInit, OnDestroy {
     }
 
     ngOnDestroy(){
-
-        console.log('desrouu')
 
         this._formCustomService.idEventNow = ''
 

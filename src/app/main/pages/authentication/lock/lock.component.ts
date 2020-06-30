@@ -73,14 +73,10 @@ export class LockComponent implements OnInit, OnDestroy {
         this._formInvitationService.onInvitedChanged
             .pipe(takeUntil(this._unsubscribeAll))
             .subscribe((invited) => {
-                console.log(
-                    "array in onInit ",
-                    this._formInvitationService.arrayInputsSelect
-                );
+
 
               
 
-                console.log("invited", invited);
                 if (!invited.invited) {
                     this.invited = new Invited();
 
@@ -94,7 +90,6 @@ export class LockComponent implements OnInit, OnDestroy {
                             return x.column === 2;
                         })
 
-                        console.log('inputs select',this._formInvitationService.arrayInputsSelect)
 
                         if(this._formInvitationService.arrayInputsSelect.length === 0){
 
@@ -111,9 +106,9 @@ export class LockComponent implements OnInit, OnDestroy {
 
 
                 } else {
-                    console.log("invited", invited);
+                  
                     this.invited = new Invited(invited.invited);
-                    console.log("this.producte.evnd.id", invited.invited._id);
+                 
 
                    // this.patchFieldInputs();
 
@@ -162,7 +157,6 @@ export class LockComponent implements OnInit, OnDestroy {
         this._formInvitationService.arrayInputsSelect.forEach((x) => {
             inputs.push(this.patchValiesSelection(x));
 
-            console.log(inputs);
         });
     }
 
@@ -189,7 +183,7 @@ export class LockComponent implements OnInit, OnDestroy {
             }
         );
 
-        console.log(findEmail);
+       
 
         if (findEmail.length === 0) {
             return;
@@ -198,8 +192,7 @@ export class LockComponent implements OnInit, OnDestroy {
                 this._formInvitationService
                     .getInvitedByEmail(this.f.email.value)
                     .then((invited) => {
-                        console.log(invited);
-
+                  
                         if (invited) {
                             this.invited = invited;
 
@@ -227,17 +220,17 @@ export class LockComponent implements OnInit, OnDestroy {
 
         const data = this.invitationForm.getRawValue();
 
-        console.log("data", data);
+
         if (this.invitationForm.valid) {
-            console.log("valid!: ");
+          
 
             if (this._formInvitationService.invitedExist) {
-                console.log("invited data: ", data);
+               
 
                 this._formInvitationService
                     .confirmInvitation(data)
                     .then((inv: Invited) => {
-                        console.log(inv);
+                    
 
                         this.router.navigate([
                             "/pages/confirm/si/" +
@@ -247,14 +240,14 @@ export class LockComponent implements OnInit, OnDestroy {
                         ]);
                     });
             } else {
-                console.log("hi", data);
+            
 
                 this._formInvitationService
                     .addNewInvitation(data)
                     .then((res) => {
                         let inv = res.post;
 
-                        console.log(inv);
+                 
                         this.router.navigate([
                             "/pages/confirm/si/" +
                                 this._formInvitationService.campaignId +
@@ -274,7 +267,7 @@ export class LockComponent implements OnInit, OnDestroy {
 
         const data = this.invitationForm.getRawValue();
 
-        console.log("invited data: ", data);
+ 
 
         this._formInvitationService
             .confirmInvitation(data)

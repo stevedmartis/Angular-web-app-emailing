@@ -43,7 +43,7 @@ validatorEmail(control: FormControl): any {
 
                 this._academyCoursesService.emailValid = true;
 
-                console.log(valid)
+     
 
                 resolve(null);
 
@@ -51,7 +51,7 @@ validatorEmail(control: FormControl): any {
 
             else {
 
-                console.log(valid)
+             
 
                 this._academyCoursesService.emailValid = false;
                 resolve( { emailInvalid : true })

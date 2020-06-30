@@ -133,7 +133,7 @@ export class UsersComponent implements OnInit {
               }
           
               else {
-                  console.log('is else ')
+              
                   this._usersServices.contactsExist = false;
                   this._usersServices.loadingContact = false; 
               }

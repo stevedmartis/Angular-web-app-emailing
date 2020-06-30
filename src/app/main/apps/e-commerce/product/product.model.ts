@@ -153,7 +153,7 @@ export class Product
 
          // add space the input value
 
-            console.log('xuaplo pnera')
+         
            
     }
 }

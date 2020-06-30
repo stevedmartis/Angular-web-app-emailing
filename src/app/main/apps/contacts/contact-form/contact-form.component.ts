@@ -159,9 +159,6 @@ export class ContactsContactFormDialogComponent implements OnInit {
         let arraySecondHalf = array.slice(halfwayThrough, array.length);
 
 
-        console.log('divider',arrayFirstHalf,
-        arraySecondHalf)
-
         const obj = {
             arrayFirstHalf,
             arraySecondHalf
@@ -169,7 +166,7 @@ export class ContactsContactFormDialogComponent implements OnInit {
 
         let dividerArray = obj
 
-        console.log('dividerArray', dividerArray)
+
         resolve(dividerArray)
 
     })
@@ -180,7 +177,7 @@ getInputsFormInvited(inputsForm, inputsForm2){
 
   const inputs =  this._contactServices.inputsArray.filter(obj => obj.export)
 
-  console.log(inputs)
+
 
   const objField = []; 
   
@@ -215,7 +212,6 @@ getInputsFormInvited(inputsForm, inputsForm2){
         this.dividerArrayInputs(objField)
         .then((array) => {
 
-            console.log('them array:', inputs)
 
             this.arrayDividerArrayPatch(array.arrayFirstHalf, inputsForm)
 
@@ -243,7 +239,7 @@ getInputsFormInvited(inputsForm, inputsForm2){
         
       });
 
-      console.log(this.f)
+
 
       this.loadInputs = true;
 
@@ -251,8 +247,7 @@ getInputsFormInvited(inputsForm, inputsForm2){
   }
 
   addInputsForm(inputsForm, inputsForm2){
-        
-        console.log('event not inpuits')
+     
   
         this._contactServices.getInputsEvent()
         .then((array) => {
@@ -261,7 +256,6 @@ getInputsFormInvited(inputsForm, inputsForm2){
             this.dividerArrayInputs(array)
             .then((array) => {
     
-                console.log('them array:', array)
     
                 this.arrayDividerArrayPatch(array.arrayFirstHalf, inputsForm)
 

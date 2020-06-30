@@ -167,7 +167,7 @@ export class SpeedDialFabComponent implements OnInit {
   conditionCompleteCharge(arrayCount){
     if (this._contactsService.contactsCount === arrayCount) {
 
-      console.log('news ',this._contactsService.contactsCount, "new total", this._contactsService.contacts.length )
+    
     
           this._contactsService.contactsCount = 0;
          
@@ -196,13 +196,12 @@ export class SpeedDialFabComponent implements OnInit {
     .then((data) => {
 
     
-      console.log('response', data)
+    
     
       this._contactsService.selectFieldsAddInvited(data)
       .then((response) => {
         this.loadingContact = true;
         
-      console.log('response', response)
 
 
       this._contactsService.addMultipleInvited(response)

@@ -159,11 +159,11 @@ export class AnalyticsDashboardComponent implements OnInit, OnDestroy
             "EEEE dd/LLL"
         )
 
-        console.log('date change', index, toDayShort)
+    
 
      let item = this._analyticsDashboardService.eventsArray[index];
 
-     console.log(item)
+
 
     const daySelect = item.widget1.datasets.selectDay;
 
@@ -175,11 +175,7 @@ export class AnalyticsDashboardComponent implements OnInit, OnDestroy
 
      let dataStatusClicked = this._analyticsDashboardService.dataStatus(item.countClicked[0], toDayShort);
 
-     console.log(dataStatusSent,
-        dataStatusOpen,
-        dataStatusClicked)
-
-        console.log('daySelect', daySelect)
+  
 
        
         daySelect[0].data = dataStatusClicked;
@@ -188,11 +184,6 @@ export class AnalyticsDashboardComponent implements OnInit, OnDestroy
     
         daySelect[2].data = dataStatusSent;
     
-
-        console.log('new', item)
-
-        
-        console.log('new', item)
 
         this.widget1SelectedYear = 'selectDay'
 

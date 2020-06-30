@@ -155,13 +155,13 @@ export class NewInvitedComponent implements OnInit, OnDestroy {
 
        const data = this.invitationForm.getRawValue();
 
-       console.log('invited data: ', data)
+
 
     
         this._formInvitationNewService.addNewInvitation(data)
         .then( (inv: Invited ) => {
 
-            console.log(inv)
+   
 
            this.router.navigate(['/pages/confirm/si/' + this._formInvitationNewService.campaignInvitation._id + '/' + this.invited._id ])
 

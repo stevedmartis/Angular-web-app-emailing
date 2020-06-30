@@ -80,9 +80,7 @@ export class CampaignsComponent implements OnInit, OnDestroy {
             .subscribe((courses) => {
                 this.filteredCourses = this._campaignService.campaigns;
 
-                console.log('camp entro')
 
-                console.log(this.filteredCourses);
             });
     }
 
@@ -90,7 +88,7 @@ export class CampaignsComponent implements OnInit, OnDestroy {
     //this.allLoading = false;
     //this.selectLoading = false;
     sendCampaignDialog(campaign) {
-        console.log(campaign);
+      
         this.dialogRef = this._matDialog.open(SendComponent, {
             disableClose: true,
             panelClass: "my-class-send",
@@ -169,8 +167,7 @@ export class CampaignsComponent implements OnInit, OnDestroy {
             }
             const actionType: string = response[0];
             const formData: FormGroup = response[1];
-            console.log('actionType', )
-            console.log('formData', formData)
+  
             switch (actionType) {
                 /**
                  * Save
@@ -209,7 +206,7 @@ export class CampaignsComponent implements OnInit, OnDestroy {
     }
 
     linkOfEventOpen(idCampaign) {
-        console.log(this._campaignService.eventObj);
+       
         const val =
             "http://www.turevento.net/#/pages/" +
             this._campaignService.eventObj.handle +

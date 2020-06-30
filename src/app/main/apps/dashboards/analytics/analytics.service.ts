@@ -85,13 +85,13 @@ export class AnalyticsDashboardService implements Resolve<any> {
         this.loadingEvents = true;
 
                 this.getEventClientUser().then((data: any) => {
-                    console.log('evtns user client', data.events)
+                
         
                     this.events = data.events
 
                     this.getEventsByUser().then((data: any) => {
 
-                        console.log('evtns user staff or creator', data.events)
+                    
 
                         data.events.forEach(obj => {
                             
@@ -119,11 +119,11 @@ export class AnalyticsDashboardService implements Resolve<any> {
                 this.getContacts(obj._id)
                 .then(data => {
 
-                    console.log('data',data)
+           
                 
                     let allOk: any[] = data.filter(x => x.messageOk === true);
 
-                    console.log(allOk)
+             
 
                 
                     let countAllSent = allOk.length;
@@ -493,8 +493,7 @@ export class AnalyticsDashboardService implements Resolve<any> {
 
                     this.eventsArray.push(eventObj);
 
-                    console.log( this.eventsArray)
-
+                
                
                         this.loadingEvents = false;
                         

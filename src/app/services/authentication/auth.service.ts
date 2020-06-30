@@ -53,8 +53,6 @@ defineRolUser(rol)
   this.isCreator = rol === 'Creador'? true: false;
 
 
- console.log(this.isClient,  this.isStaff , this.isCreator )
-
 }
 
   login(email, password) {
@@ -97,7 +95,7 @@ defineRolUser(rol)
           .subscribe((response: any) => {
               resolve(response);
 
-              console.log(response)
+             
           }, reject);
   });
 

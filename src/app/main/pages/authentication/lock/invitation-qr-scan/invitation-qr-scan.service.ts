@@ -97,7 +97,7 @@ export class InvitationQrScanService implements Resolve<any> {
 
                     this.campaignName = this.campaignInvitation.affair;
 
-                    console.log(this.campaignInvitation);
+              
 
                     resolve(response);
                 }, reject);
@@ -122,7 +122,7 @@ export class InvitationQrScanService implements Resolve<any> {
                     this.onInvitedChanged.next(this.invited);
                     resolve(response);
 
-                    console.log(response);
+                
                 }, reject);
         });
     }
@@ -134,13 +134,12 @@ export class InvitationQrScanService implements Resolve<any> {
                 .subscribe((response: any) => {
                     resolve(response);
 
-                    console.log(response);
+           
                 }, reject);
         });
     }
 
     assistCheced(invited) {
-        console.log(invited);
 
         return new Promise((resolve, reject) => {
             this._httpClient

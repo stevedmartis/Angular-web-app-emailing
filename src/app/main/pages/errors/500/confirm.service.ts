@@ -95,13 +95,12 @@ export class ConfirmInvitationService implements Resolve<any> {
             this._httpClient
                 .get(environment.apiUrl + "/api/get-campaign/" + idCampaign)
                 .subscribe((response: any) => {
-                    console.log(response);
+                 
 
                     this.campaignInvitation = response.campaign;
 
                     this.campaignName = this.campaignInvitation.affair;
 
-                    console.log(this.campaignInvitation);
 
                     resolve(response);
                 }, reject);
@@ -118,13 +117,12 @@ export class ConfirmInvitationService implements Resolve<any> {
               .subscribe((response: any) => {
                   resolve(response);
     
-                  console.log(response);
+          
     
                   this.invited = response;
     
                   resolve(response)
     
-                  console.log(response)
               }, reject);
             
       });
@@ -140,7 +138,7 @@ export class ConfirmInvitationService implements Resolve<any> {
               .subscribe((response: any) => {
                   resolve(response);
     
-                  console.log(response);
+
     
            
 

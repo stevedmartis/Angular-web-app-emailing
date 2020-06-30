@@ -23,7 +23,6 @@ export class SendComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
 
-    console.log(this._campaignService._contactService.idEventNow)
 
     
     this._campaignService.getContacts(this._campaignService._contactService.idEventNow)

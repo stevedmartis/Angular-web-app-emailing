@@ -102,34 +102,32 @@ export class InvitationQrScanComponent implements OnInit, OnDestroy {
             .subscribe(invited => {
 
 
-                console.log('invited', invited)
                 if ( !invited.invited)
                 {
 
 
                     this.invited = new Invited();
 
-                    console.log(  this.invited)
+              
     
                 }
                 else
                 {
 
 
-                    
-                    console.log('invited', invited)
+          
                     this.invited = new Invited(invited.invited);
-                    console.log('this.producte.evnd.id',invited.invited._id)
+                   
 
                     this._formInvitationService.getTagsByEvent().then( ( ) => {
 
-                      console.log('aray name ',  this._formInvitationService.tagsArray)
+                 
 
                       const array = this._formInvitationService.tagsArray.map(
                         tag => tag.name
                       )
 
-                      console.log('array', array)
+              
 
                       this.filteredTags = this.tagCtrl.valueChanges.pipe(
                         

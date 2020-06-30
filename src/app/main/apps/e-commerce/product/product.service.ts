@@ -105,7 +105,7 @@ export class EcommerceProductService implements Resolve<any>
         return new Promise((resolve, reject) => {
 
           
-     console.log(this.routeParams.id)
+  
             if ( this.routeParams.id === 'new' )
             {
 
@@ -163,8 +163,7 @@ export class EcommerceProductService implements Resolve<any>
                     
                     resolve(response);
 
-                    
-                    console.log(response)
+               
                 }, reject);
         });
     }
@@ -254,7 +253,7 @@ export class EcommerceProductService implements Resolve<any>
            })
                .subscribe((response: any) => {
 
-                console.log(response)
+         
                    resolve(response);
                    
                }, reject);
@@ -273,12 +272,11 @@ export class EcommerceProductService implements Resolve<any>
                     this.contactServices.idEventNow
             )
             .subscribe(response => {
-                console.log(response);
+          
 
 
                 array.forEach(tag => {
             
-                    console.log('tag to post :', tag)
                     this.addTagsInProduct(tag)
                     .then( (x) => {
         
@@ -341,7 +339,6 @@ getInputsInitial(): Promise<any> {
         this._httpClient.get(environment.apiUrl + '/api/form/initial')
             .subscribe((response: any) => {
 
-             console.log(response)
                 resolve(response);
                 
             }, reject);

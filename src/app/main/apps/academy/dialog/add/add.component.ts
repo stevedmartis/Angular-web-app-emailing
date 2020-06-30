@@ -75,7 +75,7 @@ private files: Array<FileUploadModel> = [];
     ) {
       // Set the defaults
 
-      console.log('_data', _data)
+    
       this.action = _data.action;
 
       if ( this.action === 'edit' )

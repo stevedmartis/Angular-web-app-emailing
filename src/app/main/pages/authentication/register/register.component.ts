@@ -98,12 +98,12 @@ export class RegisterComponent implements OnInit, OnDestroy
 
         this.authServices.register(email.value, username.value, password.value, rol )
         .subscribe(user => {
-            console.log('user register and person create:', user)
+        
 
             this.router.navigate(['/apps/dashboards/analytics']);
         },
         err => {
-            console.log('error api: ', err)    
+            
             this._matSnackBar.open(err.error.message, 'OK', {
                 verticalPosition: 'top',
                 duration        : 3000

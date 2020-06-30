@@ -100,8 +100,6 @@ emailValid: boolean = false;
 
             obj.changePassword = true;
 
-            console.log(obj)
-
       return new Promise((resolve, reject) => {
         this._httpClient.post<User>(`${environment.apiUrl}/api/register`, obj)
             .subscribe((response: any) => {
@@ -145,11 +143,10 @@ if( this.eventObj.users){
 
     let users = this.eventObj.users.map(user => user.userId)
 
-    console.log(users)
 
     users.forEach(userId => {
 
-        console.log(userId)
+     
 
         this.getUser(userId)
 
@@ -177,7 +174,7 @@ getUser(id): Promise<any> {
 
                 let objUser = response.user;
 
-                console.log(objUser)
+           
 
                 if(objUser){
 
@@ -254,7 +251,7 @@ getUserByUsername(username): Promise<any> {
         this._httpClient
             .post(environment.apiUrl + "/api/username/", {username: username})
             .subscribe((response: User) => {
-                console.log(response);
+           
                 resolve(response)
             }, reject);
     });
@@ -265,7 +262,7 @@ getUserByEmail(email): Promise<any> {
         this._httpClient
             .post(environment.apiUrl + "/api/forgot-password/", {email: email})
             .subscribe((response: User) => {
-                console.log(response);
+            
                 resolve(response)
             }, reject);
     });
@@ -321,7 +318,7 @@ editUserExist(user): Promise<any>
             rol: user.rol
         })
             .subscribe((response: any) => {
-                console.log(response)
+    
 
                 this.arrayUserData.push(response.user)
 
@@ -329,7 +326,7 @@ editUserExist(user): Promise<any>
                 resolve(response);
 
                 
-                console.log(response)
+
 
                 
             
@@ -361,7 +358,7 @@ emailValidator(email: string) : Observable<any> {
 
 sendMailJet(email, username, _id, password): Promise<any> {
 
-    console.log('ok', email, username, _id)
+ 
 
     return new Promise((resolve, reject) => { 
         this._httpClient.post<any>(`${environment.apiUrl}/api/send-new-user-mail`, { email , username, _id, password})

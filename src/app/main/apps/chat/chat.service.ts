@@ -55,7 +55,7 @@ export class ChatService implements Resolve<any>
                     this.contacts = contacts;
                     this.chats = chats;
 
-                    console.log()
+             
                     this.user = user;
                     resolve();
                 },
@@ -227,7 +227,7 @@ export class ChatService implements Resolve<any>
                     this.contacts = contacts;
                     this.chats = chats;
 
-                    console.log()
+        
                     this.user = user;
                     resolve();
                 },
@@ -247,7 +247,7 @@ export class ChatService implements Resolve<any>
                 .subscribe((response: any) => {
                     resolve(response);
 
-                    console.log(response)
+              
                 }, reject);
         });
     }

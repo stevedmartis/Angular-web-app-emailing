@@ -137,7 +137,7 @@ export class ContactsContactListComponent implements OnInit, OnDestroy
                     if(this._contactsService.inputsArray.length > 0 ){
 
                         this._contactsService.initColumns = [];
-                        console.log('initColumns',this._contactsService.initColumns)
+                    
                         this._contactsService.initColumns = this._contactsService.inputsArray;
                       
 
@@ -153,7 +153,7 @@ export class ContactsContactListComponent implements OnInit, OnDestroy
                 }
             
                 else {
-                    console.log('is else ')
+                 
                     this._contactsService.contactsExist = false;
                     this._contactsService.loadingContact = false; 
                 }

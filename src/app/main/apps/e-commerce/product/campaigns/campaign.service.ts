@@ -137,7 +137,7 @@ export class CampaignService {
                 .get(environment.apiUrl + "/api/campaign-event/"  + this._productService.idNowEvent)
                 .subscribe((response: any) => {
 
-                    console.log('response', response)
+              
                     const campaigns = response.campaigns;
 
                     this.campaigns = campaigns;
@@ -183,8 +183,7 @@ export class CampaignService {
     }
 
     deleteCampaign(campaign) {
-        console.log(campaign);
-
+   
         return new Promise((resolve, reject) => {
             this._httpClient
                 .delete(
@@ -198,7 +197,7 @@ export class CampaignService {
 
                     this.onCampaignChanged.next(this.campaigns);
 
-                    console.log(response);
+              
                 }, reject);
         });
     }
@@ -222,7 +221,7 @@ export class CampaignService {
                 })
                 .subscribe((response: any) => {
                     resolve(response);
-                    console.log(response);
+                 
 
                     this.getCampaigns().then(x => {
                         // this.loadingContact = false;
@@ -234,7 +233,6 @@ export class CampaignService {
 
     ManiInvited(campaign, array){
 
-        console.log('MAin invited :', campaign, array)
 
         const arrayInvitedAll = array;
         const arrayNew = [];
@@ -244,19 +242,19 @@ export class CampaignService {
                 if (this.emailPattern.test(c.email))
 
                 {
-                    console.log('valid!')
+                   
                     arrayNew.push(c);
 
                 }
 
                 else {
 
-                    console.log('inivalid email', c)
+                   
                 }
                
             } else {
                
-                console.log('no existe', c)
+              
             }
         });
 
@@ -264,10 +262,6 @@ export class CampaignService {
         this.allLoading = true;
 
         let arrayvalidEmials = arrayNew.map(obj => obj._id);
-
-        console.log('emails valids' ,arrayvalidEmials)
-
-
         
         let valueOk = 0;
         let valueBad = 0;
@@ -282,14 +276,9 @@ export class CampaignService {
         this.sendManiInvited(campaign, arrayNew)
 
         .then( (res) => {
-            console.log('res', res)
 
-
-            console.log('value', this.value )
 
             this.value = totalCount;
-
-                console.log('completed')
 
 
 
@@ -309,9 +298,6 @@ export class CampaignService {
 
             if(this.value === arrayvalidEmials.length) {
 
-
-                console.log('completed')
-
                 
             
                 this.countStatus = "Enviados: " + this.valueOk + " de " + totalCount;
@@ -320,8 +306,7 @@ export class CampaignService {
 
             }
 
-            
-            console.log(err)
+
         })
 
     }
@@ -331,15 +316,11 @@ export class CampaignService {
 
         const totalCount = array.length;
 
-        console.log(
-            "contacts selects: ",
-            this._contactService.selectedContacts
-        );
 
         if (option === "all") {
             this.allLoading = true;
 
-            console.log("allllll");
+       
             const arrayInvitedAll = array;
             const arrayNew = [];
             arrayInvitedAll.forEach(c => {
@@ -351,17 +332,17 @@ export class CampaignService {
             });
 
 
-            console.log(arrayNew)
+    
 
             this.emailsValidForSend = arrayNew.length;
 
             this.sendManiInvited(campaign._id, arrayNew)
 
             .then( (res) => {
-                console.log('res', res)
+               
             })
             .catch((err) => {
-                console.log(err)
+             
             })
 
 
@@ -373,16 +354,14 @@ export class CampaignService {
 
             const arrayInvitedSelected = this._contactService.selectedContacts;
 
-            console.log("allllll");
-            
             const arrayNewSelection = [];
 
             arrayInvitedSelected.forEach(obj => {
 
-                console.log(obj)
+             
                const filter = array.filter(element => element._id === obj);
 
-               console.log(filter)
+
 
                if(filter[0].email){
 
@@ -423,7 +402,7 @@ export class CampaignService {
 
                 this.countStatus = "Enviando a: " + totalCount;
                
-                console.log(obj)
+          
              
                     if (obj.email) {
                         this.sendInvited(invitation, obj)
@@ -434,7 +413,7 @@ export class CampaignService {
                                
                                 this.valueOk++;
 
-                                console.log(mail,  this.value)
+                          
 
                                 let id = mail.resBody.Messages[0].To[0].MessageID;
                                    
@@ -456,17 +435,11 @@ export class CampaignService {
                             .catch(err => {
                                 this.value++;
 
-                             
-          
-                                        console.log(err);
-
+       
                                         this.invitedFails.push(obj);
-
-                                        console.log(this.invitedFails);
 
                                       
                                 
-
                                 if (this.value === totalCount) {
                                     this.value = totalCount;
 
@@ -490,13 +463,12 @@ export class CampaignService {
 
         this.countStatus = "Enviando a: " + totalCount;
         this.statusSendInvitation = "Enviando...";
- console.log('' ,array)
+
         
         setTimeout(() => {
             
             array.forEach(obj => {
 
-                console.log(obj, invitation)
 
              
                     if (obj.email) {
@@ -506,7 +478,6 @@ export class CampaignService {
                                
                                 this.value++;
 
-                                console.log(mail,  this.value)
 
                                 let id = mail.resBody.Messages[0].To[0].MessageID;
 
@@ -529,11 +500,11 @@ export class CampaignService {
 
                              
           
-                                        console.log(obj);
+                  
 
                                         this.invitedFails.push(obj);
 
-                                        console.log(this.invitedFails);
+                                  
 
                                       
                                 
@@ -555,7 +526,7 @@ export class CampaignService {
     }
 
     sendInvited(invitation, person): Promise<any> {
-        console.log( this.eventObj);
+   
         const imagen = invitation.imgBlob.substr(22);
 
         const obj = {
@@ -577,7 +548,7 @@ export class CampaignService {
                 .post<any>(`${environment.apiUrl}/api/send-invited`, obj)
                 .subscribe((response: any) => {
                     resolve(response);
-                    console.log(response);
+           
                 }, reject);
         });
     }
@@ -625,7 +596,6 @@ export class CampaignService {
     fileProgress(fileInput: any, type) {
         this.fileData = <File>fileInput;
 
-        console.log(this.fileData);
 
         this.preview(type);
     }
@@ -645,7 +615,7 @@ export class CampaignService {
 
                 this.image = this.previewUrl;
 
-                console.log(this.image);
+              
 
                 this.previewLoading = true;
             } else {
@@ -663,7 +633,7 @@ sendManiInvited(campaign, array): Promise<any> {
         .post<any>(environment.apiUrl + '/api/mani-invited', { campaign, array } )                
         .subscribe((response: any) => {
 
-                console.log(response);
+         
                 resolve(response);
                
             }, reject);
@@ -681,7 +651,7 @@ sendManiInvited(campaign, array): Promise<any> {
             .subscribe((response: any) => {
 
 
-                    console.log(response);
+                
                     resolve(response);
                    
                 }, reject);

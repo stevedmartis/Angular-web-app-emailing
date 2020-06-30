@@ -377,7 +377,7 @@ export class ContactsService {
                 .subscribe((response: any) => {
                     //this.getContacts(this.idEventNow)
                     resolve(response);
-                    console.log(response);
+                 
                 });
         });
     }
@@ -394,7 +394,7 @@ export class ContactsService {
                 .subscribe((response: any) => {
                     //this.getContacts(this.idEventNow)
                     resolve(response);
-                    console.log(response);
+                 
                 });
         });
     }
@@ -409,7 +409,7 @@ export class ContactsService {
                 .subscribe((response: any) => {
                    
                     resolve(response);
-                    console.log(response);
+                 
                 }, reject);
         });
     }
@@ -583,7 +583,7 @@ export class ContactsService {
 
         this.contacts.forEach(c => {
 
-            console.log('data: ', c);
+         
 
             let obj = {
                 
@@ -663,7 +663,7 @@ export class ContactsService {
               for (let key in worksheet) {
                   let regEx = new RegExp("^\(\\w\)\(1\){1}$");
                   if (regEx.test(key) == true) {
-                    console.log ('key',key);
+              
 
                     
                       columnHeaders.push(worksheet[key].v);
@@ -674,7 +674,6 @@ export class ContactsService {
           }
 
 
-          console.log(columnHeaders)  
 
           
           this.columnHeaders = columnHeaders;
@@ -732,7 +731,7 @@ export class ContactsService {
         let inputsArray = [];
 
         let nameData = dataString.data? dataString.data : dataString.Hoja1? dataString.Hoja1 : '';
-        console.log(nameData)
+     
 
 
         
@@ -746,8 +745,7 @@ export class ContactsService {
 
           const arrayFields = arraySelect.map(obj => obj.name);
 
-          console.log(arrayFields)
-
+    
 
           arrayFields.forEach(e => {
           
@@ -855,7 +853,6 @@ const dataImport = {}
         
           });
 
-          console.log(dataImport)
 
           objInvited.dataImport.push(dataImport)
 

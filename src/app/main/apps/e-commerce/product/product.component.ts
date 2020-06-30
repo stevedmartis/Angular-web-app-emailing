@@ -124,7 +124,7 @@ export class EcommerceProductComponent implements OnInit, OnDestroy
                     this._contactsService.initColumns = this.product.inputs;
 
 
-                    console.log( this._contactsService.inputsArray)
+                  
 
                     this._ecommerceProductService.idNowEvent = product.event._id
                     this.pageType = 'edit';
@@ -140,9 +140,8 @@ export class EcommerceProductComponent implements OnInit, OnDestroy
 
                    this._formCustomService.getInputsEvent()
                    .then(( inputs) => {
-                    console.log(inputs)
-
-                   
+            
+       
 
                     inputs.forEach(obj => {
                         
@@ -340,7 +339,7 @@ export class EcommerceProductComponent implements OnInit, OnDestroy
                 if(data.tags.length === 0){
 
 
-                console.log('entro', data.tags.length)
+        
                     //,  Show the success message
     
     
@@ -408,9 +407,6 @@ export class EcommerceProductComponent implements OnInit, OnDestroy
             });
     }
 
-    sendEmailToInvited(){
-        console.log('contacts ',this._contactsService.contacts)
-    }
 
     createEventValidator(control: AbstractControl) {
         if (this.isCreated) {
@@ -431,8 +427,7 @@ export class EcommerceProductComponent implements OnInit, OnDestroy
     
             this._campaignService.fileProgress(event.target.files[0], type )
     
-              
-             console.log('1', this.productForm)
+     
     
                const name = event.target.files[0].name
     
@@ -464,7 +459,7 @@ removeDetected(tag){
 
     this.removeTag = true;
 
-    console.log(' this.removeTag',  this.removeTag)
+
     
 
 }
@@ -474,7 +469,7 @@ nextStep() {
     if (this.selectedIndex !=this.maxNumberOfTabs) {
       this.selectedIndex = this.selectedIndex + 1;
     }
-    console.log(this.selectedIndex);
+ 
   }
 
   previousStep() {

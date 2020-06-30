@@ -70,7 +70,7 @@ export class EcommerceProductService implements Resolve<any>
 
                     this._academyCoursesService.eventObj = event;
 
-                    console.log(event)
+                
 
                    
                     this._academyCoursesService.getCategories(),
@@ -103,8 +103,7 @@ export class EcommerceProductService implements Resolve<any>
     {
         return new Promise((resolve, reject) => {
 
-          
-     console.log(this.routeParams.id)
+
             if ( this.routeParams.id === 'new' )
             {
 
@@ -118,14 +117,13 @@ export class EcommerceProductService implements Resolve<any>
                 this._httpClient.get(environment.apiUrl + '/api/event/' + this.routeParams.id)
                     .subscribe((response: any) => {
                         this.product = response;
-                        console.log(this.product)
+                     
 
                     
 
                         this.contactServices.idEventNow = this.product.event._id;
 
-                        console.log('**  this.contactServices.idEventNow',  this.contactServices.idEventNow)
-
+                  
                         this.onProductChanged.next(this.product);
                         resolve( this.product.event)
 
@@ -143,7 +141,7 @@ export class EcommerceProductService implements Resolve<any>
      */
     saveProduct(product, img): Promise<any>
     {
-        console.log('product', product)
+
         return new Promise((resolve, reject) => {
             this._httpClient.post(environment.apiUrl + '/api/event/edit-event', 
             {   
@@ -164,7 +162,7 @@ export class EcommerceProductService implements Resolve<any>
                     resolve(response);
 
                     
-                    console.log(response)
+                 
                 }, reject);
         });
     }
@@ -184,7 +182,7 @@ export class EcommerceProductService implements Resolve<any>
                     resolve(response);
 
                     
-                    console.log(response)
+                
                 }, reject);
         });
     }
@@ -197,7 +195,6 @@ export class EcommerceProductService implements Resolve<any>
      */
     addProduct(product, img): Promise<any> {
 
-         console.log(product)
         
         return new Promise((resolve, reject) => {
             this._httpClient.post(environment.apiUrl + '/api/event/add-new-event', 
@@ -234,7 +231,7 @@ export class EcommerceProductService implements Resolve<any>
             this._httpClient.get(environment.apiUrl + '/api/tag/event/' + this.contactServices.idEventNow)
                 .subscribe((response: any) => {
  
-                 console.log(response)
+               
                     resolve(response);
                     
                 }, reject);
@@ -254,7 +251,7 @@ export class EcommerceProductService implements Resolve<any>
            })
                .subscribe((response: any) => {
 
-                console.log(response)
+            
                    resolve(response);
                    
                }, reject);
@@ -272,12 +269,12 @@ export class EcommerceProductService implements Resolve<any>
                     this.contactServices.idEventNow
             )
             .subscribe(response => {
-                console.log(response);
+               
 
 
                 array.forEach(tag => {
             
-                    console.log('tag to post :', tag)
+                
                     this.addTagsInProduct(tag)
                     .then( (x) => {
         

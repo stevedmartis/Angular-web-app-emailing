@@ -60,13 +60,13 @@ export class FormInvitedService implements Resolve<any> {
 
             Promise.all([
                 this.getCampaignById(this.campaignId).then((res: any) => {
-                    console.log(res);
+              
 
                     this.editInvited = true;
 
                     this.getEventById(this.campaignInvitation.eventId).then(
                         (data) => {
-                            console.log(data);
+                          
 
                             this.event = data.event;
 
@@ -75,7 +75,7 @@ export class FormInvitedService implements Resolve<any> {
 
 
                             if (this.invitedId !== "new") {
-                                console.log("invitedId", this.invitedId);
+                               
 
                                 this.getInvited().then(() => {
                                     this.invitedExist = true;
@@ -118,16 +118,16 @@ export class FormInvitedService implements Resolve<any> {
 
                     this.campaignName = this.campaignInvitation.affair;
 
-                    console.log(this.campaignInvitation);
+                
 
                     const linkBol = response.campaign.webLinkCharge;
                     const linkString = response.campaign.webLink;
 
                     if (linkBol) {
-                        console.log(linkString);
+                    
 
                         this.onClickEditInvited().then((x) => {
-                            console.log("x", x);
+                        
                             window.location.href = linkString;
 
                             return;
@@ -143,7 +143,7 @@ export class FormInvitedService implements Resolve<any> {
 
     getInvited(): Promise<any> {
         return new Promise((resolve, reject) => {
-            console.log("elseseeee", this.invitedId);
+         
 
             this._httpClient
                 .get(
@@ -154,14 +154,13 @@ export class FormInvitedService implements Resolve<any> {
                 .subscribe((response: any) => {
                     resolve(response);
 
-                    console.log(response);
 
                     this.invited = response;
 
                     this.onInvitedChanged.next(this.invited);
                     resolve(response);
 
-                    console.log(response);
+              
                 }, reject);
         });
     }
@@ -201,7 +200,7 @@ export class FormInvitedService implements Resolve<any> {
                     invited
                 )
                 .subscribe((response: any) => {
-                    console.log(response);
+                   
 
                     resolve(response);
                 }, reject);
@@ -223,14 +222,14 @@ export class FormInvitedService implements Resolve<any> {
         };
 
         return new Promise((resolve, reject) => {
-            console.log("entro add", obj);
+           
             this._httpClient
                 .post(environment.apiUrl + "/api/invited/add-new-invited/", obj)
                 
 
                 .subscribe((response: any) => {
                     resolve(response);
-                    console.log(response);
+                  
                 });
         });
     }
@@ -243,7 +242,7 @@ export class FormInvitedService implements Resolve<any> {
                     onClick: true,
                 })
                 .subscribe((response: any) => {
-                    console.log(response);
+                   
 
                     resolve(response);
                 }, reject);
