@@ -5,7 +5,7 @@
 export const environment = {
     production: false,
     hmr       : false,
-    apiUrl: 'https://api.turevento.net'
+    apiUrl: 'http://ec2-18-228-221-205.sa-east-1.compute.amazonaws.com:3000'
 };
 
 
