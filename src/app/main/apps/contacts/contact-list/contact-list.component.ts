@@ -32,43 +32,11 @@ export class ContactsContactListComponent implements OnInit, OnDestroy
     user: any;
     dataSource: FilesDataSource | null;
 
-    
-    initColumns: any[] = [
 
-
-
-        { name:'checkbox', initial: true, checkbox: true, title: '',  },
-
-        //data DB xls
-        { name:'company', initial: false, title: 'Empresa' ,   export: true },
-
-        { name:'name', initial: false,  title: 'Name' ,  export: true,  },
-
-        //teleMarketing
-        { name:'contactado', initial: true, title: 'Contacto', contact: true,  },
+    displayedColumns: any[] = this._contactsService.initColumns.map(col => col.name);
         
-        { name:'asiste', initial: true, title: 'Asiste' ,  asiste: true,    },
-
-        //buttons action
-        { name:'buttons', initial: true, title: '',  buttons: true  },
-
-      
-                
-                    ];
-    displayedColumns: any[] = this.initColumns.map(col => col.name);
-        
-
-
-
-
-
-    
-    
-
     displayedColumnsSelection : string[] 
 
-
-  
 
     @ViewChild('dialogContent', {static: false})
     dialogContent: TemplateRef<any>;
@@ -103,8 +71,7 @@ export class ContactsContactListComponent implements OnInit, OnDestroy
     
     {
 
-     
-
+    
         this.searchInput = new FormControl('');
 
         // Set the private defaults
@@ -166,20 +133,15 @@ export class ContactsContactListComponent implements OnInit, OnDestroy
 
                    if(contacts.length > 0){
 
-                
-
+            
                     if(this._contactsService.inputsArray.length > 0 ){
 
-                        this.initColumns = [];
-                        console.log('initColumns',this.initColumns)
-                        this.initColumns = this._contactsService.inputsArray;
-                        console.log('.inputsArray',this._contactsService.inputsArray,  this.initColumns)
+                        this._contactsService.initColumns = [];
+                        console.log('initColumns',this._contactsService.initColumns)
+                        this._contactsService.initColumns = this._contactsService.inputsArray;
+                      
 
-                        this.displayedColumns = this.initColumns.map(col => col.name);
-
-
-
-                    console.log('displayedColumns', this.displayedColumns)
+                        this.displayedColumns = this._contactsService.initColumns.map(col => col.name);
                         
 
                      }
@@ -248,6 +210,11 @@ export class ContactsContactListComponent implements OnInit, OnDestroy
         this._unsubscribeAll.complete();
 
         this._contactsService.searchText = null;
+
+        this._contactsService.initColumns = [];
+        this._contactsService.arraySelect  = [];
+
+        this._contactsService.inputsArray  = [];
     }
 
     // -----------------------------------------------------------------------------------------------------
@@ -275,12 +242,8 @@ export class ContactsContactListComponent implements OnInit, OnDestroy
                 {
                     return;
                 }
-                const actionType: string = response[0];
-                const formData: FormGroup = response[1];
-
-                console.log('array',   formData.getRawValue())
-                      
-
+                const actionType: string = response[0]
+                const formData: FormGroup = response[1]                      
                 const dataForm =  formData.getRawValue()
 
                 switch ( actionType )
@@ -290,35 +253,30 @@ export class ContactsContactListComponent implements OnInit, OnDestroy
                      * Save
                      */
                     case 'save':
-                  
-
-                        let objInvited = {
-                            
+                    
+                        let datInit = {
+                 
                             asiste: dataForm.asiste,
-                            contactado: dataForm.asiste,
-                            notes: dataForm.notes
+                            contactado: dataForm.contactado,
+                            notes: dataForm.notes,
                         }
 
-
-                       
+                        let objInvited = {}
 
                         dataForm.inputsFormContact.forEach(a1 => {
-
-                                objInvited[a1.title]  = a1.value;
-                                
+                                objInvited[a1.name]  = a1.value;
                             });
 
-                            dataForm.inputsFormContact2.forEach(a1 => {
+                            dataForm.inputsFormContact2.forEach(a2 => {
+                                objInvited[a2.name]  = a2.value;
+                            })                                
 
-                                objInvited[a1.title]  = a1.value;
 
-                            })
-                                
-      
+                    this._contactsService.editContact(dataForm.id,datInit, objInvited)
+                    .then((res) => {
 
-               
-
-                    this._contactsService.editContact(dataForm.id,objInvited);
+                        console.log(res)
+                    })
 
                         break;
                     /**
@@ -340,9 +298,7 @@ export class ContactsContactListComponent implements OnInit, OnDestroy
     }
 
     duplicateContact(contact){
-
         this._contactsService.duplicateContact(contact);
-
     }
 
     /**

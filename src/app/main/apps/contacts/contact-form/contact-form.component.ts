@@ -107,10 +107,8 @@ export class ContactsContactFormDialogComponent implements OnInit {
 
 
      ngOnInit(){
-
-
         
-        this.contactForm = this.createContactForm()
+        this.contactForm = this.createContactForm();
         
         const inputsForm = <FormArray>this.f.inputsFormContact;
 
@@ -180,32 +178,39 @@ export class ContactsContactFormDialogComponent implements OnInit {
          
 getInputsFormInvited(inputsForm, inputsForm2){
 
-  const inputs =  this._contactServices.arraySelect;
+  const inputs =  this._contactServices.inputsArray.filter(obj => obj.export)
 
-  console.log(inputs, this.contact)
+  console.log(inputs)
 
-  const objField = [];
-
-
+  const objField = []; 
   
-  if(inputs.length > 0 ){
-
-  inputs.forEach(f => {
 
 
-    const obj = {
+    this.contact.dataImport.forEach(element => {
 
-        title:  f.name,
-        value:  this.contact[f.name],
-        placeHolder: 'Ej: ' +  this.contact[f.name]
-    }
+    
+    Object.getOwnPropertyNames(element)
+    .forEach((val) => {
 
-    objField.push(obj)
       
-  });
 
-  console.log(objField)
- 
+  const title = this.capitalize(val)
+
+  const obj = {
+      title:  title,
+      name: val,
+      value:  element[val],
+      placeHolder: 'Ej: ' +  this.contact[val]
+  }
+
+  objField.push(obj)
+
+
+
+
+});
+
+});
 
         this.dividerArrayInputs(objField)
         .then((array) => {
@@ -219,10 +224,15 @@ getInputsFormInvited(inputsForm, inputsForm2){
         })
 
   
-      }
+    
 
 
   }
+
+  capitalize(word){
+    return word[0].toUpperCase()+word.slice(1).toLowerCase();
+}
+
 
 
   arrayDividerArrayPatch(array, inputsForm){
@@ -261,7 +271,6 @@ getInputsFormInvited(inputsForm, inputsForm2){
 
         })
   
-       
       
   }
   
@@ -271,12 +280,11 @@ getInputsFormInvited(inputsForm, inputsForm2){
     return this._formBuilder.group({
 
         title: obj.title,
+        name: obj.name,
         value: obj.value,
         placeHolder: obj.placeHolder,
     });
   }
 
   
-
-
 }

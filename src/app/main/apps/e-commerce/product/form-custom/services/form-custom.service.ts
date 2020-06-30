@@ -74,35 +74,17 @@ getMesaggeErrorTitle(i, title){
   
 }
 
-getInputsEventOrInitial(){
+getInputsEventOrInitial(input){ 
 
-
-
-
-              
-  
-
-  this.getInputsEvent()
-  .then((inputs) => {
-
-    console.log(inputs)
-
-    if(inputs.length > 0 ){
-
-      inputs.forEach(obj => {
+    if(input ){
 
         
-        this.pushDataInArrays(obj)
-      });
-
-    return inputs;
-
+        this.pushDataInArrays(input)
 
     }
 
     else {
 
-      console.log('event not inpuits')
 
       this.getInputsInitial()
       .then((array) => {
@@ -138,9 +120,6 @@ getInputsEventOrInitial(){
 
 
 
-
-    
-  })
 }
 
 
@@ -163,12 +142,12 @@ pushDataInArrays(obj){
 
 patchFieldsEnabled(obj) {
 
-    
+
 
   const fields = <FormArray>this.enabledF.fieldsEnabled;
 
 
-     fields.push(this.patchValuesEnables(obj, 1));
+     fields.push(this.patchValuesEnables(obj._id, obj, 1));
  
 }
 
@@ -179,27 +158,31 @@ patchFieldsSelection(obj) {
   const fields = <FormArray>this.selectionF.fieldsSelection;
 
  
-  fields.push(this.patchValuesSelection(obj, 2));
+  fields.push(this.patchValuesSelection(obj._id, obj, 2));
 
 }
 
-patchValuesEnables(obj, Ncolumn) {
+patchValuesEnables(id, obj, Ncolumn) {
+
+
   return this._formBuilder.group({
-      id: obj._id,
+      id: id,
       title: [obj.title, [Validators.required, Validators.minLength(3)]],
       value: obj.value,
       placeHolder: obj.placeHolder,
       edit: obj.edit,
       type: obj.type,
-      coulmn: Ncolumn,
+      column: Ncolumn,
       nameControl: obj.nameControl,
       required: obj.required,
   });
 }
 
-patchValuesSelection(obj, Ncolumn) {
+patchValuesSelection(id, obj, Ncolumn) {
+
+
   return this._formBuilder.group({
-      id: obj._id,
+      id: id,
       title: [obj.title, [Validators.required]],
       value: obj.required
           ? [obj.value]
@@ -207,7 +190,7 @@ patchValuesSelection(obj, Ncolumn) {
       placeHolder: obj.placeHolder,
       edit: obj.edit,
       type: obj.type,
-      coulmn: Ncolumn,
+      column: Ncolumn,
       nameControl: obj.nameControl,
       required: obj.required,
   });
@@ -225,12 +208,7 @@ clearFormArray = (formArray: FormArray) => {
         this._httpClient.get(environment.apiUrl + '/api/form/event/' + this.idEventNow)
             .subscribe((response: any) => {
 
-         console.log('resp',response)
 
-                  
-         
-         
-        
          resolve( response.inputs)
 
             }, reject);

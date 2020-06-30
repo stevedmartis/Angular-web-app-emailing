@@ -1,96 +1,89 @@
 <div id="contact-list" class="page-layout-campaign page-margin fullwidth inner-scroll">
 
-    <div class="center" >
-    <!-- HEADER -->
-    <div class="header accent" fxLayout="column"
-         fxLayout.gt-xs="row" fxLayoutAlign.gt-xs="space-between center">
+    <div class="center">
+        <!-- HEADER -->
+        <div class="header accent" fxLayout="column" fxLayout.gt-xs="row" fxLayoutAlign.gt-xs="space-between center">
 
 
 
-         <div class=" icon-lg ml-sm-32 " fxLayout="row" fxLayoutAlign="center center">
+            <div class=" icon-lg ml-sm-32 " fxLayout="row" fxLayoutAlign="center center">
 
 
-            <mat-icon class="logo-icon mr-24"
-            >account_box
-   </mat-icon>
-       
+                <mat-icon class="logo-icon mr-24">account_box
+                </mat-icon>
 
-    </div>
-
-
-   
-        <!-- / APP TITLE -->
-
-        <!-- SEARCH -->
-        <div class="ml-sm-32 " fxLayout="row" fxLayoutAlign="center center" >
-            <div class="ml-sm-32 icon-xs" fxLayout="row" fxLayoutAlign="center center">
-           
-
-        </div>
-
-
-            <div class="search-wrapper mt-16 mt-sm-0">
-
-
-                <div class="search" fxFlex="100" fxLayout="row" fxLayoutAlign="start center">
-
-                    
-                    <mat-icon>search</mat-icon>
-                    <input [formControl]="searchInput" placeholder="Buscar invitado">
-                </div>
 
             </div>
 
+
+
+            <!-- / APP TITLE -->
+
+            <!-- SEARCH -->
+            <div class="ml-sm-32 " fxLayout="row" fxLayoutAlign="center center">
+                <div class="ml-sm-32 icon-xs" fxLayout="row" fxLayoutAlign="center center">
+
+
+                </div>
+
+
+                <div class="search-wrapper mt-16 mt-sm-0">
+
+
+                    <div class="search" fxFlex="100" fxLayout="row" fxLayoutAlign="start center">
+
+
+                        <mat-icon>search</mat-icon>
+                        <input [formControl]="searchInput" placeholder="Buscar invitado">
+                    </div>
+
+                </div>
+
+            </div>
+            <!-- / SEARCH -->
+            <!-- SELECTED BAR -->
+            <selected-bar class="accent-600" *ngIf="hasSelectedContacts" [@slideInTop]></selected-bar>
+            <!-- / SELECTED BAR -->
+
+
         </div>
-        <!-- / SEARCH -->
-          <!-- SELECTED BAR -->
-          <selected-bar class="accent-600" *ngIf="hasSelectedContacts" [@slideInTop]></selected-bar>
-          <!-- / SELECTED BAR -->
-          
-  
-    </div>
-    <!-- / HEADER -->
+        <!-- / HEADER -->
 
 
- <!-- CENTER -->
-   
+        <!-- CENTER -->
 
 
- 
- 
 
-<div 
-[ngClass]="{
+
+
+
+        <div [ngClass]="{
     'table-hidden': _contactsService.contacts.length === 0,
     'table-contacts-visible': _contactsService.contacts.length > 0  }">
 
 
-<mat-table  class="table-invited"
-        #table [dataSource]="dataSource"
-        matSort
-        [@animateStagger]="{value:'50'}"
-        fusePerfectScrollbar>
-    <!-- Checkbox Column -->
+            <mat-table class="table-invited" #table [dataSource]="dataSource" matSort [@animateStagger]="{value:'50'}"
+                fusePerfectScrollbar>
+                <!-- Checkbox Column -->
 
 
-    <ng-container [matColumnDef]="column.name" 
-    *ngFor="let column of initColumns; index as i">
+                <ng-container [matColumnDef]="column.name"
+                    *ngFor="let column of _contactsService.initColumns; index as i">
 
-    <span>
-        <mat-header-cell *matHeaderCellDef  mat-sort-header>{{column.title}}</mat-header-cell>
-        <mat-cell *matCellDef="let element">
+                    <span>
+                        <mat-header-cell *matHeaderCellDef mat-sort-header>{{column.title}}</mat-header-cell>
+                        <mat-cell *matCellDef="let element">
 
-            <span *ngIf="column.checkbox">
-                <mat-checkbox [(ngModel)]="checkboxes[element._id]" (ngModelChange)="onSelectedChange(element._id)"
-                (click)="$event.stopPropagation()">
-                    </mat-checkbox>
-              
-            </span>
+                            <span *ngIf="column.checkbox">
+                                <mat-checkbox [(ngModel)]="checkboxes[element._id]"
+                                    (ngModelChange)="onSelectedChange(element._id)" (click)="$event.stopPropagation()">
+                                </mat-checkbox>
 
-            <span *ngIf="column.export">
-             
-                    {{ element[column.name] }}
-             
+                            </span>
+
+                            <span *ngIf="column.export">
+
+                                {{ element.dataImport[0][column.name] }
           
             </span>
         
@@ -168,36 +161,33 @@
              [ngClass]="{'accent-50':checkboxes[contact._id]}"
              matRipple
              [@animate]="{value:'*',params:{y:'100%'}}">
-    </mat-row>
+                                </mat-row>
 
 
 
 
-</mat-table>
+            </mat-table>
 
 
 
-<mat-paginator #paginator
-class="paginator-left"
-[length]="dataSource.filteredData.length"
-[pageIndex]="0"
-[pageSize]="25">
-</mat-paginator>
+            <mat-paginator #paginator class="paginator-left" [length]="dataSource.filteredData.length" [pageIndex]="0"
+                [pageSize]="25">
+            </mat-paginator>
 
-</div>
+        </div>
 
 
 
-<div *ngIf="_contactsService.contacts.length === 0 " class="no-invited">
+        <div *ngIf="_contactsService.contacts.length === 0 " class="no-invited">
 
-       
-        <img class="empty-inv" src="assets/images/listEmptyCut.png">
+
+            <img class="empty-inv" src="assets/images/listEmptyCut.png">
+
+        </div>
+
+
+
 
     </div>
-
-
-
-
-</div>
 
 </div>
