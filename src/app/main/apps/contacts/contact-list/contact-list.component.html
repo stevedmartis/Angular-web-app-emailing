@@ -68,11 +68,11 @@
 
 
                 <ng-container [matColumnDef]="column.name"
-                    *ngFor="let column of _contactsService.initColumns; index as i">
+                    *ngFor="let column of _contactsService.initColumns; index as i" >
 
                     <span>
-                        <mat-header-cell *matHeaderCellDef mat-sort-header>{{column.title}}</mat-header-cell>
-                        <mat-cell *matCellDef="let element">
+                        <mat-header-cell  *matHeaderCellDef mat-sort-header [fxHide.xs]="column.export">{{column.title}}</mat-header-cell>
+                        <mat-cell *matCellDef="let element" [fxHide.xs]="column.export">
 
                             <span *ngIf="column.checkbox">
                                 <mat-checkbox [(ngModel)]="checkboxes[element._id]"
