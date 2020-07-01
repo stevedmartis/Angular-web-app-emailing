@@ -19,6 +19,7 @@ export class ContactsContactFormDialogComponent implements OnInit {
   
     dialogTitle: string;
     checked = true;
+    edit: boolean  = false;
 
  
     private _unsubscribeAll: Subject<any>;
@@ -62,13 +63,16 @@ export class ContactsContactFormDialogComponent implements OnInit {
         // Set the defaults
         this.action = _data.action;
 
-       
 
         
 
         if (this.action === 'edit') {
             this.dialogTitle = 'Editar invitado';
+
+            this.edit = true
             this.contact = _data.contact;
+
+            
 
          
 

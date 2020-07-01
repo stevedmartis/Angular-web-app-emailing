@@ -5,7 +5,11 @@
     <div class="dialog-content-wrapper">
         <mat-toolbar matDialogTitle class="mat-accent m-0">
             <mat-toolbar-row fxLayout="row" fxLayoutAlign="space-between center">
-                <span class="title dialog-title"> <mat-icon>person_add</mat-icon> {{dialogTitle}}</span>
+                <span class="title dialog-title">
+                     <mat-icon *ngIf="edit">edit</mat-icon> 
+
+                       <mat-icon *ngIf="!edit">person_add</mat-icon> 
+                     {{dialogTitle}}</span>
                 <button mat-icon-button (click)="matDialogRef.close()" aria-label="Close dialog">
                     <mat-icon>close</mat-icon>
                 </button>
@@ -18,7 +22,7 @@
     <div class="content p-24" *ngIf="loadInputs">
 
 
-        <div mat-dialog-content class="mb-24" fxLayout="column" fxLayoutAlign="start" fxLayout.gt-md="row" fusePerfectScrollbar>
+        <div mat-dialog-content class="mb-24 margin-form" fxLayout="column" fxLayoutAlign="start" fxLayout.gt-md="row" fusePerfectScrollbar>
 
             <!-- REACTIVE FORM EXAMPLE -->
 
