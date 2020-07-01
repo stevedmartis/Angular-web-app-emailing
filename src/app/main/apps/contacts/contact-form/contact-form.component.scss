@@ -46,17 +46,6 @@
     margin-top: 5%;
 }
 
-.content {
-
-    
-    @include media-breakpoint('xs') {
-        margin-left: 3%;
-        margin-right: -3%;
-        margin-top: 3%;
-    }
-
-}
-
 .mat-form-field-infix {
 
     width: auto;

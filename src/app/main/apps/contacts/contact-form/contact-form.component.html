@@ -118,15 +118,6 @@
 
 
 
-        <button *ngIf="action === 'edit'"
-        mat-button
-        class="mr-8"
-        (click)="matDialogRef.close(['duplicate', contactForm])"
-        aria-label="Duplicate"
-        matTooltip="Duplica invitado">
-        DUPLICAR
-        </button>
-
         <button *ngIf="action !== 'edit'"
                 mat-button
                 class="save-button"
