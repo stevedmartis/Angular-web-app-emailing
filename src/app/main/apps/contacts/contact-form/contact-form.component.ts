@@ -183,9 +183,19 @@ getInputsFormInvited(inputsForm, inputsForm2){
 
 
 
-  const objField = []; 
+let objField = []; 
   
+if( this.contact.dataImport.length === 0){
 
+
+    
+      objField = inputs;
+    
+    
+
+}
+
+else {
 
     this.contact.dataImport.forEach(element => {
 
@@ -212,6 +222,8 @@ getInputsFormInvited(inputsForm, inputsForm2){
 });
 
 });
+
+}
 
         this.dividerArrayInputs(objField)
         .then((array) => {

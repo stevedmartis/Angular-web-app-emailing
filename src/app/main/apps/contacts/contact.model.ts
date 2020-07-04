@@ -10,7 +10,7 @@ export class Contact {
     StatusDateTime: Date;
     emailValid: Boolean;
     notes: String
-    dataImport: [] = [];
+    dataImport = [];
 
 
 
@@ -25,7 +25,9 @@ export class Contact {
             this._id = contact._id || '';
             this.asiste = contact.asiste || 'null';
             this.contactado = contact.contactado || 'null';
-            this.dataImport = this.dataImport || [];  
+            this.dataImport = this.dataImport || [
+               
+            ];  
             this.onClick = contact.onClick || '';
             this.dateOnClick = contact.dateOnClick || '';
             this.Status = contact.Status || '';

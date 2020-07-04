@@ -96,23 +96,27 @@ export class SpeedDialFabComponent implements OnInit {
                 codeEvento: this._contactsService.idEventNow,      
                 asiste: dataForm.asiste,
                 contactado: dataForm.asiste,
-                notes: dataForm.notes
+                notes: dataForm.notes,
+                dataImport: []
             }
 
-
-           
+            let obj = {}
 
             dataForm.inputsFormContact.forEach(a1 => {
 
-                    objInvited[a1.title]  = a1.value;
+              obj[a1.name]  = a1.value;
                     
                 });
 
                 dataForm.inputsFormContact2.forEach(a1 => {
 
-                    objInvited[a1.title]  = a1.value;
+                  obj[a1.name]  = a1.value;
 
                 })
+
+                objInvited.dataImport.push(obj)
+
+                console.log(objInvited)
 
                   
   this._contactsService.createContact(objInvited)

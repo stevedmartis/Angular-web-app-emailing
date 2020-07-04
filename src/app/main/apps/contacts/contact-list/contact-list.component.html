@@ -181,7 +181,7 @@
         <div *ngIf="_contactsService.contacts.length === 0 " class="no-invited">
 
 
-            <img class="empty-inv" src="assets/images/listEmptyCut.png">
+            <img class="empty-inv" src="assets/images/listEmptyCut.png" [@animate]="{value:'*',params:{delay:'50ms',scale:'0.2'}}">
 
         </div>
 

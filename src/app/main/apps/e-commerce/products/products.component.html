@@ -191,7 +191,7 @@
         <div class="content-card empty-card" *ngIf="_ecommerceProductsService.products.length === 0">
 
 
-            <img class="size-img" src="assets/images/emptyevent.png">
+            <img class="size-img" src="assets/images/emptyevent.png" [@animate]="{value:'*',params:{delay:'50ms',scale:'0.2'}}">
 
         </div>
 
