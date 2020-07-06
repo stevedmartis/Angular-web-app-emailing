@@ -2,6 +2,7 @@ import { Component, OnInit, Inject, OnDestroy } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { CampaignService } from '../../campaign.service';
 import { isThisSecond } from 'date-fns';
+import { Campaign } from '../../campaign.model';
 
 @Component({
   selector: 'app-send',
@@ -13,8 +14,11 @@ export class SendComponent implements OnInit, OnDestroy {
   selectionCount = this._campaignService._contactService.selectedContacts.length;
 
   allContacts: any[]
+  arrayDataImport: any[];
   contactsCount: number = 0;
   loadingContacts: boolean = true;
+
+  campaign: Campaign
 
   constructor(public matDialogRef: MatDialogRef<SendComponent>,
     public _campaignService: CampaignService,
@@ -30,6 +34,9 @@ export class SendComponent implements OnInit, OnDestroy {
       this.allContacts = x.invited;
 
 
+     
+
+      console.log(  this.arrayDataImport )
 
       this.contactsCount = this.allContacts.length;
 
@@ -59,11 +66,11 @@ const initialStatus =  'Cargando...'
 
     this._campaignService.statusSendInvitation = initialStatus
     
-    const invitation = this._data.campaign;
+    this.campaign = this._data.campaign;
 
    // this._campaignService.ManiInvited(invitation, this.allContacts)
 
-   this._campaignService.getDataPersonForSendEmail(invitation, option, this.allContacts)
+   this._campaignService.getDataPersonForSendEmail(option, this.campaign, this.allContacts)
 
 
   }

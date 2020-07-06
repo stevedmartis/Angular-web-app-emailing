@@ -23,8 +23,13 @@ contacts-contact-list .mat-table .mat-row .mat-cell {
 
 .my-class-send .mat-dialog-container {
     width: 600px !important;
-    //height: 300px !important;
+    height: 300px !important;
     padding: 0px;
+
+
+    @include media-breakpoint('xs') {
+        height: -1px !important;
+    }
     
 }
 

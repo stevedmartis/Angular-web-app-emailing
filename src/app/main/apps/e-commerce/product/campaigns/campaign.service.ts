@@ -231,122 +231,186 @@ export class CampaignService {
     }
 
 
-    ManiInvited(campaign, array){
+
+    getDataPersonForSendEmail(option, campaign, invited) {
 
 
-        const arrayInvitedAll = array;
-        const arrayNew = [];
-        arrayInvitedAll.forEach(c => {
-            if (c.email) {
-
-                if (this.emailPattern.test(c.email))
-
-                {
-                   
-                    arrayNew.push(c);
-
-                }
-
-                else {
-
-                   
-                }
-               
-            } else {
-               
-              
-            }
-        });
-
-
-        this.allLoading = true;
-
-        let arrayvalidEmials = arrayNew.map(obj => obj._id);
-        
-        let valueOk = 0;
-        let valueBad = 0;
-
-        let totalCount = arrayvalidEmials.length
-
-        this.statusSendInvitation = "Enviando...";
-
-        this.countStatus = "Enviando a: " + totalCount;
-       
-
-        this.sendManiInvited(campaign, arrayNew)
-
-        .then( (res) => {
-
-
-            this.value = totalCount;
+        const totalCount = invited.length;
 
 
 
-                this.countStatus = "Enviados: " + this.value + " de " + totalCount;
-
-                this.statusSendInvitation = "Completado!";
-
-        
-
-            
-        })
-        .catch((err) => {
-
-            this.value++
-
-            valueBad++;
-
-            if(this.value === arrayvalidEmials.length) {
-
-                
-            
-                this.countStatus = "Enviados: " + this.valueOk + " de " + totalCount;
-
-                this.statusSendInvitation = "Completado!";
-
-            }
-
-
-        })
-
-    }
-
-    getDataPersonForSendEmail(campaign, option, array) {
-
-
-        const totalCount = array.length;
-
-
+console.log(campaign, invited, this.eventObj)
         if (option === "all") {
             this.allLoading = true;
 
-       
-            const arrayInvitedAll = array;
-            const arrayNew = [];
-            arrayInvitedAll.forEach(c => {
-                if (c.email) {
-                    arrayNew.push(c);
-                } else {
-                    return;
-                }
+            const arraydataImport = invited.map(obj => 
+                { let final = { 
+                data: obj.dataImport, id: obj._id 
+            }; return final
+        })
+
+            console.log(arraydataImport)
+
+            const arrayFinal = [];
+            arraydataImport.forEach(element => {
+
+                console.log(element.data[0])
+                Object.getOwnPropertyNames(element.data[0])
+                .forEach((val) => {
+            
+                 let value = element.data[0][val];
+
+        
+                    if (value) {
+
+                        if (this.emailPattern.test(value))
+        
+                        {
+
+                           
+                            console.log('is email ',value)
+
+
+                            const inv = {
+                                idInvited: element.id,
+                                emailInvited: value,
+                                nameInvited: "wenas",
+                                emailValidation: true,
+                            }
+
+                            arrayFinal.push(inv)
+
+                          
+
+
+
+                          
+    
+
+                    }
+        
+                        else {
+
+                            console.log('no email',value)
+
+        
+                           
+                        }
+
+                        
+                       
+                    } else {
+                       
+                      
+                    }
+            
+            
             });
 
 
-    
+            });
 
-            this.emailsValidForSend = arrayNew.length;
+            console.log('arrayFinal', arrayFinal)
 
-            this.sendManiInvited(campaign._id, arrayNew)
 
-            .then( (res) => {
+            const imagen = campaign.imgBlob.substr(22);
+
+           const campaign2  = JSON.parse(JSON.stringify(campaign))
+
+
+           campaign2.imgBlob = imagen;
+
+            console.log('campaign2', campaign2)
+
+            var arrayUnique = arrayFinal.reduce((unique, o) => {
+                if(!unique.some(obj => obj.emailInvited )) {
+                  unique.push(o);
+                }
+                return unique;
+            },[]);
+
+            console.log('arrayUnique', arrayUnique)
+
+            arrayUnique.forEach(inv => {
+
+
+
+             this.sendManiInvited(this.eventObj.handle, campaign2, inv)
+
+                            
+                
+                .then( (mail) => {
+
+
+                    this.value++;
+
+                   
+                    this.valueOk++;
+
+              
+
+                    let id = mail.resBody.Messages[0].To[0].MessageID;
+                       
+                    this._contactService.editMessageId(inv.idInvited, id)
+                    .then(() => {
+                        this._productService.Is_mailJet()
+                        
+                    })
                
-            })
-            .catch((err) => {
-             
-            })
+
+                    if (this.value === arrayUnique.length) {
+                        this.value = totalCount;
+
+                        this.countStatus = "Enviados: " + this.valueOk + " de " + totalCount;
+
+                        this.statusSendInvitation = "Completado!";
+                    }
+
+                    console.log(mail)
+                   
+                })
+                .catch((err) => {
+                    console.log(err)
 
 
-           this.invitedArrayforSend(arrayNew, campaign, this.emailsValidForSend);
+            
+
+                this.value++;
+
+
+                this.invitedFails.push(inv);
+
+              
+        
+        if (this.value === totalCount) {
+            this.value = totalCount;
+
+
+            this.countStatus = "Enviados: " + this.valueOk + " de " + totalCount;
+
+
+            this.statusSendInvitation = "Completado!";
+
+        }
+
+                return;
+
+
+
+                })
+    
+                
+            });
+
+                
+
+          
+
+            
+
+      //     this.invitedArrayforSend(arrayNew, campaign, this.emailsValidForSend);
+
+
         } else {
             this.selectLoading = true;
 
@@ -359,7 +423,7 @@ export class CampaignService {
             arrayInvitedSelected.forEach(obj => {
 
              
-               const filter = array.filter(element => element._id === obj);
+               const filter = invited.filter(element => element._id === obj);
 
 
 
@@ -379,6 +443,12 @@ export class CampaignService {
         }
     }
 
+
+
+    removeDuplicateObjects(array: any[]) {
+        return [...new Set(array.map(s => JSON.stringify(s.emailInvited)))]
+          .map(s => JSON.parse(s));
+      }
 
     getContacts(idEvent): Promise<any> {
         return new Promise((resolve, reject) => {
@@ -404,7 +474,7 @@ export class CampaignService {
                
           
              
-                    if (obj.email) {
+                    if (obj.emailInvited) {
                         this.sendInvited(invitation, obj)
                             .then(mail => {
 
@@ -417,7 +487,7 @@ export class CampaignService {
 
                                 let id = mail.resBody.Messages[0].To[0].MessageID;
                                    
-                                this._contactService.editMessageId(obj._id, id)
+                                this._contactService.editMessageId(obj.idInvited, id)
                                 .then(() => {
                                     this._productService.Is_mailJet()
                                     
@@ -626,11 +696,11 @@ export class CampaignService {
         };
     }
 
-sendManiInvited(campaign, array): Promise<any> {
+sendManiInvited(eventName, campaign, invited): Promise<any> {
 
         return new Promise((resolve, reject) => {
         this._httpClient
-        .post<any>(environment.apiUrl + '/api/mani-invited', { campaign, array } )                
+        .post<any>(environment.apiUrl + '/api/send-invited', { eventName,campaign, invited} )                
         .subscribe((response: any) => {
 
          
