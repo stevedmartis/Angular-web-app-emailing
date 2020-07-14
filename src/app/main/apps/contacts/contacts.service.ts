@@ -755,7 +755,7 @@ export class ContactsService {
               const obj = {
 
                   name: e, 
-                  export: true, 
+                  import: true, 
                   title: cap
               }
 
@@ -772,36 +772,40 @@ export class ContactsService {
           this.inputsArray = inputsArray;
           this.initColumns =   this.inputsArray;
 
-          const onlyExport = inputsArray.filter(obj => obj.export)
-          this.arraySelect  = onlyExport;
+          const onlyImport = inputsArray.filter(obj => obj.import)
+          this.arraySelect  = onlyImport;
 
+          console.log(inputsArray)
 
           this.editEventInputs(inputsArray).
           then((res) =>{
             
 
-
+console.log(res)
 
             res.event.inputs.forEach(input => {
 
-                if(input.export){
+              
+
+                if(input.import){
 
                     const obj = {
 
                         title: input.title,
-                        type: input.type,
-                        name: input.name,
+                        type: "text",
+                        nameInitial: input.name,
                         placeHolder: input.placeHolder,
-                        value: input.value,
+                        value: "",
                         required: true,
-                        export: input.export
                     }
+
+                    console.log(obj)
 
                     this.addInputFormInEvent(obj)
                     .then((res) => {
         
                   
-        
+                        console.log(res)
                 
                             this._formCustomService.getInputsEventOrInitial(res.input)
                         
@@ -968,7 +972,7 @@ const dataImport = {}
                  codeEvento:  this.idEventNow,
                  title: input.title,
                  type: input.type,
-                 name: input.name,
+                 nameInitial: input.nameInitial,
                  placeHolder: input.placeHolder,
                  value: input.value,
                  required: input.required,

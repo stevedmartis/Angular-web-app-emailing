@@ -126,6 +126,8 @@ export class FormCustomComponent implements OnInit, OnDestroy {
     }
 
     dropItemSideBarClose(i, event, name): void {
+
+        console.log(event)
       
 
         if (this._formCustomService.inputsEnabledForm.invalid) {

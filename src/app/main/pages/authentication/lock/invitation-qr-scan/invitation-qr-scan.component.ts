@@ -62,7 +62,7 @@ export class InvitationQrScanComponent implements OnInit, OnDestroy {
 
       
 
-        this.invited = new Invited();
+        this.invited = new Invited({});
 
 
 
@@ -106,7 +106,7 @@ export class InvitationQrScanComponent implements OnInit, OnDestroy {
                 {
 
 
-                    this.invited = new Invited();
+                    this.invited = new Invited({});
 
               
     
@@ -159,13 +159,7 @@ export class InvitationQrScanComponent implements OnInit, OnDestroy {
 
         return this._formBuilder.group({
             invitedId: [this.invited._id, [Validators.required]], 
-            name:  [this.invited.name, [Validators.required]], 
-            lastname:  [this.invited.lastname, [Validators.required]], 
-            email: [this.invited.email, [Validators.required, Validators.email]], 
-            company:  [this.invited.company, [Validators.required]], 
-            assit_checked: [true],
-            jobtitle: [this.invited.jobtitle, [Validators.required]], 
-            phone: [this.invited.phone], 
+
             contactado: ['email'],
         });
     }

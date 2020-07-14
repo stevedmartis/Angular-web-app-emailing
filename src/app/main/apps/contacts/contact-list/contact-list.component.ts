@@ -272,7 +272,7 @@ export class ContactsContactListComponent implements OnInit, OnDestroy
                             })                                
 
 
-                    this._contactsService.editContact(dataForm.id,datInit, objInvited)
+                    this._contactsService.editContact(dataForm.id, datInit, objInvited)
                     .then((res) => {
 
                         console.log(res)

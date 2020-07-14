@@ -164,6 +164,8 @@ patchFieldsSelection(obj) {
 
 patchValuesEnables(id, obj, Ncolumn) {
 
+  console.log('obj', obj)
+
 
   return this._formBuilder.group({
       id: id,
@@ -173,7 +175,7 @@ patchValuesEnables(id, obj, Ncolumn) {
       edit: obj.edit,
       type: obj.type,
       column: Ncolumn,
-      nameControl: obj.nameControl,
+      name: obj.name,
       required: obj.required,
   });
 }
@@ -191,7 +193,7 @@ patchValuesSelection(id, obj, Ncolumn) {
       edit: obj.edit,
       type: obj.type,
       column: Ncolumn,
-      nameControl: obj.nameControl,
+      name: obj.name,
       required: obj.required,
   });
 }

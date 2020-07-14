@@ -47,7 +47,7 @@ export class NewInvitedComponent implements OnInit, OnDestroy {
         private titleService: Title
     ) {
 
-        this.invited = new Invited();
+        this.invited = new Invited({});
 
         this._unsubscribeAll = new Subject();
         // Configure the layout
@@ -78,7 +78,7 @@ export class NewInvitedComponent implements OnInit, OnDestroy {
      */
     ngOnInit(): void {
 
-        this.invitationForm = this.createInvitedForm();
+      
 
 
         this.setDocTitle(this._formInvitationNewService.event.affair)
@@ -129,22 +129,6 @@ export class NewInvitedComponent implements OnInit, OnDestroy {
         this._unsubscribeAll.complete();
     }
 
-
-        createInvitedForm(): FormGroup
-    {
-
-        return this._formBuilder.group({
-            codeEvento: [this._formInvitationNewService.campaignInvitation.eventId], 
-            name:  [this.invited.name, [Validators.required]], 
-            lastname:  [this.invited.lastname, [Validators.required]], 
-            email: [this.invited.email, [Validators.required, Validators.email]], 
-            company:  [this.invited.company, [Validators.required]], 
-            asiste: [],
-            jobtitle: [this.invited.jobtitle], 
-            phone: [this.invited.phone], 
-            contactado: ['email']
-        });
-    }
 
 
     confirmInvitation(){

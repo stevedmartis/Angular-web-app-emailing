@@ -76,8 +76,27 @@ export class FormInvitedService implements Resolve<any> {
 
                             if (this.invitedId !== "new") {
                                
+                                console.log(this.invitedId )
 
-                                this.getInvited().then(() => {
+
+                                
+                                this.getInputsEvent(this.campaignInvitation.eventId)
+                                .then((data) => {
+
+
+                                    this.arrayInputsSelect = data.inputs.filter(x => {
+                                        return x.column === 2;
+                                    })
+
+                                this.getInvited()
+                                .then((res) => {
+
+
+                
+                                    })
+
+                                    console.log(res )
+
                                     this.invitedExist = true;
                                 });
                             } else {
@@ -192,12 +211,12 @@ export class FormInvitedService implements Resolve<any> {
         });
     }
 
-    confirmInvitation(invited) {
+    confirmInvitation(id, obj) {
         return new Promise((resolve, reject) => {
             this._httpClient
                 .post(
                     environment.apiUrl + "/api/invited/confirm-invited",
-                    invited
+                    {  invitedId: id, dataInvited: obj,  }
                 )
                 .subscribe((response: any) => {
                    

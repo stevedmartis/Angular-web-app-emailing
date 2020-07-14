@@ -23,7 +23,8 @@ export class LockComponent implements OnInit, OnDestroy {
     invitationForm 
     = this.createInputsForm()
 
-    invited: Invited;
+    invited: any;
+    objField: any
 
     private _unsubscribeAll: Subject<any>;
 
@@ -39,7 +40,7 @@ export class LockComponent implements OnInit, OnDestroy {
         public _formInvitationService: FormInvitedService,
         private router: Router
     ) {
-        this.invited = new Invited();
+        
 
         this._unsubscribeAll = new Subject();
         // Configure the layout
@@ -75,55 +76,95 @@ export class LockComponent implements OnInit, OnDestroy {
             .subscribe((invited) => {
 
 
-              
+              console.log(invited)
 
-                if (!invited.invited) {
-                    this.invited = new Invited();
+                if (invited.invited) {
+                    this.invited = invited.invited;
 
                 
+console.log( this.invited,  this._formInvitationService.arrayInputsSelect
+)
+       
+if(this._formInvitationService.arrayInputsSelect.length === 0){
+                
+    return;
+}
 
-                    this._formInvitationService.getInputsEvent(this._formInvitationService.campaignInvitation.eventId)
-                    .then((data) => {
-
-
-                        this._formInvitationService.arrayInputsSelect = data.inputs.filter(x => {
-                            return x.column === 2;
-                        })
-
-
-                        if(this._formInvitationService.arrayInputsSelect.length === 0){
-
-                            return;
-                        }
-
-                        else {
-
-                            this.patchFieldInputs();
-                        }
-
-                    })
-                  
+else {
 
 
-                } else {
-                  
-                    this.invited = new Invited(invited.invited);
-                 
-
-                   // this.patchFieldInputs();
-
-                   
-                }
+    this.getInputsFormInvited();
+}
 
                
                
-            });
+            }
+    })
+
+}
+
+
+    getInputsFormInvited(){
+
+        const inputsSelect =   this._formInvitationService.arrayInputsSelect;
+
+        let objField = []; 
+        inputsSelect.forEach(input => {
+            
+     
+      
+      
+
+            console.log(input)
+      
+          this.invited.dataImport.forEach(element => {
+      
+          
+          Object.getOwnPropertyNames( element)
+          .forEach((val) => {
+
+              if(val === input.nameInitial){
+
+
+        
+            console.log(input, val)
+      
+        const obj = {
+            title:  input.title,
+            name: val,
+            value:  element[val],
+            placeHolder: 'Ej: ' +  this.invited[val]
+        }
+      
+        objField.push(obj)
+      
+      
     }
+      
+      
+      });
+      
+      });
+      
+    });
+
+  
+    console.log(objField)
+
+
+    this.patchFieldInputs(objField);
+          
+      
+      
+        }
+      
 
     ngOnDestroy(): void {
         // Unsubscribe from all subscriptions
         this._unsubscribeAll.next();
         this._unsubscribeAll.complete();
+
+        this._formInvitationService.arrayInputsSelect = [];
     }
 
     createInputsForm(): FormGroup {
@@ -151,10 +192,10 @@ export class LockComponent implements OnInit, OnDestroy {
             : "";
     }
 
-    patchFieldInputs() {
+    patchFieldInputs(objField) {
         const inputs = <FormArray>this.f.inputSelection;
 
-        this._formInvitationService.arrayInputsSelect.forEach((x) => {
+        objField.forEach((x) => {
             inputs.push(this.patchValiesSelection(x));
 
         });
@@ -171,7 +212,7 @@ export class LockComponent implements OnInit, OnDestroy {
             edit: obj.edit,
             type: obj.type,
             coulmn: obj.column,
-            nameControl: obj.nameControl,
+            name: obj.name,
             required: obj.required,
         });
     }
@@ -220,15 +261,69 @@ export class LockComponent implements OnInit, OnDestroy {
 
         const data = this.invitationForm.getRawValue();
 
-
         if (this.invitationForm.valid) {
           
 
             if (this._formInvitationService.invitedExist) {
+
+            console.log('yes')
+
+
+             
+        console.log(data)
+
+
+ 
+
+
+      let objData = {}
+
+ 
+
+
+          const dataImport = this.invited.dataImport;
+
+            
+     
+      
+      
+
+        dataImport.forEach(element => {
+      
+          
+          Object.getOwnPropertyNames( element)
+          .forEach((val) => {
+
+        
+            console.log(element, val)
+      
+        objData[val] = element[val];
+      
+
+      
+      
+      });
+      
+   
+
+      
+    });
+
+ data.inputSelection.forEach(obj => {
+
+    objData[obj.name] = obj.value;
+ });
+
+
+
+
+
+          console.log(objData)
+
                
 
                 this._formInvitationService
-                    .confirmInvitation(data)
+                    .confirmInvitation(this.invited._id, objData)
                     .then((inv: Invited) => {
                     
 
@@ -241,6 +336,9 @@ export class LockComponent implements OnInit, OnDestroy {
                     });
             } else {
             
+                console.log('not')
+
+
 
                 this._formInvitationService
                     .addNewInvitation(data)
@@ -261,6 +359,8 @@ export class LockComponent implements OnInit, OnDestroy {
         }
     }
 
+
+
     cancelInvitation() {
         const value = "no";
         this.invitationForm.controls["asiste"].setValue(value);
@@ -270,7 +370,7 @@ export class LockComponent implements OnInit, OnDestroy {
  
 
         this._formInvitationService
-            .confirmInvitation(data)
+            .confirmInvitation(data, data)
             .then((inv: Invited) => {
                 console.log(inv);
 

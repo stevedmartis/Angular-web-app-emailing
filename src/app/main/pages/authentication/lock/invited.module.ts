@@ -1,67 +1,42 @@
 
 
 export class Invited {
-    codeEvento: string;
-    rut: string;
-    name: string;
-    lastname: string;
-    email: string;
-    district: string;
-    street: string;
-    address: string;
-    apartmentOffice: string;
-    created: string;
-    company: string;
-    jobtitle: string;
-    zip_code: string;
-    phone: string;
-    website: string;
-    asiste: string;
-    asistio: false;
-    status: string;
-    sendEmail: true;
-    codeQr: string;
-    update: null;
-    send_email: null;
-    contactado: string;
-    observation: string;
     _id: string;
-    user: string;
+    asiste: string;
+    contactado: string;
+    onClick: boolean;
+    dateOnClick: Date;
+    Status: string;
+    StatusDateTime: Date;
+    emailValid: Boolean;
+    notes: String
+    dataImport = [];
+
+
+
 
     /**
      * Constructor
      *
-     * @param product
+     * @param invited
      */
-    constructor(invited?) {
-        invited = invited || {};
-        this.rut = invited.rut || '';
-        this.codeEvento = invited.codeEvento || '';
-        this.name = invited.name || '';
-        this.lastname = invited.lastname || '';
-        this.email = invited.email || '';
-        this.district = invited,this.district || '';
-        this.street = invited.street || '';
-        this.address = invited.address || '';
-        this.apartmentOffice = invited.apartmentOffice || '';
-        this.created = invited.created || '';
-        this.company = invited.company || '';
-        this.jobtitle = invited.jobtitle || '';
-        this.zip_code = invited.zip_code || '';
-        this.phone = invited.phone || '';
-        this.website = invited.website || '';
-        this.asiste = invited.asiste || 'null';
-        this.asistio = invited.asistio || false;
-        this.status = invited.status || '';
-        this.sendEmail = invited.send_email || '';
-        this.codeQr = invited.codeQr || '';
-        this.update = invited.update || '';
-        this.send_email = invited.send_email || '';
-        this.contactado = invited.contactado || '';
-        this.observation = invited.observation || '';
-        this._id = invited._id || '';
-        this.user = invited.user || '';
-      
+    constructor(invited) {
+        {
+            this._id = invited._id || '';
+            this.asiste = invited.asiste || 'null';
+            this.contactado = invited.contactado || 'null';
+            this.dataImport = this.dataImport || [
+               
+            ];  
+            this.onClick = invited.onClick || '';
+            this.dateOnClick = invited.dateOnClick || '';
+            this.Status = invited.Status || '';
+            this.StatusDateTime = invited.StatusDateTime || '';
+            this.emailValid = invited.emailValid || false;
+            this.notes = invited.notes ||  '';
 
+            
+        }
     }
 }
+

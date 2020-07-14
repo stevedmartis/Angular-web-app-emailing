@@ -141,7 +141,7 @@ export class EcommerceProductComponent implements OnInit, OnDestroy
                    this._formCustomService.getInputsEvent()
                    .then(( inputs) => {
             
-       
+                    console.log(inputs)
 
                     inputs.forEach(obj => {
                         
