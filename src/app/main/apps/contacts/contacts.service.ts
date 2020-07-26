@@ -29,6 +29,7 @@ export class ContactsService {
     contactsExist: boolean = false;
     contactInitial: boolean = false;
     arrayFieldSelection: string[];
+    emailPattern = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
 
         
     initColumns: any[] = [
@@ -123,6 +124,18 @@ export class ContactsService {
 
                     this.onContactsChanged.next(this.contacts);
                     resolve(this.contacts);
+                }, reject);
+        });
+    }
+
+    getContactsOnly(idEvent): Promise<any> {
+        return new Promise((resolve, reject) => {
+            this._httpClient
+                .get(environment.apiUrl + "/api/invited/event/" + idEvent)
+                .subscribe((response: any) => {
+                   
+                   
+                    resolve( response.invited);
                 }, reject);
         });
     }
@@ -314,6 +327,7 @@ export class ContactsService {
      * @returns {Promise<any>}
      */
     createContactValidatorEmail(obj): Promise<any> {
+    
         return new Promise((resolve, reject) => {
             
             this._httpClient
@@ -349,6 +363,8 @@ export class ContactsService {
     }
 
     insertDbExcelInvited(db): Promise<any> {
+
+        console.log('db',db)
         return new Promise((resolve, reject) => {
           
             this._httpClient
@@ -358,6 +374,7 @@ export class ContactsService {
                  
                  
                     console.log(response)
+                    
                 
 
 
@@ -824,56 +841,94 @@ console.log(res)
 
            
 
+
+            let value;
+            let email;
+            const emailPattern = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+                           
+          nameData.forEach((e, index ) => {
+  console.log('namedate inv', e)
+  
+  Object.keys(e).map(function(k){ 
+      console.log(e[k])  
+  
+    
+  
+      value = emailPattern.test( e[k])
+  
+      if(value){
+          email =  e[k]
+      }
+  
+  
+  })
+  
+  console.log(value)
+  
+        
+  
+        
+  
+      this.validateEmail(email)
+      .then((valid) => {
+           console.log(valid)
+  
+  
+           let objInvited = {
+  
+              codeEvento: this.idEventNow,
+              contactado: e.CONTACTADO || e.contactado,
+              asiste: e.ASISTE || e.asiste,
+              asistio: false,
+              notes: e.OBSERVACIONES,
+              dataImport : [],
+              emailValid: valid,
+  
+          };
+  
+         
+  const dataImport = {}
+  
+          arraySelect.forEach(i => {
+  
+  
+                  dataImport[i.name]  = e[i.name]
+  
+        
+          });
+  
+  
+    
+  
+          objInvited.dataImport.push(dataImport)
+  
+          contactsArray.push(objInvited)
+  
+          console.log('contactsArray', contactsArray)
+  
+          this.addManyInvitedValid(contactsArray)
+  
+      })
            
 
             
           })
 
 
-
-                         
-        nameData.forEach((e, index ) => {
-
-          
-          let objInvited = {
-
-              codeEvento: this.idEventNow,
-              contactado: e.CONTACTADO || e.contactado,
-              asiste: e.ASISTE || e.asiste,
-              asistio: false,
-              notes: e.OBSERVACIONES,
-              dataImport : []
-
-          };
-
-         
-const dataImport = {}
-
-          arraySelect.forEach(i => {
-
+ 
   
-                  dataImport[i.name]  = e[i.name]
 
-        
-          });
-
-
-          objInvited.dataImport.push(dataImport)
-
-          contactsArray.push(objInvited)
-
-        
-    
-          resolve(contactsArray);
 
         });
 
-
+    
         })
 
-
+     
            
     });
+
+    
     }
 
 
@@ -882,27 +937,116 @@ const dataImport = {}
 
         return new Promise((resolve, reject) => {
 
-        this.insertDbExcelInvited(contactsArray)
-        .then((res) => {
+console.log(contactsArray)
+                    
+                    this.validateEmailInvited(contactsArray)
+                    .then((array) => {
+
+                        console.log(array)
+                       
+                        resolve(array)
+                    })
       
-           
-            this.getContacts(this.idEventNow)
-            .then(() => {
-    
-      
-                resolve(res.post);
-            } )
-         
-      
-        
-      
-      
+
+
         })
     
          
-});
+
 
     }
+
+    validateEmailInvited(array) : Promise<any>{
+
+   
+    let email = '';
+    const arrayValid = []
+
+    return new Promise((resolve, reject) => {
+
+    array.forEach(obj => {
+
+        const objData = obj.dataImport[0];
+      
+
+        console.log(objData)
+
+        Object.keys(objData).map(function(k){ 
+            console.log(objData[k])  
+
+            email = objData[k]
+
+
+        })
+ 
+
+
+        if(this.emailPattern.test(email)){
+
+            this.validateEmail(email)
+            .then((valid) => {
+                 console.log(valid)
+
+                 obj.emailValid = valid;
+
+            })
+    
+         }
+
+         arrayValid.push(obj)
+
+
+ 
+
+
+        
+    });
+
+
+    console.log('arrayValid', arrayValid)
+
+
+    resolve(arrayValid)
+
+         
+});
+
+    
+
+}
+
+addManyInvitedValid(array) : Promise<any>{
+
+ 
+
+    return new Promise((resolve, reject) => {
+
+
+console.log('array,', array)
+    
+    this.insertDbExcelInvited(array)
+    .then((res) => {
+
+
+        this.contacts = res.post.ops;
+        this.onContactsChanged.next(this.contacts);
+       
+
+        resolve(res.post.ops)
+  
+       });
+
+
+         
+});
+
+    
+
+}
+
+
+
+    
 
     selectFieldsDialog(fields):Promise<any> 
 

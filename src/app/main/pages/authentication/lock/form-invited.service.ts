@@ -8,8 +8,7 @@ import {
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { BehaviorSubject, Observable } from "rxjs";
 import { environment } from "environments/environment";
-import { AuthService } from "app/services/authentication/auth.service";
-import { map } from "rxjs/operators";
+
 
 @Injectable()
 export class FormInvitedService implements Resolve<any> {
@@ -156,6 +155,9 @@ export class FormInvitedService implements Resolve<any> {
                     }
 
                     resolve(response);
+
+                     
+
                 }, reject);
         });
     }

@@ -199,38 +199,36 @@ export class SpeedDialFabComponent implements OnInit {
     this._contactsService.onFileChange(ev)
     .then((data) => {
 
-    
-    
+
     
       this._contactsService.selectFieldsAddInvited(data)
-      .then((response) => {
+      .then((array) => {
+
+        console.log('array', array)
         this.loadingContact = true;
-        
-
-
-      this._contactsService.addMultipleInvited(response)
-      .then((data) => {
-
-      this.loadingContact = false;
-      this._contactsService.editCountInvited(this._contactsService.contacts.length);
-
-      this.loadingContact = false;
-      
-    this._matSnackBar.open('Carga completada', 'OK', {
-      verticalPosition: 'top',
-      duration        : undefined
-
-  });
-
-})
-
-      })
-  
 
 
     
+          this.loadingContact = false;
+          this._contactsService.editCountInvited(this._contactsService.contacts.length);
+    
+          this.loadingContact = false;
+          
+        this._matSnackBar.open('Carga completada', 'OK', {
+          verticalPosition: 'top',
+          duration        : 60000
+    
+      });
+    
+
+  
+    
     })
-  }
+  })
+
+
+}
+
 
   
   
