@@ -245,7 +245,7 @@ console.log(campaign, invited, this.eventObj)
 
             const arraydataImport = invited.map(obj => 
                 { let final = { 
-                data: obj.dataImport, id: obj._id 
+                data: obj.dataImport, id: obj._id, emailValid: obj.emailValid
             }; return final
         })
 
@@ -260,33 +260,32 @@ console.log(campaign, invited, this.eventObj)
             
                  let value = element.data[0][val];
 
-        
                     if (value) {
 
                         if (this.emailPattern.test(value))
         
                         {
 
-                           
-                            console.log('is email ',value)
+                            if(element.emailValid){
 
+                                console.log('is email element',value, element)
 
-                            const inv = {
-                                idInvited: element.id,
-                                emailInvited: value,
-                                nameInvited: "wenas",
-                                emailValidation: true,
+                                const inv = {
+                                    idInvited: element.id,
+                                    emailInvited: value,
+                                    nameInvited: "wenas",
+                                    emailValid: element.emailValid,
+                                }
+    
+                                arrayFinal.push(inv)
+                            }
+                            else {
+                                return;
                             }
 
-                            arrayFinal.push(inv)
+     
 
-                          
-
-
-
-                          
-    
-
+                        
                     }
         
                         else {
@@ -333,7 +332,7 @@ console.log(campaign, invited, this.eventObj)
 
             arrayUnique.forEach(inv => {
 
-
+console.log('inv qql,', inv)
 
              this.sendManiInvited(this.eventObj.handle, campaign2, inv)
 
