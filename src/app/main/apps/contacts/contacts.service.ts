@@ -742,8 +742,7 @@ export class ContactsService {
 
         const dataString = jsonData;
 
-        let contactsArray = [];
-
+   
         
         let inputsArray = [];
 
@@ -837,82 +836,46 @@ console.log(res)
                 
             });
 
+            let contactsArray = [];
+
+            let count = 0;
     
+            nameData.forEach((e, index ) => {
 
-           
-
-
-            let value;
-            let email;
-            const emailPattern = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
-                           
-          nameData.forEach((e, index ) => {
-  console.log('namedate inv', e)
-  
-  Object.keys(e).map(function(k){ 
-      console.log(e[k])  
-  
-    
-  
-      value = emailPattern.test( e[k])
-  
-      if(value){
-          email =  e[k]
-      }
-  
-  
-  })
-  
-  console.log(value)
-  
-        
-  
-        
-  
-      this.validateEmail(email)
-      .then((valid) => {
-           console.log(valid)
-  
-  
-           let objInvited = {
-  
-              codeEvento: this.idEventNow,
-              contactado: e.CONTACTADO || e.contactado,
-              asiste: e.ASISTE || e.asiste,
-              asistio: false,
-              notes: e.OBSERVACIONES,
-              dataImport : [],
-              emailValid: valid,
-  
-          };
-  
          
-  const dataImport = {}
-  
-          arraySelect.forEach(i => {
-  
-  
-                  dataImport[i.name]  = e[i.name]
-  
-        
-          });
-  
-  
+                    
+            
+              
+
+                this.dataExcelCreateArrayForAdd(e,arraySelect)
+                .then((objInvited) => {
+
+                    count++
     
-  
-          objInvited.dataImport.push(dataImport)
-  
-          contactsArray.push(objInvited)
-  
-          console.log('contactsArray', contactsArray)
-  
-          this.addManyInvitedValid(contactsArray)
-  
-      })
+    
+                    contactsArray.push(objInvited)
+ console.log(count, nameData.length)
+                   
+                    if(count === nameData.length){
+
+
+                              
+
+            console.log('contactsArray', contactsArray)
+
+            this.addManyInvitedValid(contactsArray)
+                    }
+                
+    
+    
+                })
+
+
            
 
-            
-          })
+            })
+           
+
 
 
  
@@ -929,6 +892,88 @@ console.log(res)
     });
 
     
+    }
+
+    dataExcelCreateArrayForAdd(e, arraySelect)  : Promise<any>{
+
+       
+        return new Promise((resolve, reject) => { 
+
+        
+        let value;
+        let email;
+        const emailPattern = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+                       
+
+console.log('namedate inv', e)
+
+Object.keys(e).map(function(k){ 
+  console.log(e[k])  
+
+
+
+  value = emailPattern.test( e[k])
+
+  if(value){
+      email =  e[k]
+  }
+
+
+})
+
+console.log(value)
+
+    
+
+  this.validateEmail(email)
+  .then((valid) => {
+       console.log(valid)
+
+
+       let objInvited = {
+
+          codeEvento: this.idEventNow,
+          contactado: e.CONTACTADO || e.contactado,
+          asiste: e.ASISTE || e.asiste,
+          asistio: false,
+          notes: e.OBSERVACIONES,
+          dataImport : [],
+          emailValid: valid,
+
+      };
+
+     
+const dataImport = {}
+
+      arraySelect.forEach(i => {
+
+
+              dataImport[i.name]  = e[i.name]
+    
+      });
+
+
+
+      objInvited.dataImport.push(dataImport);
+
+      
+    
+
+
+      console.log('final', objInvited)
+
+      
+      resolve(objInvited)
+
+
+
+  })
+
+
+
+ 
+        
+      })
     }
 
 
@@ -1028,11 +1073,8 @@ console.log('array,', array)
     .then((res) => {
 
 
-        this.contacts = res.post.ops;
-        this.onContactsChanged.next(this.contacts);
-       
-
-        resolve(res.post.ops)
+        this.getContacts(this.idEventNow)
+    
   
        });
 
