@@ -275,7 +275,6 @@ export class ContactsContactListComponent implements OnInit, OnDestroy
                     this._contactsService.editContact(dataForm.id, datInit, objInvited)
                     .then((res) => {
 
-                        console.log(res)
                     })
 
                         break;
@@ -328,7 +327,7 @@ export class ContactsContactListComponent implements OnInit, OnDestroy
      */
     onSelectedChange(contactId): void
     {
-        console.log('contactId',contactId)
+
         this._contactsService.toggleSelectedContact(contactId);
     }
 

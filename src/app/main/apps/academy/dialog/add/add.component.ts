@@ -124,7 +124,7 @@ private files: Array<FileUploadModel> = [];
 
   addUser(user){
 
-    console.log(this.f)
+  
 
 if(this.userForm.valid){
   

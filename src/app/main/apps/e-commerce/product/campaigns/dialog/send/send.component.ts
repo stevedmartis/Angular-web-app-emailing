@@ -36,7 +36,6 @@ export class SendComponent implements OnInit, OnDestroy {
 
      
 
-      console.log(  this.arrayDataImport )
 
       this.contactsCount = this.allContacts.length;
 

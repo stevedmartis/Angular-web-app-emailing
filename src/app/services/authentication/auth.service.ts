@@ -76,7 +76,6 @@ defineRolUser(rol)
 
   createPerson(name) {
 
-    console.log('entro person')
 
     return this.http.post<Person>(`${environment.apiUrl}/api/person`, { name })
     .pipe(map(person => {

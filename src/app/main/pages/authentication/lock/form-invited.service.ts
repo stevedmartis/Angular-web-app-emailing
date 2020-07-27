@@ -75,7 +75,6 @@ export class FormInvitedService implements Resolve<any> {
 
                             if (this.invitedId !== "new") {
                                
-                                console.log(this.invitedId )
 
 
                                 
@@ -196,7 +195,6 @@ export class FormInvitedService implements Resolve<any> {
                     this.invited = invited;
                     resolve(invited);
 
-                    console.log(this.invited);
                 }, reject);
         });
     }
@@ -208,7 +206,6 @@ export class FormInvitedService implements Resolve<any> {
                 .subscribe((response: any) => {
                     resolve(response);
 
-                    console.log(response);
                 }, reject);
         });
     }

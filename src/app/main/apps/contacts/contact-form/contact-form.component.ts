@@ -74,11 +74,6 @@ export class ContactsContactFormDialogComponent implements OnInit {
 
             
 
-         
-
-        
-
-            console.log( this.contact)
 
         
         }
@@ -151,7 +146,6 @@ export class ContactsContactFormDialogComponent implements OnInit {
 
     dividerArrayInputs(array): Promise<any>{
 
-        console.log(array)
 
         
         return new Promise((resolve, reject) => {
@@ -179,9 +173,9 @@ export class ContactsContactFormDialogComponent implements OnInit {
          
 getInputsFormInvited(inputsForm, inputsForm2){
 
-  const inputs =  this._contactServices.inputsArray.filter(obj => obj.export)
+  const inputs =  this._contactServices.inputsArray.filter(obj => obj.import)
 
-
+console.log(inputs)
 
 let objField = []; 
   

@@ -513,7 +513,7 @@ export class AnalyticsDashboardService implements Resolve<any> {
 
         array.forEach(c => {
 
-            console.log('data: ', c);
+           
 
             let obj = {
                 EMPRESA: c.company,
@@ -598,7 +598,7 @@ export class AnalyticsDashboardService implements Resolve<any> {
             this._httpClient
                 .get(environment.apiUrl + "/api/invited/event/" + idEvent)
                 .subscribe((response: any) => {
-                    console.log(response);
+                 
 
                     this.contacts = response.invited;
                     resolve(this.contacts);

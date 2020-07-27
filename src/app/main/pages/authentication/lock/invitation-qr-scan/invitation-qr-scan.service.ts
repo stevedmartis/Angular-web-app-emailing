@@ -165,7 +165,6 @@ export class InvitationQrScanService implements Resolve<any> {
                 .subscribe((response: any) => {
                     this.tagsArray = response.tag;
 
-                    console.log("tags: ", this.tagsArray);
                     resolve(response);
                 }, reject);
         });

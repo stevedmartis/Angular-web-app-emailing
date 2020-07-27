@@ -89,7 +89,7 @@ export class SpeedDialFabComponent implements OnInit {
           
               let dataForm = response.getRawValue();
 
-              console.log(dataForm)
+             
 
               let objInvited = {
 
@@ -116,7 +116,7 @@ export class SpeedDialFabComponent implements OnInit {
 
                 objInvited.dataImport.push(obj)
 
-                console.log(objInvited)
+           
 
                   
   this._contactsService.createContact(objInvited)
@@ -204,7 +204,7 @@ export class SpeedDialFabComponent implements OnInit {
       this._contactsService.selectFieldsAddInvited(data)
       .then((array) => {
 
-        console.log('array', array)
+       
         this.loadingContact = true;
 
 

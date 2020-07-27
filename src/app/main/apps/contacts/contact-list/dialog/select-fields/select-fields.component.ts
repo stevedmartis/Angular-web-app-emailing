@@ -50,11 +50,11 @@ selectField(f){
 
 fieldSelection(){
 
-  console.log(this.arrayfields)
+  
 
   const selection = this.arrayfields.filter(obj =>  obj.select === true )
 
-  console.log(selection)
+ 
 
 
   return selection;

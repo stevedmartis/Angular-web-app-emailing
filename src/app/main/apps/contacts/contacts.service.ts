@@ -364,7 +364,7 @@ export class ContactsService {
 
     insertDbExcelInvited(db): Promise<any> {
 
-        console.log('db',db)
+       
         return new Promise((resolve, reject) => {
           
             this._httpClient
@@ -373,7 +373,7 @@ export class ContactsService {
                 .subscribe((response: any) => {
                  
                  
-                    console.log(response)
+               
                     
                 
 
@@ -791,13 +791,11 @@ export class ContactsService {
           const onlyImport = inputsArray.filter(obj => obj.import)
           this.arraySelect  = onlyImport;
 
-          console.log(inputsArray)
 
           this.editEventInputs(inputsArray).
           then((res) =>{
             
 
-console.log(res)
 
             res.event.inputs.forEach(input => {
 
@@ -815,13 +813,13 @@ console.log(res)
                         required: true,
                     }
 
-                    console.log(obj)
+                  
 
                     this.addInputFormInEvent(obj)
                     .then((res) => {
         
                   
-                        console.log(res)
+                      
                 
                             this._formCustomService.getInputsEventOrInitial(res.input)
                         
@@ -854,14 +852,13 @@ console.log(res)
     
     
                     contactsArray.push(objInvited)
- console.log(count, nameData.length)
                    
                     if(count === nameData.length){
 
 
                               
 
-            console.log('contactsArray', contactsArray)
+
 
             this.addManyInvitedValid(contactsArray)
                     }
@@ -905,10 +902,10 @@ console.log(res)
         const emailPattern = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
                        
 
-console.log('namedate inv', e)
+
 
 Object.keys(e).map(function(k){ 
-  console.log(e[k])  
+  
 
 
 
@@ -921,14 +918,12 @@ Object.keys(e).map(function(k){
 
 })
 
-console.log(value)
 
     
 
   this.validateEmail(email)
   .then((valid) => {
-       console.log(valid)
-
+     
 
        let objInvited = {
 
@@ -959,9 +954,6 @@ const dataImport = {}
       
     
 
-
-      console.log('final', objInvited)
-
       
       resolve(objInvited)
 
@@ -982,12 +974,12 @@ const dataImport = {}
 
         return new Promise((resolve, reject) => {
 
-console.log(contactsArray)
+
                     
                     this.validateEmailInvited(contactsArray)
                     .then((array) => {
 
-                        console.log(array)
+                      
                        
                         resolve(array)
                     })
@@ -1014,10 +1006,10 @@ console.log(contactsArray)
         const objData = obj.dataImport[0];
       
 
-        console.log(objData)
+   
 
         Object.keys(objData).map(function(k){ 
-            console.log(objData[k])  
+            
 
             email = objData[k]
 
@@ -1030,7 +1022,7 @@ console.log(contactsArray)
 
             this.validateEmail(email)
             .then((valid) => {
-                 console.log(valid)
+               
 
                  obj.emailValid = valid;
 
@@ -1048,7 +1040,7 @@ console.log(contactsArray)
     });
 
 
-    console.log('arrayValid', arrayValid)
+   
 
 
     resolve(arrayValid)
@@ -1067,7 +1059,7 @@ addManyInvitedValid(array) : Promise<any>{
     return new Promise((resolve, reject) => {
 
 
-console.log('array,', array)
+
     
     this.insertDbExcelInvited(array)
     .then((res) => {
@@ -1114,7 +1106,7 @@ console.log('array,', array)
 
                 else {
 
-                    console.log(response)
+                 
                     resolve(response)
                 }
 

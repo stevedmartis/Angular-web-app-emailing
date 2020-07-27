@@ -93,7 +93,7 @@ export class EcommerceProductsService implements Resolve<any> {
     }
 
     getAllEvents(): Promise<any> {
-        console.log("user ", this.authServices.currentUserValue.token);
+      
 
         return new Promise((resolve, reject) => {
             this._httpClient

@@ -164,7 +164,6 @@ patchFieldsSelection(obj) {
 
 patchValuesEnables(id, obj, Ncolumn) {
 
-  console.log('obj', obj)
 
 
   return this._formBuilder.group({

@@ -89,7 +89,7 @@ export class ConfirmInvitationService implements Resolve<any> {
     }
 
     getCampaignById(idCampaign) {
-        console.log(idCampaign);
+       
 
         return new Promise((resolve, reject) => {
             this._httpClient
@@ -110,8 +110,7 @@ export class ConfirmInvitationService implements Resolve<any> {
 
         return new Promise((resolve, reject) => {
     
-    
-        console.log('invited id', this.invitedId)
+
     
           this._httpClient.get(environment.apiUrl + '/api/invited-confirm/' + this.invitedId)
               .subscribe((response: any) => {

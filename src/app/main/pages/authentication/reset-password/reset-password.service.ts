@@ -60,15 +60,12 @@ export class ResetPasswordService implements Resolve<any>
     
     resetPassword(id, newPassword) {
 
-        console.log(id, newPassword)
 
         return new Promise((resolve, reject) => {
             this._httpClient.post(environment.apiUrl + '/api/reset-password', {id, newPassword } )
             .subscribe((response: any) => {
 
 
-                console.log(response)
-               
 
                 resolve(response);
                 

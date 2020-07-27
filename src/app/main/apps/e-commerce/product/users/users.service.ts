@@ -38,7 +38,6 @@ export class UsersService {
     return new Promise((resolve, reject) => {
         Promise.all([
 
-          console.log('entro users')
 ,            this.getUsersByIdEvent(this.idEventNow)
             //this.getUserData()
         ]).then(([files]) => {

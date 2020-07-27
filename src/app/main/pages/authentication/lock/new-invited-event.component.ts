@@ -89,8 +89,6 @@ export class NewInvitedComponent implements OnInit, OnDestroy {
             .pipe(takeUntil(this._unsubscribeAll))
             .subscribe(invited => {
 
-
-                console.log('invited', invited)
                 if ( !invited.invited)
                 {
 

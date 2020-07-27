@@ -76,7 +76,6 @@ export class CancelInvitationService implements Resolve<any> {
 
                 
 
-                    console.log(this.campaignInvitation);
 
                     resolve(response);
                 }, reject);

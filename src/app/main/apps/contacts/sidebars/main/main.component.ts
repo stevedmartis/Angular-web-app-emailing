@@ -72,7 +72,7 @@ export class ContactsMainSidebarComponent implements OnInit, OnDestroy
     changeFilter(filter): void
     {
 
-        console.log('in cganfe', filter)
+       
         this.filterBy = filter;
         this._contactsService.onFilterChanged.next(this.filterBy);
     }

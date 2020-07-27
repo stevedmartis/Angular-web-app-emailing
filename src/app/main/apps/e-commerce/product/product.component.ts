@@ -119,6 +119,8 @@ export class EcommerceProductComponent implements OnInit, OnDestroy
 
                     this.product = new Product(product.event);
 
+                    console.log(this.product.inputs)
+
                     this._contactsService.inputsArray =  this.product.inputs;
 
                     this._contactsService.initColumns = this.product.inputs;
@@ -141,7 +143,7 @@ export class EcommerceProductComponent implements OnInit, OnDestroy
                    this._formCustomService.getInputsEvent()
                    .then(( inputs) => {
             
-                    console.log(inputs)
+                  
 
                     inputs.forEach(obj => {
                         
@@ -194,7 +196,7 @@ export class EcommerceProductComponent implements OnInit, OnDestroy
 
                 this.productForm = this.createProductForm();
 
-                console.log(this.isCreated)
+        
 
                this._campaignService.previewUrlEvent = this.product.imgBanner;
 
@@ -329,7 +331,6 @@ export class EcommerceProductComponent implements OnInit, OnDestroy
         
         data.handle = FuseUtils.handleize(data.name);
 
-        console.log(data)
 
         this._ecommerceProductService.addProduct(data, this._campaignService.previewUrlEvent)
             .then((x) => {

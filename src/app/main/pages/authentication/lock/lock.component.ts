@@ -76,14 +76,11 @@ export class LockComponent implements OnInit, OnDestroy {
             .subscribe((invited) => {
 
 
-              console.log(invited)
 
                 if (invited.invited) {
                     this.invited = invited.invited;
 
-                
-console.log( this.invited,  this._formInvitationService.arrayInputsSelect
-)
+
        
 if(this._formInvitationService.arrayInputsSelect.length === 0){
                 
@@ -115,7 +112,6 @@ else {
       
       
 
-            console.log(input)
       
           this.invited.dataImport.forEach(element => {
       
@@ -127,7 +123,6 @@ else {
 
 
         
-            console.log(input, val)
       
         const obj = {
             title:  input.title,
@@ -149,7 +144,6 @@ else {
     });
 
   
-    console.log(objField)
 
 
     this.patchFieldInputs(objField);
@@ -266,12 +260,9 @@ else {
 
             if (this._formInvitationService.invitedExist) {
 
-            console.log('yes')
 
 
-             
-        console.log(data)
-
+        
 
  
 
@@ -295,7 +286,6 @@ else {
           .forEach((val) => {
 
         
-            console.log(element, val)
       
         objData[val] = element[val];
       
@@ -315,13 +305,6 @@ else {
  });
 
 
-
-
-
-          console.log(objData)
-
-               
-
                 this._formInvitationService
                     .confirmInvitation(this.invited._id, objData)
                     .then((inv: Invited) => {
@@ -336,7 +319,6 @@ else {
                     });
             } else {
             
-                console.log('not')
 
 
 

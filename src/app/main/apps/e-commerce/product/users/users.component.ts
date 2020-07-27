@@ -183,8 +183,7 @@ export class UsersComponent implements OnInit {
 
   onSelectedChange(contactId): void
   {
-      console.log('contactId',contactId)
-      this._usersServices.toggleSelectedContact(contactId);
+          this._usersServices.toggleSelectedContact(contactId);
   }
 
   /**

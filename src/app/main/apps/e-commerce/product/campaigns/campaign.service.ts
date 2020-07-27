@@ -239,7 +239,7 @@ export class CampaignService {
 
 
 
-console.log(campaign, invited, this.eventObj)
+
         if (option === "all") {
             this.allLoading = true;
 
@@ -249,12 +249,12 @@ console.log(campaign, invited, this.eventObj)
             }; return final
         })
 
-            console.log(arraydataImport)
+          
 
             const arrayFinal = [];
             arraydataImport.forEach(element => {
 
-                console.log(element.data[0])
+               
                 Object.getOwnPropertyNames(element.data[0])
                 .forEach((val) => {
             
@@ -268,7 +268,7 @@ console.log(campaign, invited, this.eventObj)
 
                             if(element.emailValid){
 
-                                console.log('is email element',value, element)
+                          
 
                                 const inv = {
                                     idInvited: element.id,
@@ -290,7 +290,6 @@ console.log(campaign, invited, this.eventObj)
         
                         else {
 
-                            console.log('no email',value)
 
         
                            
@@ -309,7 +308,6 @@ console.log(campaign, invited, this.eventObj)
 
             });
 
-            console.log('arrayFinal', arrayFinal)
 
 
             const imagen = campaign.imgBlob.substr(22);
@@ -319,7 +317,6 @@ console.log(campaign, invited, this.eventObj)
 
            campaign2.imgBlob = imagen;
 
-            console.log('campaign2', campaign2)
 
             var arrayUnique = arrayFinal.reduce((unique, o) => {
                 if(!unique.some(obj => obj.emailInvited )) {
@@ -328,11 +325,8 @@ console.log(campaign, invited, this.eventObj)
                 return unique;
             },[]);
 
-            console.log('arrayUnique', arrayUnique)
-
             arrayUnique.forEach(inv => {
 
-console.log('inv qql,', inv)
 
              this.sendManiInvited(this.eventObj.handle, campaign2, inv)
 
@@ -365,7 +359,6 @@ console.log('inv qql,', inv)
                         this.statusSendInvitation = "Completado!";
                     }
 
-                    console.log(mail)
                    
                 })
                 .catch((err) => {
@@ -713,7 +706,6 @@ sendManiInvited(eventName, campaign, invited): Promise<any> {
 
     mailJetStatusTo(id): Promise<any> {
 
-        console.log('id', id)
         return new Promise((resolve, reject) => {
             this._httpClient
             .get<any>(`${environment.apiUrl}/api/status-to-mailjet/${id}`,)                
