@@ -244,13 +244,16 @@ export class CampaignService {
             this.allLoading = true;
 
             const arraydataImport = invited.map(obj => 
-                { let final = { 
-                data: obj.dataImport, id: obj._id, emailValid: obj.emailValid
+                { 
+                    let final = { 
+                data: obj.dataImport, 
+                id: obj._id, 
+                emailValid: obj.emailValid
             }; return final
         })
 
           
-
+        console.log(arraydataImport)
             const arrayFinal = [];
             arraydataImport.forEach(element => {
 
@@ -273,7 +276,6 @@ export class CampaignService {
                                 const inv = {
                                     idInvited: element.id,
                                     emailInvited: value,
-                                    nameInvited: "wenas",
                                     emailValid: element.emailValid,
                                 }
     
@@ -289,7 +291,7 @@ export class CampaignService {
                     }
         
                         else {
-
+                            return
 
         
                            
@@ -318,22 +320,13 @@ export class CampaignService {
            campaign2.imgBlob = imagen;
 
 
-            var arrayUnique = arrayFinal.reduce((unique, o) => {
-                if(!unique.some(obj => obj.emailInvited )) {
-                  unique.push(o);
-                }
-                return unique;
-            },[]);
-
-            arrayUnique.forEach(inv => {
+           arrayFinal.forEach(inv => {
 
 
-             this.sendManiInvited(this.eventObj.handle, campaign2, inv)
-
-                            
+             this.sendManiInvited(this.eventObj.handle, campaign2, inv)   
                 
                 .then( (mail) => {
-
+                    console.log(inv)
 
                     this.value++;
 
@@ -351,7 +344,7 @@ export class CampaignService {
                     })
                
 
-                    if (this.value === arrayUnique.length) {
+                    if (this.value === arrayFinal.length) {
                         this.value = totalCount;
 
                         this.countStatus = "Enviados: " + this.valueOk + " de " + totalCount;
@@ -384,8 +377,6 @@ export class CampaignService {
             this.statusSendInvitation = "Completado!";
 
         }
-
-                return;
 
 
 
@@ -434,6 +425,9 @@ export class CampaignService {
            
         }
     }
+
+
+
 
 
 

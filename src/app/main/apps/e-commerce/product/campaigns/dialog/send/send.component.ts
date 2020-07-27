@@ -27,14 +27,10 @@ export class SendComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
 
-
     
     this._campaignService.getContacts(this._campaignService._contactService.idEventNow)
     .then((x) => {
       this.allContacts = x.invited;
-
-
-     
 
 
       this.contactsCount = this.allContacts.length;
@@ -44,7 +40,6 @@ export class SendComponent implements OnInit, OnDestroy {
 
 
 
- 
   }
 
 
