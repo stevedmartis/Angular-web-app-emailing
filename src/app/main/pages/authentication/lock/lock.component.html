@@ -56,7 +56,7 @@
 
                                 <mat-label *ngIf="!f.value.required">{{ f.value.title }} </mat-label>
                                 <input matInput formControlName="value" [type]="f.value.type"
-                                    (change)="getDataInvited()">
+                                    (keyup)="getDataInvited(f.value.value)">
 
                                 <mat-error>
                                     {{ getMesaggeErrorTitle(i, f.value.title, f.value.value) }}

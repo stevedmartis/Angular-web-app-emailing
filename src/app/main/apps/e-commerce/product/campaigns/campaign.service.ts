@@ -257,7 +257,6 @@ export class CampaignService {
             const arrayFinal = [];
             arraydataImport.forEach(element => {
 
-               
                 Object.getOwnPropertyNames(element.data[0])
                 .forEach((val) => {
             
@@ -316,12 +315,8 @@ export class CampaignService {
 
            const campaign2  = JSON.parse(JSON.stringify(campaign))
 
-
            campaign2.imgBlob = imagen;
-
-
            arrayFinal.forEach(inv => {
-
 
              this.sendManiInvited(this.eventObj.handle, campaign2, inv)   
                 
@@ -330,10 +325,7 @@ export class CampaignService {
 
                     this.value++;
 
-                   
                     this.valueOk++;
-
-              
 
                     let id = mail.resBody.Messages[0].To[0].MessageID;
                        
@@ -356,9 +348,6 @@ export class CampaignService {
                 })
                 .catch((err) => {
                     console.log(err)
-
-
-            
 
                 this.value++;
 

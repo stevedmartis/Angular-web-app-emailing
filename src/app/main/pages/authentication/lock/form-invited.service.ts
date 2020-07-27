@@ -85,31 +85,26 @@ export class FormInvitedService implements Resolve<any> {
                                 console.log( this.arrayInputsSelect)
 
                                 
-                    this.onInvitedChanged.next({});
-                    });
-                          
-
-
                             if (this.invitedId !== "new") {
-                               
-
-
-                                
-              
+    
                                 this.getInvited()
                                 .then((res) => {
 
-
-                
-                                    })
-
-                                    console.log(res )
+                                    console.log(res)
 
                                     this.invitedExist = true;
-        
+
+                                    this.onInvitedChanged.next(this.invited);
+
+                                })
+
+                  
                             } else {
+                                this.onInvitedChanged.next({});
                                 this.invitedExist = false;
                             }
+
+                        });
                         }
                     );
                 }),
@@ -120,6 +115,7 @@ export class FormInvitedService implements Resolve<any> {
             }, reject);
         });
     }
+
 
 
     getInputsEvent(idEvent): Promise<any> {
@@ -135,6 +131,8 @@ export class FormInvitedService implements Resolve<any> {
                 }, reject);
         });
     }
+
+
 
     getCampaignById(idCampaign) {
         return new Promise((resolve, reject) => {
@@ -187,7 +185,7 @@ export class FormInvitedService implements Resolve<any> {
 
                     this.invited = response;
 
-                    this.onInvitedChanged.next(this.invited);
+                 
                     resolve(response);
 
               
@@ -195,14 +193,16 @@ export class FormInvitedService implements Resolve<any> {
         });
     }
 
-    getInvitedByEmail(email): Promise<any> {
+    getInvitedByEvent(): Promise<any> {
         return new Promise((resolve, reject) => {
             this._httpClient
-                .get(environment.apiUrl + "/api/invited-email/" + email)
+                .get(environment.apiUrl + "/api/invited/event/" + this.event._id)
                 .subscribe((response: any) => {
-                    let invited = response.invited[0];
 
-                    this.invited = invited;
+                    console.log(response)
+                    let invited = response.invited
+
+
                     resolve(invited);
 
                 }, reject);

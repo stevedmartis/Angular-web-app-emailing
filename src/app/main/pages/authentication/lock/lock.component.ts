@@ -20,12 +20,11 @@ import { Title } from "@angular/platform-browser";
     animations: fuseAnimations,
 })
 export class LockComponent implements OnInit, OnDestroy {
-    invitationForm 
-    = this.createInputsForm()
+    invitationForm = this.createInputsForm();
 
     invited: any;
-    objField: any
-
+    objField: any;
+    emailPattern = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
     private _unsubscribeAll: Subject<any>;
 
     /**
@@ -40,8 +39,6 @@ export class LockComponent implements OnInit, OnDestroy {
         public _formInvitationService: FormInvitedService,
         private router: Router
     ) {
-        
-
         this._unsubscribeAll = new Subject();
         // Configure the layout
         this._fuseConfigService.config = {
@@ -70,132 +67,99 @@ export class LockComponent implements OnInit, OnDestroy {
      * On init
      */
     ngOnInit(): void {
-
         const inputs = <FormArray>this.f.inputSelection;
+
+       
         // Subscribe to update product on changes
         this._formInvitationService.onInvitedChanged
             .pipe(takeUntil(this._unsubscribeAll))
             .subscribe((invited) => {
+                console.log(invited);
 
-                console.log(invited)
-              
+                if (this._formInvitationService.invitedExist) {
 
-                if (invited.invited) {
+                    if(invited.invited){
+
+                       
+
                     this.invited = invited.invited;
 
+                    console.log(this.invited)
 
-       
-if(this._formInvitationService.arrayInputsSelect.length === 0){
-                
-    return;
-}
+                    if (
+                        this._formInvitationService.arrayInputsSelect.length === 0
+                    ) {
+                        return;
+                    } else {
+                        this.getInputsFormInvited(inputs);
+                    }
 
-else {
+                }
+                }
 
+                else {
+                    console.log("else ");
 
-    this.getInputsFormInvited(inputs);
-}
-
-               
-       
-            }
-
-
-        
-
-            if(!this._formInvitationService.invitedExist){
-                console.log('else ')
-
-            
-            this.getInputsFormEvent(inputs)
-        }
-    })
-
-}
-
-
-    getInputsFormInvited(inputs){
-
-        const inputsSelect =   this._formInvitationService.arrayInputsSelect;
-
-        let objField = []; 
-        inputsSelect.forEach(input => {
-            
-     
-      
-      
-
-      
-          this.invited.dataImport.forEach(element => {
-      
-          
-          Object.getOwnPropertyNames( element)
-          .forEach((val) => {
-
-              if(val === input.nameInitial){
-
-
-        
-      
-        const obj = {
-            title:  input.title,
-            name: val,
-            value:  element[val],
-            placeHolder: 'Ej: ' +  this.invited[val]
-        }
-      
-        objField.push(obj)
-      
-      
+                    this.getInputsFormEvent(inputs);
+                }
+            });
     }
-      
-      
-      });
-      
-      });
-      
-    });
-
-  
-
-
-    this.patchFieldInputs(objField, inputs);
-          
-      
-      
-        }
-
-        getInputsFormEvent(inputs){
-
-            const inputsSelect =   this._formInvitationService.arrayInputsSelect;
-
-            console.log(inputsSelect)
     
-            let objField = []; 
-            inputsSelect.forEach(input => {
-                console.log(input)
-            const obj = {
-                title:  input.title,
-                name: input.nameInitial,
-                value:  '',
-                placeHolder: ''
-            }
-          
-            objField.push(obj)
-
-           
-
-            this.patchFieldInputs(objField, inputs);
-              
-        })
-
-       
-
-        console.log(inputs)
-
+    capitalize(word){
+        return word[0].toUpperCase()+word.slice(1).toLowerCase();
     }
- 
-      
+
+
+    getInputsFormInvited(inputs) {
+        const inputsSelect = this._formInvitationService.arrayInputsSelect;
+
+        let objField = [];
+        inputsSelect.forEach((input) => {
+            this.invited.dataImport.forEach((element) => {
+                Object.getOwnPropertyNames(element).forEach((val) => {
+                    if (val === input.nameInitial) {
+                        const obj = {
+                            title: input.title,
+                            name: val,
+                            value: element[val],
+                            placeHolder: "Ej: " + this.invited[val],
+                        };
+
+                        objField.push(obj);
+
+                       
+                    }
+                });
+            });
+        });
+
+        objField.forEach(obj => {
+    this.patchFieldInputs(obj, inputs);
+});
+       
+    }
+
+    getInputsFormEvent(inputs) {
+        const inputsSelect = this._formInvitationService.arrayInputsSelect;
+
+        console.log(inputsSelect);
+
+
+        inputsSelect.forEach((input) => {
+            console.log(input);
+            const obj = {
+                title: input.title,
+                name: input.nameInitial,
+                value: "",
+                placeHolder: "",
+            };
+
+            
+            this.patchFieldInputs(obj, inputs);
+        });
+
+        console.log(inputs);
+    }
 
     ngOnDestroy(): void {
         // Unsubscribe from all subscriptions
@@ -207,7 +171,6 @@ else {
 
     createInputsForm(): FormGroup {
         return this._formBuilder.group({
-           
             asiste: [],
 
             inputSelection: this._formBuilder.array([]),
@@ -230,15 +193,10 @@ else {
             : "";
     }
 
-    patchFieldInputs(objField, inputs ) {
-     
-      
-        objField.forEach((x) => {
 
-            console.log(x)
-            inputs.push(this.patchValiesSelection(x));
 
-        });
+    patchFieldInputs(obj, inputs) {
+        inputs.push(this.patchValiesSelection(obj));
     }
 
     patchValiesSelection(obj) {
@@ -257,41 +215,107 @@ else {
         });
     }
 
-    getDataInvited() {
-        const findEmail = this._formInvitationService.arrayInputsSelect.filter(
-            (x) => {
-               console.log(x)
-            }
-        );
+    getDataInvited(email) {
 
-        if (findEmail.length === 0) {
-            return;
-        } else {
-            if (this.f.email.valid) {
+       
+            console.log(email)
+
+         
+            if (this.emailPattern.test(email)){
+
+           
+       
                 this._formInvitationService
-                    .getInvitedByEmail(this.f.email.value)
+                    .getInvitedByEvent()
                     .then((invited) => {
-                  
-                        if (invited) {
-                            this.invited = invited;
+
+                        console.log(invited)
+                    
+                          
+                            const arrayDataImport = invited.map(obj => {
+                                return { data: obj.dataImport[0], id: obj._id }
+
+                            }
+                           )
+
+                            console.log('arrayDataImport', arrayDataImport)
+
+                            arrayDataImport.forEach(obj => {
+
+                                Object.keys(obj.data)
+                                .forEach((k) => {
+                                    
+                                    let valueData = obj.data[k]
+                                  
+
+
+                                    if(this.emailPattern.test(valueData)){
+
+                                   
+
+                                        if(valueData === email){
+
+                                            const inputs = <FormArray>this.f.inputSelection;
+
+                                            console.log('inputs', inputs.value)
+                     
+                                            Object.getOwnPropertyNames(inputs.value)
+                                            .forEach((k) => {
+
+                                                console.log('k', k)
+
+                                                let value = obj.data[k]
+
+                                                console.log('value', value)
+                                                if(value === k){
+
+                                                    obj.value = k;
+
+                                                    
+                                                console.log('found, change:', obj.value)
+                                                }
+                                                else {
+                                                    return;
+                                                }
+                                  
+
+                                            })
+                                           
+                                            console.log('encontrado', obj)
+                                        }
+
+                                        else {
+                                            ('no encontrado')
+                                        }
+                                
+                                     }
+                
+                                })
+             
+                            
+                 
+                
+                
+                            });
+                
 
                             this._formInvitationService.invitedExist = true;
 
                             //   this.invitationForm = this.createInvitedForm();
-                        } else {
-                            this.invitationForm.controls["invitedId"].setValue(
-                                ""
-                            );
+                  
+                            //this.invitationForm.controls["invitedId"].setValue("");
 
                             this._formInvitationService.invitedExist = false;
-                        }
+                    
                     })
                     .catch((err) => {
                         this._formInvitationService.invitedExist = false;
                     });
-            }
+
+                }
+            
         }
-    }
+
 
     confirmInvitation() {
         const value = "si";
@@ -300,52 +324,24 @@ else {
         const data = this.invitationForm.getRawValue();
 
         if (this.invitationForm.valid) {
-          
-
             if (this._formInvitationService.invitedExist) {
+                let objData = {};
 
+                const dataImport = this.invited.dataImport;
 
+                dataImport.forEach((element) => {
+                    Object.getOwnPropertyNames(element).forEach((val) => {
+                        objData[val] = element[val];
+                    });
+                });
 
-
-      let objData = {}
-
-
-
-          const dataImport = this.invited.dataImport;
-
-    
-
-        dataImport.forEach(element => {
-      
-          
-          Object.getOwnPropertyNames( element)
-          .forEach((val) => {
-
-        
-      
-        objData[val] = element[val];
-      
-
-      
-      
-      });
-      
-   
-
-      
-    });
-
- data.inputSelection.forEach(obj => {
-
-    objData[obj.name] = obj.value;
- });
-
+                data.inputSelection.forEach((obj) => {
+                    objData[obj.name] = obj.value;
+                });
 
                 this._formInvitationService
                     .confirmInvitation(this.invited._id, objData)
                     .then((inv: Invited) => {
-                    
-
                         this.router.navigate([
                             "/pages/confirm/si/" +
                                 this._formInvitationService.campaignId +
@@ -354,16 +350,11 @@ else {
                         ]);
                     });
             } else {
-            
-
-
-
                 this._formInvitationService
                     .addNewInvitation(data)
                     .then((res) => {
                         let inv = res.post;
 
-                 
                         this.router.navigate([
                             "/pages/confirm/si/" +
                                 this._formInvitationService.campaignId +
@@ -377,15 +368,11 @@ else {
         }
     }
 
-
-
     cancelInvitation() {
         const value = "no";
         this.invitationForm.controls["asiste"].setValue(value);
 
         const data = this.invitationForm.getRawValue();
-
- 
 
         this._formInvitationService
             .confirmInvitation(data, data)

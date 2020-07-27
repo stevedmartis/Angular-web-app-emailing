@@ -106,23 +106,16 @@ export class SpeedDialFabComponent implements OnInit {
 
             Object.getOwnPropertyNames(objInvited.dataImport[0])
             .forEach(
-
-              
                 (val) => {
                   let value = objInvited.dataImport[0][val];
-
-               
-
                     if (this.emailPattern.test(value)) {
-
                    
                         this._contactsService
                             .validateEmail(value)
                             .then((valid) => {
                                 objInvited.emailValid = valid;
 
-                            
-
+                    
                                 this._contactsService
                                     .createContact(objInvited)
                                     .then((res) => {
@@ -144,7 +137,6 @@ export class SpeedDialFabComponent implements OnInit {
                             });
                     } else {
 
-                  
                         return;
                     }
                 }
