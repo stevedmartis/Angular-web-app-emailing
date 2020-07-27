@@ -63,14 +63,31 @@ export class FormInvitedService implements Resolve<any> {
 
                     this.editInvited = true;
 
+
                     this.getEventById(this.campaignInvitation.eventId).then(
                         (data) => {
+
+                            
+                    
+                    this.event = data.event;
+
+                    console.log(data)
+                    this.eventLoad = true;
+
+
+                            this.getInputsEvent(data.event._id)
+                            .then((res) => {
+
+                                console.log(res)
+                                this.arrayInputsSelect = res.inputs.filter(x => {
+                                    return x.column === 2;
+                                })
+                                console.log( this.arrayInputsSelect)
+
+                                
+                    this.onInvitedChanged.next({});
+                    });
                           
-
-                            this.event = data.event;
-
-
-                            this.eventLoad = true;
 
 
                             if (this.invitedId !== "new") {
@@ -78,14 +95,7 @@ export class FormInvitedService implements Resolve<any> {
 
 
                                 
-                                this.getInputsEvent(this.campaignInvitation.eventId)
-                                .then((data) => {
-
-
-                                    this.arrayInputsSelect = data.inputs.filter(x => {
-                                        return x.column === 2;
-                                    })
-
+              
                                 this.getInvited()
                                 .then((res) => {
 
@@ -96,7 +106,7 @@ export class FormInvitedService implements Resolve<any> {
                                     console.log(res )
 
                                     this.invitedExist = true;
-                                });
+        
                             } else {
                                 this.invitedExist = false;
                             }

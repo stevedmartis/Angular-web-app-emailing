@@ -70,12 +70,15 @@ export class LockComponent implements OnInit, OnDestroy {
      * On init
      */
     ngOnInit(): void {
+
+        const inputs = <FormArray>this.f.inputSelection;
         // Subscribe to update product on changes
         this._formInvitationService.onInvitedChanged
             .pipe(takeUntil(this._unsubscribeAll))
             .subscribe((invited) => {
 
-
+                console.log(invited)
+              
 
                 if (invited.invited) {
                     this.invited = invited.invited;
@@ -90,18 +93,28 @@ if(this._formInvitationService.arrayInputsSelect.length === 0){
 else {
 
 
-    this.getInputsFormInvited();
+    this.getInputsFormInvited(inputs);
 }
 
                
-               
+       
             }
+
+
+        
+
+            if(!this._formInvitationService.invitedExist){
+                console.log('else ')
+
+            
+            this.getInputsFormEvent(inputs)
+        }
     })
 
 }
 
 
-    getInputsFormInvited(){
+    getInputsFormInvited(inputs){
 
         const inputsSelect =   this._formInvitationService.arrayInputsSelect;
 
@@ -146,11 +159,42 @@ else {
   
 
 
-    this.patchFieldInputs(objField);
+    this.patchFieldInputs(objField, inputs);
           
       
       
         }
+
+        getInputsFormEvent(inputs){
+
+            const inputsSelect =   this._formInvitationService.arrayInputsSelect;
+
+            console.log(inputsSelect)
+    
+            let objField = []; 
+            inputsSelect.forEach(input => {
+                console.log(input)
+            const obj = {
+                title:  input.title,
+                name: input.nameInitial,
+                value:  '',
+                placeHolder: ''
+            }
+          
+            objField.push(obj)
+
+           
+
+            this.patchFieldInputs(objField, inputs);
+              
+        })
+
+       
+
+        console.log(inputs)
+
+    }
+ 
       
 
     ngOnDestroy(): void {
@@ -186,10 +230,12 @@ else {
             : "";
     }
 
-    patchFieldInputs(objField) {
-        const inputs = <FormArray>this.f.inputSelection;
-
+    patchFieldInputs(objField, inputs ) {
+     
+      
         objField.forEach((x) => {
+
+            console.log(x)
             inputs.push(this.patchValiesSelection(x));
 
         });
@@ -214,11 +260,9 @@ else {
     getDataInvited() {
         const findEmail = this._formInvitationService.arrayInputsSelect.filter(
             (x) => {
-                return x.type === "email" ? true : false;
+               console.log(x)
             }
         );
-
-       
 
         if (findEmail.length === 0) {
             return;
@@ -262,22 +306,14 @@ else {
 
 
 
-        
-
- 
-
 
       let objData = {}
 
- 
 
 
           const dataImport = this.invited.dataImport;
 
-            
-     
-      
-      
+    
 
         dataImport.forEach(element => {
       
