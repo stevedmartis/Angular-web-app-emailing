@@ -113,11 +113,17 @@ export class LockComponent implements OnInit, OnDestroy {
     getInputsFormInvited(inputs) {
         const inputsSelect = this._formInvitationService.arrayInputsSelect;
 
+        console.log(inputsSelect)
+
         let objField = [];
         inputsSelect.forEach((input) => {
             this.invited.dataImport.forEach((element) => {
                 Object.getOwnPropertyNames(element).forEach((val) => {
+                    console.log(element)
+                    console.log(val, input.nameInitial)
                     if (val === input.nameInitial) {
+
+                      
                         const obj = {
                             title: input.title,
                             name: val,
@@ -125,13 +131,18 @@ export class LockComponent implements OnInit, OnDestroy {
                             placeHolder: "Ej: " + this.invited[val],
                         };
 
-                        objField.push(obj);
+                        console.log(obj)
 
-                       
+                        objField.push(obj);
+  
                     }
+
+
                 });
             });
         });
+
+        console.log(objField)
 
         objField.forEach(obj => {
     this.patchFieldInputs(obj, inputs);

@@ -20,6 +20,8 @@ export class SpeedDialFabComponent implements OnInit {
 
     emailPattern = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
 
+    invitedNotData: boolean = false;
+
     fabButtons = [
         {
             icon: "cloud_download",
@@ -83,31 +85,59 @@ export class SpeedDialFabComponent implements OnInit {
 
             let objInvited = {
                 codeEvento: this._contactsService.idEventNow,
-                asiste: dataForm.asiste,
-                contactado: dataForm.asiste,
-                notes: dataForm.notes,
-                emailValid: null,
+                asiste: dataForm.asiste? dataForm.asiste: "",
+                contactado: dataForm.contactado? dataForm.contactado: "",
+                notes: dataForm.notes? dataForm.notes: "",
+                emailValid: false,
                 dataImport: [],
             };
 
             let obj = {};
 
             dataForm.inputsFormContact.forEach((a1) => {
-                obj[a1.name] = a1.value;
+                obj[a1.name] = a1.value?  a1.value : "";
             });
 
             dataForm.inputsFormContact2.forEach((a1) => {
-                obj[a1.name] = a1.value;
+                obj[a1.name] = a1.value?  a1.value : "";
             });
 
             objInvited.dataImport.push(obj);
 
-            console.log(objInvited)
+            console.log(objInvited);
 
-            Object.getOwnPropertyNames(objInvited.dataImport[0])
-            .forEach(
-                (val) => {
+          const dataFound =  Object.keys(objInvited.dataImport[0])
+            .forEach((val) => {
+                console.log(objInvited.dataImport[0] );
+                let value = objInvited.dataImport[0][val]? true : false;
+                console.log(value, );
+
+                if(value){
+
+                    console.log(value, );
+                   return false
+                }
+
+                else {
+
+                    console.log(value, );
+                   return true
+                }
+
+            })
+
+            console.log(dataFound)
+
+
+            Object.keys(objInvited.dataImport[0])
+            .forEach((val) => {
+
+                    console.log(val)
+
+                
                   let value = objInvited.dataImport[0][val];
+
+                  console.log(value)
                     if (this.emailPattern.test(value)) {
                    
                         this._contactsService
@@ -115,50 +145,36 @@ export class SpeedDialFabComponent implements OnInit {
                             .then((valid) => {
                                 objInvited.emailValid = valid;
 
-                    
-                                this._contactsService
-                                    .createContact(objInvited)
-                                    .then((res) => {
+                                this.createContact(objInvited)
 
-                                      console.log(res)
-                                        let newTotal =
-                                            this._contactsService.contacts
-                                                .length + 1;
-
-                                        this._contactsService.editCountInvited(
-                                            newTotal
-                                        );
-
-                                        this.loadingContact = false;
-                                    })
-                                    .catch(() => {
-                                        this.loadingContact = false;
-                                    });
                             });
-                    } else {
-
-                        return;
                     }
-                }
+                });
+
+
+
+        });
+    }
+
+    createContact(objInvited){
+
+        this._contactsService
+        .createContact(objInvited)
+        .then((res) => {
+
+          console.log(res)
+            let newTotal =
+                this._contactsService.contacts
+                    .length + 1;
+
+            this._contactsService.editCountInvited(
+                newTotal
             );
 
-            /*               
-              this._contactsService.validateEmail(data.email)
-              .then((res: any) => {
-
-                
-      
-                this.newInvitedObj(data, res)
-
-               
-              })
-              .catch(err => {
-    
-
-
-                this.newInvitedObj(data, err.error.valid)
-              })
-               */
+            this.loadingContact = false;
+        })
+        .catch(() => {
+            this.loadingContact = false;
         });
     }
 
