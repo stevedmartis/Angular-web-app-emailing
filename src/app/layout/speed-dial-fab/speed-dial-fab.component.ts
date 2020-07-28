@@ -106,50 +106,75 @@ export class SpeedDialFabComponent implements OnInit {
 
             console.log(objInvited);
 
-          const dataFound =  Object.keys(objInvited.dataImport[0])
-            .forEach((val) => {
-                console.log(objInvited.dataImport[0] );
-                let value = objInvited.dataImport[0][val]? true : false;
-                console.log(value, );
+            let countEmail = 0;
 
-                if(value){
-
-                    console.log(value, );
-                   return false
-                }
-
-                else {
-
-                    console.log(value, );
-                   return true
-                }
-
-            })
-
-            console.log(dataFound)
-
-
-            Object.keys(objInvited.dataImport[0])
-            .forEach((val) => {
-
-                    console.log(val)
+          Object.keys(objInvited.dataImport[0])
+            .forEach((val, i) => {
 
                 
-                  let value = objInvited.dataImport[0][val];
+                let value = objInvited.dataImport[0][val];
+               
+                let isData = objInvited.dataImport[0][val]? true : false;
+                console.log(value, isData);
 
-                  console.log(value)
+                if(isData){
+
                     if (this.emailPattern.test(value)) {
-                   
+
                         this._contactsService
                             .validateEmail(value)
                             .then((valid) => {
                                 objInvited.emailValid = valid;
 
-                                this.createContact(objInvited)
+                                countEmail++;
+
+                                console.log(countEmail);
+
+                                if(countEmail == 1){
+
+                                    console.log(countEmail);
+                   
+
+                                    this.createContact(objInvited)
+                                }
+
+                              
 
                             });
                     }
-                });
+
+                    else {
+
+                        console.log(countEmail);
+
+                        if(countEmail == 0){
+
+                            console.log(countEmail);
+
+                            countEmail++;
+                            this.createContact(objInvited)
+                        }
+
+                    }
+                }
+
+                else {
+
+                  
+
+                    if(countEmail == 0){
+
+                        console.log(countEmail);
+
+                        countEmail++;
+                        this.createContact(objInvited)
+                    }
+                  
+                }
+
+            })
+
+        
 
 
 
