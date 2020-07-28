@@ -212,7 +212,7 @@ export class ContactsService {
                 .subscribe((response: any) => {
 
                     let result = response.result.data.debounce.result;
-
+console.log(result)
                     let valid =
                     result === "Invalid"
                         ? false
