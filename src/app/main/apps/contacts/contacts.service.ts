@@ -770,8 +770,24 @@ export class ContactsService {
 
                 const dataImport = {};
 
+                console.log(arraySelect)
+
                 arraySelect.forEach((i) => {
-                    dataImport[i.name] = e[i.name];
+
+                    console.log( i.name, e[i.name])
+
+                    if(e[i.name]){
+
+                        dataImport[i.name] = e[i.name];
+
+                    }
+
+                    else {
+                       dataImport[i.name] = '';
+                    }
+                   
+
+                 
                 });
 
                 console.log(dataImport);
