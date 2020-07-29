@@ -770,11 +770,11 @@ export class ContactsService {
 
                 const dataImport = {};
 
-                console.log(arraySelect)
+              
 
                 arraySelect.forEach((i) => {
 
-                    console.log( i.name, e[i.name])
+                  
 
                     if(e[i.name]){
 
@@ -790,7 +790,7 @@ export class ContactsService {
                  
                 });
 
-                console.log(dataImport);
+             
 
                 objInvited.dataImport.push(dataImport);
 
