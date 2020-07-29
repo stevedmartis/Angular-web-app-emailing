@@ -41,7 +41,7 @@ export class SpeedDialFabComponent implements OnInit {
 
     constructor(
         private _matDialog: MatDialog,
-        public _contactsService: ContactsService,
+        private _contactsService: ContactsService,
         private _matSnackBar: MatSnackBar
     ) {}
 
@@ -214,7 +214,10 @@ export class SpeedDialFabComponent implements OnInit {
 
         this.onToggleFab();
 
-        this._contactsService.xlsxToJson();
+        this._contactsService.xlsxToJson()
+        .then((res) => {
+            console.log(res)
+        })
     }
 
     conditionCompleteCharge(arrayCount) {
@@ -237,23 +240,50 @@ export class SpeedDialFabComponent implements OnInit {
         this._contactsService.exportAsExcelFile("bd_turevento");
     }
 
+
     onFileChange(ev) {
         this._contactsService.onFileChange(ev).then((data) => {
-            this._contactsService.selectFieldsAddInvited(data).then((array) => {
+         
+            this._contactsService.selectFieldsAddInvited(data).then((response) => {
+
                 this.loadingContact = true;
 
-                this.loadingContact = false;
-                this._contactsService.editCountInvited(
-                    this._contactsService.contacts.length
-                );
+                this._contactsService.editEventInputsInvitedData(response.inputsArray,
+                    response.nameData,
+                    response.arraySelect)
+                    .then((contactsArray)=> {
 
-                this.loadingContact = false;
+                       
 
-                this._matSnackBar.open("Carga completada", "OK", {
-                    verticalPosition: "top",
-                    duration: 60000,
-                });
-            });
+                        this._contactsService.addManyInvitedValid(contactsArray)
+                        .then((res)=> {
+        
+        
+               
+                        this._contactsService.editCountInvited(
+                            this._contactsService.contacts.length
+                        );
+        
+                        this.loadingContact = false;
+
+                        setTimeout(() => {
+
+                               
+                        this._matSnackBar.open("Carga completada", "OK", {
+                            verticalPosition: "top",
+                            duration: 60000,
+                        });
+                            
+                        }, 1000);
+     
+                    });
+
+                    })
+
+
+
+
+        })
         });
     }
 

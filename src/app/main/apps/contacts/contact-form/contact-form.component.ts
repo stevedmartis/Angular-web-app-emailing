@@ -115,8 +115,6 @@ export class ContactsContactFormDialogComponent implements OnInit {
 
         this.getInputsFormInvited(inputsForm, inputsForm2)
 
-  
-
      }
 
 
@@ -146,12 +144,10 @@ export class ContactsContactFormDialogComponent implements OnInit {
 
     dividerArrayInputs(array): Promise<any>{
 
-
-        
         return new Promise((resolve, reject) => {
 
       
-        let halfwayThrough = Math.floor(array.length / 2)
+        let halfwayThrough = Math.floor(array.length / 2);
 
         let arrayFirstHalf = array.slice(0, halfwayThrough);
         let arraySecondHalf = array.slice(halfwayThrough, array.length);

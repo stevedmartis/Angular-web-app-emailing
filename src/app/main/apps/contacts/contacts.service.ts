@@ -650,29 +650,19 @@ console.log(result)
 
         return new Promise((resolve, reject) => {
 
-    
-
-        
         let workBook = null;
        
         const reader = new FileReader();
         const file = ev.target.files[0];
-
-
         const xlsx = file;
-
         if(xlsx.name.includes("xls") || xlsx.name.includes("xlsx")){
-
 
         reader.onload = (event) => {
           const data = reader.result;
 
-        
           workBook = XLSX.read(data, { type: 'binary' });
 
           const sheet_name_list  = workBook.SheetNames;
-
-
 
           let columnHeaders = [];
           for (var sheetIndex = 0; sheetIndex < sheet_name_list.length; sheetIndex++) {
@@ -680,12 +670,8 @@ console.log(result)
               for (let key in worksheet) {
                   let regEx = new RegExp("^\(\\w\)\(1\){1}$");
                   if (regEx.test(key) == true) {
-              
-
-                    
-                      columnHeaders.push(worksheet[key].v);
-
-
+               
+                    columnHeaders.push(worksheet[key].v);
                   }
               }
           }
@@ -786,110 +772,120 @@ console.log(result)
           { name:'buttons', initial: true, title: '',  buttons: true  })
 
           this.inputsArray = inputsArray;
+
           this.initColumns =   this.inputsArray;
 
           const onlyImport = inputsArray.filter(obj => obj.import)
           this.arraySelect  = onlyImport;
 
 
-          this.editEventInputs(inputsArray).
-          then((res) =>{
-            
-
-
-            res.event.inputs.forEach(input => {
-
-              
-
-                if(input.import){
-
-                    const obj = {
-
-                        title: input.title,
-                        type: "text",
-                        nameInitial: input.name,
-                        placeHolder: input.placeHolder,
-                        value: "",
-                        required: true,
-                    }
-
-                  
-
-                    this.addInputFormInEvent(obj)
-                    .then((res) => {
-        
-                  
-                      
-                
-                            this._formCustomService.getInputsEventOrInitial(res.input)
-                        
-                
-        
-                    })
-                }
-
-
-
-
-                
-            });
-
-            let contactsArray = [];
-
-            let count = 0;
-    
-            nameData.forEach((e, index ) => {
-
-         
-                    
-            
-              
-
-                this.dataExcelCreateArrayForAdd(e,arraySelect)
-                .then((objInvited) => {
-
-                    count++
-    
-    
-                    contactsArray.push(objInvited)
-                   
-                    if(count === nameData.length){
-
-
-                              
-
-
-
-            this.addManyInvitedValid(contactsArray)
-                    }
-                
-    
-    
-                })
-
-
-           
-
-            })
-           
-
-
+          let arrays = { inputsArray:  this.inputsArray,  nameData: nameData, arraySelect:   this.arraySelect }
+          resolve(arrays)
 
  
-  
-
-
-        });
 
     
         })
 
-     
+      
            
     });
 
     
     }
+
+    editEventInputsInvitedData(inputsArray,nameData, arraySelect): Promise<any>{
+
+
+        
+        return new Promise((resolve, reject) => {
+
+        this.editEventInputs(inputsArray).
+        then((res) =>{
+          
+
+
+          this.addInputsForm(res)
+          .then((res) => {
+
+              let contactsArray = [];
+
+              let count = 0;
+      
+              nameData.forEach((e, index ) => {
+  
+           
+  
+                  this.dataExcelCreateArrayForAdd(e,arraySelect)
+                  .then((objInvited) => {
+  
+                      count++
+      
+      
+                      contactsArray.push(objInvited)
+                     
+                      if(count === nameData.length){
+  
+         
+                          resolve(contactsArray)
+                 
+           
+  
+                
+          
+                      }
+                  
+      
+      
+                  })
+  
+  
+  
+              })
+
+          })
+
+
+        })
+      });
+    }
+
+    addInputsForm(res): Promise<any>{
+
+
+        
+        return new Promise((resolve, reject) => {
+        res.event.inputs.forEach(input => {
+
+              
+
+            if(input.import){
+
+                const obj = {
+
+                    title: input.title,
+                    type: "text",
+                    nameInitial: input.name,
+                    placeHolder: input.placeHolder,
+                    value: "",
+                    required: true,
+                }
+
+              
+
+                this.addInputFormInEvent(obj)
+                .then((res) => {
+    
+        
+                        this._formCustomService.getInputsEventOrInitial(res.input)
+                        resolve(true)
+    
+                })
+            }
+        });
+    })
+
+}
 
     dataExcelCreateArrayForAdd(e, arraySelect)  : Promise<any>{
 
@@ -948,15 +944,12 @@ const dataImport = {}
       });
 
 
+      console.log(dataImport)
 
       objInvited.dataImport.push(dataImport);
 
-      
-    
-
-      
+            
       resolve(objInvited)
-
 
 
   })
@@ -1054,20 +1047,21 @@ const dataImport = {}
 
 addManyInvitedValid(array) : Promise<any>{
 
- 
 
     return new Promise((resolve, reject) => {
 
-
-
-    
     this.insertDbExcelInvited(array)
     .then((res) => {
 
-
+console.log(res)
         this.getContacts(this.idEventNow)
+        .then((res)=> {
+            resolve(true)
+        })
+        
+        
     
-  
+
        });
 
 
@@ -1136,6 +1130,8 @@ addManyInvitedValid(array) : Promise<any>{
         };
 
         fileUpload.click();
+
+        resolve(true)
 
     })
         
