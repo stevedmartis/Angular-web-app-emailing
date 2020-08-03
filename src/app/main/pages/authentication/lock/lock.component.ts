@@ -91,7 +91,7 @@ export class LockComponent implements OnInit, OnDestroy {
                     ) {
                         return;
                     } else {
-                        this.getInputsFormInvited(inputs);
+                        this.getInputsFormInvited(inputs, this.invited);
                     }
 
                 }
@@ -110,14 +110,14 @@ export class LockComponent implements OnInit, OnDestroy {
     }
 
 
-    getInputsFormInvited(inputs) {
+    getInputsFormInvited(inputs, invited) {
         const inputsSelect = this._formInvitationService.arrayInputsSelect;
 
-        console.log(inputsSelect)
 
         let objField = [];
         inputsSelect.forEach((input) => {
-            this.invited.dataImport.forEach((element) => {
+            invited.dataImport.forEach((element) => {
+
                 Object.getOwnPropertyNames(element).forEach((val) => {
                     console.log(element)
                     console.log(val, input.nameInitial)
@@ -128,10 +128,9 @@ export class LockComponent implements OnInit, OnDestroy {
                             title: input.title,
                             name: val,
                             value: element[val],
-                            placeHolder: "Ej: " + this.invited[val],
+                            placeHolder: "Ej: " + invited[val],
                         };
 
-                        console.log(obj)
 
                         objField.push(obj);
   
@@ -153,7 +152,6 @@ export class LockComponent implements OnInit, OnDestroy {
     getInputsFormEvent(inputs) {
         const inputsSelect = this._formInvitationService.arrayInputsSelect;
 
-        console.log(inputsSelect);
 
 
         inputsSelect.forEach((input) => {
@@ -207,10 +205,10 @@ export class LockComponent implements OnInit, OnDestroy {
 
 
     patchFieldInputs(obj, inputs) {
-        inputs.push(this.patchValiesSelection(obj));
+        inputs.push(this.patchValuesSelection(obj));
     }
 
-    patchValiesSelection(obj) {
+    patchValuesSelection(obj) {
         return this._formBuilder.group({
             id: obj._id,
             title: [obj.title],
@@ -229,22 +227,21 @@ export class LockComponent implements OnInit, OnDestroy {
     getDataInvited(email) {
 
        
-            console.log(email)
+
+            const inputs = <FormArray>this.f.inputSelection;
 
          
             if (this.emailPattern.test(email)){
 
            
-       
                 this._formInvitationService
                     .getInvitedByEvent()
                     .then((invited) => {
 
-                        console.log(invited)
                     
                           
                             const arrayDataImport = invited.map(obj => {
-                                return { data: obj.dataImport[0], id: obj._id }
+                                return { dataImport: obj.dataImport, id: obj._id }
 
                             }
                            )
@@ -253,37 +250,42 @@ export class LockComponent implements OnInit, OnDestroy {
 
                             arrayDataImport.forEach(obj => {
 
-                                Object.keys(obj.data)
-                                .forEach((k) => {
+
+                                
+                                obj.dataImport.forEach(element => {
+
                                     
-                                    let valueData = obj.data[k]
-                                  
+                               
 
+                                Object.keys(element)
+                                .forEach((k) => {
 
+                                    
+                                    let valueData = element[k];
+
+                                
                                     if(this.emailPattern.test(valueData)){
 
-                                   
 
                                         if(valueData === email){
 
                                             const inputs = <FormArray>this.f.inputSelection;
 
-                                            console.log('inputs', inputs.value)
                      
                                             Object.getOwnPropertyNames(inputs.value)
                                             .forEach((k) => {
 
-                                                console.log('k', k)
+                                               
 
-                                                let value = obj.data[k]
+                                                let value = obj.dataImport[k]
 
-                                                console.log('value', value)
+                                      
                                                 if(value === k){
 
                                                     obj.value = k;
 
                                                     
-                                                console.log('found, change:', obj.value)
+                                     
                                                 }
                                                 else {
                                                     return;
@@ -293,6 +295,10 @@ export class LockComponent implements OnInit, OnDestroy {
                                             })
                                            
                                             console.log('encontrado', obj)
+
+                                            this.removeInputs();
+
+                                            this.getInputsFormInvited(inputs, obj)
                                         }
 
                                         else {
@@ -302,6 +308,8 @@ export class LockComponent implements OnInit, OnDestroy {
                                      }
                 
                                 })
+
+                            });
              
                             
                  
@@ -326,6 +334,17 @@ export class LockComponent implements OnInit, OnDestroy {
                 }
             
         }
+
+        removeInputs(){
+
+
+            while (this.formDataInputs.length > 0) {
+              this.formDataInputs.removeAt(0);
+            }
+          
+
+          
+          }
 
 
     confirmInvitation() {

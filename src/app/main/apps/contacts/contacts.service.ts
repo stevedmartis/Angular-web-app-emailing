@@ -657,7 +657,7 @@ export class ContactsService {
 
                 inputsArray.push(
                     {
-                        name: "contactado",
+                        name: "contactado",             
                         initial: true,
                         title: "Contacto",
                         contact: true,
