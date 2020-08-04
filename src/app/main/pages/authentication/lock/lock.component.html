@@ -66,34 +66,15 @@
 
                         </div>
 
-                        <div *ngIf="!_formInvitationService.invitedExist">
 
                             <button mat-raised-button [disabled]="loadingConfirm" (click)="confirmInvitation()"
                                 class="submit-button  mt-24 mt-md-0" color="accent">
                                 <mat-icon matSuffix>done</mat-icon>
-                                ¡REGISTARME!
+                                CONFIRMAR
                             </button>
-
                         </div>
 
-                        <div *ngIf="_formInvitationService.invitedExist">
-
-
-                            <button mat-raised-button [disabled]="loadingConfirm"  (click)="confirmInvitation()"
-                                class="submit-button  mt-24 mt-md-0" color="accent">
-                                <mat-icon matSuffix>done</mat-icon>
-                                CONFIRMAR MI ASISTENCIA
-                            </button>
-
-
-                            <button mat-button (click)="cancelInvitation()" class="cancel-button">
-                                <mat-icon matSuffix>cancel</mat-icon>
-                                CANCELAR
-                            </button>
-
-
-                        </div>
-                    </div>
+                
                 </form>
 
 

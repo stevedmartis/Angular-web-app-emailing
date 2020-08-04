@@ -90,8 +90,16 @@ export class LockComponent implements OnInit, OnDestroy {
 
                     console.log(this.invited)
 
-     
+                 
+                        if(inputs.length){
+                            return
+
+
+                        }
+
                         this.getInputsFormInvited(inputs, this.invited);
+
+     
 
                 }
 
