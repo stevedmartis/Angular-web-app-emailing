@@ -11,6 +11,7 @@ import { Subject } from "rxjs";
 import { Router } from "@angular/router";
 import { PolarChartComponent } from "@swimlane/ngx-charts";
 import { Title } from "@angular/platform-browser";
+import { ContactsService } from 'app/main/apps/contacts/contacts.service';
 
 @Component({
     selector: "lock",
@@ -21,7 +22,8 @@ import { Title } from "@angular/platform-browser";
 })
 export class LockComponent implements OnInit, OnDestroy {
     invitationForm = this.createInputsForm();
-
+    loading: boolean = false;
+    loadingConfirm: boolean = false;
     invited: any;
     objField: any;
     emailPattern = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
@@ -37,7 +39,8 @@ export class LockComponent implements OnInit, OnDestroy {
         private _fuseConfigService: FuseConfigService,
         private _formBuilder: FormBuilder,
         public _formInvitationService: FormInvitedService,
-        private router: Router
+        private router: Router,
+       
     ) {
         this._unsubscribeAll = new Subject();
         // Configure the layout
@@ -76,6 +79,7 @@ export class LockComponent implements OnInit, OnDestroy {
             .subscribe((invited) => {
                 console.log(invited);
 
+
                 if (this._formInvitationService.invitedExist) {
 
                     if(invited.invited){
@@ -86,21 +90,19 @@ export class LockComponent implements OnInit, OnDestroy {
 
                     console.log(this.invited)
 
-                    if (
-                        this._formInvitationService.arrayInputsSelect.length === 0
-                    ) {
-                        return;
-                    } else {
+     
                         this.getInputsFormInvited(inputs, this.invited);
-                    }
 
                 }
-                }
+
+            }
 
                 else {
                     console.log("else ");
 
                     this.getInputsFormEvent(inputs);
+                    
+              
                 }
             });
     }
@@ -146,6 +148,10 @@ export class LockComponent implements OnInit, OnDestroy {
         objField.forEach(obj => {
     this.patchFieldInputs(obj, inputs);
 });
+
+
+
+this.loading = true;
        
     }
 
@@ -159,6 +165,7 @@ export class LockComponent implements OnInit, OnDestroy {
             const obj = {
                 title: input.title,
                 name: input.nameInitial,
+                required: input.required,
                 value: "",
                 placeHolder: "",
             };
@@ -167,6 +174,8 @@ export class LockComponent implements OnInit, OnDestroy {
             this.patchFieldInputs(obj, inputs);
         });
 
+      
+        this.loading = true;
         console.log(inputs);
     }
 
@@ -241,7 +250,7 @@ export class LockComponent implements OnInit, OnDestroy {
                     
                           
                             const arrayDataImport = invited.map(obj => {
-                                return { dataImport: obj.dataImport, id: obj._id }
+                                return { dataImport: obj.dataImport, _id: obj._id }
 
                             }
                            )
@@ -269,7 +278,7 @@ export class LockComponent implements OnInit, OnDestroy {
 
                                         if(valueData === email){
 
-                                            const inputs = <FormArray>this.f.inputSelection;
+                                           
 
                      
                                             Object.getOwnPropertyNames(inputs.value)
@@ -296,13 +305,27 @@ export class LockComponent implements OnInit, OnDestroy {
                                            
                                             console.log('encontrado', obj)
 
+                                            this.invited = obj;
+
+                                            this._formInvitationService.invitedExist = true;
+
+                                            console.log('encontrado', obj,   this._formInvitationService.invitedExist)
+
+
                                             this.removeInputs();
 
                                             this.getInputsFormInvited(inputs, obj)
+                  
+
+                 
                                         }
 
                                         else {
-                                            ('no encontrado')
+                                            ('no encontrado');
+
+                                           // inputs.reset();
+
+                                            this._formInvitationService.invitedExist = false;
                                         }
                                 
                                      }
@@ -318,13 +341,6 @@ export class LockComponent implements OnInit, OnDestroy {
                             });
                 
 
-                            this._formInvitationService.invitedExist = true;
-
-                            //   this.invitationForm = this.createInvitedForm();
-                  
-                            //this.invitationForm.controls["invitedId"].setValue("");
-
-                            this._formInvitationService.invitedExist = false;
                     
                     })
                     .catch((err) => {
@@ -354,6 +370,10 @@ export class LockComponent implements OnInit, OnDestroy {
         const data = this.invitationForm.getRawValue();
 
         if (this.invitationForm.valid) {
+
+            this.loadingConfirm = true;
+
+            console.log(this._formInvitationService.invitedExist)
             if (this._formInvitationService.invitedExist) {
                 let objData = {};
 
@@ -378,26 +398,128 @@ export class LockComponent implements OnInit, OnDestroy {
                                 "/" +
                                 this.invited._id,
                         ]);
+
+                      
                     });
             } else {
-                this._formInvitationService
-                    .addNewInvitation(data)
-                    .then((res) => {
-                        let inv = res.post;
 
-                        this.router.navigate([
-                            "/pages/confirm/si/" +
-                                this._formInvitationService.campaignId +
-                                "/" +
-                                inv._id,
-                        ]);
-                    });
+
+            let objInvited = {
+                    codeEvento: this._formInvitationService.event._id,
+                    asiste: "si",
+                    contactado: "email",
+                    notes: "se registro con link",
+                    emailValid: false,
+                    dataImport: [],
+                }; 
+    
+                let obj = {};
+    
+                console.log(data);
+                data.inputSelection.forEach((a1) => {
+
+                    console.log(a1);
+                    obj[a1.name] = a1.value?  a1.value : "";
+                })
+                objInvited.dataImport.push(obj);
+    
+              
+                let arrayValues = [];
+
+            let foundEmail = '';
+
+    
+          Object.keys(objInvited.dataImport[0])
+            .forEach((val, i) => {
+
+            
+                let value = objInvited.dataImport[0][val];
+                arrayValues.push(value)
+               
+                let isData = objInvited.dataImport[0][val]? true : false;
+
+                console.log(value, isData);
+
+    
+            })
+
+           // this.validationAndCreate()
+
+           console.log(arrayValues);
+
+           arrayValues.forEach(value => {
+
+                if(value.length){
+                    
+
+                    if (this.emailPattern.test(value)) {
+
+                        console.log('is email')
+
+                        foundEmail = value;
+                    }
+                }
+                else {
+                    console.log(value)
+                }
+           });
+
+           console.log('final', foundEmail)
+
+                console.log(objInvited);
+    
+                if(foundEmail.length){
+
+                    this.validationAndCreate(foundEmail,objInvited )
+                   }
+        
+                   else {
+                    this.createContact(objInvited)
+                   }
+
+
             }
         } else {
             return;
         }
     }
 
+    validationAndCreate(email, objInvited){
+
+        console.log('email', email);
+        this._formInvitationService
+            .validateEmail(email)
+            .then((valid) => {
+
+            
+                console.log(valid)
+                objInvited.emailValid = valid;
+                    this.createContact(objInvited)
+
+
+            });
+
+
+}
+
+
+    createContact(objInvited){
+        
+        this._formInvitationService
+        .addNewInvitation(objInvited)
+        .then((res) => {
+            let inv = res.post;
+
+            this.router.navigate([
+                "/pages/confirm/si/" +
+                    this._formInvitationService.campaignId +
+                    "/" +
+                    inv._id,
+            ]);
+
+          
+        });
+    }
     cancelInvitation() {
         const value = "no";
         this.invitationForm.controls["asiste"].setValue(value);

@@ -8,7 +8,7 @@ import {
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { BehaviorSubject, Observable } from "rxjs";
 import { environment } from "environments/environment";
-
+import { ContactsService } from 'app/main/apps/contacts/contacts.service';
 
 @Injectable()
 export class FormInvitedService implements Resolve<any> {
@@ -55,7 +55,6 @@ export class FormInvitedService implements Resolve<any> {
 
             this.invitedId = this.routeParams.invitedId;
 
-            this.loadingPage = true;
 
             Promise.all([
                 this.getCampaignById(this.campaignId).then((res: any) => {
@@ -235,24 +234,12 @@ export class FormInvitedService implements Resolve<any> {
         });
     }
 
-    addNewInvitation(data): Promise<any> {
-        const obj = {
-            asiste: data.asiste,
-            codeEvento: this.event._id,
-            company: data.company,
-            contactado: data.contactado,
-            email: data.email,
-            invitedId: data.invitedId,
-            lastname: data.lastname,
-            name: data.name,
-            phone: data.phone,
-            rut: data.rut,
-        };
+    addNewInvitation(dataObj): Promise<any> {
 
         return new Promise((resolve, reject) => {
            
             this._httpClient
-                .post(environment.apiUrl + "/api/invited/add-new-invited/", obj)
+                .post(environment.apiUrl + "/api/invited/add-new-invited/", dataObj)
                 
 
                 .subscribe((response: any) => {
@@ -273,6 +260,29 @@ export class FormInvitedService implements Resolve<any> {
                    
 
                     resolve(response);
+                }, reject);
+        });
+    }
+
+    validateEmail(email): Promise<any> {
+        return new Promise((resolve, reject) => {
+            this._httpClient
+                .get(environment.apiUrl + "/api/validate-email/" + email)
+                .subscribe((response: any) => {
+                    let result = response.result.data.debounce.result;
+                    console.log(result);
+                    let valid =
+                        result === "Invalid"
+                            ? false
+                            : result === "Risky"
+                            ? false
+                            : result === "Safe to Send"
+                            ? true
+                            : result === "Unknown"
+                            ? true
+                            : null;
+
+                    resolve(valid);
                 }, reject);
         });
     }

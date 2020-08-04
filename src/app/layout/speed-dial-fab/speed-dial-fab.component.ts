@@ -116,7 +116,7 @@ export class SpeedDialFabComponent implements OnInit {
           Object.keys(objInvited.dataImport[0])
             .forEach((val, i) => {
 
-                arrayValues
+            
                 let value = objInvited.dataImport[0][val];
                 arrayValues.push(value)
                
@@ -124,11 +124,7 @@ export class SpeedDialFabComponent implements OnInit {
 
                 console.log(value, isData);
 
-            
-
-
-
-
+    
             })
 
            // this.validationAndCreate()

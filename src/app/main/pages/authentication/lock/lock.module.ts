@@ -1,9 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { MatButtonModule } from '@angular/material/button';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatIconModule } from '@angular/material/icon';
-import { MatInputModule } from '@angular/material/input';
+
 import { FuseSharedModule } from '@fuse/shared.module';
 import { LockComponent } from 'app/main/pages/authentication/lock/lock.component';
 import { FormInvitedService } from '../lock/form-invited.service';
@@ -13,6 +10,7 @@ import { InvitationQrScanService } from './invitation-qr-scan/invitation-qr-scan
 import { InvitationQrScanComponent } from './invitation-qr-scan/invitation-qr-scan.component';
 import { AuthGuardService } from 'app/main/helpers/auth-guard.service';
 import { MaterialModule } from 'app/main/angular-material-elements/material.module';
+
 
 const routes = [
     {
@@ -56,7 +54,7 @@ const routes = [
     providers: [
         FormInvitedService,
         FormInvitedNewService,
-        InvitationQrScanService
+        InvitationQrScanService,
     ]
 })
 export class LockModule

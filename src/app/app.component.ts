@@ -62,10 +62,7 @@ if(currentUser){
     this._authServices.defineRolUser(currentUser.user.rol)
 }
 
-        
-
-
-      
+    
         if(this._authServices.isClient){
 
         

@@ -1,4 +1,4 @@
-<div *ngIf="_formInvitationService.loadingPage" id="lock" fxLayout="column">
+<div *ngIf="loading" id="lock" fxLayout="column">
 
     <div id="lock-form-wrapper" fxLayout="column" fxLayoutAlign="center center">
 
@@ -52,10 +52,9 @@
 
 
                             <mat-form-field appearance="outline">
-                                <mat-label *ngIf="f.value.required">{{ f.value.title }} *</mat-label>
-
-                                <mat-label *ngIf="!f.value.required">{{ f.value.title }} </mat-label>
-                                <input matInput formControlName="value" [type]="f.value.type"
+                         
+                                <mat-label >{{ f.value.title }} </mat-label>
+                                <input matInput formControlName="value" [type]="f.value.type" [required]="f.value.required"
                                     (keyup)="getDataInvited(f.value.value)">
 
                                 <mat-error>
@@ -69,7 +68,7 @@
 
                         <div *ngIf="!_formInvitationService.invitedExist">
 
-                            <button mat-raised-button (click)="confirmInvitation()"
+                            <button mat-raised-button [disabled]="loadingConfirm" (click)="confirmInvitation()"
                                 class="submit-button  mt-24 mt-md-0" color="accent">
                                 <mat-icon matSuffix>done</mat-icon>
                                 ¡REGISTARME!
@@ -80,7 +79,7 @@
                         <div *ngIf="_formInvitationService.invitedExist">
 
 
-                            <button mat-raised-button (click)="confirmInvitation()"
+                            <button mat-raised-button [disabled]="loadingConfirm"  (click)="confirmInvitation()"
                                 class="submit-button  mt-24 mt-md-0" color="accent">
                                 <mat-icon matSuffix>done</mat-icon>
                                 CONFIRMAR MI ASISTENCIA
