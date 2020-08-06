@@ -525,17 +525,59 @@ export class ContactsService {
     }
 
     public exportAsExcelFile(excelFileName: string): void {
+
+
         this.contacts.forEach((c) => {
+
+       
+
+
             let obj = {
                 ASISTE: c.asiste,
                 CONTACTADO: c.contactado,
                 CLICK: c.onClick ? "SI" : "NO",
                 ESTADO: c.Status,
                 FECHA_ESTADO: c.StatusDateTime,
+               
             };
 
+            c.dataImport.forEach(element => {
+
+        
+            Object.getOwnPropertyNames(element)
+            .forEach(val => {
+    
+                let value = c.dataImport[0][val];
+                console.log(value, val)
+
+                obj[val] = value? value : '';
+                
+            })
+
+    
+
             this.contactsArrayXls.push(obj);
+
+            })
         });
+
+
+        
+       
+/* 
+            Object.getOwnPropertyNames(c.dataImport[0])
+            .forEach(val => {
+    
+                let value = c.dataImport[val];
+                console.log(value, val)
+                
+            })
+ */
+    
+
+
+
+        console.log('contactsArrayXls', this.contactsArrayXls)
         const worksheet: XLSX.WorkSheet = XLSX.utils.json_to_sheet(
             this.contactsArrayXls
         );
