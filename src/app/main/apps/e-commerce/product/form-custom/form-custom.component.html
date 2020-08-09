@@ -67,7 +67,7 @@
                             (cdkDropListDropped)="drop($event)">
 
 
-                            <div class="item-field" *ngFor="let f of _formCustomService.formDataFieldsInputs.controls; index as i" 
+                            <div class="item-field"  [@animate]="{value:'*',params:{x:'-100%'}}" *ngFor="let f of _formCustomService.formDataFieldsInputs.controls; index as i" 
                             [formGroupName]="i"
                           
                             cdkDrag>

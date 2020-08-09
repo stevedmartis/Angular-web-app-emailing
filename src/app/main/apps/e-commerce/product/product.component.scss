@@ -1,3 +1,4 @@
+@import "src/@fuse/scss/fuse";
 #product {
 
     .header {
@@ -42,6 +43,10 @@
     form {
         width: 100%;
         max-width: 100% !important;
+
+        
+        
+ 
     }
 
     .form-errors-model {
@@ -174,7 +179,7 @@
 
 }
 
-@import "src/@fuse/scss/fuse";
+
 
 .invitation-form-dialog {
 
@@ -206,6 +211,17 @@
 .content-steper {
 
     display: block !important;
+
+
+    @include media-breakpoint('lt') {
+         height: 950px;
+    }
+
+  
+
+    
+
+    
 }
 
 .email-editor {

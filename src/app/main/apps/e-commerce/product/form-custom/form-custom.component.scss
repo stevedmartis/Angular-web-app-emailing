@@ -1,13 +1,7 @@
 @import "src/@fuse/scss/fuse";
 
 
-form-custom {
-    min-height: 845px;
 
-    @include media-breakpoint('xl') {
-        height: 867px;
-    }
-}
 .content-card-custom {
 
     background: white;
@@ -29,6 +23,8 @@ form-custom {
 .content-card {
     padding: 0px !important;
     
+
+  
 }
 
 .header-custom {
@@ -36,10 +32,6 @@ form-custom {
 
 
     
-
-    @include media-breakpoint('xs') {
-        height: 75px;
-    }
     }
 
 
@@ -93,10 +85,13 @@ form-custom {
 
     
         overflow: auto;
-
+        margin-bottom: 40px;
     
-
-  
+        @include media-breakpoint('xs') {
+            margin-bottom: 236px;
+    
+        }
+       
    
 }
 
@@ -168,6 +163,8 @@ form-custom {
     
     @include media-breakpoint('xs') {
         width: 85% !important;
+
+        height: 800px;
     }
 
   
@@ -179,7 +176,21 @@ form-custom {
     @include media-breakpoint('xs') {
         overflow: auto !important;
     }
+
+        
+
     
+
+} 
+
+
+.page-layout{
+
+    @include media-breakpoint('xs') {
+     
+
+        height: 800px;
+    }
 
 }
 
@@ -210,12 +221,7 @@ form-custom {
     overflow: hidden;
     display: block;
 
-    
-    @include media-breakpoint('xs') {
-        padding: 0px 30px 0px 0px;
-      }
-  
-  
+
 
 
     

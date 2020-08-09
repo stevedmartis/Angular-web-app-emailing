@@ -131,8 +131,10 @@
 
 
             <div class="no-courses" *ngIf="!_campaignService.loadingCampaigns && filteredCourses.length === 0">
-                No se encontraron campañas
+
+                <img class="empty-campaign" src="assets/images/emptyCampaigns.jpg" [@animate]="{value:'*',params:{delay:'50ms',scale:'0.2'}}">
             </div>
+
 
 
                                     
