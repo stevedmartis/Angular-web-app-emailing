@@ -217,6 +217,11 @@
          height: 950px;
     }
 
+    @include media-breakpoint('sx') {
+        height: 1500px;
+   }
+
+
   
 
     

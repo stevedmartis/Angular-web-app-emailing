@@ -188,8 +188,7 @@
 
     @include media-breakpoint('xs') {
      
-
-        height: 800px;
+        height: 1050px;
     }
 
 }
@@ -221,9 +220,10 @@
     overflow: hidden;
     display: block;
 
-
-
-
+    @include media-breakpoint('xs') {
+        padding: 0% 10% 0% 0%;
+      }
+  
     
 }
 

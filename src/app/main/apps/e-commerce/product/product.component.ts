@@ -56,7 +56,7 @@ export class EcommerceProductComponent implements OnInit, OnDestroy
     disabledBtnSave: boolean = true;
     removeTag: boolean = false;
     selectedIndex: number = 0;
-    maxNumberOfTabs: number = 3;
+    maxNumberOfTabs: number = 4;
     uploadFile: boolean = false;
      
 
@@ -495,13 +495,20 @@ nextStep() {
     else if(event.index === 3){
         this.selectedIndex = 3;
     }
+    else if(event.index === 4){
+        this.selectedIndex = 4;
+    }
+
+    else if(event.index === 5){
+        this.selectedIndex = 5;
+    }
 
   }
 
   btnNavigateStep(){
 
-   if(this.selectedIndex === 1 || this.selectedIndex === 2 || this.selectedIndex === 3 || this.selectedIndex === 4){
-
+   if(this.selectedIndex === 1 || this.selectedIndex === 2 || this.selectedIndex === 3 || this.selectedIndex === 4 || this.selectedIndex === 5){
+ 
     return true
    }
 
@@ -510,7 +517,7 @@ nextStep() {
 
   btnNavigateNextStep(){
 
-    if(this.selectedIndex === 0 || this.selectedIndex === 1 || this.selectedIndex === 2){
+    if(this.selectedIndex === 0 || this.selectedIndex === 1 || this.selectedIndex === 2 || this.selectedIndex === 3){
  
      return true
     }
