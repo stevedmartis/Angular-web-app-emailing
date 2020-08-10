@@ -398,9 +398,9 @@ contacts-contact-list {
 
 .no-invited {
     font-size: 24px;
-    margin: 24px 0;
+  //  margin: 24px 0;
     text-align: center;
-    min-height: 695px;
+   // min-height: 695px;
 
 
     @include media-breakpoint('xl') {

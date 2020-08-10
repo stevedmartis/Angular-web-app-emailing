@@ -1,6 +1,29 @@
 @import "src/@fuse/scss/fuse";
 
+form-custom {
 
+    #formcustom {
+
+
+
+        > .center {
+
+        
+            > .header {
+
+                padding: 2%;
+
+                
+    height: 100% !important;
+    min-height: 100px !important;
+    max-height: 100px !important;
+
+
+            }
+        }
+    }
+
+}
 
 .content-card-custom {
 
@@ -28,7 +51,7 @@
 }
 
 .header-custom {
-    height: 100px;
+    height: 64px;
 
 
     
@@ -88,7 +111,7 @@
         margin-bottom: 40px;
     
         @include media-breakpoint('xs') {
-            margin-bottom: 236px;
+            margin-bottom: 20%;
     
         }
        
@@ -164,7 +187,7 @@
     @include media-breakpoint('xs') {
         width: 85% !important;
 
-        height: 800px;
+     
     }
 
   
@@ -183,12 +206,22 @@
 
 } 
 
+.carded {
 
-.page-layout{
+    @include media-breakpoint('xs') {
+        height: 700px;
+    }
+
+
+ 
+}
+
+
+.page-height{
 
     @include media-breakpoint('xs') {
      
-        height: 1050px;
+        height: 500px;
     }
 
 }
@@ -221,7 +254,7 @@
     display: block;
 
     @include media-breakpoint('xs') {
-        padding: 0% 10% 0% 0%;
+        padding: 0% 10% 10% 0%;
       }
   
     

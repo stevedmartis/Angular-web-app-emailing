@@ -28,11 +28,7 @@
             </div>
             <!-- / SEARCH -->
 
-            <!-- ADD BUTTON -->
-            <button mat-raised-button (click)="addCampaignDialog()" class="add-btn fuse-white mt-24 mt-md-0">
-                <span>CREAR NUEVA</span>
-            </button>
-            <!-- / ADD BUTTON -->
+ 
 
         </div>
         <!-- / HEADER -->
@@ -126,7 +122,7 @@
 
             </div>
 
-            <mat-spinner class="spinner-fab" *ngIf="_campaignService.loadingCampaigns" diameter="50"></mat-spinner>
+         <!--    <mat-spinner class="spinner-fab" *ngIf="_campaignService.loadingCampaigns" diameter="50"></mat-spinner> -->
 
 
 
@@ -149,6 +145,20 @@
     <!-- / CENTER -->
 
 
-</div>
+
 
 </div>
+
+
+
+</div>
+
+<div class="fab-container">
+    <button mat-fab class="fab-toggler"
+            [disabled]="_campaignService.loadingCampaigns"
+            (click)="addCampaignDialog()">
+            <mat-icon *ngIf="!_campaignService.loadingCampaigns">add</mat-icon>
+            <mat-spinner class="spinner-fab-btn" *ngIf="_campaignService.loadingCampaigns" diameter="35"></mat-spinner>
+    </button>
+
+  </div>

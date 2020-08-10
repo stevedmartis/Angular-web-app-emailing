@@ -213,18 +213,16 @@
     display: block !important;
 
 
-    @include media-breakpoint('lt') {
-         height: 950px;
-    }
 
-    @include media-breakpoint('sx') {
-        height: 1500px;
-   }
+   
+    height: 100%;
+    
+  
+
 
 
   
-
-    
+ 
 
     
 }

@@ -47,12 +47,6 @@ products-campaigns {
                     }
                 }
 
-                @include media-breakpoint('lt-md') {
-                    padding: 8px 0;
-                    height: 192px !important;
-                    min-height: 192px !important;
-                    max-height: 192px !important;
-                }
             }
         }
     }
@@ -117,10 +111,15 @@ products-campaigns {
 
         .courses {
 
+            @include media-breakpoint('xs') {
+                margin-bottom: 70px;
+            }
+
+
             margin: 0 auto;
 
 
-
+          
 
 
             .no-courses {
@@ -225,6 +224,9 @@ products-campaigns {
 
 .content-card {
     padding: 16px;
+
+
+
 }
 
 .empty-campaign {
@@ -260,4 +262,83 @@ products-campaigns {
 
 .img-campaign {
     height: 356px;
+}
+
+@import "src/@fuse/scss/fuse";
+
+.fab-container {
+
+    z-index: 100;
+    display: flex;
+    flex-direction: column-reverse;
+    align-items: center;
+    position: fixed;
+   
+
+   
+
+    @include media-breakpoint('sm') {
+
+
+      bottom: 150px;
+    
+     
+    
+    }
+
+    @include media-breakpoint('m') {
+
+
+      bottom: 160px;
+    
+     
+    
+    }
+
+    
+  @include media-breakpoint('xs') {
+
+
+    bottom: 50px;
+    left: 90%;
+   
+
+}
+
+@include media-breakpoint('xl') {
+
+
+  bottom: 400;
+
+ 
+
+}
+    
+  
+    > div {
+      display: flex;
+      flex-direction: column-reverse;
+      align-items: center;
+      margin-bottom: 5px;
+  
+      button {
+        margin-bottom: 17px;
+      }
+    }
+  }
+
+  
+  .fab-toggler {
+    float: right;
+    z-index: 100;
+  }
+
+  .icon-second {
+
+    color:#878787
+  }
+
+  
+.spinner-fab-btn {
+  margin-top: -15%;
 }
