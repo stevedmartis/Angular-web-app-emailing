@@ -137,7 +137,7 @@ export class LockComponent implements OnInit, OnDestroy {
                             title: input.title,
                             name: val,
                             value: element[val],
-                            
+                             required: input.required,
                             placeHolder: "Ej: " + invited[val],
                         };
 
