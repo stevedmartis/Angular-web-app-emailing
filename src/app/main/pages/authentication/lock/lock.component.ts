@@ -85,7 +85,6 @@ export class LockComponent implements OnInit, OnDestroy {
                     if(invited.invited){
 
                        
-
                     this.invited = invited.invited;
 
                     console.log(this.invited)
@@ -138,6 +137,7 @@ export class LockComponent implements OnInit, OnDestroy {
                             title: input.title,
                             name: val,
                             value: element[val],
+                            required: input.required,
                             placeHolder: "Ej: " + invited[val],
                         };
 
