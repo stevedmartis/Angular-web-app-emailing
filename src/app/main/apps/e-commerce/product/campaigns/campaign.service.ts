@@ -660,9 +660,7 @@ export class CampaignService {
         reader.readAsDataURL(this.fileData);
         reader.onload = _event => {
             if (type === "camp") {
-                this.previewUrl = reader.result;
 
-                this.image = this.previewUrl;
 
                 console.log(_event.target.result)
 
