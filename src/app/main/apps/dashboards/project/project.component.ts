@@ -58,7 +58,6 @@ export class ProjectDashboardComponent implements OnInit
                 domain: ['#42BFF7', '#C6ECFD', '#C7B42C', '#AAAAAA']
             },
             onSelect      : (ev) => {
-                console.log(ev);
             },
             supporting    : {
                 currentRange  : '',

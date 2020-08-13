@@ -77,13 +77,11 @@ export class MailNgrxMainSidebarComponent
                      * Send
                      */
                     case 'send':
-                        console.log('new Mail', formData.getRawValue());
                         break;
                     /**
                      * Delete
                      */
                     case 'delete':
-                        console.log('delete Mail');
                         break;
                 }
             });

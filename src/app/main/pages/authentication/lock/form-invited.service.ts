@@ -70,18 +70,15 @@ export class FormInvitedService implements Resolve<any> {
                     
                     this.event = data.event;
 
-                    console.log(data)
                     this.eventLoad = true;
 
 
                             this.getInputsEvent(data.event._id)
                             .then((res) => {
 
-                                console.log(res)
                                 this.arrayInputsSelect = res.inputs.filter(x => {
                                     return x.column === 2;
                                 })
-                                console.log( this.arrayInputsSelect)
 
                                 
                             if (this.invitedId !== "new") {
@@ -89,7 +86,6 @@ export class FormInvitedService implements Resolve<any> {
                                 this.getInvited()
                                 .then((res) => {
 
-                                    console.log(res)
 
                                     this.invitedExist = true;
 
@@ -198,7 +194,6 @@ export class FormInvitedService implements Resolve<any> {
                 .get(environment.apiUrl + "/api/invited/event/" + this.event._id)
                 .subscribe((response: any) => {
 
-                    console.log(response)
                     let invited = response.invited
 
 

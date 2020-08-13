@@ -89,17 +89,13 @@ getInputsEventOrInitial(input){
       this.getInputsInitial()
       .then((array) => {
 
-        console.log(array)
 
         array.forEach(obj => {
 
-          console.log(obj)
 
           this.addInputFormInEvent(obj)
     
           .then((data) => {
-
-            console.log(data)
 
             this.pushDataInArrays(data.input)
 

@@ -171,7 +171,6 @@ getInputsFormInvited(inputsForm, inputsForm2){
 
   const inputs =  this._contactServices.inputsArray.filter(obj => obj.import)
 
-console.log(inputs)
 
 let objField = []; 
   

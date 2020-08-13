@@ -17,7 +17,6 @@ export class AuthGuardService {
 
           this.authenticationService.loginGuard(currentUser);
           this.authenticationService.isLogged = true;
-console.log('user guard:', currentUser.user)
       
           
           this.authenticationService.defineRolUser(currentUser.user.rol)

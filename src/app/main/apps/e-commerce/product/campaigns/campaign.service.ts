@@ -253,7 +253,6 @@ export class CampaignService {
         })
 
           
-        console.log(arraydataImport)
             const arrayFinal = [];
             arraydataImport.forEach(element => {
 
@@ -321,7 +320,6 @@ export class CampaignService {
              this.sendManiInvited(this.eventObj.handle, campaign2, inv)   
                 
                 .then( (mail) => {
-                    console.log(inv)
 
                     this.value++;
 
@@ -347,7 +345,6 @@ export class CampaignService {
                    
                 })
                 .catch((err) => {
-                    console.log(err)
 
                 this.value++;
 

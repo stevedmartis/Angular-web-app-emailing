@@ -104,7 +104,6 @@ export class SpeedDialFabComponent implements OnInit {
 
             objInvited.dataImport.push(obj);
 
-            console.log(objInvited);
 
             let countEmail = 0;
             let arrayValues = [];
@@ -122,14 +121,12 @@ export class SpeedDialFabComponent implements OnInit {
                
                 let isData = objInvited.dataImport[0][val]? true : false;
 
-                console.log(value, isData);
 
     
             })
 
            // this.validationAndCreate()
 
-           console.log(arrayValues);
 
            arrayValues.forEach(value => {
 
@@ -138,17 +135,14 @@ export class SpeedDialFabComponent implements OnInit {
 
                     if (this.emailPattern.test(value)) {
 
-                        console.log('is email')
 
                         foundEmail = value;
                     }
                 }
                 else {
-                    console.log(value)
                 }
            });
 
-           console.log('final', foundEmail)
 
            if(foundEmail.length){
 
@@ -163,13 +157,11 @@ export class SpeedDialFabComponent implements OnInit {
 
     validationAndCreate(email, objInvited){
 
-                console.log('email', email);
                 this._contactsService
                     .validateEmail(email)
                     .then((valid) => {
 
                       
-                        console.log(valid)
                         objInvited.emailValid = valid;
 
 
@@ -189,7 +181,6 @@ export class SpeedDialFabComponent implements OnInit {
         .createContact(objInvited)
         .then((res) => {
 
-          console.log(res)
             let newTotal =
                 this._contactsService.contacts
                     .length + 1;
@@ -212,7 +203,6 @@ export class SpeedDialFabComponent implements OnInit {
 
         this._contactsService.xlsxToJson()
         .then((res) => {
-            console.log(res)
         })
     }
 

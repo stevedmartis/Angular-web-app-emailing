@@ -77,7 +77,6 @@ export class LockComponent implements OnInit, OnDestroy {
         this._formInvitationService.onInvitedChanged
             .pipe(takeUntil(this._unsubscribeAll))
             .subscribe((invited) => {
-                console.log(invited);
 
 
                 if (this._formInvitationService.invitedExist) {
@@ -87,7 +86,6 @@ export class LockComponent implements OnInit, OnDestroy {
                        
                     this.invited = invited.invited;
 
-                    console.log(this.invited)
 
                  
                         if(inputs.length){
@@ -105,7 +103,6 @@ export class LockComponent implements OnInit, OnDestroy {
             }
 
                 else {
-                    console.log("else ");
 
                     this.getInputsFormEvent(inputs);
                     
@@ -128,8 +125,6 @@ export class LockComponent implements OnInit, OnDestroy {
             invited.dataImport.forEach((element) => {
 
                 Object.getOwnPropertyNames(element).forEach((val) => {
-                    console.log(element)
-                    console.log(val, input.nameInitial)
                     if (val === input.nameInitial) {
 
                       
@@ -151,7 +146,6 @@ export class LockComponent implements OnInit, OnDestroy {
             });
         });
 
-        console.log(objField)
 
         objField.forEach(obj => {
     this.patchFieldInputs(obj, inputs);
@@ -169,7 +163,6 @@ this.loading = true;
 
 
         inputsSelect.forEach((input) => {
-            console.log(input);
             const obj = {
                 title: input.title,
                 name: input.nameInitial,
@@ -184,7 +177,6 @@ this.loading = true;
 
       
         this.loading = true;
-        console.log(inputs);
     }
 
     ngOnDestroy(): void {
@@ -263,7 +255,6 @@ this.loading = true;
                             }
                            )
 
-                            console.log('arrayDataImport', arrayDataImport)
 
                             arrayDataImport.forEach(obj => {
 
@@ -311,13 +302,11 @@ this.loading = true;
 
                                             })
                                            
-                                            console.log('encontrado', obj)
 
                                             this.invited = obj;
 
                                             this._formInvitationService.invitedExist = true;
 
-                                            console.log('encontrado', obj,   this._formInvitationService.invitedExist)
 
 
                                             this.removeInputs();
@@ -381,7 +370,6 @@ this.loading = true;
 
             this.loadingConfirm = true;
 
-            console.log(this._formInvitationService.invitedExist)
             if (this._formInvitationService.invitedExist) {
                 let objData = {};
 
@@ -423,10 +411,8 @@ this.loading = true;
     
                 let obj = {};
     
-                console.log(data);
                 data.inputSelection.forEach((a1) => {
 
-                    console.log(a1);
                     obj[a1.name] = a1.value?  a1.value : "";
                 })
                 objInvited.dataImport.push(obj);
@@ -446,14 +432,12 @@ this.loading = true;
                
                 let isData = objInvited.dataImport[0][val]? true : false;
 
-                console.log(value, isData);
 
     
             })
 
            // this.validationAndCreate()
 
-           console.log(arrayValues);
 
            arrayValues.forEach(value => {
 
@@ -462,19 +446,15 @@ this.loading = true;
 
                     if (this.emailPattern.test(value)) {
 
-                        console.log('is email')
 
                         foundEmail = value;
                     }
                 }
                 else {
-                    console.log(value)
                 }
            });
 
-           console.log('final', foundEmail)
 
-                console.log(objInvited);
     
                 if(foundEmail.length){
 
@@ -494,13 +474,11 @@ this.loading = true;
 
     validationAndCreate(email, objInvited){
 
-        console.log('email', email);
         this._formInvitationService
             .validateEmail(email)
             .then((valid) => {
 
             
-                console.log(valid)
                 objInvited.emailValid = valid;
                     this.createContact(objInvited)
 
@@ -537,7 +515,6 @@ this.loading = true;
         this._formInvitationService
             .confirmInvitation(data, data)
             .then((inv: Invited) => {
-                console.log(inv);
 
                 this.router.navigate([
                     "/pages/confirm/no/" +

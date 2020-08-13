@@ -86,7 +86,6 @@ export class ExampleViewerComponent implements AfterViewInit, OnDestroy
         }
         else
         {
-            console.log('MISSING EXAMPLE: ', example);
         }
     }
 

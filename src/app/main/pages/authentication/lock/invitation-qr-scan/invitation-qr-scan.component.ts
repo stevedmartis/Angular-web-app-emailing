@@ -168,13 +168,11 @@ export class InvitationQrScanComponent implements OnInit, OnDestroy {
     confirmInvitation(){
        const data = this.invitationForm.getRawValue();
 
-       console.log('invited data: ', data)
 
 
         this._formInvitationService.assistCheced(data)
         .then( (inv: Invited ) => {
 
-            console.log(inv)
             //this.router.navigate(['/pages/confirm/si/' + this._formInvitationService.campaignId + '/' + this.invited._id])
 
             this.assit_checked = true;

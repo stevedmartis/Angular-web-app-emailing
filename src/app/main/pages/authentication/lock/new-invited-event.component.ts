@@ -83,36 +83,7 @@ export class NewInvitedComponent implements OnInit, OnDestroy {
 
         this.setDocTitle(this._formInvitationNewService.event.affair)
 
-   
-        /*
-        this._formInvitationService.onInvitedChanged
-            .pipe(takeUntil(this._unsubscribeAll))
-            .subscribe(invited => {
 
-                if ( !invited.invited)
-                {
-
-
-                    this.invited = new Invited();
-
-                    console.log(  this.invited)
-    
-                }
-                else
-                {
-
-
-                    
-                    console.log('invited', invited)
-                    this.invited = new Invited(invited.invited);
-                    console.log('this.producte.evnd.id',invited.invited._id)
-                }
-
-                this.invitationForm = this.createInvitedForm();
-
-            });
-
-            */
 
     }
 
@@ -168,7 +139,6 @@ export class NewInvitedComponent implements OnInit, OnDestroy {
          this._formInvitationService.confirmInvitation(data)
          .then( (inv: Invited ) => {
  
-             console.log(inv)
  
              this.router.navigate(['/pages/confirm/no/' + this._formInvitationService.campaignId])
  

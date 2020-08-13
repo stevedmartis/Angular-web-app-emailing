@@ -139,7 +139,6 @@ export class CampaignsComponent implements OnInit, OnDestroy {
                 .addCampaign(form)
 
                 .then((x) => {
-                    console.log(x);
 
                     this._campaignService.loadingCampaigns = false;
 

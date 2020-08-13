@@ -282,7 +282,6 @@ editUser(user): Promise<any>
             rol: user.rol
         })
             .subscribe((response: any) => {
-                console.log(response)
 
                 const userIndex = this.arrayUserData.findIndex(x => x._id === response.user._id);
 
@@ -364,7 +363,6 @@ sendMailJet(email, username, _id, password): Promise<any> {
         this._httpClient.post<any>(`${environment.apiUrl}/api/send-new-user-mail`, { email , username, _id, password})
     .subscribe((user: any) => {
 
-        console.log(user)
         // store user details and jwt token in local storage to keep user logged in between page refreshes
         //localStorage.setItem('currentUser', JSON.stringify(user));
 

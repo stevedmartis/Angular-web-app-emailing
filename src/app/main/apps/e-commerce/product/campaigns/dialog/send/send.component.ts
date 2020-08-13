@@ -47,7 +47,6 @@ export class SendComponent implements OnInit, OnDestroy {
 
 if(this.allContacts.length > 0){
 
-  console.log('pasa')
 
     if(this._campaignService.allLoading){
       return 

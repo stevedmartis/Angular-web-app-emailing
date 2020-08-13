@@ -43,7 +43,6 @@ export class ResetPasswordService implements Resolve<any>
 
                 Promise.all([
 
-                    console.log('routeParams', this.routeParams)
                 
                     //this.getEventsByUser()
                     

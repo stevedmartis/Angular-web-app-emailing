@@ -233,7 +233,6 @@ export class EcommerceProductService implements Resolve<any>
             this._httpClient.get(environment.apiUrl + '/api/tag/event/' + this.contactServices.idEventNow)
                 .subscribe((response: any) => {
  
-                 console.log(response)
                     resolve(response);
                     
                 }, reject);

@@ -103,7 +103,6 @@ export class ForgotPasswordComponent implements OnInit
            }
        },
        err => {
-        console.log('error api: ', err)    
         this._matSnackBar.open(err.message, 'OK', {
             verticalPosition: 'top',
             duration        : 2000

@@ -52,7 +52,6 @@ export class FormInvitedNewService implements Resolve<any> {
                 this.getCampaignById(this.campaignId).then(() => {
                     this.getEventById(this.campaignInvitation.eventId).then(
                         (data) => {
-                            console.log(data);
 
                             this.event = data.event;
 

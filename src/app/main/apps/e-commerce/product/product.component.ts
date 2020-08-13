@@ -119,7 +119,6 @@ export class EcommerceProductComponent implements OnInit, OnDestroy
 
                     this.product = new Product(product.event);
 
-                    console.log(this.product.inputs)
 
                     this._contactsService.inputsArray =  this.product.inputs;
 

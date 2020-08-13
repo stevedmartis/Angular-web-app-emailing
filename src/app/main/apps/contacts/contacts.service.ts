@@ -168,7 +168,6 @@ export class ContactsService {
                 .get(environment.apiUrl + "/api/validate-email/" + email)
                 .subscribe((response: any) => {
                     let result = response.result.data.debounce.result;
-                    console.log(result);
                     let valid =
                         result === "Invalid"
                             ? false
@@ -548,7 +547,6 @@ export class ContactsService {
             .forEach(val => {
     
                 let value = c.dataImport[0][val];
-                console.log(value, val)
 
                 obj[val] = value? value : '';
                 
@@ -562,22 +560,10 @@ export class ContactsService {
         });
 
 
-        
-       
-/* 
-            Object.getOwnPropertyNames(c.dataImport[0])
-            .forEach(val => {
-    
-                let value = c.dataImport[val];
-                console.log(value, val)
-                
-            })
- */
-    
 
 
 
-        console.log('contactsArrayXls', this.contactsArrayXls)
+
         const worksheet: XLSX.WorkSheet = XLSX.utils.json_to_sheet(
             this.contactsArrayXls
         );
@@ -877,7 +863,6 @@ export class ContactsService {
     addManyInvitedValid(array): Promise<any> {
         return new Promise((resolve, reject) => {
             this.insertDbExcelInvited(array).then((res) => {
-                console.log(res);
                 this.getContacts(this.idEventNow).then((res) => {
                     resolve(true);
                 });
