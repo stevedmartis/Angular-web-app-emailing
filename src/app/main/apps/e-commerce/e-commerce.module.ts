@@ -33,6 +33,8 @@ import { FormCustomComponent } from './product/form-custom/form-custom.component
 import { CardedLeftSidebar2Component } from 'app/main/ui/page-layouts/carded/left-sidebar-2/left-sidebar-2.component';
 import { FormCustomService } from './product/form-custom/services/form-custom.service';
 import { SelectFieldsComponent } from '../contacts/contact-list/dialog/select-fields/select-fields.component';
+import {NgxImageCompressService} from 'ngx-image-compress';
+
 
 const routes: Routes = [
     {
@@ -96,6 +98,7 @@ const routes: Routes = [
         RouterModule.forChild(routes),
 
         MaterialModule,
+      
 
         NgxChartsModule,
         AgmCoreModule.forRoot({
@@ -118,7 +121,8 @@ const routes: Routes = [
         EcommerceOrderService,
         ContactsService,
         CampaignService,
-        FormCustomService
+        FormCustomService,
+        NgxImageCompressService,
 
 
     ],

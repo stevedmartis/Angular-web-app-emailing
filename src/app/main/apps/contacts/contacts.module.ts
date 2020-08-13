@@ -22,7 +22,6 @@ import { ContactsMainSidebarComponent } from 'app/main/apps/contacts/sidebars/ma
 import { ContactsContactFormDialogComponent } from 'app/main/apps/contacts/contact-form/contact-form.component';
 import {  SpeedDialFabComponent } from 'app/layout/speed-dial-fab/speed-dial-fab.component';
 
-
 import { MatPaginatorModule } from '@angular/material';
 import { MaterialModule } from 'app/main/angular-material-elements/material.module';
 import { SelectFieldsComponent } from './contact-list/dialog/select-fields/select-fields.component';
@@ -70,6 +69,7 @@ declarations: [
     ],
     providers      : [
         ContactsService,
+        
     
         
     ],

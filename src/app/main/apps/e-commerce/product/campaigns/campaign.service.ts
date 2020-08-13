@@ -19,6 +19,7 @@ import { Campaign } from "./campaign.model";
 import { ContactsService } from "app/main/apps/contacts/contacts.service";
 import { map, tap, last, catchError } from "rxjs/operators";
 import { ImgSrcDirective } from "@angular/flex-layout";
+import { NgxImageCompressService } from 'ngx-image-compress';
 
 export class FileUploadModel {
     data: File;
@@ -96,7 +97,8 @@ export class CampaignService {
         private _httpClient: HttpClient,
         private _authServices: AuthService,
         public _productService: EcommerceProductService,
-        public _contactService: ContactsService
+        public _contactService: ContactsService,
+        private imageCompress: NgxImageCompressService
     ) {
         // Set the defaults
         this.onCategoriesChanged = new BehaviorSubject({});
@@ -649,13 +651,24 @@ export class CampaignService {
             return;
         }
 
+
         var reader = new FileReader();
+
+        console.log(this.fileData, reader)
+
+        
         reader.readAsDataURL(this.fileData);
         reader.onload = _event => {
             if (type === "camp") {
                 this.previewUrl = reader.result;
 
                 this.image = this.previewUrl;
+
+                console.log(_event.target.result)
+
+               // this.compressFile2(this.image)
+
+                this.compressFile(_event.target.result, this.fileData)
 
               
 
@@ -667,6 +680,26 @@ export class CampaignService {
             }
         };
     }
+
+    compressFile2(image) {
+    let imgResultBeforeCompress: any;
+    let imgResultAfterCompress: any;
+  
+        this.imageCompress.uploadFile().then(({image, orientation}) => {
+        
+          imgResultBeforeCompress = image;
+          console.warn('Size in bytes was:', this.imageCompress.byteCount(image));
+          
+          this.imageCompress.compressFile(image, orientation, 50, 50).then(
+            result => {
+              imgResultAfterCompress = result;
+              console.warn('Size in bytes is now:', this.imageCompress.byteCount(result));
+            }
+          );
+          
+        });
+        
+      }
 
 sendManiInvited(eventName, campaign, invited): Promise<any> {
 
@@ -698,6 +731,36 @@ sendManiInvited(eventName, campaign, invited): Promise<any> {
                 }, reject);
         });
     }
+
+    compressFile(image,fileName) {
+
+        console.log(image, fileName)
+    
+        let sizeOfOriginalImage: any
+    
+        let imgResultAfterCompress: any
+        let sizeOFCompressedImage: any;
+        let localCompressedURl: any;
+    
+        var orientation = -1;
+        sizeOfOriginalImage = this.imageCompress.byteCount(image)/(1024*1024);
+      
+        this.imageCompress.compressFile(image, orientation, 50, 50).then(
+        result => {
+        imgResultAfterCompress = result;
+        localCompressedURl = result;
+        sizeOFCompressedImage = this.imageCompress.byteCount(result)/(1024*1024)
+      
+        // create file from byte
+        const imageName = fileName;
+    
+        console.log(result)
+
+        this.previewUrl = result;
+
+
+    
+        });}
 
     
 

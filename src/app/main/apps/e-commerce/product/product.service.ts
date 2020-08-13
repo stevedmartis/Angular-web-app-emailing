@@ -3,14 +3,10 @@ import { HttpClient, HttpHeaders, HttpRequest, HttpErrorResponse, HttpEventType 
 import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot } from '@angular/router';
 import { BehaviorSubject, Observable, Subscription, of  } from 'rxjs';
 import { environment } from 'environments/environment';
-import { AuthService } from 'app/services/authentication/auth.service';
 import { ContactsService } from 'app/main/apps/contacts/contacts.service';
 import { MatHorizontalStepper } from '@angular/material';
-import { catchError, last, tap, map } from 'rxjs/operators';
-import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
-import { UsersService } from './users/users.service';
+
 import { AcademyCoursesService } from '../../academy/courses.service';
-import { FormCustomService } from './form-custom/services/form-custom.service';
 
 
 @Injectable()
@@ -36,10 +32,9 @@ export class EcommerceProductService implements Resolve<any>
      */
     constructor(
         private _httpClient: HttpClient,
-        private authServices: AuthService,
         private contactServices: ContactsService,
-        private _usersServices: UsersService,
         private _academyCoursesService: AcademyCoursesService,
+      
 
     )
     {
@@ -426,6 +421,9 @@ editInputFormColumnEnabled(inputId): Promise<any>
             }, reject);
     });
 }
+
+
+
 
 
 }
