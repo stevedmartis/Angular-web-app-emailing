@@ -41,10 +41,10 @@
 
         <div class="courses" fxLayout="row wrap" >
 
-            <div class="course" *ngFor="let c of filteredCourses" fxFlex="100" fxFlex.gt-xs="100" fxFlex.gt-sm="100"
+            <div class="course" *ngFor="let c of filteredCourses" fxFlex="100" fxFlex.gt-xs="100" fxFlex.gt-sm="50"
                 [@animate]="{value:'*',params:{y:'100%'}}">
 
-                <div class="course-content" fxLayout="column" fxFlex="1 1 auto">
+                <div class="course-content" fxLayout="column" >
 
                     <div class="header" fxLayout="row" fxLayoutAlign="center center">
                         <div class="category" fxFlex>
@@ -93,7 +93,7 @@
 
                     </div>
 
-                    <div class="content" fxLayout="column" fxLayoutAlign="center center" fxFlex="1 1 auto">
+                    <div class="content" fxLayout="column" fxLayoutAlign="center center" >
 
 
 

@@ -133,19 +133,27 @@ export class CampaignsComponent implements OnInit, OnDestroy {
 
             let form = response.getRawValue();
 
+            this._campaignService.loadingCampaigns = true;
+
             this._campaignService
                 .addCampaign(form)
 
                 .then((x) => {
                     console.log(x);
 
+                    this._campaignService.loadingCampaigns = false;
+
                     setTimeout(() => {
                         this._matSnackBar.open("Campaña creada", "OK", {
                             verticalPosition: "top",
                             duration: 3000,
                         });
+
+                       
                     }, 600);
                 });
+
+           
 
             this._campaignService.previewLoading = false;
 

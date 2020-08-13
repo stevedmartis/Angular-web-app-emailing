@@ -129,6 +129,7 @@ products-campaigns {
             }
 
             .course {
+                flex: none !important;
                 padding: 16px;
 
                 &:hover {
