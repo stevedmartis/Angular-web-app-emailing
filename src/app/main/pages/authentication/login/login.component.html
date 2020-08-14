@@ -48,6 +48,7 @@
 
                 <button *ngIf="!loading" mat-raised-button color="accent" class="submit-button" aria-label="LOG IN"
                     (click)="login()"
+                    (keyup.enter)="login()"
                     [disabled]="loginForm.invalid">
                     Iniciar sesión
                 </button>

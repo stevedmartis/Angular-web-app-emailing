@@ -654,17 +654,18 @@ export class CampaignService {
 
         var reader = new FileReader();
 
-        console.log(this.fileData, reader)
+   
 
         
         reader.readAsDataURL(this.fileData);
-        reader.onload = _event => {
+        reader.onload = (_event: any) => {
             if (type === "camp") {
 
 
-                console.log(_event.target.result)
-
+              
                // this.compressFile2(this.image)
+
+            
 
                 this.compressFile(_event.target.result, this.fileData)
 
@@ -679,25 +680,7 @@ export class CampaignService {
         };
     }
 
-    compressFile2(image) {
-    let imgResultBeforeCompress: any;
-    let imgResultAfterCompress: any;
-  
-        this.imageCompress.uploadFile().then(({image, orientation}) => {
-        
-          imgResultBeforeCompress = image;
-          console.warn('Size in bytes was:', this.imageCompress.byteCount(image));
-          
-          this.imageCompress.compressFile(image, orientation, 50, 50).then(
-            result => {
-              imgResultAfterCompress = result;
-              console.warn('Size in bytes is now:', this.imageCompress.byteCount(result));
-            }
-          );
-          
-        });
-        
-      }
+
 
 sendManiInvited(eventName, campaign, invited): Promise<any> {
 
@@ -732,7 +715,6 @@ sendManiInvited(eventName, campaign, invited): Promise<any> {
 
     compressFile(image,fileName) {
 
-        console.log(image, fileName)
     
         let sizeOfOriginalImage: any
     
@@ -748,11 +730,8 @@ sendManiInvited(eventName, campaign, invited): Promise<any> {
         imgResultAfterCompress = result;
         localCompressedURl = result;
         sizeOFCompressedImage = this.imageCompress.byteCount(result)/(1024*1024)
-      
-        // create file from byte
-        const imageName = fileName;
+
     
-        console.log(result)
 
         this.previewUrl = result;
 
