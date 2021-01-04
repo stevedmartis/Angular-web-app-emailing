@@ -737,7 +737,9 @@ export class ContactsService {
                     
 
                     nameData.forEach((e, index) => {
-                        setTimeout(() => {                            
+                        setTimeout(() => {  
+                            console.log('probando delay 3s');
+
                             this.dataExcelCreateArrayForAdd(e, arraySelect).then(
                                 (objInvited) => {
                                     count++;
@@ -749,7 +751,7 @@ export class ContactsService {
                                     }
                                 }
                             );
-                        }, 1000);
+                        }, 3000);
                         
                     });
                 });
