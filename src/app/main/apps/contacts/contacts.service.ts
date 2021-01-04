@@ -749,7 +749,7 @@ export class ContactsService {
                                     }
                                 }
                             );
-                        }, 0);
+                        }, 1000);
                         
                     });
                 });
