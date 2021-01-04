@@ -655,11 +655,16 @@ export class ContactsService {
 
             let inputsArray = [];
 
+           
+
             let nameData = dataString.data
                 ? dataString.data
                 : dataString.Hoja1
                 ? dataString.Hoja1
-                : "";
+                : dataString;
+
+
+                console.log('nameData:',nameData);
 
             this.selectFieldsDialog(this.columnHeaders).then((arraySelect) => {
                 inputsArray.push({
@@ -729,18 +734,23 @@ export class ContactsService {
 
                     let count = 0;
 
+                    
+
                     nameData.forEach((e, index) => {
-                        this.dataExcelCreateArrayForAdd(e, arraySelect).then(
-                            (objInvited) => {
-                                count++;
-
-                                contactsArray.push(objInvited);
-
-                                if (count === nameData.length) {
-                                    resolve(contactsArray);
+                        setTimeout(() => {                            
+                            this.dataExcelCreateArrayForAdd(e, arraySelect).then(
+                                (objInvited) => {
+                                    count++;
+    
+                                    contactsArray.push(objInvited);
+    
+                                    if (count === nameData.length) {
+                                        resolve(contactsArray);
+                                    }
                                 }
-                            }
-                        );
+                            );
+                        }, 0);
+                        
                     });
                 });
             });

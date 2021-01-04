@@ -230,17 +230,20 @@ export class SpeedDialFabComponent implements OnInit {
     onFileChange(ev) {
         //lee excel obtiene columnas y data, valida tipo archivo retorna Data Json.
         this._contactsService.onFileChange(ev).then((data) => {
+
+            console.log('data: ', data);
             
             //Open dialog select fields retorna:
             // array inputs seleccionados, array dataInvitados y array inputsSelect (Inports = true).
             this._contactsService.selectFieldsAddInvited(data).then((response) => {
 
+                console.log('response:',response);
                 //spinner activado
                 this.loadingContact = true;
 
                 //edita el evento con inputs selccionados y defaults, crea inputs form y dataImport de invitados.
                 this._contactsService.editEventInputsInvitedData(response.inputsArray,
-                    response.nameData,
+                    response.nameData? response.nameData : '',
                     response.arraySelect)
                     .then((contactsArray)=> {
 
