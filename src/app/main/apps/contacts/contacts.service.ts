@@ -172,7 +172,7 @@ export class ContactsService {
                         result === "Invalid"
                             ? false
                             : result === "Risky"
-                            ? false
+                            ? true
                             : result === "Safe to Send"
                             ? true
                             : result === "Unknown"
@@ -664,7 +664,6 @@ export class ContactsService {
                 : dataString;
 
 
-                console.log('nameData:',nameData);
 
             this.selectFieldsDialog(this.columnHeaders).then((arraySelect) => {
                 inputsArray.push({
@@ -738,7 +737,6 @@ export class ContactsService {
 
                     nameData.forEach((e, index) => {
                         setTimeout(() => {  
-                            console.log('probando delay 3s');
 
                             this.dataExcelCreateArrayForAdd(e, arraySelect).then(
                                 (objInvited) => {

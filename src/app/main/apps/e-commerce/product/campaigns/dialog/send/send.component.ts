@@ -54,17 +54,7 @@ if(this.allContacts.length > 0){
   } 
   else {
 
-const initialStatus =  'Cargando...'
-    this._campaignService.countStatus = initialStatus
-
-    this._campaignService.statusSendInvitation = initialStatus
-    
-    this.campaign = this._data.campaign;
-
-   // this._campaignService.ManiInvited(invitation, this.allContacts)
-
-   this._campaignService.getDataPersonForSendEmail(option, this.campaign, this.allContacts)
-
+    this.statusAndSendMails(option);
 
   }
 }
@@ -84,11 +74,7 @@ const initialStatus =  'Cargando...'
     } 
     else {
 
-      this._campaignService.statusSendInvitation = 'Cargando...'
-      
-    const invitation = this._data.campaign;
-
-    this._campaignService.getDataPersonForSendEmail(invitation, option,  this.allContacts)
+      this.statusAndSendMails(option);
 
 
     }
@@ -96,6 +82,19 @@ const initialStatus =  'Cargando...'
 
 
   }
+  }
+
+  statusAndSendMails(option){
+
+    const initialStatus =  'Cargando...'
+    this._campaignService.countStatus = initialStatus
+
+    this._campaignService.statusSendInvitation = initialStatus
+    
+    this.campaign = this._data.campaign;
+
+  this._campaignService.getDataInvitedForSendEmail(option, this.campaign, this.allContacts)
+
   }
 
   ngOnDestroy(){

@@ -114,7 +114,6 @@ export class ProjectDashboardComponent implements OnInit
                 domain: ['#f44336', '#9c27b0', '#03a9f4', '#e91e63', '#ffc107']
             },
             onSelect     : (ev) => {
-                console.log(ev);
             }
         };
 

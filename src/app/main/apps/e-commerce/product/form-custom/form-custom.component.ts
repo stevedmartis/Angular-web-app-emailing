@@ -270,7 +270,6 @@ export class FormCustomComponent implements OnInit, OnDestroy {
         this._formCustomService.editInputFormColumnSelect(newObj.id)
         .then((res) => {
 
-            console.log(res)
         })
         .catch((err) => {console.log(err)})
 

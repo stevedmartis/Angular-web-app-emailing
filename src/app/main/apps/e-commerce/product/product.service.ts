@@ -274,7 +274,6 @@ export class EcommerceProductService implements Resolve<any>
                     this.addTagsInProduct(tag)
                     .then( (x) => {
         
-                        console.log(x)
                     })
             
     
